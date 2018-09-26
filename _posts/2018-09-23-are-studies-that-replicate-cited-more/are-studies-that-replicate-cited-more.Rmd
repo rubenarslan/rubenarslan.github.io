@@ -1,0 +1,194 @@
+---
+name: "replication_and_citation"
+title: "Are studies that replicate cited more?"
+author:
+  - name: "Ruben C. Arslan"
+    url: https://rubenarslan.github.io
+    affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+description: |
+  Looking at the RPP to bring data to a discussion
+date: 09-23-2018
+categories: 
+  - meta science
+  - open science
+  - reproducibility
+output:
+  radix::radix_article:
+    toc: yes
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Replication in the Reproducibility Project Psychology and citations
+
+After his talk at the Center for Adaptive Rationality, [Stephan Lewandowsky](https://twitter.com/STWorg) and I had a small discussion whether scientists can actually pick "winners". The discussion stemmed from a larger discussion about whether we get more research waste, if we replicate first, then publish, or publish first, and then replicate those studies that are found interesting. 
+
+If I recall correctly, we didn't really disagree that scientists _can_ tell if things are off about a study, but we did disagree on whether _citation_ indexes such a quality assessment, and is a useful way to find out which studies are worthy of more attention. 
+
+So, I ran the numbers for one of the few [studies](https://osf.io/fgjvw) where we can find out, the Reproducibility Project: Psychology. I [tweeted it back then](https://twitter.com/rubenarslan/status/996782368890544132), but felt like making the graphs nicer and playing with [radix](https://rstudio.github.io/radix/) on a train ride.
+
+```{r}
+# based on CHJ Hartgerink's script
+options(stringsAsFactors = TRUE)
+
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(ggbeeswarm)
+theme_set(theme_light())
+# Read in Tilburg data
+info <- GET('https://osf.io/fgjvw/?action=download', write_disk('rpp_data.csv', overwrite = TRUE)) #downloads data file from the OSF
+MASTER <- read.csv("rpp_data.csv")[1:167, ]
+colnames(MASTER)[1] <- "ID" # Change first column name to ID to be able to load .csv file
+```
+
+```{r}
+if (file.exists("osfdata_with_dois.rdata")) {
+	load("osfdata_with_dois.rdata")
+} else {
+	library(rcrossref)
+	MASTER$DOI = NA_character_
+	for (i in 1:nrow(MASTER)) {
+		tryCatch({
+		MASTER$DOI[i] = rcrossref::cr_works(flq = c(query.title = MASTER$Study.Title..O.[i], query.author = MASTER$Authors..O.[i]), filter = c(from_pub_date = 2007, until_pub_date = 2009), sort = "relevance", limit = 1)$data$DOI}, error = function(e) warning(e))
+	}
+	MASTER$citation_count_2018 = NA_real_
+	for (i in 1:nrow(MASTER)) {
+		tryCatch({
+			MASTER$citation_count_2018[i] = rcrossref::cr_citation_count(MASTER$DOI[i])
+		}, error = function(e) warning(e))
+	}
+}
+```
+
+
+## Does replication in the RPP predict how often a paper is cited?
+No, not for the citation count recorded in the RPP.
+
+```{r layout='l-body-outset'}
+MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
+  ggplot(aes(T_pval_USE..R.< .05, Citation.count..paper..O.)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Citation count (RPP, 2015)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
+
+MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
+  glm(Citation.count..paper..O. ~ T_pval_USE..R.< .05, data = ., family = quasipoisson()) %>% 
+  summary()
+```
+
+
+## Does replication predict 2018 citation counts?
+<aside>
+__Details__: I first got DOIs, which were missing from the RPP data, by searching Crossref on titles, authors, date. I didn't do any checking that matches were proper. In a next step, I got up-to-date citation counts from CrossRef.
+</aside>
+
+I used the Crossref API to the current citation counts for the papers contained in the RPP. 
+Again, there was no association with replication status.
+
+```{r layout='l-body-outset'}
+MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
+  ggplot(aes(T_pval_USE..R.< .05, citation_count_2018)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Citation count (Crossref, 2018)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
+
+MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% glm(citation_count_2018 ~ T_pval_USE..R.< .05, data = ., family = quasipoisson()) %>% summary()
+```
+
+
+## Does replication predict subsequent citation counts (ie. 2015-2018)?
+
+<aside>
+The correlation between 2018 and 2015 counts is `r round(cor(MASTER$citation_count_2018, MASTER$Citation.count..paper..O.), 2)`. The mean for citations in 2018 is `r round(mean(MASTER$citation_count_2018),2)`, in the RPP data it was `r round(mean(MASTER$Citation.count..paper..O.),2)`. How can citations go DOWN? The citation count in the RPP probably includes more sources, leading to the mean being higher, but these sources don't seem to be systematically different, leading to the maintained rank order. d
+
+```{r}
+qplot(Citation.count..paper..O., citation_count_2018, data = MASTER) + 
+  xlab("Citations (RPP, 2015)") +
+  ylab("Citations (Crossref, 2018)") +
+ggtitle("Correlation") + geom_smooth(method = 'lm') + 
+  theme_light(base_size = 25)
+```
+
+</aside>
+
+This is pretty dirty work, because I'm subtracting citation counts from one source with another, so most papers are cited less in 2018 than in 2015. But haven't found a quick way to get citation counts in 2015 from `rcrossref`.
+
+Again, no association. So, assuming the dirtiness of the analysis doesn't matter, the literature hasn't reacted at all to the presumably important bit of information that a study doesn't replicate.
+
+```{r layout='l-body-outset'}
+lm(citation_count_2018 ~ Citation.count..paper..O., data = MASTER)
+MASTER <- MASTER %>% mutate(
+  citations_after_2018 = citation_count_2018 - Citation.count..paper..O. * 0.82,
+  citations_after_2018 = citations_after_2018 - min(citations_after_2018, na.rm = T)
+)
+MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% ggplot(aes(T_pval_USE..R.< .05, citations_after_2018)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Citations after 2015)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
+
+MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% glm(citations_after_2018 ~ T_pval_USE..R.< .05, data = ., family = 'quasipoisson') %>% summary()
+```
+
+## How does pre-2015 citation count predict post-2015 citations accounting for replication status?
+A slightly different way of looking at it.
+
+```{r layout='l-body-outset'}
+qplot(Citation.count..paper..O., citation_count_2018, colour = T_pval_USE..R.< .05, data = MASTER %>% filter(!is.na(T_pval_USE..R.))) + 
+  geom_smooth(method = 'glm', method.args = list(family = quasipoisson(link = "log"))) +
+  xlab("Citation count (RPP, 2015)") +
+  ylab("Citation count (Crossref, 2018)") +
+  scale_color_brewer("Significant \nreplication \neffect (p<.05)", palette = 1)
+
+qplot(Citation.count..paper..O., citations_after_2018, colour = T_pval_USE..R.< .05, data = MASTER %>% filter(!is.na(T_pval_USE..R.))) +   geom_smooth(method = 'glm', method.args = list(family = quasipoisson(link = "log"))) +
+  xlab("Citation count (RPP, 2015)") +
+  ylab("Citation count after 2015") +
+  scale_color_brewer("Significant \nreplication \neffect (p<.05)", palette = 1)
+```
+
+
+
+## Conclusion
+So, are citation counts a poor indicator of quality? The most common reaction I received to these results was saying
+that the 7 years from the publication of the studies to 2015 are probably not enough for citation counts to become more signal than noise,
+or at least that the 3 years from the publication of the RPP results to 2018 are not enough. These reactions mostly came from
+people who did not really believe in citations-as-merit before anyway. 
+
+To me, if 10 years after publication citations cannot be used to distinguish between studies that replicated and those that didn't, they're
+probably not a useful measure of thoroughness that can be used in assessment, hiring, and so on. They may be a useful measure of other important skills for a scientist, such as communicating their work, they may measure qualities we don't want in scientists, but it seems they are not useful to select people whose work will replicate. I think that is something we should want to do.
+
+In addition, the literature does not react quickly to the fact that studies do not replicate. Given that people also keep citing retracted studies (albeit with a sharp drop), this does not surprise me.
+
+### Limitations
+These were all studies from reputable journals, so we might have some range restriction here.  On the other hand, plenty of these studies don't replicate, and citation counts go from 0 to >300.
+
+## Which studies keep being cited after not being replicated?
+Hover your mouse over the dots to see the study titles.
+
+```{r layout='l-body-outset'}
+MASTER <- MASTER %>% 
+                filter(!is.na(T_pval_USE..R.)) %>% 
+                mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
+                       DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
+                select(Authors = Authors..O., Title = Study.Title..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
+library(rbokeh)
+figure(width = 1100, height = 500) %>%
+  ly_points(citations_2015, citations_after_2018, data = MASTER,
+    color = replicated_p_lt_05, 
+    hover = list(Authors, Title))
+```
+
+## List of studies
+```{r layout='l-screen-inset'}
+DT::datatable(MASTER %>% select(-citations_after_2018) %>% arrange(desc(citations_2018)), escape = F)
+```
+
+## Appendix {.appendix}
+These analyses are based on Chris J. Hartgerink's script. The data and his script can be found on the [OSF](https://osf.io/ytpuq/).

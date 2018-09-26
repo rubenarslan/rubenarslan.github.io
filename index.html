@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="radix" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Ruben Arslan: Personal blog</title>
+  
+  <meta property="description" itemprop="description" content="A collection of links to software, scientific work, and my blog."/>
+  
+  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  
+  
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Ruben Arslan: Personal blog"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="A collection of links to software, scientific work, and my blog."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Ruben Arslan"/>
+  
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Ruben Arslan: Personal blog"/>
+  <meta property="twitter:description" content="A collection of links to software, scientific work, and my blog."/>
+  <meta property="twitter:site" content="@rubenarslan"/>
+  
+  <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=The unconscious side of facebook: Do online social network profiles leak cues to users’ implicit motive dispositions?;citation_publication_date=2017;citation_doi=10.1007/s11031-017-9663-1;citation_issn=0146-7239, 1573-6644;citation_author=Michael Dufner;citation_author=Ruben C Arslan;citation_author=Jaap J A Denissen"/>
+  <!--radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site","bibliography","exclude"]}},"value":[{"type":"character","attributes":{},"value":["Personal blog"]},{"type":"character","attributes":{},"value":["A collection of links to software, scientific work, and my blog.\n"]},{"type":"character","attributes":{},"value":["radix::radix_website"]},{"type":"character","attributes":{},"value":["publications.bibtex"]},{"type":"character","attributes":{},"value":["*.rda","*.pdf","*.dta","*.csv","*.csl","*.bibtex","*.docx"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  
+  <script type="application/javascript">
+  
+    window.headroom_prevent_pin = false;
+  
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+  
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+  
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+  
+      // responsive menu
+      $('.radix-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+  
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+  
+  <style type="text/css">
+  
+  /* Theme (user-documented overrideables for nav appearance) */
+  
+  .radix-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #455a64;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  
+  .radix-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .radix-site-nav a:hover {
+    color: white;
+  }
+  
+  @media print {
+    .radix-site-nav {
+      display: none;
+    }
+  }
+  
+  .radix-site-header {
+  
+  }
+  
+  .radix-site-footer {
+  
+  }
+  
+  
+  /* Site Header */
+  
+  .radix-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+  
+  .radix-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .radix-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+  
+  
+  .radix-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+  
+  .radix-site-header a,
+  .radix-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+  
+  .radix-site-header .title {
+    font-size: 18px;
+  }
+  
+  .radix-site-header .logo {
+    padding: 0;
+  }
+  
+  .radix-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+  
+  .radix-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+  
+  
+  
+  @media screen and (min-width: 1000px) {
+    .radix-site-header .logo img {
+      display: inline-block;
+    }
+    .radix-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .radix-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .radix-site-header .title {
+      padding-left: 12px;
+    }
+  }
+  
+  
+  .radix-site-header .nav-toggle {
+    display: none;
+  }
+  
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+  
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-dropdown-active {
+    display: block;
+  }
+  
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+  
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+  
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .radix-site-header a, .radix-site-header .nav-dropdown  {display: none;}
+    .radix-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .radix-site-header .title {
+      margin-left: 0;
+    }
+    .radix-site-header .nav-right {
+      margin-right: 0;
+    }
+    .radix-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+  
+  
+  @media screen and (max-width: 768px) {
+    .radix-site-header.responsive {position: relative;}
+    .radix-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .radix-site-header.responsive a,
+    .radix-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .radix-site-header.responsive .nav-left,
+    .radix-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .radix-site-header.responsive .nav-dropdown {float: none;}
+    .radix-site-header.responsive .nav-dropdown-content {position: relative;}
+    .radix-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+  
+  /* Site Footer */
+  
+  .radix-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Headroom */
+  
+  d-title {
+    padding-top: 6rem;
+  }
+  
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+  
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+  
+  .headroom--unpinned {
+    top: -100px;
+  }
+  
+  .headroom--pinned {
+    top: 0;
+  }
+  
+  </style>
+  
+  <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet"/>
+  <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+  <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+  
+  <style type="text/css">
+  
+  body {
+    background-color: white;
+  }
+  
+  .pandoc-table {
+    width: 100%;
+  }
+  
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+  
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+  
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+  
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+  
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .shaded-content {
+    background: white;
+  }
+  
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  d-article {
+    padding-bottom: 30px;
+  }
+  
+  d-appendix {
+    padding-top: 30px;
+  }
+  
+  d-article>p>img {
+    width: 100%;
+  }
+  
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+  
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  /* CSS for table of contents */
+  
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+  
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+  
+  .d-toc a {
+    border-bottom: none;
+  }
+  
+  .d-toc ul {
+    padding-left: 0;
+  }
+  
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+  
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+  
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+  
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+  
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  
+  
+  
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+  
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+  
+  pre.text-output {
+  
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  @media(min-width: 768px) {
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+  
+  /* Figure */
+  
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+  
+  .figure img {
+    width: 100%;
+  }
+  
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+  
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+  
+  
+  
+  /* Tweak 1000px media break to show more text */
+  
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+  
+    .grid {
+      grid-column-gap: 16px;
+    }
+  
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+  
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+  
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+  
+  
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+  
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  
+  /* Social footer */
+  
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+  
+  .disqus-comments {
+    margin-right: 30px;
+  }
+  
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+  
+  #disqus_thread {
+    margin-top: 30px;
+  }
+  
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+  
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+  
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+  
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+  
+  
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+  
+  
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+  
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+  
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+  
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+  
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+  
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  
+  
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+  
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+  
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+  
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  </style>
+  
+  <script type="application/javascript">
+  
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+  
+  // show body when load is complete
+  function on_load_complete() {
+  
+    // set body to visible
+    document.body.style.visibility = 'visible';
+  
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+  
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+  
+  function init_distill() {
+  
+    init_common();
+  
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+  
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+  
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+  
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+  
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+  
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+  
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+  
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+  
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+  
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+  
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+  
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+  
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+  
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+  
+      // capture layout
+      var layout = $(this).attr('data-layout');
+  
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+  
+  
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+  
+    // load distill framework
+    load_distill_framework();
+  
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+  
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+  
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+  
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+  
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+  
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+  
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+  
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+  
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+  
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+  
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+  
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+  
+      // clear polling timer
+      clearInterval(tid);
+  
+      // show body now that everything is ready
+      on_load_complete();
+    }
+  
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+  
+  }
+  
+  function init_downlevel() {
+  
+    init_common();
+  
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+  
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+  
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+  
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+  
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+  
+  
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+  
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+  
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+  
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+  
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+  
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+  
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+  
+    $('body').addClass('downlevel');
+  
+    on_load_complete();
+  }
+  
+  
+  function init_common() {
+  
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+  
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+  
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+  
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+  
+    // mark figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      $(this).find('img, .html-widget').css('width', '100%');
+    });
+  
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+  
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.radix-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+  
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+  
+  
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+  
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+  
+  </script>
+  
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <style type="text/css">
+  .radix-site-nav {
+    color: #E4F2F7;
+    background-color: #4F94B0;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  
+  .radix-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .radix-site-nav a:hover {
+    color: white;
+  }
+  
+  .radix-site-header {
+  }
+  
+  .radix-site-footer {
+  }
+  
+  @media print {
+    .radix-site-nav {
+      display: none;
+    }
+  }
+  
+  .img-circle {
+    width:100px;
+    border-radius: 50%;
+  }
+  
+  </style>
+  <!--/radix_placeholder_site_in_header-->
+
+  <link rel="stylesheet" href="styles.css" type="text/css"/>
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Personal blog","description":"A collection of links to software, scientific work, and my blog.","authors":[]}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="radix-site-nav radix-site-header">
+<div class="nav-left">
+<a href="index.html" class="title">Ruben Arslan</a>
+</div>
+<div class="nav-right">
+<a href="index.html">Home</a>
+<a href="blog.html">Blog</a>
+<a href="about.html">About</a>
+<a href="index.xml">
+<i class="fa fa-rss"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Personal blog</h1>
+<p>A collection of links to software, scientific work, and my blog.</p>
+</div>
+
+
+<div class="d-article">
+<p>I’m a evolutionary personality psychologist by training, who dabbles in genetic research, software development, and open science activism. I live and work in Berlin.</p>
+<aside>
+<img src="https://formr.org/assets/build/img/ruben.jpg?v1489582723" class="img-circle" alt="Ruben Arslan">
+</aside>
+<p>You can reach me at <a href="mailto:ruben.arslan@gmail.com">ruben.arslan@gmail.com</a> or on <a href="https://twitter.com/rubenarslan">Twitter</a>. If you want to tell me I’m wrong about something anonymously, you can use <a href="https://tellmeimwrong.formr.org">this form</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<h2 id="publications">Publications</h2>
+<p>For now, you can find my traditional publications on my <a href="https://scholar.google.com/citations?user=X6fXzMcAAAAJ&amp;hl=en">Google Scholar profile</a>. Here are the two main graphs from the two main papers of my dissertation.</p>
+<div class="l-body-outset">
+<p>
+<img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width: 45%" alt="Ovulatory changes"> <img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width: 54%;" alt="Paternal age effects on reproductive fitness">
+</p>
+</div>
+<h2 id="open-science">Open Science</h2>
+<p>I’m a child of the reproducibility crisis in psychology. To me, the open science movement is our best hope for fighting corruption of science. I occasionally give talks to advertise and teach tools and methods to do better work, including some of the software listed below.</p>
+<h3 id="bad-science-vs.open-science"><a href="https://osf.io/7vnya/">Bad Science vs. Open Science</a></h3>
+<p>The replication crisis and possible reforms. This is my main introductory talk that I have given in Greifswald, Copenhagen, Berlin, and Göttingen. I try to take slightly less than half of the time for the problems, and slightly more than half for the solutions.</p>
+<details>
+<summary><strong>Abstract</strong></summary> Estimates from large-scale replication projects in psychology suggest that the majority of studies from top journals do not have replicable results. In related news, researchers were able to publish highly significant support for impossible phenomena using commonly accepted scientific research methods. Data detectives keep finding highly cited scientific papers that are riddled with errors invalidating their conclusions. Our textbooks are full of findings that do not replicate or are in serious doubt. Publication bias and outcome switching contaminate our knowledge base about pharmacological and psychotherapeutic treatment. Science as a system has issues, but can we use the scientific method to remedy them? A vibrant reform movement is seeking to do so, but it can be hard to keep track of all the suggestions to do better. I outline concrete plans and paths that could lead to lasting improvements, such as the Open Science Framework, Registered Reports, the Peer Reviewer’s Openness Initiative, the All Trials initiative, preprints, post publication peer review, and guideline and incentive setting at the journal, hiring and funding level.
+</details>
+<h3 id="workshop-on-fair-metadata"><a href="https://osf.io/f8dvx/">Workshop on FAIR metadata</a></h3>
+<details>
+<summary><strong>Abstract</strong></summary> Google now also finds datasets – but will it find yours? How can you share your data in such a way that it will be useful to you and others in the future? Some scientific disciplines have found ways to store data in standardised formats in central, open repositories. But for many, especially in health and human subjects research, data cannot be shared openly. You can always share metadata – but how do you do so in a forward-thinking way? We discuss standards or the lack of them and try out practical tools.
+</details>
+<h3 id="formr-workshop"><a href="https://osf.io/gu23h/">formr workshop</a></h3>
+<details>
+<summary><strong>Abstract</strong></summary> The survey framework formr.org is a free, open source software for online and lab studies. Even with little or no programming skills users can design complex studies. Key features include automatic email and text message reminders for repeated surveys on computers and smartphones and the automatic generation of personalised graphical feedback based on R functions. Designed by and for personality researchers, formr.org makes it easy to collect peer ratings, social networks, dyadic and round robin data, longitudinal, and experience sampling data. It also allows for separation of contact and study data as required by European privacy laws. Users of formr.org can increase the transparency and reproducibility of their research by sharing and version tracking complete study workflows. Furthermore, data collected with formr.org can be cleaned and documented in human- and machine-readable codebooks without additional effort by relying on the study metadata.
+</details>
+<h3 id="maintaining-privacy-with-open-data"><a href="https://osf.io/7vnya/">Maintaining privacy with open data</a></h3>
+<details>
+<summary><strong>Abstract</strong></summary> In this workshop, we will try to tackle questions about privacy in the age of big and open data. Why should we even share our data? For what kind of research data do we need to maintain privacy? What is personally identifiable information and why is not sufficient to omit it to make data truly anonymous? How do we assess the risks of re-identification? How do we maintain our participants’ anonymity, when we need to stay in touch with them online? What novel risks are engendered by the massive trail of data we all leave on the web? How do we anonymise already collected data by binning, fuzzing, and omitting? We will also discuss novel technological solutions that can permit us to share data openly: synthetic data generation, scientific use files, or differential privacy algorithms. The workshop consists of some theoretical input, but will also focus on practical exercises. Ideally, participants bring their own laptop with a current R installation. Furthermore, participants can send in questions or typical scenarios from their own research fields in advance.
+</details>
+<h2 id="software">Software</h2>
+<p>I have published a few tools, mostly written in PHP, Javascript, or R, all of which are free to use, and two of which are open source. Missing from this list is one website that I had to take offline because a German dictionary didn’t get the joke and threatened to sue me. Don’t ask. You can find the open source software and some of my reproducible statistical analyses on <a href="https://github.com/rubenarslan">Github</a>.</p>
+<h3 id="formr.org"><a href="https://formr.org">formr.org</a></h3>
+<p><em>formr.org</em> is a study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata and Matthias Walther are helping me develop and maintain the software since 2015 and 2018, respectively. I also wrote an <a href="https://github.com/rubenarslan/formr">R package called simply formr</a> to help users make the most of the data and metadata.</p>
+<p>In addition to extensive documentation supplied by us and supplemented by our users in a Wiki, there is also a <a href="https://psyarxiv.com/pjasu">preprint</a> describing the software.</p>
+<h3 id="codebook"><a href="https://cran.r-project.org/web/packages/codebook/">codebook</a></h3>
+<p>codebook is an R package that allows users to document datasets in nice websites that can be read and understood both by co-authors, forgetful future yous, and machines. It was based on a set of convenience functions available in formr. It can make good use of existing metadata, such as item data contained in Qualtrics or formr.org surveys, but also variable and value labels, in Stata, SPSS, and SAS files.</p>
+<p>A tutorial is available as a <a href="https://psyarxiv.com/5qc6h/">preprint</a>, but the easiest way to get going is to simply upload a dataset to this <a href="http://codebook.formr.org/">webapp</a>.</p>
+<h3 id="alphabattle.xyz"><a href="https://alphabattle.xyz">Alphabattle.xyz</a></h3>
+<p>A small collaboration with a friend led to this player-vs-player online word game written with <a href="https://www.meteor.com">Meteor</a>. You have to infer the other person’s secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone.</p>
+<h3 id="brainfunnel.com"><a href="http://brainfunnel.com/">brainfunnel.com</a></h3>
+<p>During a year abroad in Sweden, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn’t work on Macs, I wrote one in the form of a website. I stopped working on this in 2011, but it still works, and I think it might still be the only one with easy support for gap texts.</p>
+<h2 id="blog">Blog</h2>
+<p>Together with <a href="http://www.the100.ci/about/">three wonderful people</a>, I founded <a href="http://www.the100.ci/">The 100% CI</a>, a blog focused on open science and meta science. Posts that I wrote primarily, can be found <a href="http://www.the100.ci/author/ruben/">here</a>, although we all edit and review each other. My posts that did not clear our high bar for punniness go <a href="blog.html">here</a>.</p>
+<h1 id="pub">pub</h1>
+<p><span class="citation" data-cites="Dufner2017">Dufner, Arslan, and Denissen (<a href="#ref-Dufner2017">2017</a>)</span></p>
+<div id="refs" class="references">
+<div id="ref-Dufner2017">
+<p>Dufner, Michael, Ruben C Arslan, and Jaap J A Denissen. 2017. “The Unconscious Side of Facebook: Do Online Social Network Profiles Leak Cues to Users’ Implicit Motive Dispositions?” <em>Motiv. Emot.</em>, December. <a href="https://doi.org/10.1007/s11031-017-9663-1" class="uri">https://doi.org/10.1007/s11031-017-9663-1</a>.</p>
+</div>
+</div>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Some more information about this form can be found [here] (<a href="http://www.the100.ci/2018/02/22/tell-me-im-wrong" class="uri">http://www.the100.ci/2018/02/22/tell-me-im-wrong</a>)<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rubenarslan/rubenarslan.github.io/issues/new">create an issue</a> on the source repository.</p>
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rubenarslan/rubenarslan.github.io">https://github.com/rubenarslan/rubenarslan.github.io</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+</div>
+<script id="distill-bibliography" type="text/bibtex">
+@ARTICLE{Dufner2017,
+  title   = "The unconscious side of Facebook: Do online social network
+             profiles leak cues to users' implicit motive dispositions?",
+  author  = "Dufner, Michael and Arslan, Ruben C and Denissen, Jaap J A",
+  journal = "Motiv. Emot.",
+  month   =  dec,
+  year    =  2017,
+  url     = "https://doi.org/10.1007/s11031-017-9663-1",
+  issn    = "0146-7239, 1573-6644",
+  doi     = "10.1007/s11031-017-9663-1"
+}
+
+@ARTICLE{Arslan2017-hd,
+  title     = "Using 26 thousand diary entries to show ovulatory changes in
+               sexual desire and behaviour",
+  author    = "Arslan, Ruben and Schilling, Katharina and Gerlach, Tanja and
+               Penke, Lars",
+  journal   = "PsyArXiv",
+  publisher = "psyarxiv.com",
+  year      =  2017,
+  url       = "https://psyarxiv.com/jp2ym/download?format=pdf",
+  doi       = "10.17605/OSF.IO/JP2YM"
+}
+
+@ARTICLE{Gerlach2017-ng,
+  title    = "Predictive Validity and Adjustment of Ideal Partner Preferences
+              Across the Transition Into Romantic Relationships",
+  author   = "Gerlach, Tanja M and Arslan, Ruben C and Schultze, Thomas and
+              Reinhard, Selina K and Penke, Lars",
+  journal  = "J. Pers. Soc. Psychol.",
+  month    =  sep,
+  year     =  2017,
+  url      = "http://dx.doi.org/10.1037/pspp0000170",
+  language = "en",
+  issn     = "0022-3514, 1939-1315",
+  pmid     = "28921999",
+  doi      = "10.1037/pspp0000170"
+}
+
+@ARTICLE{Arslan2014-ct,
+  title    = "The Effect of Paternal Age on Offspring Intelligence and
+              Personality when Controlling for Parental Trait Levels",
+  author   = "Arslan, Ruben C and Penke, Lars and Johnson, Wendy and Iacono,
+              William G and Mc Gue, Matt",
+  journal  = "PLoS One",
+  volume   =  9,
+  number   =  2,
+  pages    = "e90097",
+  month    =  feb,
+  year     =  2014,
+  url      = "http://dx.doi.org/10.1371/journal.pone.0090097",
+  doi      = "10.1371/journal.pone.0090097"
+}
+
+@ARTICLE{Arslan2017-qf,
+  title    = "Older fathers' children have lower evolutionary fitness across
+              four centuries and in four populations",
+  author   = "Arslan, Ruben C and Willf{\"u}hr, Kai P and Frans, Emma M and
+              Verweij, Karin J H and B{\"u}rkner, Paul-Christian and
+              Myrskyl{\"a}, Mikko and Voland, Eckart and Almqvist, Catarina and
+              Zietsch, Brendan P and Penke, Lars",
+  journal  = "Proceedings of the Royal Society B: Biological Sciences",
+  volume   =  20171562,
+  number   =  1862,
+  pages    = "20171562",
+  month    =  sep,
+  year     =  2017,
+  url      = "http://dx.doi.org/10.1098/rspb.2017.1562",
+  language = "en",
+  issn     = "0962-8452, 1471-2954",
+  doi      = "10.1098/rspb.2017.1562"
+}
+
+@ARTICLE{Arslan2016-zy,
+  title  = "formr.org survey software",
+  author = "Arslan, Ruben C and Tata, Cyril S",
+  year   =  2016,
+  url    = "dx.doi.org/10.5281/zenodo.32986",
+  doi    = "10.5281/zenodo.32986"
+}
+
+@ARTICLE{Arslan2017-hp,
+  title   = "Paternal age and offspring fitness: Online supplementary website
+             https://rubenarslan.github.io/paternal\_age\_fitness/",
+  author  = "Arslan, Ruben C and Willf{\"u}hr, Kai P and Frans, Emma and
+             Verweij, Karin J H and B{\"u}rkner, Paul-Christian and
+             Myrskyl{\"a}, Mikko and Voland, Eckart and Almqvist, Catarina and
+             Zietsch, Brendan P and Penke, Lars",
+  journal = "Zenodo",
+  year    =  2017,
+  url     = "https://rubenarslan.github.io/paternal_age_fitness/",
+  doi     = "10.5281/zenodo.838961"
+}
+
+@ARTICLE{Bleidorn2015-dl,
+  title    = "Age and Gender Differences in {Self-Esteem---A} {Cross-Cultural}
+              Window",
+  author   = "Bleidorn, Wiebke and Arslan, Ruben C and Denissen, Jaap J A and
+              Rentfrow, Peter J and Gebauer, Jochen E and Potter, Jeff and
+              Gosling, Samuel D",
+  journal  = "J. Pers. Soc. Psychol.",
+  year     =  2015,
+  url      = "http://doi.apa.org/getdoi.cfm?doi=10.1037/pspp0000078",
+  language = "en",
+  issn     = "0022-3514, 1939-1315",
+  doi      = "10.1037/pspp0000078"
+}
+
+@ARTICLE{Dufner2015-ye,
+  title    = "Affective contingencies in the affiliative domain: Physiological
+              assessment, associations with the affiliation motive, and
+              prediction of behavior",
+  author   = "Dufner, Michael and Arslan, Ruben C and Hagemeyer, Birk and
+              Sch{\"o}nbrodt, Felix D and Denissen, Jaap J A",
+  journal  = "J. Pers. Soc. Psychol.",
+  volume   =  109,
+  number   =  4,
+  pages    = "662--676",
+  year     =  2015,
+  url      = "http://doi.apa.org/getdoi.cfm?doi=10.1037/pspp0000025",
+  language = "en",
+  issn     = "0022-3514, 1939-1315",
+  doi      = "10.1037/pspp0000025"
+}
+
+@ARTICLE{Arslan2013-xx,
+  title  = "archivalproject.org collaborative meta-analysis website",
+  author = "Arslan, Ruben C and Simon, Lyndsy",
+  year   =  2013,
+  url    = "dx.doi.org/10.5281/zenodo.46633",
+  doi    = "10.5281/zenodo.46633"
+}
+
+@MISC{Arslan2016-am,
+  title  = "formr: v0.3.0",
+  author = "Arslan, Ruben C",
+  month  =  feb,
+  year   =  2016,
+  url    = "https://zenodo.org/record/46568",
+  doi    = "10.5281/zenodo.46568"
+}
+
+@MISC{Arslan2015-rl,
+  title  = "attentionbias: v1.0.2",
+  author = "Arslan, Ruben C",
+  month  =  nov,
+  year   =  2015,
+  url    = "https://zenodo.org/record/33336",
+  doi    = "10.5281/zenodo.33336"
+}
+
+@MISC{Arslan2007-uo,
+  title  = "brainfunnel.com vocabulary trainer",
+  author = "Arslan, Ruben C",
+  year   =  2007
+}
+
+@ARTICLE{Arslan2015-gm,
+  title    = "Zeroing in on the Genetics of Intelligence",
+  author   = "Arslan, Ruben C and Penke, Lars",
+  journal  = "Journal of Intelligence",
+  volume   =  3,
+  number   =  2,
+  pages    = "41--45",
+  month    =  apr,
+  year     =  2015,
+  url      = "http://www.mdpi.com/2079-3200/3/2/41",
+  language = "en",
+  doi      = "10.3390/jintelligence3020041"
+}
+
+@ARTICLE{Greischel2016-lq,
+  title    = "Sailing Uncharted Waters: Adolescent Personality Development and
+              Social Relationship Experiences During a Year Abroad",
+  author   = "Greischel, Henriette and Noack, Peter and Neyer, Franz J",
+  journal  = "J. Youth Adolesc.",
+  month    =  apr,
+  year     =  2016,
+  url      = "http://link.springer.com/10.1007/s10964-016-0479-1",
+  language = "en",
+  issn     = "0047-2891, 1573-6601",
+  doi      = "10.1007/s10964-016-0479-1"
+}
+
+@ARTICLE{Waters_undated-ob,
+  title    = "Manuscript accepted for publication in Journal of Youth and
+              Adolescence",
+  author   = "Waters, S U and Abroad, Y and Greischel, H and Noack, P and
+              Neyer, F J",
+  url      = "https://www.researchgate.net/profile/Franz_Neyer/publication/299487713_Sailing_Uncharted_Waters_Adolescent_Personality_Development_and_Social_Relationship_Experiences_During_a_Year_Abroad/links/56fb72bc08ae3c0f264c0f29.pdf"
+}
+
+@ARTICLE{Schubach2016-fn,
+  title    = "Me, Myself, and Mobility: The Relevance of Region for Young
+              Adults' Identity Development: Regional identity",
+  author   = "Schubach, Elisabeth and Zimmermann, Julia and Noack, Peter and
+              Neyer, Franz J",
+  journal  = "Eur. J. Pers.",
+  volume   =  30,
+  number   =  2,
+  pages    = "189--200",
+  year     =  2016,
+  url      = "http://doi.wiley.com/10.1002/per.2048",
+  language = "en",
+  issn     = "0890-2070",
+  doi      = "10.1002/per.2048"
+}
+
+@MISC{Arslan2016-an,
+  title    = "formr.org: v0.12.6",
+  author   = "Arslan, Ruben C and Tata, C",
+  month    =  aug,
+  year     =  2016,
+  url      = "http://zenodo.org/record/60957"
+}
+
+@ARTICLE{Arslan2017-jm,
+  title     = "Negative results are needed to show the specific value of a
+               cultural explanation for g: A commentary on Burkart et al",
+  author    = "Arslan, R C and von Borell, C and Ostner, J and Penke, L",
+  publisher = "osf.io",
+  year      =  2017,
+  url       = "https://osf.io/preprints/v7u38/"
+}
+
+@ARTICLE{Wurst2017-os,
+  title    = "Narcissism and romantic relationships: The differential impact of
+              narcissistic admiration and rivalry",
+  author   = "Wurst, Stefanie N and Gerlach, Tanja M and Dufner, Michael and
+              Rauthmann, John F and Grosz, Michael P and K{\"u}fner, Albrecht C
+              P and Denissen, Jaap J A and Back, Mitja D",
+  journal  = "J. Pers. Soc. Psychol.",
+  volume   =  112,
+  number   =  2,
+  pages    = "280--306",
+  month    =  feb,
+  year     =  2017,
+  url      = "http://dx.doi.org/10.1037/pspp0000113",
+  language = "en",
+  issn     = "0022-3514, 1939-1315",
+  pmid     = "27560609",
+  doi      = "10.1037/pspp0000113"
+}
+
+@ARTICLE{Schilling2014-tw,
+  title  = "Cycle shifts and pill dosage effects",
+  author = "Schilling, Katharina M and Straus, Hanne and Arslan, Ruben C and
+            Gerlach, Tanja M and Penke, Lars",
+  month  =  may,
+  year   =  2014
+}
+
+@MISC{Arslan2013-ni,
+  title    = "formr.org: v0.2.0",
+  author   = "Arslan, Ruben C",
+  month    =  oct,
+  year     =  2013,
+  url      = "https://zenodo.org/record/33329",
+  doi      = "10.5281/zenodo.33329"
+}
+
+@ARTICLE{Habedank2017-uz,
+  title   = "Online Attention Bias Modification for {Obsessive-Compulsive}
+             Disorder: A Randomized Controlled Trial",
+  author  = "Habedank, Isabelle and Lennartz, Sarah J and Arslan, Ruben C and
+             Ertle, Andrea",
+  journal = "Open Science Framework",
+  month   =  apr,
+  year    =  2017,
+  url     = "https://osf.io/gxvwk/",
+  doi     = "10.17605/osf.io/u7cve"
+}
+
+@MISC{noauthor_undated-rp,
+  title        = "Male intelligence -- thin slices and their impact on romantic
+                  and sexual attraction",
+  url          = "https://osf.io/he5wy/",
+  howpublished = "\url{https://osf.io/he5wy/}"
+}
+
+@MISC{noauthor_undated-gu,
+  title        = "Mate Choice",
+  url          = "https://osf.io/u4ypk/",
+  howpublished = "\url{https://osf.io/u4ypk/}"
+}
+
+@MISC{noauthor_undated-kt,
+  title        = "Online diary study of ovulatory cycle shifts on sexual
+                  desire, sexual activity, and mating behaviour",
+  url          = "https://osf.io/73jha/",
+  howpublished = "\url{https://osf.io/73jha/}"
+}
+
+@INCOLLECTION{Arslan2015-ph,
+  title     = "Evolutionary Genetics",
+  booktitle = "The Handbook of Evolutionary Psychology",
+  author    = "Arslan, Ruben C and Penke, Lars",
+  editor    = "Buss, David M",
+  publisher = "Wiley",
+  volume    =  2,
+  pages     = "1047--1066",
+  year      =  2015,
+  url       = "http://onlinelibrary.wiley.com/doi/10.1002/9781119125563.evpsych245/abstract",
+  address   = "New York",
+  language  = "en",
+  isbn      = "9781119125563"
+}
+
+@PHDTHESIS{Hanshans2016-aw,
+  title    = "Konzeption einer elektronischen Studienplattform zur
+              Durchf{\"u}hrung umfangreicher internetbasierter Studien in der
+              Psychosomatik am Beispiel {SURE}",
+  author   = "Hanshans, Christian",
+  month    =  aug,
+  year     =  2016,
+  url      = "https://epub.uni-regensburg.de/34152/",
+  address  = "Regensburg, Germany",
+  school   = "Universit{\"a}t Regensburg",
+  language = "de"
+}
+
+@INCOLLECTION{Geukes2017-up,
+  title     = "28 - Analyzing processes in personality development",
+  booktitle = "Personality Development Across the Lifespan",
+  author    = "Geukes, Katharina and van Zalk, Maarten H W and Back, Mitja D",
+  editor    = "Specht, Jule",
+  publisher = "Academic Press",
+  pages     = "455--472",
+  year      =  2017,
+  url       = "http://www.sciencedirect.com/science/article/pii/B9780128046746000284",
+  isbn      = "9780128046746"
+}
+
+@ARTICLE{Toplak2011-ea,
+  title    = "The Cognitive Reflection Test as a predictor of performance on
+              heuristics-and-biases tasks",
+  author   = "Toplak, Maggie E and West, Richard F and Stanovich, Keith E",
+  journal  = "Mem. Cognit.",
+  volume   =  39,
+  number   =  7,
+  pages    = "1275",
+  month    =  oct,
+  year     =  2011,
+  url      = "https://link.springer.com/article/10.3758/s13421-011-0104-1",
+  language = "en",
+  issn     = "0090-502X, 1532-5946",
+  doi      = "10.3758/s13421-011-0104-1"
+}
+</script>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="radix-site-nav radix-site-footer">
+<p>© Copyright 2018 Ruben Arslan.</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

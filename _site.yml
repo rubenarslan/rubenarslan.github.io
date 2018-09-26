@@ -1,0 +1,27 @@
+name: "rubenarslan.github.io"
+title: "Ruben Arslan"
+description: |
+  Personal blog
+base_url: https://rubenarslan.github.io
+repository_url: https://github.com/rubenarslan/rubenarslan.github.io
+output_dir: "."
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Blog"
+      href: blog.html
+    - text: "About"
+      href: about.html
+    - icon: fa fa-rss
+      href: index.xml
+output:
+  radix::radix_article:
+     css: styles.css
+creative_commons: CC BY
+twitter:
+   site: "@rubenarslan"
+collections:
+  posts:
+    feed_items_max: false
+    share: [twitter, facebook, google-plus, linkedin]
