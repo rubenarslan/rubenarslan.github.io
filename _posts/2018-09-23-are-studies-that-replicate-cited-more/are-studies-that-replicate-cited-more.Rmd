@@ -39,6 +39,8 @@ library(httr)
 library(dplyr)
 library(ggplot2)
 library(ggbeeswarm)
+library(tidyverse)
+library(lubridate)
 theme_set(theme_light())
 # Read in Tilburg data
 info <- GET('https://osf.io/fgjvw/?action=download', write_disk('rpp_data.csv', overwrite = TRUE)) #downloads data file from the OSF
@@ -47,14 +49,27 @@ colnames(MASTER)[1] <- "ID" # Change first column name to ID to be able to load 
 ```
 
 ```{r}
+MASTER$Study.Title..O. <- as.character(MASTER$Study.Title..O.)
+MASTER$Authors..O. <- as.character(MASTER$Authors..O.)
 if (file.exists("osfdata_with_dois.rdata")) {
 	load("osfdata_with_dois.rdata")
 } else {
 	library(rcrossref)
 	MASTER$DOI = NA_character_
+	MASTER$title_crossref = NA_character_
 	for (i in 1:nrow(MASTER)) {
 		tryCatch({
-		MASTER$DOI[i] = rcrossref::cr_works(flq = c(query.title = MASTER$Study.Title..O.[i], query.author = MASTER$Authors..O.[i]), filter = c(from_pub_date = 2007, until_pub_date = 2009), sort = "relevance", limit = 1)$data$DOI}, error = function(e) warning(e))
+		  crossref_data <- rcrossref::cr_works(
+		  flq = c(query.title = MASTER$Study.Title..O.[i], 
+		          query.author = MASTER$Authors..O.[i]), 
+		  filter = c(from_pub_date = 2008, until_pub_date = 2008), 
+		  sort = "relevance")$data %>% 
+		  filter(container.title %in% c("Psychological Science", "Journal of Personality and Social Psychology", "Journal of Experimental Psychology: Learning, Memory, and Cognition")) %>% 
+		  head(1)
+		MASTER$DOI[i] = crossref_data %>% pull(DOI)
+		MASTER$title_crossref[i] = crossref_data %>% pull(title)
+		  }, error = function(e) warning(e))
+
 	}
 	MASTER$citation_count_2018 = NA_real_
 	for (i in 1:nrow(MASTER)) {
@@ -62,8 +77,11 @@ if (file.exists("osfdata_with_dois.rdata")) {
 			MASTER$citation_count_2018[i] = rcrossref::cr_citation_count(MASTER$DOI[i])
 		}, error = function(e) warning(e))
 	}
+	save(MASTER, file = "osfdata_with_dois.rdata")
 }
 ```
+
+We found `r sum(!is.na(MASTER$DOI))` DOIs, so for all our `r nrow(MASTER)` studies.
 
 
 ## Does replication in the RPP predict how often a paper is cited?
@@ -84,12 +102,12 @@ MASTER %>% filter(!is.na(T_pval_USE..R.)) %>%
 
 
 ## Does replication predict 2018 citation counts?
+I used the Crossref API to the current citation counts for the papers contained in the RPP. 
+Again, there was no association with replication status.
+
 <aside>
 __Details__: I first got DOIs, which were missing from the RPP data, by searching Crossref on titles, authors, date. I didn't do any checking that matches were proper. In a next step, I got up-to-date citation counts from CrossRef.
 </aside>
-
-I used the Crossref API to the current citation counts for the papers contained in the RPP. 
-Again, there was no association with replication status.
 
 ```{r layout='l-body-outset'}
 MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
@@ -105,6 +123,10 @@ MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% glm(citation_count_2018 ~ T_pval_U
 
 ## Does replication predict subsequent citation counts (ie. 2015-2018)?
 
+This is pretty dirty work, because I'm subtracting citation counts from one source with another, so most papers are cited less in 2018 than in 2015. But haven't found a quick way to get citation counts in 2015 from `rcrossref`.
+
+Again, no association. So, assuming the dirtiness of the analysis doesn't matter, the literature hasn't reacted at all to the presumably important bit of information that a study doesn't replicate.
+
 <aside>
 The correlation between 2018 and 2015 counts is `r round(cor(MASTER$citation_count_2018, MASTER$Citation.count..paper..O.), 2)`. The mean for citations in 2018 is `r round(mean(MASTER$citation_count_2018),2)`, in the RPP data it was `r round(mean(MASTER$Citation.count..paper..O.),2)`. How can citations go DOWN? The citation count in the RPP probably includes more sources, leading to the mean being higher, but these sources don't seem to be systematically different, leading to the maintained rank order. d
 
@@ -118,14 +140,10 @@ ggtitle("Correlation") + geom_smooth(method = 'lm') +
 
 </aside>
 
-This is pretty dirty work, because I'm subtracting citation counts from one source with another, so most papers are cited less in 2018 than in 2015. But haven't found a quick way to get citation counts in 2015 from `rcrossref`.
-
-Again, no association. So, assuming the dirtiness of the analysis doesn't matter, the literature hasn't reacted at all to the presumably important bit of information that a study doesn't replicate.
-
 ```{r layout='l-body-outset'}
 lm(citation_count_2018 ~ Citation.count..paper..O., data = MASTER)
 MASTER <- MASTER %>% mutate(
-  citations_after_2018 = citation_count_2018 - Citation.count..paper..O. * 0.82,
+  citations_after_2018 = citation_count_2018 - Citation.count..paper..O. * 0.87,
   citations_after_2018 = citations_after_2018 - min(citations_after_2018, na.rm = T)
 )
 MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% ggplot(aes(T_pval_USE..R.< .05, citations_after_2018)) + 
@@ -173,22 +191,35 @@ These were all studies from reputable journals, so we might have some range rest
 Hover your mouse over the dots to see the study titles.
 
 ```{r layout='l-body-outset'}
-MASTER <- MASTER %>% 
+MASTER2 <- MASTER %>% 
                 filter(!is.na(T_pval_USE..R.)) %>% 
                 mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
                        DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
                 select(Authors = Authors..O., Title = Study.Title..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
 library(rbokeh)
 figure(width = 1100, height = 500) %>%
-  ly_points(citations_2015, citations_after_2018, data = MASTER,
+  ly_points(citations_2015, citations_after_2018, data = MASTER2,
     color = replicated_p_lt_05, 
     hover = list(Authors, Title))
 ```
 
 ## List of studies
 ```{r layout='l-screen-inset'}
-DT::datatable(MASTER %>% select(-citations_after_2018) %>% arrange(desc(citations_2018)), escape = F)
+DT::datatable(MASTER2 %>% select(-citations_after_2018) %>% arrange(desc(citations_2018)), escape = F,
+extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel')
+  )
+)
 ```
 
 ## Appendix {.appendix}
+```{r}
+MASTER$mismatch <- stringdist::stringdist(MASTER$Study.Title..O., MASTER$title_crossref)
+# MASTER %>% arrange(desc(mismatch)) %>% filter(!is.na(T_pval_USE..R.)) %>% select(Study.Title..O., title_crossref, DOI)
+```
+
 These analyses are based on Chris J. Hartgerink's script. The data and his script can be found on the [OSF](https://osf.io/ytpuq/).
+Did I get the right DOIs? There are probably still some mismatches. Titles are not exactly equal for `r sum(MASTER$mismatch>0)` studies,
+but on manual inspection this is only because Crossref separates out the subtitle.
+
