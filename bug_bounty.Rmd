@@ -66,18 +66,16 @@ cases, I will post a note on this page, in more severe cases, I will start the p
 submitting a correction, an erratum, or a retraction. I cannot give a timeline on these
 because of co-authors.
 
-<div class="l-page-outset">
-| Item | Bounty |
-| ---- | ------ |
+| Item             | Bounty |
+| ---------------- | ------ |
 | Typos | A beer^[Capped at 3, I don't want you to get hungover.] if we meet. |
 | Omitted citations | A beer^[Capped at 3, I don't want you to get hungover.] if we meet. |
 | Error that changes a number reported in the supplement | 10€ |
-| Error that changes a number reported in the manuscript. | 50€ |
-| A better way to statistically model or test something that leads to a different conclusion. | 100€ |
-| Coding error that changes a number reported in the manuscript, but not a conclusion based on the number. | 100€ |
-| Coding error that changes a conclusion in the manuscript. | 200€ |
-| Coding error that changes the main conclusion in the abstract. | 500€ |
-</div>
+| Error that changes a number reported in the manuscript | 50€ |
+| A better way to statistically model or test something that leads to a different conclusion | 100€ |
+| Coding error that changes a number reported in the manuscript, but not a conclusion based on the number | 100€ |
+| Coding error that changes a conclusion in the manuscript | 200€ |
+| Coding error that changes the main conclusion in the abstract | 500€ |
 
 I will count the errors (by type, not by repetitions), not the numbers, or conclusions changed.
 
