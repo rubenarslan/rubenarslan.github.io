@@ -13,6 +13,7 @@ categories:
   - meta science
   - open science
   - reproducibility
+  - quick job
 output:
   radix::radix_article:
     toc: yes
