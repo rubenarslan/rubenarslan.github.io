@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 
-```{r layout='l-screen-inset', fig.cap="Bug death duster. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14764470974)", out.extra="class=external"}
+```{r layout='l-page-outset', fig.cap="Bug death duster. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14764470974)", out.extra="class=external"}
 knitr::include_graphics("https://farm3.staticflickr.com/2920/14764470974_92473042b4_o_d.jpg")
 ```
 
