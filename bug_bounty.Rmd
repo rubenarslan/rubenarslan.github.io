@@ -40,7 +40,7 @@ So, what does this apply to, and what can you earn?
 
 ### Criteria
 - I'm first author.^[I don't want to scare people off of collaborating with me.]
-- It's an empirical manuscript^[I know for a fact that there are bugs in my software, but it's open source and can be updated continuously, so just create an issue or send a pull request. Since I already don't earn money off it, I wouldn't want to penalise working on it even more.]
+- It's an empirical manuscript^[I [know for a fact](https://github.com/rubenarslan/formr.org/issues) that there are bugs in my software, but users already tell me about those. Also, it's open source and can be updated continuously, so just create an issue or send a pull request.]
   - preprints count for the full amount (until they are accepted)
   - published papers count for 3/4 the amount
   - blog posts count for 1/4 the amount unless they are tagged `quick job`^[For these, payouts are capped at one beer.]
