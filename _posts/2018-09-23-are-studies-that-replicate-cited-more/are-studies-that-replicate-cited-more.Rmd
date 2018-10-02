@@ -103,12 +103,13 @@ MASTER %>% filter(!is.na(T_pval_USE..R.)) %>%
 
 
 ## Does replication predict 2018 citation counts?
-I used the Crossref API to the current citation counts for the papers contained in the RPP. 
+<aside>
+__Details__: I got DOIs, which were missing from the RPP data, by searching Crossref on titles, authors, and dates. I did some checking to see if matches were proper. Next, I got up-to-date citation counts from CrossRef. Find the improved dataset with DOIs below.
+</aside>
+
+I used the Crossref API to get DOIs and current citation counts for the papers contained in the RPP. 
 Again, there was no association with replication status.
 
-<aside>
-__Details__: I first got DOIs, which were missing from the RPP data, by searching Crossref on titles, authors, date. I didn't do any checking that matches were proper. In a next step, I got up-to-date citation counts from CrossRef.
-</aside>
 
 ```{r layout='l-body-outset'}
 MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
@@ -123,13 +124,8 @@ MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% glm(citation_count_2018 ~ T_pval_U
 
 
 ## Does replication predict subsequent citation counts (ie. 2015-2018)?
-
-This is pretty dirty work, because I'm subtracting citation counts from one source with another, so most papers are cited less in 2018 than in 2015. But haven't found a quick way to get citation counts in 2015 from `rcrossref`.
-
-Again, no association. So, assuming the dirtiness of the analysis doesn't matter, the literature hasn't reacted at all to the presumably important bit of information that a study doesn't replicate.
-
 <aside>
-The correlation between 2018 and 2015 counts is `r round(cor(MASTER$citation_count_2018, MASTER$Citation.count..paper..O.), 2)`. The mean for citations in 2018 is `r round(mean(MASTER$citation_count_2018),2)`, in the RPP data it was `r round(mean(MASTER$Citation.count..paper..O.),2)`. How can citations go DOWN? The citation count in the RPP probably includes more sources, leading to the mean being higher, but these sources don't seem to be systematically different, leading to the maintained rank order. d
+The correlation between 2018 and 2015 counts is `r round(cor(MASTER$citation_count_2018, MASTER$Citation.count..paper..O.),2)`. The mean for citations in 2018 is `r round(mean(MASTER$citation_count_2018))`, in the RPP data it was `r round(mean(MASTER$Citation.count..paper..O.))`. How can citations go _down_? The citation count in the RPP from Google Scholar includes more sources, leading to the mean being higher, but these sources don't seem to be systematically different, leading to the maintained rank order. 
 
 ```{r}
 qplot(Citation.count..paper..O., citation_count_2018, data = MASTER) + 
@@ -140,6 +136,11 @@ ggtitle("Correlation") + geom_smooth(method = 'lm') +
 ```
 
 </aside>
+
+This is pretty dirty work, because I'm subtracting citation counts from one source with another, so most papers are cited less in 2018 than in 2015. But haven't found a quick way to get citation counts in 2015 from `rcrossref`.
+
+Again, no association. So, assuming the dirtiness of the analysis doesn't matter, the literature hasn't reacted at all to the presumably important bit of information that a study doesn't replicate.
+
 
 ```{r layout='l-body-outset'}
 lm(citation_count_2018 ~ Citation.count..paper..O., data = MASTER)
@@ -196,7 +197,7 @@ MASTER2 <- MASTER %>%
                 filter(!is.na(T_pval_USE..R.)) %>% 
                 mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
                        DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
-                select(Authors = Authors..O., Title = Study.Title..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
+                select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
 library(rbokeh)
 figure(width = 1100, height = 500) %>%
   ly_points(citations_2015, citations_after_2018, data = MASTER2,
@@ -207,7 +208,7 @@ figure(width = 1100, height = 500) %>%
 ## List of studies
 ```{r layout='l-screen-inset'}
 DT::datatable(MASTER2 %>% select(-citations_after_2018) %>% arrange(desc(citations_2018)), escape = F,
-extensions = 'Buttons', options = list(
+extensions = 'Buttons', rownames = F, options = list(
     dom = 'Bfrtip',
     buttons = c('copy', 'csv', 'excel')
   )
