@@ -18,3 +18,6 @@
         margin-bottom: -500px;
     }
 }
+.figure img.external {
+  padding: 6px;
+}

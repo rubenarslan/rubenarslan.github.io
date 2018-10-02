@@ -16,7 +16,7 @@ categories:
   - quick job
 output:
   radix::radix_article:
-    toc: yes
+    toc: no
     self_contained: false
 ---
 
@@ -25,6 +25,12 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Replication in the Reproducibility Project Psychology and citations
+
+<aside>
+```{r fig.cap="Does it replicate? From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14580358548)", out.extra="class=external"}
+knitr::include_graphics("https://farm6.staticflickr.com/5578/14580358548_c906271a5a_o_d.jpg")
+```
+</aside>
 
 After his talk at the Center for Adaptive Rationality, [Stephan Lewandowsky](https://twitter.com/STWorg) and I had a small discussion whether scientists can actually pick "winners". The discussion stemmed from a larger discussion about whether we get more research waste, if we replicate first, then publish, or publish first, and then replicate those studies that are found interesting. 
 
@@ -80,6 +86,16 @@ if (file.exists("osfdata_with_dois.rdata")) {
 	}
 	save(MASTER, file = "osfdata_with_dois.rdata")
 }
+regress15_18 <- lm(citation_count_2018 ~ Citation.count..paper..O., data = MASTER)
+MASTER <- MASTER %>% mutate(
+  citations_after_2018 = citation_count_2018 - Citation.count..paper..O. * regress15_18$coefficients[2],
+  citations_after_2018 = citations_after_2018 - min(citations_after_2018, na.rm = T)
+)
+MASTER_clean <- MASTER %>% 
+                filter(!is.na(T_pval_USE..R.)) %>% 
+                mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
+                       DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
+                select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
 ```
 
 We found `r sum(!is.na(MASTER$DOI))` DOIs, so for all our `r nrow(MASTER)` studies.
@@ -89,15 +105,15 @@ We found `r sum(!is.na(MASTER$DOI))` DOIs, so for all our `r nrow(MASTER)` studi
 No, not for the citation count recorded in the RPP.
 
 ```{r layout='l-body-outset'}
-MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
-  ggplot(aes(T_pval_USE..R.< .05, Citation.count..paper..O.)) + 
+MASTER_clean %>% 
+  ggplot(aes(replicated_p_lt_05, citations_2015)) + 
   xlab("Significant replication effect (p < .05)") +
   ylab("Citation count (RPP, 2015)") +
   geom_beeswarm(alpha = 0.3) + 
   geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
 
-MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
-  glm(Citation.count..paper..O. ~ T_pval_USE..R.< .05, data = ., family = quasipoisson()) %>% 
+MASTER_clean %>% 
+  glm(citations_2015 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
   summary()
 ```
 
@@ -112,14 +128,16 @@ Again, there was no association with replication status.
 
 
 ```{r layout='l-body-outset'}
-MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% 
-  ggplot(aes(T_pval_USE..R.< .05, citation_count_2018)) + 
+MASTER_clean %>% 
+  ggplot(aes(replicated_p_lt_05, citations_2018)) + 
   xlab("Significant replication effect (p < .05)") +
   ylab("Citation count (Crossref, 2018)") +
   geom_beeswarm(alpha = 0.3) + 
   geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
 
-MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% glm(citation_count_2018 ~ T_pval_USE..R.< .05, data = ., family = quasipoisson()) %>% summary()
+MASTER_clean %>% 
+  glm(citations_2018 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
+  summary()
 ```
 
 
@@ -143,22 +161,20 @@ Again, no association. So, assuming the dirtiness of the analysis doesn't matter
 
 
 ```{r layout='l-body-outset'}
-lm(citation_count_2018 ~ Citation.count..paper..O., data = MASTER)
-MASTER <- MASTER %>% mutate(
-  citations_after_2018 = citation_count_2018 - Citation.count..paper..O. * 0.87,
-  citations_after_2018 = citations_after_2018 - min(citations_after_2018, na.rm = T)
-)
-MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% ggplot(aes(T_pval_USE..R.< .05, citations_after_2018)) + 
+MASTER_clean %>% 
+ggplot(aes(replicated_p_lt_05, citations_after_2018)) + 
   xlab("Significant replication effect (p < .05)") +
   ylab("Citations after 2015)") +
   geom_beeswarm(alpha = 0.3) + 
   geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
 
-MASTER %>% filter(!is.na(T_pval_USE..R.)) %>% glm(citations_after_2018 ~ T_pval_USE..R.< .05, data = ., family = 'quasipoisson') %>% summary()
+MASTER_clean %>% 
+  glm(citations_after_2018 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
+  summary()
 ```
 
 ## How does pre-2015 citation count predict post-2015 citations accounting for replication status?
-A slightly different way of looking at it.
+A slightly different way of looking at it does not yield different conclusions for me.
 
 ```{r layout='l-body-outset'}
 qplot(Citation.count..paper..O., citation_count_2018, colour = T_pval_USE..R.< .05, data = MASTER %>% filter(!is.na(T_pval_USE..R.))) + 
@@ -173,7 +189,22 @@ qplot(Citation.count..paper..O., citations_after_2018, colour = T_pval_USE..R.< 
   scale_color_brewer("Significant \nreplication \neffect (p<.05)", palette = 1)
 ```
 
+## Does the association differ by journal?
+Hard to tell with this little data!
 
+```{r fig.height=6, layout="l-page", fig.width=10}
+MASTER_clean %>% 
+  ggplot(aes(replicated_p_lt_05, citations_2018)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Citation count (Crossref, 2018)") +
+  geom_beeswarm(alpha = 0.3) + 
+  facet_wrap(~ Journal, nrow = 1) +
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color = '#4F94B0')
+
+MASTER_clean %>% 
+  glm(citations_2015 ~ Journal*replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
+  summary()
+```
 
 ## Conclusion
 So, are citation counts a poor indicator of quality? The most common reaction I received to these results was saying
@@ -193,21 +224,16 @@ These were all studies from reputable journals, so we might have some range rest
 Hover your mouse over the dots to see the study titles.
 
 ```{r layout='l-body-outset'}
-MASTER2 <- MASTER %>% 
-                filter(!is.na(T_pval_USE..R.)) %>% 
-                mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
-                       DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
-                select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
 library(rbokeh)
 figure(width = 1100, height = 500) %>%
-  ly_points(citations_2015, citations_after_2018, data = MASTER2,
+  ly_points(citations_2015, citations_after_2018, data = MASTER_clean,
     color = replicated_p_lt_05, 
     hover = list(Authors, Title))
 ```
 
 ## List of studies
 ```{r layout='l-screen-inset'}
-DT::datatable(MASTER2 %>% select(-citations_after_2018) %>% arrange(desc(citations_2018)), escape = F,
+DT::datatable(MASTER_clean %>% select(-citations_after_2018) %>% arrange(desc(citations_2018)), escape = F,
 extensions = 'Buttons', rownames = F, options = list(
     dom = 'Bfrtip',
     buttons = c('copy', 'csv', 'excel')
@@ -218,11 +244,13 @@ extensions = 'Buttons', rownames = F, options = list(
 ## Appendix {.appendix}
 ```{r}
 MASTER$mismatch <- stringdist::stringdist(MASTER$Study.Title..O., MASTER$title_crossref)
+library(formr)
+MASTER$starts <- str_to_lower(MASTER$Study.Title..O.) %starts_with% str_to_lower(MASTER$title_crossref)
 # MASTER %>% arrange(desc(mismatch)) %>% filter(!is.na(T_pval_USE..R.)) %>% select(Study.Title..O., title_crossref, DOI)
 ```
 
 These analyses are based on Chris J. Hartgerink's script. The data and his script can be found on the [OSF](https://osf.io/ytpuq/).
-Did I get the right DOIs? There are probably still some mismatches. Titles are not exactly equal for `r sum(MASTER$mismatch>0)` studies,
-but on manual inspection this is only because Crossref separates out the subtitle.
+Did I get the right DOIs? There are probably still some mismatches. Titles are not exactly equal for `r sum(MASTER$mismatch>0, na.rm = TRUE)` studies, but on manual inspection this is only because Crossref separates out the subtitle, and `r sum(MASTER$starts, na.rm = TRUE)` of `r nrow(MASTER)` titles start exactly the same.
+
 
 
