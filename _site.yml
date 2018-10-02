@@ -11,6 +11,8 @@ navbar:
       href: index.html
     - text: "Blog"
       href: blog.html
+    - text: "Bug bounty"
+      href: bug_bounty.html
     - text: "About"
       href: about.html
     - icon: fa fa-rss

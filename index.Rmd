@@ -23,7 +23,7 @@ I'm a evolutionary personality psychologist by training, who dabbles in genetic 
 <img src="https://formr.org/assets/build/img/ruben.jpg?v1489582723" class="img-circle" alt="Ruben Arslan">
 </aside>
 
-You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/rubenarslan). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org)^[Some more information about this form can be found [here] (http://www.the100.ci/2018/02/22/tell-me-im-wrong)].
+You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/rubenarslan). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org)^[Some more information about this form can be found [here](http://www.the100.ci/2018/02/22/tell-me-im-wrong).].
 
 
 ## Publications
@@ -87,3 +87,6 @@ During a year abroad in Sweden, I tried to speed up my vocabulary learning using
 ## Blog
 Together with [three wonderful people](http://www.the100.ci/about/), I founded [The 100% CI](http://www.the100.ci/), a blog focused on open science and meta science. Posts that I wrote primarily, can be found [here](http://www.the100.ci/author/ruben/), although we all edit and review each other. My posts that did not clear our high bar for punniness go [here](blog.html).
 
+### Privacy Policy {.appendix}
+
+See [here](about.html)
