@@ -34,14 +34,24 @@ Stepping on people's toes with my work yielded more, but it's not a practice I w
 institutionalise.
 
 ## Bug bounties
-So, I'm borrowing another practice from software^[the computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place]: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program). I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend it.
+So, I'm borrowing another practice from software^[The computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place]: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program). I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend it.
 
 So, what does this apply to, and what can you earn? 
 
 ### Criteria
-- I'm first author^[I don't want to scare people off of collaborating with me.].
-- It's an empirical manuscript^[I know for a fact that there are bugs in my software, but it's open source and can be updated continuously, so just create an issue or send a pull request. Since I already don't earn money off it, I wouldn't want to penalise working on it even more.], preprint or published
-- It was published after October 2, 2018^[I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I'm wrong form.].
+- I'm first author.^[I don't want to scare people off of collaborating with me.]
+- It's an empirical manuscript^[I know for a fact that there are bugs in my software, but it's open source and can be updated continuously, so just create an issue or send a pull request. Since I already don't earn money off it, I wouldn't want to penalise working on it even more.]
+  - preprints count for the full amount (until they are accepted)
+  - published papers count for 3/4 the amount
+  - blog posts count for 1/4 the amount unless they are tagged `quick-job`^[in which case payouts are capped at one beer]
+- It was published after October 2, 2018.^[I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I'm wrong form.]
+
+The different factors for preprints, publications, and blogs reflect the amount of 
+effort I already put in them and how easy it will me for me to correct something
+at that point. So, because I would love to hear about errors before the publication
+processes "enshrines" the paper^[I'm obviously not a fan of enshrining papers, but think we currently
+lack a good mechanism of correcting papers citing an invalidated claim, so it's hard
+to fix on our own.], errors in preprints are worth more than those in published paper.
 
 ### Budget
 For now, I'm setting aside 2500€. When this runs out, I'll have to a) refine my
