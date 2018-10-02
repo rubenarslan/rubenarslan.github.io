@@ -34,7 +34,7 @@ Stepping on people's toes with my work yielded more, but it's not a practice I w
 institutionalise.
 
 ## Bug bounties
-So, I'm borrowing another practice from software^[The computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place]: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program). I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend it.
+So, I'm borrowing another practice from software^[The computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place.]: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program). I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend it.
 
 So, what does this apply to, and what can you earn? 
 
@@ -43,7 +43,7 @@ So, what does this apply to, and what can you earn?
 - It's an empirical manuscript^[I know for a fact that there are bugs in my software, but it's open source and can be updated continuously, so just create an issue or send a pull request. Since I already don't earn money off it, I wouldn't want to penalise working on it even more.]
   - preprints count for the full amount (until they are accepted)
   - published papers count for 3/4 the amount
-  - blog posts count for 1/4 the amount unless they are tagged `quick-job`^[in which case payouts are capped at one beer]
+  - blog posts count for 1/4 the amount unless they are tagged `quick-job`^[For these, payouts are capped at one beer.]
 - It was published after October 2, 2018.^[I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I'm wrong form.]
 
 The different factors for preprints, publications, and blogs reflect the amount of 
@@ -86,7 +86,8 @@ can be pretty bad), but also my perception which of these are actually determina
 the sum for omitting citations, I hope to forestall drawn-out arguments by reducing both side's temptation to 
 argue.
 
-Any one person can claim at most 5 items, so up to 1100€.
+Any one person can claim at most 5 items, so up to 1100€. If multiple people notice an error, second reporters
+only get a beer, and my heartfelt gratitude.
 
 ## Please help!
 
