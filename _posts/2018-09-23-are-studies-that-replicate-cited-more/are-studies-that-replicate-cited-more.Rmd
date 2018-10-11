@@ -96,6 +96,25 @@ MASTER_clean <- MASTER %>%
                 mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
                        DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
                 select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
+
+library(rscopus)
+
+	for (i in 1:nrow(MASTER)) {
+		tryCatch({
+		  que <- generic_elsevier_api(api_key = scopus_api_key, 
+		                              query = paste0("DOI(",MASTER$DOI[i],")"),
+		                               type = "citation-count",
+		                              search_type = "scopus")
+		  que <- scopus_search(api_key = scopus_api_key, 
+		                              query = paste0("DOI(",MASTER$DOI[i],")"),
+		                               type = "citations")
+		  que <- abstract_retrieval(api_key = scopus_api_key, 
+		                              query = paste0("DOI(",MASTER$DOI[i],")"),
+		                               type = "citations")
+		  entries_to_df2(que$entries)
+			MASTER$citation_count_2018[i] = rcrossref::cr_citation_count(MASTER$DOI[i])
+		}, error = function(e) warning(e))
+	}
 ```
 
 We found `r sum(!is.na(MASTER$DOI))` DOIs, so for all our `r nrow(MASTER)` studies.
