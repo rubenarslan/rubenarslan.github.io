@@ -213,9 +213,10 @@ or at least that the 3 years from the publication of the RPP results to 2018 are
 people who did not really believe in citations-as-merit before anyway. 
 
 To me, if 10 years after publication citations cannot be used to distinguish between studies that replicated and those that didn't, they're
-probably not a useful measure of thoroughness that can be used in assessment, hiring, and so on. They may be a useful measure of other important skills for a scientist, such as communicating their work, they may measure qualities we don't want in scientists, but it seems they are not useful to select people whose work will replicate. I think that is something we should want to do.
+probably not a useful measure of thoroughness that can be used in assessment, hiring, and so on. They may be a useful measure of other important skills for a scientist, such as communicating their work; they may measure qualities we don't want in scientists, but it seems they are not useful to select people whose work will replicate. I think that is something we should want to do.
 
-In addition, the literature does not react quickly to the fact that studies do not replicate. Given that people also keep citing retracted studies (albeit with a sharp drop), this does not surprise me.
+In addition, the literature does not react quickly to the fact that studies do not replicate. Given that people also keep citing retracted studies (albeit with a sharp drop), this does not surprise me. It will be interesting to revisit the
+data in a few years time and see if researchers picked up on replication status then.
 
 ### Limitations
 These were all studies from reputable journals, so we might have some range restriction here.  On the other hand, plenty of these studies don't replicate, and citation counts go from 0 to >300.
