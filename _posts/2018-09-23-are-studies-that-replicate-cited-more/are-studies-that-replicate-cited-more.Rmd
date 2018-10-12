@@ -98,7 +98,7 @@ MASTER_clean <- MASTER %>%
                 select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
 ```
 
-We found `r sum(!is.na(MASTER$DOI))` DOIs, so for all our `r nrow(MASTER)` studies.
+We found `r sum(!is.na(MASTER$DOI))` DOIs, so we had DOIs for all our `r nrow(MASTER)` studies^[Were they they all correct? See Appendix].
 
 
 ## Does replication in the RPP predict how often a paper is cited?
