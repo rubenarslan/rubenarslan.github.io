@@ -33,6 +33,10 @@ focused on journals, but having recently had invested a lot of time into obtaini
 large samples, I was curious to see whether these translated into any sort of citation
 advantage.
 
+```{r layout="l-body-outset",fig.cap="Ample size? From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14596336128)", out.extra="class=external"}
+knitr::include_graphics("https://farm4.staticflickr.com/3922/14596336128_9cbfbd34fe_o_d.jpg")
+```
+
 Iro Eleftheriadou, our new RA, helped me clean up the messy code that I wrote at the
 beginning of my dissertation (for-loops, ugh).
 
@@ -311,6 +315,12 @@ extensions = 'Buttons', rownames = F, options = list(
 ) %>% 
   DT::formatRound("sample_size", digits = 0)
 ```
+
+
+```{r layout="l-screen-inset",fig.cap="Ample size ain't worth it. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14782389554)", out.extra="class=external"}
+knitr::include_graphics("https://farm3.staticflickr.com/2940/14782389554_3ba3df7683_o_d.jpg")
+```
+
 
 ## Appendix {.appendix}
 
