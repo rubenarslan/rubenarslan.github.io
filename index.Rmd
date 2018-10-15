@@ -49,16 +49,48 @@ Estimates from large-scale replication projects in psychology suggest that the m
 Google now also finds datasets – but will it find yours? How can you share your data in such a way that it will be useful to you and others in the future? Some scientific disciplines have found ways to store data in standardised formats in central, open repositories. But for many, especially in health and human subjects research, data cannot be shared openly. You can always share metadata – but how do you do so in a forward-thinking way? We discuss standards or the lack of them and try out practical tools.
 </details>
 
+
+<div class="l-screen-inset"><p><center>
+<img src="screen 1.png" style="width: 15%" >
+<img src="screen 4.png" style="width: 15%">
+<img src="screen 6.png" style="width: 15%">
+<img src="screen 2.png" style="width: 15%">
+<img src="screen 5.png" style="width: 15%">
+<img src="screen 3.png" style="width: 15%">
+</p></div></center>
+
+
+
 ### [formr workshop](https://osf.io/gu23h/)
 <details><summary>__Abstract__</summary> 
 The survey framework formr.org is a free, open source software for online and lab studies. Even with little or no programming skills users can design complex studies. Key features include automatic email and text message reminders for repeated surveys on computers and smartphones and the automatic generation of personalised graphical feedback based on R functions. Designed by and for personality researchers, formr.org makes it easy to collect peer ratings, social networks, dyadic and round robin data, longitudinal, and experience sampling data. It also allows for separation of contact and study data as required by European privacy laws. Users of formr.org can increase the transparency and reproducibility of their research by sharing and version tracking complete study workflows. Furthermore, data collected with formr.org can be cleaned and documented in human- and machine-readable codebooks without additional effort by relying on the study metadata.
 </details>
 
 
+<div class="l-screen-inset"><p><center>
+<img src="form 7.png" style="width: 15%" >
+<img src="form 2.png" style="width: 15%">
+<img src="form 8.png" style="width: 15%">
+<img src="form 3.png" style="width: 15%">
+<img src="form 5.png" style="width: 15%">
+<img src="form 6.png" style="width: 15%">
+</p></div></center>
+
+
+
 ### [Maintaining privacy with open data](https://osf.io/7vnya/)
 <details><summary>__Abstract__</summary> 
 In this workshop, we will try to tackle questions about privacy in the age of big and open data. Why should we even share our data? For what kind of research data do we need to maintain privacy? What is personally identifiable information and why is not sufficient to omit it to make data truly anonymous? How do we assess the risks of re-identification? How do we maintain our participants' anonymity, when we need to stay in touch with them online? What novel risks are engendered by the massive trail of data we all leave on the web? How do we anonymise already collected data by binning, fuzzing, and omitting? We will also discuss novel technological solutions that can permit us to share data openly: synthetic data generation, scientific use files, or differential privacy algorithms. The workshop consists of some theoretical input, but will also focus on practical exercises. Ideally, participants bring their own laptop with a current R installation. Furthermore, participants can send in questions or typical scenarios from their own research fields in advance.
 </details>
+
+<div class="l-screen-inset"><p><center>
+<img src="bad 7.png" style="width: 15%">
+<img src="bad 2.png" style="width: 15%">
+<img src="bad 4.png" style="width: 15%">
+<img src="bad 3.png" style="width: 15%">
+<img src="bad 5.png" style="width: 15%">
+<img src="bad 6.png" style="width: 15%">
+</p></div></center>
 
 
 ## Software
