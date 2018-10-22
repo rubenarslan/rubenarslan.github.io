@@ -6,7 +6,7 @@ author:
     url: https://rubenarslan.github.io
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
-  - name: "Iro Ioanna Eleftheriadou"
+  - name: "Ioanna Iro Eleftheriadou"
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 description: |
   Does sample size predict number of citations?
@@ -28,10 +28,7 @@ not the case, I turned to a different analysis that I once did quickly. Namely,
 I reviewed the [N-pact paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0109019) by Chris Fraley
 and Simine Vazire back in 2014. I got excited about the paper, as I'm wont to, and tried
 redoing their analyses because they had provided the data with their manuscript. I also
-decided to see if I could find a relationship at the article level as well. They had
-focused on journals, but having recently had invested a lot of time into obtaining
-large samples, I was curious to see whether these translated into any sort of citation
-advantage.
+decided to see if I could find a relationship at the article level as well. 
 
 ```{r layout="l-body-outset",fig.cap="Ample size? From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14596336128)", out.extra="class=external"}
 knitr::include_graphics("https://farm4.staticflickr.com/3922/14596336128_9cbfbd34fe_o_d.jpg")
@@ -165,16 +162,16 @@ we could next get the citation counts. We found `r sum(!is.na(per_doi$doi))` DOI
 ## Reproducing the original result
 Here, I first checked whether I would obtain the same measure as Fraley & Vazire did,
 when I simply averaged the citations to the articles in this set for each year and journal.
-Interestingly, I could not, or at least it was substantially weaked. 
+Interestingly, I could not, or at least it was substantially weakened. 
 I'm pretty sure that when I did this in 2014, I could reproduce the finding. 
 As you can also see, the association is even weaker when using medians for the
-citation counts instead of means. However, I can still reproduce with the Thomson-Reuters
-Impact Factors that I quickly googled. I know how the Impact Factor is made is a shady
+citation counts instead of means. However, I can still reproduce their original result with the Thomson-Reuters
+Impact Factors that I quickly googled. I know the Impact Factor isn't just a simple metric, but a shady
 business including some [negotiation](http://bjoern.brembs.net/2016/01/just-how-widespread-are-impact-factor-negotiations/).
 Do journal executives sometimes try a pity move, asking for a higher impact factor by highlighting paltry poor sample sizes?
-It's impossible to find out.
+It's impossible to prove this never happened ;-)!
 
-```{r layout='l-body-outset', fig.width=10,fig.height=4}
+```{r layout='l-body-outset', fig.width=10,fig.height=4, fig.cap="Correlation between IF and NF on the journal level."}
 library(cowplot)
 plot_grid(
 ggplot(data = impact, aes(x = NF, y = IF, color = Journal_Full))  + 
@@ -196,13 +193,20 @@ ggplot(data = impact, aes(x = NF, y = IF_tr, color = Journal_Full))  +
   ggtitle("NF & IF (Thomson-Reuters)"), nrow = 1)
 ```
 
+## Moving to the study level
+Fraley & Vazire were interested in highlighting how impact factors do not track
+a no-nonsense aspect of study quality (all else equal, bigger N is simply better).
+So, they focused on journals. But I, having recently invested a lot of time into obtaining
+large samples, was curious to see whether these efforts translated into any sort of citation
+advantage, and more generally, whether we pay more attention to research that is presumably
+more reliable.^[I understand this is a presumption, see limitations].
 
 ## By year of publication
-Maybe it takes us some time to notice how paltry a sample size was? Or maybe
-early citations are all about the glamour, but over time, the best
+Maybe it takes us some time to notice how paltry a sample size was?^[I hope nobody skims that badly.] Or maybe
+early citations are all about the glamour and flair, but over time the best
 and biggest studies win out?
 
-```{r layout="l-screen-inset", fig.height = 4, fig.width = 20}
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20, fig.cap = "There is no association between N and citations, including for studies that had more years to accumulate citations."}
  ggplot(data = per_doi, mapping = aes(x = reis_n, y = citation_count_crossref, color = Year))+
   geom_point() + facet_wrap(~ Year, nrow = 1) +
    scale_x_log10() +
@@ -214,10 +218,13 @@ and biggest studies win out?
 ```
 
 ## By journal
+Maybe we don't see an association between N and citations in Psychological Science, because some small-N papers are
+solid vision studies with good power within-subject? 
 In the analysis by journal, we see that there is no association between sample size and number of citations
-within each journal.
+within each journal, including some that focus on personality research only, which is a pretty N-driven
+area.
 
-```{r layout="l-screen-inset", fig.height = 4, fig.width = 20}
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20,fig.cap="Even in the Journal of Personality and the Journal of Research in Personality, there is no association between N and citations. There appears to be some in SPPS, but the number of studies is small and we should not overinterpret it."}
  ggplot(data = per_doi, mapping = aes(x = reis_n, y = citation_count_crossref, color = Journal_Full))+
    geom_point() + facet_wrap(~ Journal, nrow = 1) +
    scale_color_discrete(guide = F) + 
@@ -227,34 +234,7 @@ within each journal.
    ggtitle("Scatter plot per journal")
 ```
 
-
-There isn't really any perceptible time trend in sample size (ugh), but it still seems worthwhile to
-divide the citation count by number of years until 2018 to see whether that makes a
-difference.
-
-```{r layout="l-screen-inset", fig.height = 4, fig.width = 20}
-ggplot(per_doi, aes(Year, reis_n, color = Journal_Full)) + 
-   scale_color_discrete(guide = F) + 
-  geom_smooth(stat = 'summary', fun.data = 'mean_cl_boot') + 
-  ggtitle("Sample size trend by year") + facet_wrap(~ Journal, nrow = 1)
-
-```
-
-
-It does not.
-
-```{r layout="l-screen-inset", fig.height = 4, fig.width = 20}
- ggplot(data = per_doi, mapping = aes(x = reis_n, y = citation_count_crossref/(2018-Year), color = Journal_Full))+
-   geom_point() + facet_wrap(~ Journal, nrow = 1) +
-   scale_color_discrete(guide = F) + 
-   scale_x_log10("Sample size") +
-   scale_y_log10("Citation count") +
-   geom_smooth(method = 'lm') + 
-   ggtitle("Scatter plot per journal", "by year")
-```
- 
-
-More of a numbers type? Here are some Spearman rank correlations between sample size and citations by journal.
+The Spearman rank correlations between sample size and citations by journal tell the same story.
 
 ```{r}
 knitr::kable(
@@ -263,10 +243,34 @@ knitr::kable(
 )
 ```
 
+There isn't really any perceptible time trend in sample size,^[Ugh, that alone is depressing. Since 2006, so many new tools came on the market. How did that not help?] but it still seems worthwhile to
+divide the citation count by number of years until 2018 to see whether that makes a
+difference.
+
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20, fig.cap="We do not collect bigger samples over time."}
+ggplot(per_doi, aes(Year, reis_n, color = Journal_Full)) + 
+   scale_color_discrete(guide = F) + 
+  geom_smooth(stat = 'summary', fun.data = 'mean_cl_boot') + 
+  ggtitle("Sample size trend by year") + facet_wrap(~ Journal, nrow = 1)
+
+```
+
+It does not.
+
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20, fig.cap="Because there is no sample size trend, citations over years published is not related to sample size any differently than simple citation count."}
+ ggplot(data = per_doi, mapping = aes(x = reis_n, y = citation_count_crossref/(2018-Year), color = Journal_Full))+
+   geom_point() + facet_wrap(~ Journal, nrow = 1) +
+   scale_color_discrete(guide = F) + 
+   scale_x_log10("Sample size") +
+   scale_y_log10("Citation count") +
+   geom_smooth(method = 'lm') + 
+   ggtitle("Scatter plot per journal by year")
+```
+
 
 Maybe the problem is that I ignored the fact that citations are a count variable and did not adjust those correlations for the publication year. Nope!
 
-```{r models, include = FALSE, error = T}
+```{r models, include = TRUE, error = T}
 options(digits = 2)
 knitr::kable(broom::tidy(glm(citation_count_crossref ~ reis_n + Year, data = per_doi, family = quasipoisson()), exponentiate = T, conf.int = T)[-1,],
              caption = "Predicting citation count")
@@ -280,28 +284,36 @@ knitr::kable(broom::tidy(glm(citation_count_crossref ~ reis_n * Year, data = per
 ```
 
 
-## How does sample size relate to citation counts?
-Ok, so there is nothing there! Maybe we can come up with a post-hoc narrative by
+## So, how does sample size relate to citation counts?
+There seems to be pretty much _nothing_ there! Maybe we can come up with a post-hoc narrative by
 looking at all studies and seeing which studies are cited a lot and have large or small samples.
 
 Hover your mouse over the dots to see the study titles. Jean Twenge with her humongous name study
 is hiding behind the legend, scroll to find her.
 
-```{r layout='l-screen-inset'}
+My current favourite post-hoc narrative is that citation counts are just very poor measures
+of importance. I wouldn't bet that a better measure of importance would correlate with sample
+size, but I'm fairly convinced by now that citation counts just suck as a metric even of the
+thing they're meant to index (impact/importance). I am especially worried about the difference
+simple citation counts make between a study that is synthesised in a review that then gets cited
+a lot^[Obviously, reviews aren't included here, but neither is their reflected glory.] and a study that doesn't get synthesised in a review.
+I tried to make [the case for a better, more PageRank-y metric](http://www.the100.ci/2018/06/26/the-tyranny-of-metrics-in-science-evaluation/), but it would
+already be interesting to redo my analysis here and from the previous blog post after excluding self citations. Unfortunately, Elsevier still hasn't given me Scopus API access, and I lack the chops to do anything more fancy. I really hope projects like the [Open Citations Corpus](http://opencitations.net/) lead to such fancy metrics becoming available.
+
+```{r layout='l-screen-inset', fig.cap="Interactive plot of Ns and citation counts."}
 library(rbokeh)
 figure(width = 2800, height = 500) %>%
   ly_points(sample_size, citation_count_crossref, data = per_doi,
             color = Journal,
-    hover = list(First_Author, Title, Journal_Full)) %>% 
+    hover = list(First_Author, Title, Journal_Full, sample_size)) %>% 
   x_axis(log = 10) %>% 
   y_axis(log = 10)
 ```
 
+### Limitations
 
-Well, there are some cognitive studies in here that used a within-subject
-paradigm and probably had adequate power, even though their sample size may have limited generalizability to other people. 
-But then again, for some pure-personality journals, we also find no association. 
-At least, above a sample size of 1000, there are no studies that are not cited at all.
+Well, there are some vision studies in here that used a within-subject paradigm and probably had adequate power for the question they asked anyway. Their small sample size may limit generalizability to other people, but I guess that's not the dominant question asked in vision science.^[Which is consistent with the fact that there are low-hanging fruit like The Dress waiting to be picked in the study of individual differences in vision.] 
+But then again, for some pure-personality journals, we also find no association. There is of course the possibility that studies with very large Ns are more likely to use abbreviated measures, only self-report, and online samples. But then, they are also more likely to be from representative panel studies and online samples aren't actually any less representative than lab samples. It seems unlikely that any disadvantages exactly balance out with the advantages associated with sample size, so that we arrive at a zero correlation with importance.
 
 ## List of studies
 Thought of something fun to do with the data that I didn't do here? Grab the data below!
