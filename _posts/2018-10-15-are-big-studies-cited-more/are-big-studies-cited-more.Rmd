@@ -296,8 +296,7 @@ of importance. I wouldn't bet that a better measure of importance would correlat
 size, but I'm fairly convinced by now that citation counts just suck as a metric even of the
 thing they're meant to index (impact/importance). I am especially worried about the difference
 simple citation counts make between a study that is synthesised in a review that then gets cited
-a lot^[Obviously, reviews aren't included here, but neither is their reflected glory.] and a study that doesn't get synthesised in a review.
-I tried to make [the case for a better, more PageRank-y metric](http://www.the100.ci/2018/06/26/the-tyranny-of-metrics-in-science-evaluation/), but it would
+a lot^[Obviously, reviews aren't included here, but neither is their reflected glory.] and a study that doesn't get synthesised in a review. I tried to make [the case for a better, more PageRank-y metric](http://www.the100.ci/2018/06/26/the-tyranny-of-metrics-in-science-evaluation/), but it would
 already be interesting to redo my analysis here and from the previous blog post after excluding self citations. Unfortunately, Elsevier still hasn't given me Scopus API access, and I lack the chops to do anything more fancy. I really hope projects like the [Open Citations Corpus](http://opencitations.net/) lead to such fancy metrics becoming available.
 
 ```{r layout='l-screen-inset', fig.cap="Interactive plot of Ns and citation counts."}
