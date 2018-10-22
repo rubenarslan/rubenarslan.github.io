@@ -10,7 +10,7 @@ author:
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 description: |
   Does sample size predict number of citations?
-date: 10-15-2018
+date: 10-22-2018
 categories: 
   - meta science
   - open science
