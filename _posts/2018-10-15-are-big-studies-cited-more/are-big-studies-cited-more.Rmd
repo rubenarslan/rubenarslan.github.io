@@ -1,0 +1,339 @@
+---
+title: "Are big studies cited more?"
+name: "sample_size_and_citation"
+author:
+  - name: "Ruben C. Arslan"
+    url: https://rubenarslan.github.io
+    affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+  - name: "Ioanna Iro Eleftheriadou"
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+description: |
+  Does sample size predict number of citations?
+date: 10-22-2018
+categories: 
+  - meta science
+  - open science
+  - reproducibility
+  - quick job
+output:
+  radix::radix_article:
+    toc: no
+    self_contained: false
+---
+
+
+After asking whether studies that replicate are cited more and finding that this is
+not the case, I turned to a different analysis that I once did quickly. Namely,
+I reviewed the [N-pact paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0109019) by Chris Fraley
+and Simine Vazire back in 2014. I got excited about the paper, as I'm wont to, and tried
+redoing their analyses because they had provided the data with their manuscript. I also
+decided to see if I could find a relationship at the article level as well. 
+
+```{r layout="l-body-outset",fig.cap="Ample size? From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14596336128)", out.extra="class=external"}
+knitr::include_graphics("https://farm4.staticflickr.com/3922/14596336128_9cbfbd34fe_o_d.jpg")
+```
+
+Iro Eleftheriadou, our new RA, helped me clean up the messy code that I wrote at the
+beginning of my dissertation (for-loops, ugh).
+
+```{r packages, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+library(rcrossref)
+library(rAltmetric)
+library(RISmed)
+library(devtools)
+library(lme4)
+theme_set(theme_light())
+```
+
+```{r data}
+# load data
+npact = rio::import("https://osf.io/ti2r6/download", format = "tsv")
+
+articles = unique(npact[, c("id", "Journal", "Year", 
+                            "Title", "Authors", "Citation")])
+
+journals = list(JESP = "Journal of Experimental Social Psychology", 
+                JPSP = "Journal of Personality and Social Psychology", 
+                JP = "Journal of Personality", JRP = "Journal of Research in Personality", 
+                PS = "Psychological Science", PSPB = "Personality and Social Psychology Bulletin", 
+                SPPS = "Social Psychological and Personality Science")
+
+articles <- mutate(articles,
+                   First_Author = 
+                     str_match(string = Authors, 
+                               "^(Author: )?([a-z A-Z-]+),")[,3], 
+                   Journal_Full = as.character(journals[Journal]),
+                   First_Page = str_match(string = Citation, 
+                              "([0-9]+)\\-[0-9]+\\.$")[,2],
+                   Volume = str_match(string = 
+                             Citation, str_c(as.character(Journal_Full),
+                              " ([0-9]+).+([0-9]+)"))[,2],
+                   Issue = str_match(string = 
+                           Citation, str_c(as.character(Journal_Full),
+                               " ([0-9]+).+([0-9]+)"))[,3]
+                 
+                   )
+```
+
+
+
+```{r, cache = TRUE}
+cache_file <- "articles_with_dois.rds"
+if (file.exists(cache_file)) {
+  articles <- readRDS(cache_file)
+} else {
+# get doi's and citations 
+find_doi <- function(x) {
+  tryCatch({
+  doi <- cr_works(flq = c(query.title = x$Title, 
+		          query.author = x$First_Author,
+		          `query.container-title` = x$Journal_Full), 
+		  filter = c(from_pub_date = x$Year, until_pub_date = x$Year), 
+		  sort = "relevance", limit = 1)$data$DOI
+  if (length(doi) == 1 & is.character(doi)) {
+    doi 
+  } else {
+    NA_character_
+  }
+  }, error = function(e) { 
+    NA_character_
+    })
+}
+
+find_citation <- function(x){
+  tryCatch({
+  cr_citation_count(doi = x)
+  }, error = function(e) { 
+    NA_real_
+  })
+}
+
+articles$doi <- articles %>% transpose() %>% map_chr(find_doi)
+articles$citation_count_crossref <- as.list(articles$doi) %>% 
+  map_dbl(find_citation)
+
+saveRDS(articles, file = cache_file)
+}
+```
+
+
+
+
+```{r data_merge}
+# put data together based on doi
+per_doi = npact %>% group_by(id) %>%
+  summarise(sample_size = mean(Avg_Coder_N,na.rm=T), reis_n = mean(reis_n,na.rm=T))
+
+per_doi = merge(per_doi, articles, by = "id", all = T)
+per_doi = per_doi[! is.nan(per_doi$reis_n), ]
+
+per_doi$citations_capped = if_else(per_doi$citation_count_crossref > 90, 90, per_doi$citation_count_crossref)
+per_doi$impact = ave(x=per_doi$citation_count_crossref, per_doi$Journal_Full, FUN = median)
+per_doi$npact = ave(x=per_doi$reis_n, per_doi$Journal_Full, FUN=median)
+
+
+# Journal data + correlation per journal table
+per_doi <- per_doi %>% group_by(Journal_Full) %>% mutate(IF = mean(citation_count_crossref, na.rm = T),NF = mean(reis_n, na.rm = T))
+impact <- per_doi %>% group_by(Journal_Full, Journal, Year) %>% 
+  summarise(IF = mean(citation_count_crossref, na.rm = T),
+            IFmed = median(citation_count_crossref, na.rm = T),
+            NF = median(sample_size, na.rm = T)) %>% 
+  group_by(Journal_Full, Journal) %>% 
+  summarise(IF = mean(IF), IFmed = mean(IFmed), NF = mean(NF))
+impact$IF_tr <- c(2.87, 3.48, 5.73, 2.85, 2.50, 6.13, 2.63)
+
+correlation_per_Journal <- per_doi %>% group_by(IF, NF, Journal) %>% 
+  summarise(k_studies = n(), correlation = cor(sample_size, citation_count_crossref,
+            method = c("spearman"), use = 'pairwise.complete.obs'))
+```
+
+Again, we first needed to get the DOIs by querying the Crossref API. Using the DOIs,
+we could next get the citation counts. We found `r sum(!is.na(per_doi$doi))` DOIs out of `r nrow(per_doi)` studies.
+
+
+```{r get_altmetrics, cache = TRUE, include = FALSE}
+# altmetrics_lists = per_doi$doi %>% map( ~ tryCatch( {altmetrics(doi = .x)}, error = function(e) {cat(paste0("•Error• ", .x, "\n"))}))
+``` 
+
+## Reproducing the original result
+Here, I first checked whether I would obtain the same measure as Fraley & Vazire did,
+when I simply averaged the citations to the articles in this set for each year and journal.
+Interestingly, I could not, or at least it was substantially weakened. 
+I'm pretty sure that when I did this in 2014, I could reproduce the finding. 
+As you can also see, the association is even weaker when using medians for the
+citation counts instead of means. However, I can still reproduce their original result with the Thomson-Reuters
+Impact Factors that I quickly googled. I know the Impact Factor isn't just a simple metric, but a shady
+business including some [negotiation](http://bjoern.brembs.net/2016/01/just-how-widespread-are-impact-factor-negotiations/).
+Do journal executives sometimes try a pity move, asking for a higher impact factor by highlighting paltry poor sample sizes?
+It's impossible to prove this never happened ;-)!
+
+```{r layout='l-body-outset', fig.width=10,fig.height=4, fig.cap="Correlation between IF and NF on the journal level."}
+library(cowplot)
+plot_grid(
+ggplot(data = impact, aes(x = NF, y = IF, color = Journal_Full))  + 
+  geom_text(aes(label = Journal)) +
+   scale_color_discrete(guide = F) + 
+  geom_smooth(color = "black", method = 'lm', se = F) +
+  ggtitle("NF & mean citations (Crossref)"),
+
+ggplot(data = impact, aes(x = NF, y = IFmed, color = Journal_Full))  + 
+  geom_text(aes(label = Journal)) +
+   scale_color_discrete(guide = F) + 
+  geom_smooth(color = "black", method = 'lm', se = F) +
+  ggtitle("NF & median citations (Crossref)"),
+
+ggplot(data = impact, aes(x = NF, y = IF_tr, color = Journal_Full))  + 
+  geom_text(aes(label = Journal)) +
+   scale_color_discrete(guide = F) + 
+  geom_smooth(color = "black", method = 'lm', se = F) +
+  ggtitle("NF & IF (Thomson-Reuters)"), nrow = 1)
+```
+
+## Moving to the study level
+Fraley & Vazire were interested in highlighting how impact factors do not track
+a no-nonsense aspect of study quality (all else equal, bigger N is simply better).
+So, they focused on journals. But I, having recently invested a lot of time into obtaining
+large samples, was curious to see whether these efforts translated into any sort of citation
+advantage, and more generally, whether we pay more attention to research that is presumably
+more reliable.^[I understand this is a presumption, see limitations].
+
+## By year of publication
+Maybe it takes us some time to notice how paltry a sample size was?^[I hope nobody skims that badly.] Or maybe
+early citations are all about the glamour and flair, but over time the best
+and biggest studies win out?
+
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20, fig.cap = "There is no association between N and citations, including for studies that had more years to accumulate citations."}
+ ggplot(data = per_doi, mapping = aes(x = reis_n, y = citation_count_crossref, color = Year))+
+  geom_point() + facet_wrap(~ Year, nrow = 1) +
+   scale_x_log10() +
+   scale_y_log10() +
+  scale_color_continuous(guide = F) + 
+  geom_smooth(method = 'glm', method.args = list(family = "quasipoisson")) + 
+   ggtitle("Scatter plot per year")
+
+```
+
+## By journal
+Maybe we don't see an association between N and citations in Psychological Science, because some small-N papers are
+solid vision studies with good power within-subject? 
+In the analysis by journal, we see that there is no association between sample size and number of citations
+within each journal, including some that focus on personality research only, which is a pretty N-driven
+area.
+
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20,fig.cap="Even in the Journal of Personality and the Journal of Research in Personality, there is no association between N and citations. There appears to be some in SPPS, but the number of studies is small and we should not overinterpret it."}
+ ggplot(data = per_doi, mapping = aes(x = reis_n, y = citation_count_crossref, color = Journal_Full))+
+   geom_point() + facet_wrap(~ Journal, nrow = 1) +
+   scale_color_discrete(guide = F) + 
+   scale_x_log10("Sample size") +
+   scale_y_log10("Citation count") +
+   geom_smooth(method = 'glm', method.args = list(family = "quasipoisson")) + 
+   ggtitle("Scatter plot per journal")
+```
+
+The Spearman rank correlations between sample size and citations by journal tell the same story.
+
+```{r}
+knitr::kable(
+  correlation_per_Journal %>% ungroup() %>% mutate_at(vars(IF, NF), funs(round)) %>% mutate_if(is.numeric, funs(round(., 2))), 
+  caption = "Correlation values per journal"
+)
+```
+
+There isn't really any perceptible time trend in sample size,^[Ugh, that alone is depressing. Since 2006, so many new tools came on the market. How did that not help?] but it still seems worthwhile to
+divide the citation count by number of years until 2018 to see whether that makes a
+difference.
+
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20, fig.cap="We do not collect bigger samples over time."}
+ggplot(per_doi, aes(Year, reis_n, color = Journal_Full)) + 
+   scale_color_discrete(guide = F) + 
+  geom_smooth(stat = 'summary', fun.data = 'mean_cl_boot') + 
+  ggtitle("Sample size trend by year") + facet_wrap(~ Journal, nrow = 1)
+
+```
+
+It does not.
+
+```{r layout="l-screen-inset", fig.height = 4, fig.width = 20, fig.cap="Because there is no sample size trend, citations over years published is not related to sample size any differently than simple citation count."}
+ ggplot(data = per_doi, mapping = aes(x = reis_n, y = citation_count_crossref/(2018-Year), color = Journal_Full))+
+   geom_point() + facet_wrap(~ Journal, nrow = 1) +
+   scale_color_discrete(guide = F) + 
+   scale_x_log10("Sample size") +
+   scale_y_log10("Citation count") +
+   geom_smooth(method = 'lm') + 
+   ggtitle("Scatter plot per journal by year")
+```
+
+
+Maybe the problem is that I ignored the fact that citations are a count variable and did not adjust those correlations for the publication year. Nope!
+
+```{r models, include = TRUE, error = T}
+options(digits = 2)
+knitr::kable(broom::tidy(glm(citation_count_crossref ~ reis_n + Year, data = per_doi, family = quasipoisson()), exponentiate = T, conf.int = T)[-1,],
+             caption = "Predicting citation count")
+
+
+knitr::kable(broom::tidy(glm(citation_count_crossref ~ reis_n * Journal + Year, data = per_doi, family = quasipoisson()), exponentiate = T, conf.int = T)[-1,],
+             caption = "Predicting citation count by journal")
+
+knitr::kable(broom::tidy(glm(citation_count_crossref ~ reis_n * Year, data = per_doi, family = quasipoisson()), exponentiate = T, conf.int = T)[-1,],
+             caption = "Predicting citation count by year")
+```
+
+
+## So, how does sample size relate to citation counts?
+There seems to be pretty much _nothing_ there! Maybe we can come up with a post-hoc narrative by
+looking at all studies and seeing which studies are cited a lot and have large or small samples.
+
+Hover your mouse over the dots to see the study titles. Jean Twenge with her humongous name study
+is hiding behind the legend, scroll to find her.
+
+My current favourite post-hoc narrative is that citation counts are just very poor measures
+of importance. I wouldn't bet that a better measure of importance would correlate with sample
+size, but I'm fairly convinced by now that citation counts just suck as a metric even of the
+thing they're meant to index (impact/importance). I am especially worried about the difference
+simple citation counts make between a study that is synthesised in a review that then gets cited
+a lot^[Obviously, reviews aren't included here, but neither is their reflected glory.] and a study that doesn't get synthesised in a review. I tried to make [the case for a better, more PageRank-y metric](http://www.the100.ci/2018/06/26/the-tyranny-of-metrics-in-science-evaluation/), but it would
+already be interesting to redo my analysis here and from the previous blog post after excluding self citations. Unfortunately, Elsevier still hasn't given me Scopus API access, and I lack the chops to do anything more fancy. I really hope projects like the [Open Citations Corpus](http://opencitations.net/) lead to such fancy metrics becoming available.
+
+```{r layout='l-screen-inset', fig.cap="Interactive plot of Ns and citation counts."}
+library(rbokeh)
+figure(width = 2800, height = 500) %>%
+  ly_points(sample_size, citation_count_crossref, data = per_doi,
+            color = Journal,
+    hover = list(First_Author, Title, Journal_Full, sample_size)) %>% 
+  x_axis(log = 10) %>% 
+  y_axis(log = 10)
+```
+
+### Limitations
+
+Well, there are some vision studies in here that used a within-subject paradigm and probably had adequate power for the question they asked anyway. Their small sample size may limit generalizability to other people, but I guess that's not the dominant question asked in vision science.^[Which is consistent with the fact that there are low-hanging fruit like The Dress waiting to be picked in the study of individual differences in vision.] 
+But then again, for some pure-personality journals, we also find no association. There is of course the possibility that studies with very large Ns are more likely to use abbreviated measures, only self-report, and online samples. But then, they are also more likely to be from representative panel studies and online samples aren't actually any less representative than lab samples. It seems unlikely that any disadvantages exactly balance out with the advantages associated with sample size, so that we arrive at a zero correlation with importance.
+
+## List of studies
+Thought of something fun to do with the data that I didn't do here? Grab the data below!
+
+```{r layout='l-screen-inset'}
+DT::datatable(per_doi %>% select(First_Author, Title, Journal_Full, sample_size, citation_count_crossref, doi) %>% arrange(desc(citation_count_crossref)), escape = F,
+extensions = 'Buttons', rownames = F, options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel')
+  )
+) %>% 
+  DT::formatRound("sample_size", digits = 0)
+```
+
+
+```{r layout="l-screen-inset",fig.cap="Ample size ain't worth it. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14782389554)", out.extra="class=external"}
+knitr::include_graphics("https://farm3.staticflickr.com/2940/14782389554_3ba3df7683_o_d.jpg")
+```
+
+
+## Appendix {.appendix}
+
+You can grab the original data on the [OSF](https://osf.io/ti2r6).
+Did we get the right DOIs? There are probably still some mismatches and for some, we didn't find the DOI at all.

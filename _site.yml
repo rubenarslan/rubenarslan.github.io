@@ -24,4 +24,5 @@ twitter:
 collections:
   posts:
     feed_items_max: false
+    subscribe: _subscribe.html
     share: [twitter, facebook, google-plus, linkedin]
