@@ -1220,7 +1220,6 @@
       $('#disqus_thread').toggleClass('hidden');
       if (!$('#disqus_thread').hasClass('hidden')) {
         var offset = $(this).offset();
-        $(window).resize();
         $('html, body').animate({
           scrollTop: offset.top - 35
         });
@@ -1293,6 +1292,7 @@
 <div class="nav-right">
 <a href="index.html">Home</a>
 <a href="blog.html">Blog</a>
+<a href="bug_bounty.html">Bug Bounty</a>
 <a href="about.html">About</a>
 <a href="index.xml">
 <i class="fa fa-rss"></i>
