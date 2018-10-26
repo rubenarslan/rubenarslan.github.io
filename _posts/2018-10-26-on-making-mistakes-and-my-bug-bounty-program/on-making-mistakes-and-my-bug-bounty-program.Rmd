@@ -2,7 +2,7 @@
 draft: true
 title: "New rational athletics for boys and girls."
 description: |
-  Accounting for mistakes in my scientific work and announcing my bug bounty program.
+  Accounting for mistakes in my scientific work and announcing a bug bounty program.
 author:
   - name: "Ruben C. Arslan"
     url: https://rubenarslan.github.io
@@ -31,7 +31,7 @@ knitr::include_graphics("https://farm6.staticflickr.com/5562/14597595828_44d41a5
 [Here](http://psycnet.apa.org/buy/2015-37761-001), we accidentally reported a lower cutoff than we actually used owing to some miscommunication to my co-authors on my part.
 
 And recently, my co-authors and I replied to a critical commentary of one my dissertation papers. I actually love this kind of stuff, as I personally feel that I learn the most when seeing a nice debate between two parties of opposite viewpoints.^[I still need to read [The Enigma of Reason](http://www.hup.harvard.edu/catalog.php?isbn=9780674368309) which makes the point that arguing is how we reason best.]
-However, this was a fundamentally dissatisfying experience because I spent more time battling journal submission forms than counter-arguments. I was invited to peer review the critique^[which I didn't like because I didn't feel I should  get to influence whether criticism of my work is published] and pointed out a few factual errors. As a result, the critique that was  published already partially addressed some counterpoints, leading to a quite jumbled argument-counterargument sequence. Then, the journal messed up. After a first round of peer review and then acceptance, they allowed the authors to revise their critique further. The authors substantially changed the text and added two new arguments. Then, the journal sent me an older version to comment on than the one they published. As a result, our reply quotes the commenters three times - and none of those quotes are in the published version - we looked quite sloppy. It took a long time for the journal to acknowledge the mistake, even longer for them to decide how to deal with it. We then had to submit an erratum (apparently, an erratum is for journal errors, corrections are for author errors, in their parlance). The journal then desk-rejected the erratum, because they felt replying to the newly added arguments didn't fit in the erratum. In the end, [this is all they allowed us to publish](http://rspb.royalsocietypublishing.org/content/285/1884/20181427) and the process took more than a month and a lot of nerves. 
+However, this was a fundamentally dissatisfying experience because I spent more time battling journal submission forms than counter-arguments (see Appendix).
 
 I only noticed the version problem because an anonymous submission via my [Tell me I'm wrong] form alerted me to the fact that I was misquoting the authors. Thank you, anonymous commenter.
 
@@ -46,7 +46,6 @@ I also know that for every new release of formr.org that involves more than a fe
 No. If I'm honest with myself, I think there are probably even more errors in my work than the ones that have been found. Unfortunately, psychological science does not have a well-developed error culture and it is rare for people to reanalyse others' data, even if they build on it. 
 
 ## Code review
-
 <aside>
 ```{r fig.cap="Watch closely. Figure from the book New rational athletics for boys and girls (1917) in the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804113553)", out.extra="class=external"}
 knitr::include_graphics("https://farm6.staticflickr.com/5564/14804113553_69542c87b7_k_d.jpg")
@@ -67,3 +66,12 @@ knitr::include_graphics("https://farm6.staticflickr.com/5578/14804680103_c8d5ef8
 </aside>
 
 So, I'm announcing a [bug bounty program](/bug_bounty.html). Briefly, I will pay you to report errors in my work to me (up to 760€). It generally only applies to first-authored scientific work I publish from now on, but my co-author and friend Laura Botzet volunteered her first-authored preprint on [birth order effects in Indonesia](https://psyarxiv.com/5387k/) as a guinea pig. I'm senior author on this paper, and tried my best to check the code (I also wrote some parts myself). Data and code are openly available, so if you feel like playing with a cool dataset and an interesting research question, we encourage you to check and review our code. Please see [here](/bug_bounty.html) for the exact conditions^[They are phrased rather lawyerly, because I would expect a bug bounty program to attract nitpicky people.]
+
+
+## A bad error culture at Proceedings of the Royal Society B {.appendix}
+
+I was invited to peer review the critique^[which I didn't like because I didn't feel I should  get to influence whether criticism of my work is published] and pointed out a few factual errors. As a result, the critique that was accepted for publication already partially addressed some counterpoints, leading to a quite jumbled argument-counterargument sequence. 
+
+Then, the journal messed up. After a first round of peer review and then acceptance, they allowed the authors to revise their critique further. The authors substantially changed the text and added two new arguments. But the journal sent me the older version to comment, not the one they published. As a result, our reply quotes the commenters three times - and none of those quotes are in the published version - we looked quite sloppy. 
+
+Mistakes happen (I know!), but it took a while for the journal to acknowledge the mistake, and even longer for them to decide how to deal with it. We then had to submit an erratum (apparently, in their parlance, an erratum is for journal errors, corrections are for author errors). The journal then desk-rejected the erratum, because they felt replying to the newly added arguments didn't fit in the erratum. I then added a sentence to reflect the fact that we were not allowed to respond to these additional points. They removed this sentence without my consent, and then rephrased the erratum to put it in the journal's voice. In the end, [this is all they  published](http://rspb.royalsocietypublishing.org/content/285/1884/20181427). The whole ordeal after I pointed out the error, took from March to August, in excess of 40 emails, and a lot of nerves. 
