@@ -19,372 +19,39 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>Ruben Arslan: Bug Bounty Program</title>
+  <title>New rational athletics for boys and girls.</title>
   
-  <meta property="description" itemprop="description" content="Terms for my scientific bug bounty program."/>
+  <meta property="description" itemprop="description" content="Accounting for mistakes in my scientific work and announcing my bug bounty program."/>
   
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
   
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2018-10-26"/>
+  <meta property="article:created" itemprop="dateCreated" content="2018-10-26"/>
+  <meta name="article:author" content="Ruben C. Arslan"/>
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Ruben Arslan: Bug Bounty Program"/>
+  <meta property="og:title" content="New rational athletics for boys and girls."/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Terms for my scientific bug bounty program."/>
+  <meta property="og:description" content="Accounting for mistakes in my scientific work and announcing my bug bounty program."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Ruben Arslan"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Ruben Arslan: Bug Bounty Program"/>
-  <meta property="twitter:description" content="Terms for my scientific bug bounty program."/>
-  <meta property="twitter:site" content="@rubenarslan"/>
+  <meta property="twitter:title" content="New rational athletics for boys and girls."/>
+  <meta property="twitter:description" content="Accounting for mistakes in my scientific work and announcing my bug bounty program."/>
   
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["Bug Bounty Program"]},{"type":"character","attributes":{},"value":["Terms for my scientific bug bounty program."]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["draft","title","description","author","date","output"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["New rational athletics for boys and girls."]},{"type":"character","attributes":{},"value":["Accounting for mistakes in my scientific work and announcing my bug bounty program.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]}]},{"type":"character","attributes":{},"value":["10-26-2018"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
-  <!--radix_placeholder_navigation_in_header-->
   
-  <script type="application/javascript">
-  
-    window.headroom_prevent_pin = false;
-  
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-  
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-  
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-  
-      // responsive menu
-      $('.radix-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-  
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["on-making-mistakes-and-my-bug-bounty-program_files/bowser-1.9.3/bowser.min.js","on-making-mistakes-and-my-bug-bounty-program_files/distill-2.2.21/template.v2.js","on-making-mistakes-and-my-bug-bounty-program_files/jquery-1.11.3/jquery.min.js","on-making-mistakes-and-my-bug-bounty-program_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
-  
-  <style type="text/css">
-  
-  /* Theme (user-documented overrideables for nav appearance) */
-  
-  .radix-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #455a64;
-    font-size: 15px;
-    font-weight: 300;
-  }
-  
-  .radix-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-  
-  .radix-site-nav a:hover {
-    color: white;
-  }
-  
-  @media print {
-    .radix-site-nav {
-      display: none;
-    }
-  }
-  
-  .radix-site-header {
-  
-  }
-  
-  .radix-site-footer {
-  
-  }
-  
-  
-  /* Site Header */
-  
-  .radix-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-  
-  .radix-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .radix-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-  
-  
-  .radix-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-  
-  .radix-site-header a,
-  .radix-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-  
-  .radix-site-header .title {
-    font-size: 18px;
-  }
-  
-  .radix-site-header .logo {
-    padding: 0;
-  }
-  
-  .radix-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-  
-  .radix-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-  
-  
-  
-  @media screen and (min-width: 1000px) {
-    .radix-site-header .logo img {
-      display: inline-block;
-    }
-    .radix-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .radix-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .radix-site-header .title {
-      padding-left: 12px;
-    }
-  }
-  
-  
-  .radix-site-header .nav-toggle {
-    display: none;
-  }
-  
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-  
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-  
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-  
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .nav-dropdown-active {
-    display: block;
-  }
-  
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-  
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-  
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-  
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .radix-site-header a, .radix-site-header .nav-dropdown  {display: none;}
-    .radix-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .radix-site-header .title {
-      margin-left: 0;
-    }
-    .radix-site-header .nav-right {
-      margin-right: 0;
-    }
-    .radix-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-  
-  
-  @media screen and (max-width: 768px) {
-    .radix-site-header.responsive {position: relative;}
-    .radix-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .radix-site-header.responsive a,
-    .radix-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .radix-site-header.responsive .nav-left,
-    .radix-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .radix-site-header.responsive .nav-dropdown {float: none;}
-    .radix-site-header.responsive .nav-dropdown-content {position: relative;}
-    .radix-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-  
-  /* Site Footer */
-  
-  .radix-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-  
-  /* Headroom */
-  
-  d-title {
-    padding-top: 6rem;
-  }
-  
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-  
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-  
-  .headroom--unpinned {
-    top: -100px;
-  }
-  
-  .headroom--pinned {
-    top: 0;
-  }
-  
-  </style>
-  
-  <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet"/>
-  <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-  <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
   
@@ -1230,40 +897,13 @@
   </script>
   
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="on-making-mistakes-and-my-bug-bounty-program_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="on-making-mistakes-and-my-bug-bounty-program_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="on-making-mistakes-and-my-bug-bounty-program_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="on-making-mistakes-and-my-bug-bounty-program_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <style type="text/css">
-  .radix-site-nav {
-    color: #E4F2F7;
-    background-color: #4F94B0;
-    font-size: 15px;
-    font-weight: 300;
-  }
-  
-  .radix-site-nav a:hover {
-    color: white;
-  }
-  
-  .img-circle {
-    width:100px;
-    border-radius: 50%;
-  }
-  @media(min-width:768px) {
-      aside {
-          margin-bottom: -500px;
-      }
-  }
-  .figure img.external {
-    padding: 6px;
-  }
-  
-  </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
 
 </head>
 
@@ -1272,145 +912,79 @@
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Bug Bounty Program","description":"Terms for my scientific bug bounty program.","authors":[]}
+{"title":"New rational athletics for boys and girls.","description":"Accounting for mistakes in my scientific work and announcing my bug bounty program.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin","affiliationURL":"https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"}],"publishedDate":"2018-10-26T00:00:00.000+02:00","citationText":"Arslan, 2018"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="radix-site-nav radix-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">Ruben Arslan</a>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="bug_bounty.html">Bug Bounty</a>
-<a href="about.html">About</a>
-<a href="index.xml">
-<i class="fa fa-rss"></i>
-</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Bug Bounty Program</h1>
-<p>Terms for my scientific bug bounty program.</p>
+<h1>New rational athletics for boys and girls.</h1>
+<p>Accounting for mistakes in my scientific work and announcing my bug bounty program.</p>
 </div>
 
+<div class="d-byline">
+  Ruben C. Arslan <a href="https://rubenarslan.github.io" class="uri">https://rubenarslan.github.io</a> (Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin)<a href="https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan" class="uri">https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan</a>
+  
+<br/>10-26-2018
+</div>
 
 <div class="d-article">
+<h2 id="a-story-of-few-papers-and-many-corrections">A story of few papers and many corrections</h2>
+<p>My first published paper had a typo in the title. I had gone over every use of the word “parental” and “paternal” in my draft and asked a friend to do the same, because I knew I tended to mix them up. I forgot the title. I emailed PLoS ONE frantically when I noticed, as the paper had not yet been published, but apparently it slipped their mind, and I had to ask again after publication.</p>
+<p>So, my academic career started with <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0097370">a correction</a>. And it was not going to be the last.</p>
 <div class="layout-chunk" data-layout="l-page-outset">
 <div class="figure"><span id="fig:unnamed-chunk-1"></span>
-<img src="https://farm3.staticflickr.com/2920/14764470974_92473042b4_o_d.jpg" alt="Bug death duster. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14764470974)" class=external />
+<img src="https://farm6.staticflickr.com/5562/14597595828_44d41a5e86_k_d.jpg" alt="Figure from the book New rational athletics for boys and girls (1917) in the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14597595828/)" class=external />
 <p class="caption">
-Figure 1: Bug death duster. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14764470974">Internet Archive Book Images</a>
+Figure 1: Figure from the book New rational athletics for boys and girls (1917) in the <a href="https://www.flickr.com/photos/internetarchivebookimages/14597595828/">Internet Archive Book Images</a>
 </p>
 </div>
 </div>
-<p>To find errors in my work, I try to make my analysesreproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work.</p>
+<p><a href="http://psycnet.apa.org/buy/2015-37761-001">Here</a>, we accidentally reported a lower cutoff than we actually used owing to some miscommunication to my co-authors on my part.</p>
+<p>And recently, my co-authors and I replied to a critical commentary of one my dissertation papers. I actually love this kind of stuff, as I personally feel that I learn the most when seeing a nice debate between two parties of opposite viewpoints.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> However, this was a fundamentally dissatisfying experience because I spent more time battling journal submission forms than counter-arguments. I was invited to peer review the critique<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and pointed out a few factual errors. As a result, the critique that was published already partially addressed some counterpoints, leading to a quite jumbled argument-counterargument sequence. Then, the journal messed up. After a first round of peer review and then acceptance, they allowed the authors to revise their critique further. The authors substantially changed the text and added two new arguments. Then, the journal sent me an older version to comment on than the one they published. As a result, our reply quotes the commenters three times - and none of those quotes are in the published version - we looked quite sloppy. It took a long time for the journal to acknowledge the mistake, even longer for them to decide how to deal with it. We then had to submit an erratum (apparently, an erratum is for journal errors, corrections are for author errors, in their parlance). The journal then desk-rejected the erratum, because they felt replying to the newly added arguments didn’t fit in the erratum. In the end, <a href="http://rspb.royalsocietypublishing.org/content/285/1884/20181427">this is all they allowed us to publish</a> and the process took more than a month and a lot of nerves.</p>
+<p>I only noticed the version problem because an anonymous submission via my [Tell me I’m wrong] form alerted me to the fact that I was misquoting the authors. Thank you, anonymous commenter.</p>
+<p>And lately, I’ve received some useful post-publication peer review of my ovulatory changes paper. I had put all my code online, and a previous peer reviewer was actually motivated to check it for errors. Others like Dan Engber or Mike Wood just noticed problems right away, by virtue of their different background in journalism and statistics. This is great, but I admittedly dread another corrections process. I would love to work in a system where we publish and update our knowledge base more continuously than through the antiquated system of publication, correction, and retraction. But I don’t and here’s an attempt to reckon with that.</p>
+<h2 id="consequences">Consequences</h2>
+<p>This is the story of the mistakes I know about so far. It is not an impressively low rate for a fledgling scientist, but I’m at my limit in terms of reducing my own error rate through best practices on my own.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>I also know that for every new release of formr.org that involves more than a few lines of code, I make mistakes. With formr.org I usually find out quite early, because users notice the ensuing problems. Some of my scientific data analyses also involve a lot of code. Do I magically make fewer errors when working with R than with PHP and JavaScript?</p>
+<p>No. If I’m honest with myself, I think there are probably even more errors in my work than the ones that have been found. Unfortunately, psychological science does not have a well-developed error culture and it is rare for people to reanalyse others’ data, even if they build on it.</p>
+<h2 id="code-review">Code review</h2>
 <aside>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:unnamed-chunk-2"></span>
-<img src="https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg" alt="Get him. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804680103)" class=external />
+<img src="https://farm6.staticflickr.com/5564/14804113553_69542c87b7_k_d.jpg" alt="Watch closely. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804113553)" class=external />
 <p class="caption">
-Figure 2: Get him. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14804680103">Internet Archive Book Images</a>
+Figure 2: Watch closely. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14804113553">Internet Archive Book Images</a>
 </p>
 </div>
 </div>
 </aside>
-<p>Putting up an anonymous submission form only yielded one measly submission (although a good one, which led to an erratum in Proceedings B, because it turned out the journal published a later version than the one I quoted and commented on).</p>
-<p>Stepping on people’s toes with my work yielded more, but it’s not a practice I want to institutionalise.</p>
-<h2 id="bug-bounties">Bug bounties</h2>
-<p>So, I’m borrowing another practice from software: a <a href="https://en.wikipedia.org/wiki/Bug_bounty_program">bug bounty program</a>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I’m slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend half of it.</p>
-<p>So, what does this apply to, and what can you earn?</p>
-<h3 id="criteria">Criteria</h3>
-<ul>
-<li>I’m first author or the other authors ask me to include it in the bug bounty program.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
-<li>It’s an empirical manuscript<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>
-<ul>
-<li>preprints count for the full amount (until they are accepted)</li>
-<li>published papers count for 3/4 the amount</li>
-<li>blog posts count for 1/4 the amount unless they are tagged <code>quick job</code><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></li>
-</ul></li>
-<li>It was published after October 2, 2018.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></li>
-</ul>
-<p>The different factors for preprints, publications, and blogs reflect the amount of effort I already put in them and how easy it will me for me to correct something at that point. So, because I would love to hear about errors before the publication processes “enshrines” the paper<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>, errors in preprints are worth more than those in published paper.</p>
-<h3 id="budget">Budget</h3>
-<p>For now, I’m setting aside 2500€. When this runs out, I’ll have to a) improve my error checking workflow, b) get another stipend, award, donation, or tenured position, so I can afford continuing to make errors. I’ll keep this page updated, so should my budget have run out, you won’t waste too much time.</p>
-<p>Within at most two months of the bug being reported, I’ll pay out the sum via Paypal or bank transfer or argue my case why it was not a bug. In severe cases, or if I’m ill, or out of work, it might take me longer, in these cases I will post a note quoting the bug report and my intention to respond. In all cases, I will post a note on this page, in more severe cases, I will start the process of submitting a correction, or a retraction. I cannot give a timeline on these because of co-authors.</p>
-<p>If you report a bug anonymously, I will donate the fee to <a href="https://againstmalaria.com">Against Malaria</a> via the <a href="https://effektiveraltruismus.de/effektiv-spenden/">German Equivalent</a> of <a href="https://effektiveraltruismus.de/effektiv-spenden/">Give Well</a>. You can also choose a different charity on the GiveWell list. You can also choose to donate if you do not report anonymously. I will not donate more to reflect the amount I would get back in taxes if I donate, because I cannot be bothered to do the calculations.</p>
-<h3 id="bounties">Bounties</h3>
-<table>
-<colgroup>
-<col style="width: 72%" />
-<col style="width: 27%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Item</th>
-<th>Bounty</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Typos</td>
-<td>A beer<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> if we meet.</td>
-</tr>
-<tr class="even">
-<td>Omitted citations</td>
-<td>A beer<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> if we meet.</td>
-</tr>
-<tr class="odd">
-<td>Coding error that changes a number reported in the supplement</td>
-<td>10€</td>
-</tr>
-<tr class="even">
-<td>Coding error that changes a number reported in the manuscript, but not a conclusion based on the number</td>
-<td>50€</td>
-</tr>
-<tr class="odd">
-<td>A better way to statistically model or test something that leads to a different conclusion</td>
-<td>100€</td>
-</tr>
-<tr class="even">
-<td>Coding error that changes a conclusion in the manuscript</td>
-<td>200€</td>
-</tr>
-<tr class="odd">
-<td>Coding error that changes the main conclusion in the abstract</td>
-<td>400€</td>
-</tr>
-</tbody>
-</table>
-<p>I will count the errors (by type, not by repetitions), not the numbers, or conclusions changed.</p>
-<p>Please note that these bounties do not necessarily reflect only the gravity of a bug (i.e., missing a citation can be pretty bad), but also my perception which of these are actually determinable objectively. So, by reducing the sum for omitting citations, I hope to forestall drawn-out arguments by reducing both side’s temptation to bargain.</p>
-<p>Any one person can claim at most 5 items, so up to 760€. If multiple people notice the same error, second and third reporters only get a beer, and my heartfelt gratitude.</p>
-<h2 id="please-help">Please help!</h2>
-<div class="layout-chunk" data-layout="l-screen-inset">
+<p>It is probably a co-incidence, but my <a href="http://rspb.royalsocietypublishing.org/content/284/1862/20171562">paternal and fitness paper</a> was the only one where one of my co-authors (thanks, Kai) independently re-did some of my central analyses completely independently<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> - and it is also the only one where I haven’t yet had to issue a correction, even though I was primarily responsible for analysis.</p>
+<p>So, I want to further promote code review in my work. I urge it on the people I supervise, I’m collaborating on a draft to advertise the practice. But there is also one other avenue that I want to try.</p>
+<h2 id="a-bug-bounty-program">A bug bounty program</h2>
+<aside>
+<div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:unnamed-chunk-3"></span>
-<img src="https://farm4.staticflickr.com/3855/14749733671_e759258f78_o_d.jpg" alt="Help me master my bugs. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14749733671)" class=external />
+<img src="https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg" alt="Get him. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804680103)" class=external />
 <p class="caption">
-Figure 3: Help me master my bugs. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14749733671">Internet Archive Book Images</a>
+Figure 3: Get him. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14804680103">Internet Archive Book Images</a>
 </p>
 </div>
 </div>
+</aside>
+<p>So, I’m announcing a <a href="/bug_bounty.html">bug bounty program</a>. Briefly, I will pay you to report errors in my work to me (up to 760€). It generally only applies to first-authored scientific work I publish from now on, but my co-author and friend Laura Botzet volunteered her first-authored preprint on <a href="https://psyarxiv.com/5387k/">birth order effects in Indonesia</a> as a guinea pig. I’m senior author on this paper, and tried my best to check the code (I also wrote some parts myself). Data and code are openly available, so if you feel like playing with a cool dataset and an interesting research question, we encourage you to check and review our code. Please see <a href="/bug_bounty.html">here</a> for the exact conditions<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>The computer scientist <a href="https://en.wikipedia.org/wiki/Knuth_reward_check">Donald Knuth</a> has a similar program in place that I did not know about until I mentioned this idea to others and I also drew some inspiration from <a href="https://www.gwern.net/Mistakes">gwern’s Mistakes page</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>I don’t want to scare people off of collaborating with me, so I have resolved not to badger anyone into this.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>I <a href="https://github.com/rubenarslan/formr.org/issues">know for a fact</a> that there are bugs in my software, but users already tell me about those. Also, it’s open source and can be updated continuously, so just create an issue or send a pull request.<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>For these, payouts are capped at one beer.<a href="#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I’m wrong form. I will buy you a beer though.<a href="#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>I’m obviously not a fan of enshrining papers, but think we currently lack a good mechanism of correcting papers citing an invalidated claim, see <a href="https://rubenarslan.github.io/posts/2018-09-23-are-studies-that-replicate-cited-more/">my blog post</a>, so it’s hard to fix on our own.<a href="#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>Capped at 3, I don’t want you to get hungover.<a href="#fnref7" class="footnote-back">↩</a></p></li>
-<li id="fn8"><p>Capped at 3, I don’t want you to get hungover.<a href="#fnref8" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>I still need to read <a href="http://www.hup.harvard.edu/catalog.php?isbn=9780674368309">The Enigma of Reason</a> which makes the point that arguing is how we reason best.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>which I didn’t like because I didn’t feel I should get to influence whether criticism of my work is published<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Or at least at the level that collaborators and employers will tolerate with respect to how much this slows me down<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>different data cleaning, used Stata instead of R, used a different model in some places<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>They are phrased rather lawyerly, because I would expect a bug bounty program to attract nitpicky people.<a href="#fnref5" class="footnote-back">↩</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
@@ -1424,17 +998,9 @@ Figure 3: Help me master my bugs. Figure from the <a href="https://www.flickr.co
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom">
-<h3 id="updates-and-corrections">Corrections</h3>
-<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rubenarslan/rubenarslan.github.io/issues/new">create an issue</a> on the source repository.</p>
-<h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rubenarslan/rubenarslan.github.io">https://github.com/rubenarslan/rubenarslan.github.io</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
-</div>
+<div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
-<div class="radix-site-nav radix-site-footer">
-<p>© Copyright 2018 Ruben Arslan.</p>
-</div>
 <!--/radix_placeholder_navigation_after_body-->
 
 </body>

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::include_graphics("https://farm3.staticflickr.com/2920/14764470974_92473042b4_o_d.jpg")
 ```
 
-To find errors in my work, I try to make my analyses  reproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work.
+To find errors in my work, I try to make my analysesreproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work.
 
 <aside>
 ```{r fig.cap="Get him. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804680103)", out.extra="class=external"}
@@ -27,7 +27,7 @@ Putting up an anonymous submission form only yielded one measly submission (alth
 Stepping on people's toes with my work yielded more, but it's not a practice I want to institutionalise.
 
 ## Bug bounties
-So, I'm borrowing another practice from software: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program).^[The computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place that I did not know about until I mentioned this idea to others.] I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend half of it.
+So, I'm borrowing another practice from software: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program).^[The computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place that I did not know about until I mentioned this idea to others and I also drew some inspiration from [gwern's Mistakes page](https://www.gwern.net/Mistakes).] I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend half of it.
 
 So, what does this apply to, and what can you earn? 
 
