@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::include_graphics("https://farm3.staticflickr.com/2920/14764470974_92473042b4_o_d.jpg")
 ```
 
-To find errors in my work, I try to make my analysesreproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work.
+To find errors in my work, I try to make my analyses reproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work.
 
 <aside>
 ```{r fig.cap="Get him. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804680103)", out.extra="class=external"}
