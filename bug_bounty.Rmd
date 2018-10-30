@@ -76,3 +76,9 @@ This policy could change anytime without notice.
 ```{r layout='l-screen-inset', fig.cap="Help me master my bugs. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14749733671)", out.extra="class=external"}
 knitr::include_graphics("https://farm4.staticflickr.com/3855/14749733671_e759258f78_o_d.jpg")
 ```
+
+
+## Acknowledgements
+
+Thanks to Wikimedia Germany and the Stifterverband for funding me through their fellowship "Free Knowledge" and supporting this program.
+Thanks to Daniel Mietchen, Nicolas Schmelling, and Benjamin Paffhausen with whom I hatched the precursor to this plan.
