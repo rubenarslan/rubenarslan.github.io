@@ -40,7 +40,7 @@ And lately, I've received some useful post-publication peer review of my ovulato
 
 This is the story of the mistakes I know about so far. It is not an impressively low rate for a fledgling scientist, but I'm at my limit in terms of reducing my own error rate through best practices on my own.^[Or at least at the level that collaborators and employers will tolerate with respect to how much this slows me down]
 
-I also know that for every new release of formr.org that involves more than a few lines of code, I make mistakes. With formr.org I usually find out quite early, because users notice the ensuing problems. Some of my scientific data analyses also involve a lot of code. Do I magically make fewer errors when working with R than with PHP and JavaScript?
+I also know that for every new release of [formr.org](https://formr.org) that involves more than a few lines of code, I make mistakes. With [formr.org](https://formr.org) I usually find out quite early, because users notice the ensuing problems. Some of my scientific data analyses also involve a lot of code. Do I magically make fewer errors when working with R than with PHP and JavaScript?
 
 No. If I'm honest with myself, I think there are probably even more errors in my work than the ones that have been found. Unfortunately, psychological science does not have a well-developed error culture and it is rare for people to reanalyse others' data, even if they build on it. 
 
