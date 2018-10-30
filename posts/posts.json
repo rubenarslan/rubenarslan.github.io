@@ -1,5 +1,20 @@
 [
   {
+    "path": "posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program/",
+    "title": "New rational athletics for boys and girls.",
+    "description": "Accounting for mistakes in my scientific work and announcing a bug bounty program.",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      }
+    ],
+    "date": "2018-10-26",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2018-10-30T13:53:35+01:00"
+  },
+  {
     "path": "posts/2018-10-15-are-big-studies-cited-more/",
     "title": "Are big studies cited more?",
     "description": "Does sample size predict number of citations?",
