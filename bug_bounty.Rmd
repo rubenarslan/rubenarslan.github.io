@@ -39,7 +39,7 @@ So, what does this apply to, and what can you earn?
   - blog posts count for 1/4 the amount unless they are tagged `quick job`^[For these, payouts are capped at one beer.]
 - It was published after October 2, 2018.^[I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I'm wrong form. I will buy you a beer though.]
 
-The different factors for preprints, publications, and blogs reflect the amount of effort I already put in them and how easy it will me for me to correct something at that point. So, because I would love to hear about errors before the publication processes "enshrines" the paper^[I'm obviously not a fan of enshrining papers, but think we currently
+The different factors for preprints, publications, and blogs reflect the amount of effort I already put in them and how easy it will be for me to correct something at that point. So, because I would love to hear about errors before the publication processes "enshrines" the paper^[I'm obviously not a fan of enshrining papers, but think we currently
 lack a good mechanism of correcting papers citing an invalidated claim, see [my blog post](https://rubenarslan.github.io/posts/2018-09-23-are-studies-that-replicate-cited-more/), so it's hard to fix on our own.], errors in preprints are worth more than those in published paper.
 
 ### Budget
