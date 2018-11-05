@@ -105,7 +105,7 @@ In addition to extensive documentation supplied by us and supplemented by our us
 ### [codebook](https://cran.r-project.org/web/packages/codebook/)
 codebook is an R package that allows users to document datasets in nice websites that can be read and understood both by co-authors, forgetful future yous, and machines. It was based on a set of convenience functions available in formr. It can make good use of existing metadata, such as item data contained in Qualtrics or formr.org surveys, but also variable and value labels, in Stata, SPSS, and SAS files.
 
-A tutorial is available as a [preprint](https://psyarxiv.com/5qc6h/), but the easiest way to get going is to simply upload a dataset to this [webapp](http://codebook.formr.org/). Iro Eleftheriadou created a [gallery](https://rubenarslan.github.io/codebook_gallery/) for codebooks made from dataset uploaded to the Open Science Framework.
+A tutorial is available as a [preprint](https://psyarxiv.com/5qc6h/), but the easiest way to get going is to simply upload a dataset to this [webapp](http://codebook.formr.org/). Iro Eleftheriadou created a [gallery](https://rubenarslan.github.io/codebook_gallery/) for codebooks made from datasets uploaded to the Open Science Framework.
 
 ### [Alphabattle.xyz](https://alphabattle.xyz)
 A small collaboration with a friend led to this player-vs-player online word game written with [Meteor](https://www.meteor.com). 
