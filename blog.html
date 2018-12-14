@@ -1214,7 +1214,6 @@
       $('#disqus_thread').toggleClass('hidden');
       if (!$('#disqus_thread').hasClass('hidden')) {
         var offset = $(this).offset();
-        $(window).resize();
         $('html, body').animate({
           scrollTop: offset.top - 35
         });
@@ -1287,6 +1286,7 @@
 <div class="nav-right">
 <a href="index.html">Home</a>
 <a href="blog.html">Blog</a>
+<a href="bug_bounty.html">Bug Bounty</a>
 <a href="about.html">About</a>
 <a href="index.xml">
 <i class="fa fa-rss"></i>
@@ -1621,10 +1621,21 @@ function init_posts_list() {
 
 <div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
+<a href="posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":[]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 25, 2018</div>
+</div>
+<div class="thumbnail"></div>
+<div class="description">
+<h2>New rational athletics for boys and girls.</h2>
+<p>Accounting for mistakes in my scientific work and announcing a bug bounty program.</p>
+</div>
+</a>
 <a href="posts/2018-10-15-are-big-studies-cited-more/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["meta science","open science","reproducibility","quick job"]}</script>
 <div class="metadata">
-<div class="publishedDate">Oct. 21, 2018</div>
+<div class="publishedDate">Oct. 22, 2018</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2018-10-15-are-big-studies-cited-more/are-big-studies-cited-more_files/figure-html5/unnamed-chunk-3-1.png"/>
