@@ -270,7 +270,7 @@ in the field. But the study authors hardly have this excuse; they knew whether t
 MASTER_clean %>% 
 ggplot(aes(replicated_p_lt_05, self_cites_before_2015)) + 
   xlab("Significant replication effect (p < .05)") +
-  ylab("Self Citations before 2015)") +
+  ylab("Self Citations before 2015") +
   geom_beeswarm(alpha = 0.3) + 
   geom_pointrange(stat='summary', fun.data = 'mean_se',color ='#4F94B0')
 
@@ -283,7 +283,7 @@ MASTER_clean %>%
 MASTER_clean %>% 
 ggplot(aes(replicated_p_lt_05, self_cites_after_2015)) + 
   xlab("Significant replication effect (p < .05)") +
-  ylab("Self Citations after 2015)") +
+  ylab("Self Citations after 2015") +
   geom_beeswarm(alpha = 0.3) + 
   geom_pointrange(stat='summary', fun.data = 'mean_se',color ='#4F94B0')
 
