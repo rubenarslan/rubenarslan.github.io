@@ -1,14 +1,16 @@
 ---
 name: "replication_and_citation"
-title: "Are studies that replicate cited more?"
+title: "Revised: Are studies that replicate cited more?"
 author:
   - name: "Ruben C. Arslan"
     url: https://rubenarslan.github.io
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+  - name: "Ioanna Iro Eleftheriadou"
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 description: |
   Looking at the RPP to bring data to a discussion
-date: 09-23-2018
+date: 01-02-2019
 categories: 
   - meta science
   - open science
@@ -90,8 +92,8 @@ if (file.exists("osfdata_with_dois.rdata")) {
 }
 regress15_18 <- lm(citation_count_2018 ~ Citation.count..paper..O., data = MASTER)
 MASTER <- MASTER %>% mutate(
-  citations_after_2018 = citation_count_2018 - Citation.count..paper..O. * regress15_18$coefficients[2],
-  citations_after_2018 = citations_after_2018 - min(citations_after_2018, na.rm = T)
+  citations_after_2015 = citation_count_2018 - Citation.count..paper..O. * regress15_18$coefficients[2],
+  citations_after_2015 = citations_after_2015 - min(citations_after_2015, na.rm = T)
 )
 
 MASTER_clean <- MASTER %>% 
@@ -99,7 +101,7 @@ MASTER_clean <- MASTER %>%
                 mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
                        doi = DOI,
                        DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
-                select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018, doi)
+                select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2015, doi)
 ```
 
 
@@ -172,7 +174,15 @@ save(MASTER_clean, file = "osfdata_with_scopus.rdata")
 }
 ```
 
-We found `r sum(!is.na(MASTER$DOI))` DOIs, so we had DOIs for all our `r nrow(MASTER)` studies^[Were they they all correct? See Appendix].
+We found `r sum(!is.na(MASTER$DOI))` DOIs, so we had DOIs for all our studies^[Were they they all correct? See Appendix].
+
+```{r layout="l-body-outset"}
+MASTER_clean %>% select(scopus_pre2015 = cit_before_2015_scopus, scopus_2018 = cit_total_scopus, scopus_post2015 = cit_after_2015_scopus, gscholar_pre2015 = citations_2015, crossref_2018 = citations_2018, mixed_post2015 = citations_after_2015) %>% cor() %>% round(2) %>% knitr::kable()
+
+MASTER_clean$citations_2015 <- MASTER_clean$cit_before_2015_scopus
+MASTER_clean$citations_after_2015 <- MASTER_clean$cit_after_2015_scopus
+MASTER_clean$citations_2018 <- MASTER_clean$cit_total_scopus
+```
 
 
 ## Does replication in the RPP predict how often a paper is cited?
@@ -184,7 +194,7 @@ MASTER_clean %>%
   xlab("Significant replication effect (p < .05)") +
   ylab("Citation count (RPP, 2015)") +
   geom_beeswarm(alpha = 0.3) + 
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
+  geom_pointrange(stat='summary', fun.data = 'mean_se',color ='#4F94B0')
 
 MASTER_clean %>% 
   glm(citations_2015 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
@@ -194,20 +204,23 @@ MASTER_clean %>%
 
 ## Does replication predict 2018 citation counts?
 <aside>
-__Details__: I got DOIs, which were missing from the RPP data, by searching Crossref on titles, authors, and dates. I did some checking to see if matches were proper. Next, I got up-to-date citation counts from CrossRef. Find the improved dataset with DOIs below.
+__Details__: I got DOIs, which were missing from the RPP data, by searching Crossref on titles, authors, and dates. I did some checking to see if matches were proper. Next, I got citation counts from Scopus and validated those against those in the RPP and Crossref. Find the improved dataset with DOIs below.
 </aside>
 
-I used the Crossref API to get DOIs and current citation counts for the papers contained in the RPP. 
-Again, there was no association with replication status.
+I used the Crossref API to get DOIs and the Scopus API to get yearly citation counts for the papers contained in the RPP. 
+
+__Edit:__ The SCOPUS citation count up to 2015 was highly correlated with the one stored in the dataset (based on Google Scholar). Rank order were also very similar for citations pre and post 2015 using Scopus, CrossRef, or Google Scholar. However, subtracting CrossRef citation counts from Google Scholar counts amplified error (to get citations after the publication of the RPP) - the correlation with the "citations after 2015 (Scopus)" variable was low. Therefore, the revised version of this blog post uses only the Scopus numbers.
+
+Again, there was no association with replication status for 2018 citation counts.
 
 
 ```{r layout='l-body-outset'}
 MASTER_clean %>% 
   ggplot(aes(replicated_p_lt_05, citations_2018)) + 
   xlab("Significant replication effect (p < .05)") +
-  ylab("Citation count (Crossref, 2018)") +
+  ylab("Citation count (Scopus, 2018)") +
   geom_beeswarm(alpha = 0.3) + 
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
+  geom_pointrange(stat='summary', fun.data = 'mean_se',color ='#4F94B0')
 
 MASTER_clean %>% 
   glm(citations_2018 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
@@ -217,33 +230,65 @@ MASTER_clean %>%
 
 ## Does replication predict subsequent citation counts (ie. 2015-2018)?
 <aside>
-The correlation between 2018 and 2015 counts is `r round(cor(MASTER$citation_count_2018, MASTER$Citation.count..paper..O.),2)`. The mean for citations in 2018 is `r round(mean(MASTER$citation_count_2018))`, in the RPP data it was `r round(mean(MASTER$Citation.count..paper..O.))`. How can citations go _down_? The citation count in the RPP from Google Scholar includes more sources, leading to the mean being higher, but these sources don't seem to be systematically different, leading to the maintained rank order. 
+The correlation between 2018 Scopus and 2015 Google Scholar counts is `r round(cor(MASTER$citation_count_2018, MASTER$Citation.count..paper..O.),2)`, but the means differ (2018 Scopus = `r round(mean(MASTER$citation_count_2018))`, Scholar 2015 = `r round(mean(MASTER$Citation.count..paper..O.))`). Can citations go _down_? No, but Google Scholar includes more sources than Scopus, leading to the mean being higher. Still, these sources don't seem to be systematically different, leading to the maintained rank order. 
 
 ```{r}
 qplot(Citation.count..paper..O., citation_count_2018, data = MASTER) + 
-  xlab("Citations (RPP, 2015)") +
-  ylab("Citations (Crossref, 2018)") +
+  xlab("Citations (GScholar, 2015)") +
+  ylab("Citations (Scopus, 2018)") +
 ggtitle("Correlation") + geom_smooth(method = 'lm') + 
   theme_light(base_size = 25)
 ```
 
 </aside>
 
-This is pretty dirty work, because I'm subtracting citation counts from one source with another, so most papers are cited less in 2018 than in 2015. But haven't found a quick way to get citation counts in 2015 from `rcrossref`. I've requested the necessary access to Scopus, where I could check, but Elsevier is being annoying.
+<strike>This is pretty dirty work, because I'm subtracting citation counts from one source with another, so most papers are cited less in 2018 than in 2015. But haven't found a quick way to get citation counts in 2015 from `rcrossref`. I've requested the necessary access to Scopus, where I could check, but Elsevier is being annoying.</strike>
 
-Again, no association. So, assuming the dirtiness of the analysis doesn't matter, the literature hasn't reacted at all to the presumably important bit of information that a study doesn't replicate.
+<strike>Again, no association. So, assuming the dirtiness of the analysis doesn't matter, </strike>
+
+The literature hasn't reacted at all to the presumably important bit of information that a study doesn't replicate.
 
 
 ```{r layout='l-body-outset'}
 MASTER_clean %>% 
-ggplot(aes(replicated_p_lt_05, citations_after_2018)) + 
+ggplot(aes(replicated_p_lt_05, citations_after_2015)) + 
   xlab("Significant replication effect (p < .05)") +
   ylab("Citations after 2015)") +
   geom_beeswarm(alpha = 0.3) + 
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')
+  geom_pointrange(stat='summary', fun.data = 'mean_se',color ='#4F94B0')
 
 MASTER_clean %>% 
-  glm(citations_after_2018 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
+  glm(citations_after_2015 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
+  summary()
+```
+
+### What about self citations?
+The RPP emphasised its own overall result. Hence, some nonreplications of specific studies may have gone unnoticed by researchers
+in the field. But the study authors hardly have this excuse; they knew whether their study was replicated (probably even prior to 2015, but this is hard to figure out). However, there is also no significant difference in self citation count (before or after 2015) by publication status.
+
+```{r layout='l-body-outset'}
+MASTER_clean %>% 
+ggplot(aes(replicated_p_lt_05, self_cites_before_2015)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Self Citations before 2015)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'mean_se',color ='#4F94B0')
+
+MASTER_clean %>% 
+  glm(self_cites_before_2015 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
+  summary()
+```
+
+```{r layout='l-body-outset'}
+MASTER_clean %>% 
+ggplot(aes(replicated_p_lt_05, self_cites_after_2015)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Self Citations after 2015)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'mean_se',color ='#4F94B0')
+
+MASTER_clean %>% 
+  glm(self_cites_after_2015 ~ replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
   summary()
 ```
 
@@ -251,15 +296,16 @@ MASTER_clean %>%
 A slightly different way of looking at it does not yield different conclusions for me.
 
 ```{r layout='l-body-outset'}
-qplot(Citation.count..paper..O., citation_count_2018, colour = T_pval_USE..R.< .05, data = MASTER %>% filter(!is.na(T_pval_USE..R.))) + 
+qplot(citations_2015, citations_2018, colour = replicated_p_lt_05, data = MASTER_clean %>% filter(!is.na(replicated_p_lt_05))) + 
   geom_smooth(method = 'glm', method.args = list(family = quasipoisson(link = "log"))) +
-  xlab("Citation count (RPP, 2015)") +
-  ylab("Citation count (Crossref, 2018)") +
+  xlab("Citation count (Scopus, 2015)") +
+  ylab("Citation count (Scopus, 2018)") +
   scale_color_brewer("Significant \nreplication \neffect (p<.05)", palette = 1)
 
-qplot(Citation.count..paper..O., citations_after_2018, colour = T_pval_USE..R.< .05, data = MASTER %>% filter(!is.na(T_pval_USE..R.))) +   geom_smooth(method = 'glm', method.args = list(family = quasipoisson(link = "log"))) +
-  xlab("Citation count (RPP, 2015)") +
-  ylab("Citation count after 2015") +
+qplot(citations_2015, citations_after_2015, colour = replicated_p_lt_05, data = MASTER_clean %>% filter(!is.na(replicated_p_lt_05))) +  
+  geom_smooth(method = 'glm', method.args = list(family = quasipoisson(link = "log"))) +
+  xlab("Citation count (Scopus, 2015)") +
+  ylab("Citation count after 2015 (Scopus)") +
   scale_color_brewer("Significant \nreplication \neffect (p<.05)", palette = 1)
 ```
 
@@ -271,10 +317,10 @@ Hard to tell with this little data!
 MASTER_clean %>% 
   ggplot(aes(replicated_p_lt_05, citations_2018)) + 
   xlab("Significant replication effect (p < .05)") +
-  ylab("Citation count (Crossref, 2018)") +
+  ylab("Citation count (Scopus, 2018)") +
   geom_beeswarm(alpha = 0.3) + 
   facet_wrap(~ Journal, nrow = 1) +
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color = '#4F94B0')
+  geom_pointrange(stat='summary', fun.data = 'mean_se',color = '#4F94B0')
 
 MASTER_clean %>% 
   glm(citations_2015 ~ Journal*replicated_p_lt_05, data = ., family = quasipoisson()) %>% 
@@ -299,17 +345,28 @@ These were all studies from reputable journals, so we might have some range rest
 ## Which studies keep being cited after not being replicated?
 Hover your mouse over the dots to see the study titles.
 
-```{r layout='l-body-outset'}
+```{r layout='l-screen-inset'}
 library(rbokeh)
-figure(width = 1100, height = 500) %>%
-  ly_points(citations_2015, citations_after_2018, data = MASTER_clean,
+MASTER_clean$Replicated <- MASTER_clean$replicated_p_lt_05
+figure(width = 2800, height = 500) %>%
+  ly_points(citations_2015, citations_after_2015, data = MASTER_clean,
     color = replicated_p_lt_05, 
-    hover = list(Authors, Title))
+    hover = list(Authors, Title, Replicated))
+```
+
+## Which authors keep citing their own studies after they do not replicate?
+Hover your mouse over the dots to see the study titles.
+
+```{r layout='l-screen-inset'}
+figure(width = 2800, height = 500) %>%
+  ly_points(self_cites_before_2015, self_cites_after_2015, data = MASTER_clean,
+    color = replicated_p_lt_05, 
+    hover = list(Authors, Title, Replicated))
 ```
 
 ## List of studies
 ```{r layout='l-screen-inset'}
-DT::datatable(MASTER_clean %>% select(-citations_after_2018) %>% arrange(desc(citations_2018)), escape = F,
+DT::datatable(MASTER_clean %>% select(Authors, Title, Journal, DOI, replicated_p_lt_05, citations_2015, citations_2018, self_cites_before_2015, self_cites_after_2015) %>% arrange(desc(citations_2018)), escape = F,
 extensions = 'Buttons', rownames = F, options = list(
     dom = 'Bfrtip',
     buttons = c('copy', 'csv', 'excel')
@@ -322,57 +379,10 @@ extensions = 'Buttons', rownames = F, options = list(
 MASTER$mismatch <- stringdist::stringdist(MASTER$Study.Title..O., MASTER$title_crossref)
 library(formr)
 MASTER$starts <- str_to_lower(MASTER$Study.Title..O.) %starts_with% str_to_lower(MASTER$title_crossref)
-# MASTER %>% arrange(desc(mismatch)) %>% filter(!is.na(T_pval_USE..R.)) %>% select(Study.Title..O., title_crossref, DOI)
+# MASTER %>% arrange(desc(mismatch)) %>% filter(!is.na(T_pval_USE..R.)) %>% select(Study.Title..O., title_crossref, DOI) %>% View
 ```
 
 These analyses are based on Chris J. Hartgerink's script. The data and his script can be found on the [OSF](https://osf.io/ytpuq/).
 Did I get the right DOIs? There are probably still some mismatches. Titles are not exactly equal for `r sum(MASTER$mismatch>0, na.rm = TRUE)` studies, but on manual inspection this is only because Crossref separates out the subtitle, and `r sum(MASTER$starts, na.rm = TRUE)` of `r nrow(MASTER)` titles start exactly the same.
 
-
-
-```{r scopus plots}
-
-ggplot(data = MASTER_clean, mapping = aes(x = cit_before_2015_scopus, y = cit_after_2015_scopus, color = replicated_p_lt_05)) + 
-  geom_point() + geom_smooth(method = lm) + ggtitle("citations before and after 2015") 
-
-ggplot(data = MASTER_clean, mapping = aes(x = cit_scopus_self_ex_before_2015, y = cit_scopus_self_ex_after_2015, color = replicated_p_lt_05)) + 
-  geom_point() + geom_smooth(method = lm) + ggtitle("citations (self excluding) before and after 2015") 
-
-ggplot(data = MASTER_clean, mapping = aes(x = self_cites_before_2015, y = self_cites_after_2015, color = replicated_p_lt_05)) + 
-  geom_point() + geom_smooth(method = lm) + ggtitle("self citations before and after 2015") 
-
-ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, self_cites_after_2015)) + 
-  xlab("Significant replication effect (p < .05)") +
-  ylab("Self cites after 2015 (Scopus)") +
-  geom_beeswarm(alpha = 0.3) + 
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0') + 
-  ggtitle("Self citations after 2015 wrt replication") 
-
-ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, cit_before_2015_scopus)) + 
-  xlab("Significant replication effect (p < .05)") +
-  ylab("Citations before 2015 (Scopus)") +
-  geom_beeswarm(alpha = 0.3) + 
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0') + 
-  ggtitle("Citations before 2015 wrt replication")  
-
-ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, cit_after_2015_scopus)) + 
-  xlab("Significant replication effect (p < .05)") +
-  ylab("Citations after 2015 (Scopus)") +
-  geom_beeswarm(alpha = 0.3) + 
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0') + 
-  ggtitle("Citations after 2015 wrt replication")  
- 
-
-ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, cit_total_scopus)) + 
-  xlab("Significant replication effect (p < .05)") +
-  ylab("total citation count (Scopus)") +
-  geom_beeswarm(alpha = 0.3) + 
-  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')+ 
-  facet_wrap(~ Journal, nrow = 1) + 
-  ggtitle("Citations wrt replication per Journal") 
-
-
-
-```
-```
 

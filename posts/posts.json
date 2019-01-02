@@ -1,5 +1,31 @@
 [
   {
+    "path": "posts/2019-01-02-are-studies-that-replicate-cited-more/",
+    "title": "Revised: Are studies that replicate cited more?",
+    "description": "Looking at the RPP to bring data to a discussion",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      },
+      {
+        "name": "Ioanna Iro Eleftheriadou",
+        "url": {}
+      }
+    ],
+    "date": "2019-01-02",
+    "categories": [
+      "meta science",
+      "open science",
+      "reproducibility",
+      "quick job"
+    ],
+    "preview": "posts/2019-01-02-are-studies-that-replicate-cited-more/are-studies-that-replicate-cited-more_files/figure-html5/unnamed-chunk-5-1.png",
+    "last_modified": "2019-01-02T18:02:49+01:00",
+    "preview_width": 1152,
+    "preview_height": 768
+  },
+  {
     "path": "posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program/",
     "title": "New rational athletics for boys and girls.",
     "description": "Accounting for mistakes in my scientific work and announcing a bug bounty program.",
@@ -38,28 +64,6 @@
     "preview": "posts/2018-10-15-are-big-studies-cited-more/are-big-studies-cited-more_files/figure-html5/unnamed-chunk-3-1.png",
     "last_modified": "2018-10-24T18:08:16+02:00",
     "preview_width": 1920,
-    "preview_height": 768
-  },
-  {
-    "path": "posts/2018-09-23-are-studies-that-replicate-cited-more/",
-    "title": "Are studies that replicate cited more?",
-    "description": "Looking at the RPP to bring data to a discussion",
-    "author": [
-      {
-        "name": "Ruben C. Arslan",
-        "url": "https://rubenarslan.github.io"
-      }
-    ],
-    "date": "2018-09-23",
-    "categories": [
-      "meta science",
-      "open science",
-      "reproducibility",
-      "quick job"
-    ],
-    "preview": "posts/2018-09-23-are-studies-that-replicate-cited-more/are-studies-that-replicate-cited-more_files/figure-html5/unnamed-chunk-4-1.png",
-    "last_modified": "2018-10-24T18:08:45+02:00",
-    "preview_width": 1152,
     "preview_height": 768
   }
 ]
