@@ -48,6 +48,8 @@ library(ggplot2)
 library(ggbeeswarm)
 library(tidyverse)
 library(lubridate)
+library(Hmisc)
+library(rscopus)
 theme_set(theme_light())
 # Read in Tilburg data
 info <- GET('https://osf.io/fgjvw/?action=download', write_disk('rpp_data.csv', overwrite = TRUE)) #downloads data file from the OSF
@@ -91,11 +93,83 @@ MASTER <- MASTER %>% mutate(
   citations_after_2018 = citation_count_2018 - Citation.count..paper..O. * regress15_18$coefficients[2],
   citations_after_2018 = citations_after_2018 - min(citations_after_2018, na.rm = T)
 )
+
 MASTER_clean <- MASTER %>% 
                 filter(!is.na(T_pval_USE..R.)) %>% 
                 mutate(replicated_p_lt_05 = factor(if_else(T_pval_USE..R. < .05, "yes", "no")),
+                       doi = DOI,
                        DOI = paste0("<a href='https://dx.doi.org/", DOI,"'>", DOI, "</a>")) %>% 
-                select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018)
+                select(Authors = Authors..O., Title = Study.Title..O., Journal = Journal..O., DOI, replicated_p_lt_05, citations_2015 = Citation.count..paper..O., citations_2018 = citation_count_2018, citations_after_2018, doi)
+```
+
+
+```{r rscopus}
+
+if (file.exists("osfdata_with_scopus.rdata")) {
+	load("osfdata_with_scopus.rdata")
+} else {
+
+find_cit_scopus <- function(x, flag){
+s <- generic_elsevier_api(api_key = api_key,
+                          doi = x,
+                          date = "2015-2019",
+                          type = "citations",
+                          search_type = "scopus")
+
+s_exclude <- generic_elsevier_api(api_key = api_key,
+                          doi = x, 
+                          date = "2015-2019",
+                          citation = "exclude-self",
+                          type = "citations",
+                          search_type = "scopus")
+
+prev <- s$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$prevColumnTotal
+after <- s$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$rangeColumnTotal
+total <- s$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$grandTotal
+prev_ex <- s_exclude$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$prevColumnTotal
+after_ex <- s_exclude$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$rangeColumnTotal
+total_exclude <- s_exclude$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$grandTotal
+
+if(flag == "prev"){
+  return(prev)}
+else if(flag == "after"){
+  return(after)}
+else if(flag == "total"){
+  return(total)}
+else if(flag == "total_exclude"){
+  return(total_exclude)}
+else if(flag == "prev_ex"){
+  return(prev_ex)}
+else if(flag == "after_ex"){
+  return(after_ex)
+}
+}
+
+
+  
+MASTER_clean$cit_before_2015_scopus <- as.integer(as.list(MASTER_clean$doi) %>% 
+  map(find_cit_scopus, flag = "prev"))
+
+MASTER_clean$cit_after_2015_scopus <- as.integer(as.list(MASTER_clean$doi) %>% 
+  map(find_cit_scopus, flag = "after"))
+
+MASTER_clean$cit_total_scopus <- as.integer(as.list(MASTER_clean$doi) %>% 
+  map(find_cit_scopus, flag = "total"))
+
+MASTER_clean$cit_total_scopus_self_exclude <- as.integer(as.list(MASTER_clean$doi) %>% 
+  map(find_cit_scopus, flag = "total_exclude"))
+
+MASTER_clean$cit_scopus_self_ex_before_2015  <- as.integer(as.list(MASTER_clean$doi) %>% 
+  map(find_cit_scopus, flag = "prev_ex"))
+
+MASTER_clean$cit_scopus_self_ex_after_2015  <- as.integer(as.list(MASTER_clean$doi) %>% 
+  map(find_cit_scopus, flag = "after_ex"))
+
+MASTER_clean <- MASTER_clean %>% mutate(self_cites_before_2015 = cit_before_2015_scopus-cit_scopus_self_ex_before_2015,
+                                        self_cites_after_2015 = cit_after_2015_scopus - cit_scopus_self_ex_after_2015)
+
+save(MASTER_clean, file = "osfdata_with_scopus.rdata")
+}
 ```
 
 We found `r sum(!is.na(MASTER$DOI))` DOIs, so we had DOIs for all our `r nrow(MASTER)` studies^[Were they they all correct? See Appendix].
@@ -189,6 +263,7 @@ qplot(Citation.count..paper..O., citations_after_2018, colour = T_pval_USE..R.< 
   scale_color_brewer("Significant \nreplication \neffect (p<.05)", palette = 1)
 ```
 
+
 ## Does the association differ by journal?
 Hard to tell with this little data!
 
@@ -254,4 +329,50 @@ These analyses are based on Chris J. Hartgerink's script. The data and his scrip
 Did I get the right DOIs? There are probably still some mismatches. Titles are not exactly equal for `r sum(MASTER$mismatch>0, na.rm = TRUE)` studies, but on manual inspection this is only because Crossref separates out the subtitle, and `r sum(MASTER$starts, na.rm = TRUE)` of `r nrow(MASTER)` titles start exactly the same.
 
 
+
+```{r scopus plots}
+
+ggplot(data = MASTER_clean, mapping = aes(x = cit_before_2015_scopus, y = cit_after_2015_scopus, color = replicated_p_lt_05)) + 
+  geom_point() + geom_smooth(method = lm) + ggtitle("citations before and after 2015") 
+
+ggplot(data = MASTER_clean, mapping = aes(x = cit_scopus_self_ex_before_2015, y = cit_scopus_self_ex_after_2015, color = replicated_p_lt_05)) + 
+  geom_point() + geom_smooth(method = lm) + ggtitle("citations (self excluding) before and after 2015") 
+
+ggplot(data = MASTER_clean, mapping = aes(x = self_cites_before_2015, y = self_cites_after_2015, color = replicated_p_lt_05)) + 
+  geom_point() + geom_smooth(method = lm) + ggtitle("self citations before and after 2015") 
+
+ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, self_cites_after_2015)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Self cites after 2015 (Scopus)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0') + 
+  ggtitle("Self citations after 2015 wrt replication") 
+
+ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, cit_before_2015_scopus)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Citations before 2015 (Scopus)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0') + 
+  ggtitle("Citations before 2015 wrt replication")  
+
+ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, cit_after_2015_scopus)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("Citations after 2015 (Scopus)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0') + 
+  ggtitle("Citations after 2015 wrt replication")  
+ 
+
+ggplot(data = MASTER_clean, mapping = aes(replicated_p_lt_05, cit_total_scopus)) + 
+  xlab("Significant replication effect (p < .05)") +
+  ylab("total citation count (Scopus)") +
+  geom_beeswarm(alpha = 0.3) + 
+  geom_pointrange(stat='summary', fun.data = 'median_hilow',color ='#4F94B0')+ 
+  facet_wrap(~ Journal, nrow = 1) + 
+  ggtitle("Citations wrt replication per Journal") 
+
+
+
+```
+```
 

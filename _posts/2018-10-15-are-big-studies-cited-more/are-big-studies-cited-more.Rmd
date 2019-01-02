@@ -46,6 +46,7 @@ library(rAltmetric)
 library(RISmed)
 library(devtools)
 library(lme4)
+library(rscopus)
 theme_set(theme_light())
 ```
 
@@ -112,6 +113,7 @@ find_citation <- function(x){
   })
 }
 
+
 articles$doi <- articles %>% transpose() %>% map_chr(find_doi)
 articles$citation_count_crossref <- as.list(articles$doi) %>% 
   map_dbl(find_citation)
@@ -120,6 +122,34 @@ saveRDS(articles, file = cache_file)
 }
 ```
 
+```{r}
+find_cit_scopus <- function(x, flag){
+  
+#a <- paste(y$Year, y$Year+2, sep = "-")
+s <- generic_elsevier_api(api_key = api_key,
+                          doi = x, query = list(citation = "exclude-self"),
+                          date = "2006-2019",
+                          type = "citations",
+                          search_type = "scopus")
+prev <- s$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$prevColumnTotal
+range <- s$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$rangeColumnTotal
+later <- s$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$laterColumnTotal
+total <- s$content$`abstract-citations-response`$citeColumnTotalXML$citeCountHeader$grandTotal
+if(flag == "prev"){
+  return(prev)}
+else if(flag == "range"){
+  return(range)}
+else if(flag == "total"){
+  return(total)
+}
+}
+
+articles$cit_total_scopus <- as.list(articles$doi) %>% 
+  map(find_cit_scopus, flag = "total")
+
+
+
+```
 
 
 
