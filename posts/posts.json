@@ -1,5 +1,28 @@
 [
   {
+    "path": "posts/2019-01-21-genetic-analyses-and-solidarity/",
+    "title": "Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil",
+    "description": "Genetische Unterschiede sind ein Argument für den Sozialstaat",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      },
+      {
+        "name": "Gert G. Wagner",
+        "url": {}
+      },
+      {
+        "name": "Philipp Köllinger",
+        "url": {}
+      }
+    ],
+    "date": "2019-01-21",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2019-01-21T14:40:12+01:00"
+  },
+  {
     "path": "posts/2019-01-02-are-studies-that-replicate-cited-more/",
     "title": "Revised: Are studies that replicate cited more?",
     "description": "Looking at the RPP to bring data to a discussion",

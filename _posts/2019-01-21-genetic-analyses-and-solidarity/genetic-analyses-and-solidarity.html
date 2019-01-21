@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
   <meta name="generator" content="radix" />
-  <link rel="alternate" type="application/rss+xml" href="https://rubenarslan.github.io/blog.xml" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -20,372 +19,41 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>Ruben Arslan: Ruben C. Arslan</title>
+  <title>Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil</title>
   
-  <meta property="description" itemprop="description" content="New blog posts"/>
+  <meta property="description" itemprop="description" content="Genetische Unterschiede sind ein Argument für den Sozialstaat"/>
   
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
   
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2019-01-21"/>
+  <meta property="article:created" itemprop="dateCreated" content="2019-01-21"/>
+  <meta name="article:author" content="Ruben C. Arslan"/>
+  <meta name="article:author" content="Gert G. Wagner"/>
+  <meta name="article:author" content="Philipp Köllinger"/>
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Ruben Arslan: Ruben C. Arslan"/>
+  <meta property="og:title" content="Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="New blog posts"/>
+  <meta property="og:description" content="Genetische Unterschiede sind ein Argument für den Sozialstaat"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Ruben Arslan"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Ruben Arslan: Ruben C. Arslan"/>
-  <meta property="twitter:description" content="New blog posts"/>
-  <meta property="twitter:site" content="@rubenarslan"/>
+  <meta property="twitter:title" content="Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil"/>
+  <meta property="twitter:description" content="Genetische Unterschiede sind ein Argument für den Sozialstaat"/>
   
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","listing","description"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["posts"]},{"type":"character","attributes":{},"value":["New blog posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil"]},{"type":"character","attributes":{},"value":["Genetische Unterschiede sind ein Argument für den Sozialstaat\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Gert G. Wagner"]},{"type":"character","attributes":{},"value":["Max Planck Institute for Human Development, Berlin, German Institute for Economic Research (DIW Berlin)"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Philipp Köllinger"]},{"type":"character","attributes":{},"value":["Free University Amsterdam (VU), German Institute for Economic Research (DIW Berlin)"]}]}]},{"type":"character","attributes":{},"value":["01-21-2019"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
-  <!--radix_placeholder_navigation_in_header-->
   
-  <script type="application/javascript">
-  
-    window.headroom_prevent_pin = false;
-  
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-  
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-  
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-  
-      // responsive menu
-      $('.radix-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-  
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["genetic-analyses-and-solidarity_files/bowser-1.9.3/bowser.min.js","genetic-analyses-and-solidarity_files/distill-2.2.21/template.v2.js","genetic-analyses-and-solidarity_files/jquery-1.11.3/jquery.min.js","genetic-analyses-and-solidarity_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
-  
-  <style type="text/css">
-  
-  /* Theme (user-documented overrideables for nav appearance) */
-  
-  .radix-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #455a64;
-    font-size: 15px;
-    font-weight: 300;
-  }
-  
-  .radix-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-  
-  .radix-site-nav a:hover {
-    color: white;
-  }
-  
-  @media print {
-    .radix-site-nav {
-      display: none;
-    }
-  }
-  
-  .radix-site-header {
-  
-  }
-  
-  .radix-site-footer {
-  
-  }
-  
-  
-  /* Site Header */
-  
-  .radix-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-  
-  .radix-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .radix-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-  
-  
-  .radix-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-  
-  .radix-site-header a,
-  .radix-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-  
-  .radix-site-header .title {
-    font-size: 18px;
-  }
-  
-  .radix-site-header .logo {
-    padding: 0;
-  }
-  
-  .radix-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-  
-  .radix-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-  
-  
-  
-  @media screen and (min-width: 1000px) {
-    .radix-site-header .logo img {
-      display: inline-block;
-    }
-    .radix-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .radix-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .radix-site-header .title {
-      padding-left: 12px;
-    }
-  }
-  
-  
-  .radix-site-header .nav-toggle {
-    display: none;
-  }
-  
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-  
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-  
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-  
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .nav-dropdown-active {
-    display: block;
-  }
-  
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-  
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-  
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-  
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .radix-site-header a, .radix-site-header .nav-dropdown  {display: none;}
-    .radix-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .radix-site-header .title {
-      margin-left: 0;
-    }
-    .radix-site-header .nav-right {
-      margin-right: 0;
-    }
-    .radix-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-  
-  
-  @media screen and (max-width: 768px) {
-    .radix-site-header.responsive {position: relative;}
-    .radix-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .radix-site-header.responsive a,
-    .radix-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .radix-site-header.responsive .nav-left,
-    .radix-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .radix-site-header.responsive .nav-dropdown {float: none;}
-    .radix-site-header.responsive .nav-dropdown-content {position: relative;}
-    .radix-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-  
-  /* Site Footer */
-  
-  .radix-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-  
-  /* Headroom */
-  
-  d-title {
-    padding-top: 6rem;
-  }
-  
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-  
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-  
-  .headroom--unpinned {
-    top: -100px;
-  }
-  
-  .headroom--pinned {
-    top: 0;
-  }
-  
-  </style>
-  
-  <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet"/>
-  <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-  <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
   
@@ -397,6 +65,10 @@
   
   .pandoc-table {
     width: 100%;
+  }
+  
+  .pandoc-table>caption {
+    margin-bottom: 10px;
   }
   
   .pandoc-table th:not([align]) {
@@ -413,6 +85,10 @@
   
   .l-screen-inset {
     padding-right: 16px;
+  }
+  
+  .l-screen .caption {
+    margin-left: 10px;
   }
   
   .shaded {
@@ -522,6 +198,10 @@
   /* Tweak code blocks (note that this CSS is repeated above in an injection
      into the d-code shadow dom) */
   
+  d-code {
+    overflow-x: auto !important;
+  }
+  
   pre.d-code code.d-code {
     padding-left: 10px;
     font-size: 12px;
@@ -552,6 +232,11 @@
   }
   
   @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
   pre.d-code code.d-code  {
       padding-left: 18px;
       font-size: 14px;
@@ -1180,9 +865,19 @@
     // prevent underline for linked images
     $('a > img').parent().css({'border-bottom' : 'none'});
   
-    // mark figures created by knitr chunks as 100% width
+    // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
-      $(this).find('img, .html-widget').css('width', '100%');
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+  
+      }
     });
   
     // auto-append index.html to post-preview links in file: protocol
@@ -1203,6 +898,8 @@
     $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
     $('.kable-table').children('table').addClass('pandoc-table');
   
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
   
     // initialize posts list
     if (window.init_posts_list)
@@ -1214,6 +911,7 @@
       $('#disqus_thread').toggleClass('hidden');
       if (!$('#disqus_thread').hasClass('hidden')) {
         var offset = $(this).offset();
+        $(window).resize();
         $('html, body').animate({
           scrollTop: offset.top - 35
         });
@@ -1231,493 +929,57 @@
   </script>
   
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="genetic-analyses-and-solidarity_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="genetic-analyses-and-solidarity_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="genetic-analyses-and-solidarity_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="genetic-analyses-and-solidarity_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <style type="text/css">
-  .radix-site-nav {
-    color: #E4F2F7;
-    background-color: #4F94B0;
-    font-size: 15px;
-    font-weight: 300;
-  }
-  
-  .radix-site-nav a:hover {
-    color: white;
-  }
-  
-  .img-circle {
-    width:100px;
-    border-radius: 50%;
-  }
-  @media(min-width:768px) {
-      aside {
-          margin-bottom: -500px;
-      }
-  }
-  .figure img.external {
-    padding: 6px;
-  }
-  
-  </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Ruben C. Arslan","description":"New blog posts","authors":[]}
+{"title":"Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil","description":"Genetische Unterschiede sind ein Argument für den Sozialstaat","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin","affiliationURL":"https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"},{"author":"Gert G. Wagner","authorURL":"#","affiliation":"Max Planck Institute for Human Development, Berlin, German Institute for Economic Research (DIW Berlin)","affiliationURL":"#"},{"author":"Philipp Köllinger","authorURL":"#","affiliation":"Free University Amsterdam (VU), German Institute for Economic Research (DIW Berlin)","affiliationURL":"#"}],"publishedDate":"2019-01-21T00:00:00.000+01:00","citationText":"Arslan, et al., 2019"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="radix-site-nav radix-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">Ruben Arslan</a>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="bug_bounty.html">Bug Bounty</a>
-<a href="about.html">About</a>
-<a href="index.xml">
-<i class="fa fa-rss"></i>
-</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
-
-<style type="text/css">
-
-/* Styles for listing layout (hide title) */
-.layout-listing d-title, .layout-listing .d-title {
-  display: none;
-}
-
-/* Styles for posts lists (not auto-injected) */
-
-
-.posts-with-sidebar {
-  padding-left: 45px;
-  padding-right: 45px;
-}
-
-.posts-list .description h2,
-.posts-list .description p {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-}
-
-.posts-list .description h2 {
-  font-weight: 700;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.posts-list h2.post-tag {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 12px;
-}
-.posts-list {
-  margin-top: 60px;
-  margin-bottom: 24px;
-}
-
-.posts-list .post-preview {
-  text-decoration: none;
-  overflow: hidden;
-  display: block;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 24px 0;
-}
-
-.post-preview-last {
-  border-bottom: none !important;
-}
-
-.posts-list .posts-list-caption {
-  grid-column: screen;
-  font-weight: 400;
-}
-
-.posts-list .post-preview h2 {
-  margin: 0 0 6px 0;
-  line-height: 1.2em;
-  font-style: normal;
-  font-size: 24px;
-}
-
-.posts-list .post-preview p {
-  margin: 0 0 12px 0;
-  line-height: 1.4em;
-  font-size: 16px;
-}
-
-.posts-list .post-preview .thumbnail {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  position: relative;
-  max-width: 500px;
-}
-.posts-list .post-preview img {
-  width: 100%;
-  display: block;
-}
-
-.posts-list .metadata {
-  font-size: 12px;
-  line-height: 1.4em;
-  margin-bottom: 18px;
-}
-
-.posts-list .metadata > * {
-  display: inline-block;
-}
-
-.posts-list .metadata .publishedDate {
-  margin-right: 1em;
-}
-
-.posts-list .metadata .tags {
-  margin-top: 1em;
-}
-
-.posts-list .tags .tag {
-  color: rgba(0,0,0,0.67);
-  padding: 0.3em 0.5em;
-  margin: 0;
-  font-size: 80%;
-  border: 1px solid rgba(0,0,0,0.4);
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.posts-list img {
-  opacity: 1;
-}
-
-.posts-list img[data-src] {
-  opacity: 0;
-}
-
-.posts-more {
-  clear: both;
-}
-
-
-.posts-sidebar {
-  font-size: 16px;
-}
-
-.posts-sidebar h3 {
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.sidebar-section {
-  margin-bottom: 30px;
-}
-
-.categories ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.categories li {
-  color: rgba(0, 0, 0, 0.8);
-  margin-bottom: 0;
-}
-
-.categories li>a {
-  border-bottom: none;
-}
-
-.categories li>a:hover {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-.categories .active {
-  font-weight: 600;
-}
-
-.categories .category-count {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-
-@media(min-width: 768px) {
-  .posts-list .post-preview h2 {
-    font-size: 26px;
-  }
-  .posts-list .post-preview .thumbnail {
-    float: right;
-    width: 35%;
-    margin-bottom: 0;
-  }
-  .posts-list .post-preview .description {
-    float: left;
-    width: 45%;
-  }
-  .posts-list .post-preview .metadata {
-    float: left;
-    width: 15%;
-    margin-top: 8px;
-  }
-  .posts-list .post-preview p {
-    margin: 0 0 12px 0;
-    line-height: 1.5em;
-    font-size: 16px;
-  }
-  .posts-with-sidebar .posts-list {
-    float: left;
-    width: 72%;
-  }
-  .posts-with-sidebar .posts-sidebar {
-    float: right;
-    width: 20%;
-    margin-top: 60px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
-}
-
-.downlevel .posts-list .post-preview {
-  color: inherit;
-}
-
-</style>
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).load(function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace("#", "");
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if (category == page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
-<div class="posts-list">
-<h1 class="posts-list-caption">Ruben C. Arslan</h1>
-<a href="posts/2019-01-21-genetic-analyses-and-solidarity/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Jan. 20, 2019</div>
-</div>
-<div class="thumbnail"></div>
-<div class="description">
-<h2>Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil</h2>
-<p>Genetische Unterschiede sind ein Argument für den Sozialstaat</p>
-</div>
-</a>
-<a href="posts/2019-01-02-are-studies-that-replicate-cited-more/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["meta science","open science","reproducibility","quick job"]}</script>
-<div class="metadata">
-<div class="publishedDate">Jan. 2, 2019</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2019-01-02-are-studies-that-replicate-cited-more/are-studies-that-replicate-cited-more_files/figure-html5/unnamed-chunk-5-1.png"/>
-</div>
-<div class="description">
-<h2>Revised: Are studies that replicate cited more?</h2>
-<p>Looking at the RPP to bring data to a discussion</p>
-</div>
-</a>
-<a href="posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Oct. 26, 2018</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>New rational athletics for boys and girls.</h2>
-<p>Accounting for mistakes in my scientific work and announcing a bug bounty program.</p>
-</div>
-</a>
-<a href="posts/2018-10-15-are-big-studies-cited-more/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["meta science","open science","reproducibility","quick job"]}</script>
-<div class="metadata">
-<div class="publishedDate">Oct. 22, 2018</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2018-10-15-are-big-studies-cited-more/are-big-studies-cited-more_files/figure-html5/unnamed-chunk-3-1.png"/>
-</div>
-<div class="description">
-<h2>Are big studies cited more?</h2>
-<p>Does sample size predict number of citations?</p>
-</div>
-</a>
-</div>
-<div class="posts-sidebar">
-<div class="sidebar-section subscribe">
-<h3>Subscribe</h3>
-<form method='post' action='https://blogtrottr.com'>
-  <p>Get notified of new posts via email:</p>
-  <input type='text' name='btr_email' />
-  <input type='hidden' name='btr_url'
-         value='https://rubenarslan.github.io/blog.xml'/>
-  <input type='hidden' name='schedule_type' value='0' />
-  <input type='submit' value='Subscribe' />
-</form>
-
-</div>
-<div class="sidebar-section categories">
-<h3>Categories</h3>
-<ul>
-<li>
-<a href="#meta_science">meta science</a>
-<span class="category-count">(2)</span>
-</li>
-<li>
-<a href="#open_science">open science</a>
-<span class="category-count">(2)</span>
-</li>
-<li>
-<a href="#quick_job">quick job</a>
-<span class="category-count">(2)</span>
-</li>
-<li>
-<a href="#reproducibility">reproducibility</a>
-<span class="category-count">(2)</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>Ruben C. Arslan</h1>
-<p>New blog posts</p>
+<h1>Genetische Analysen implizieren keineswegs Unmenschlichkeit – im Gegenteil</h1>
+<p>Genetische Unterschiede sind ein Argument für den Sozialstaat</p>
 </div>
 
+<div class="d-byline">
+  Ruben C. Arslan <a href="https://rubenarslan.github.io" class="uri">https://rubenarslan.github.io</a> (Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin)<a href="https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan" class="uri">https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan</a>
+  
+,   Gert G. Wagner  (Max Planck Institute for Human Development, Berlin, German Institute for Economic Research (DIW Berlin))
+  
+,   Philipp Köllinger  (Free University Amsterdam (VU), German Institute for Economic Research (DIW Berlin))
+  
+<br/>01-21-2019
+</div>
 
 <div class="d-article">
-
+<p><small>My colleagues and I wrote the following (in German) to announce the release of a new GWAS on risk preferences. We also respond to an article in the Süddeutsche Zeitung on the heritability of intelligence that we thought was misleading on some major points. Maybe some of those misconceptions and the desire to reject genetic explanations for individual differences come from an assumption that genetic research must lead to a “survival of the fittest” mentality. We disagree. A shorter version appeared in the SZ today.</small></p>
+<p><em>gekürzt erschienen unter dem Titel <a href="https://www.sueddeutsche.de/wirtschaft/forum-argumente-fuer-mehr-solidaritaet-1.4295164">„Argumente für mehr Solidarität“ in der Süddeutschen Zeitung</a> am 21. Januar 2019, S. 18</em></p>
+<p><small>Ruben C. Arslan ist Psychologe am Max Planck Institut für Bildungsforschung, Berlin, wo auch der Ökonom Gert G. Wagner tätig ist. Philipp Köllinger ist Professor für Genom-Ökonomie an der Freien Universität Amsterdam. Köllinger und Wagner sind auch Research Fellows am Deutschen Institut für Wirtschaftsforschung (DIW Berlin). Alle Autoren waren 2014 bis 2017 Mitglied in der Forschergruppe „Genetic and Social Causes of Life Chances“ am Zentrum für interdisziplinäre Forschung (ZiF) der Universität Bielefeld.</small></p>
+<p>Mitte Januar 2019 ist in der Fachzeitschrift Nature Genetics ein <a href="https://doi.org/10.1038/s41588-018-0309-3">Aufsatz zu den genetischen Grundlagen der menschlichen Risikobereitschaft</a> online gegangen, an dem zwei der Autoren dieses Beitrags beteiligt sind (u.a. auf Basis der Daten der Berliner Altersstudie). Im Genom von über einer Million Menschen, deren Daten analysiert wurden, wurden 124 Stellen gefunden, die die Risikobereitschaft vorhersagen, die von den analysierten Befragten angegeben wurde. Außerdem wurden entsprechende molekulargenetische Zusammenhänge mit tatsächlichem Verhalten, etwa Rauchen und Trinken, gefunden. Aber von der enormen Streuung der menschlichen Risikobereitschaft kann durch einzelne Gen-Varianten fast nichts statistisch erklärt werden. Die wichtigste Variante erklärt nur 0,02 Prozent der Streuung – statistisch signifikant, also kein reiner Zufall, aber trotzdem wird so gut wie kein Unterschied in der Risikobereitschaft durch eine Stelle im Genom erklärt.</p>
+<p>Durch die Betrachtung von größeren Bereichen des Genoms, die Millionen von einzelnen Gen-Buchstaben enthalten (aus über sechs Milliarden Buchstaben, aus denen ein menschliches Genom besteht), konnten immerhin 1,6 Prozent der Streuung statistisch aufgeklärt werden. Die winzigen Effekte vieler Stellen im Genom summieren sich. Aber auch nun würde es sich nicht lohnen die Speichelproben von Investmentbankern zu analysieren, um herauszufinden, wie risikobereit sie sind. In der Studie wird <a href="https://www.thessgac.org/faqs">ausdrücklich festgestellt</a>, dass das Ergebnis der Analyse sich nicht eignet um die Risikobereitschaft eines einzelnen Menschen vorherzusagen – der Prognosefehler wäre viel zu hoch. Wozu also der ganze Aufwand? Was kann man aus solchen Genom-Analysen schlussfolgern und was nicht? Sind derartige genetische Analysen nicht von Grund auf menschenunwürdig und führen in moralische Abgründe? „Nein“ ist unsere im folgenden begründete Antwort. Genetische Erkenntnisse können sogar zur Menschenwürde beitragen, da sie gute Argumente liefern für Solidarität und für Bestrebungen hin zu mehr Chancengleichheit in unserer Gesellschaft.</p>
+<p>Erst einmal ist gewissermaßen „innerwissenschaftlich“ festzuhalten, dass die erfolgreiche Erklärung von psychologischen Unterschieden durch molekulargenetisch gemessene Unterschiede die bereits länger bestehenden Kernergebnisse der sogenannten Verhaltensgenetik bestätigt. Diese Disziplin berechnet auf Basis von Studien zur Ähnlichkeit von beispielsweise adoptierten Geschwistern oder separat aufgewachsenen eineiigen Zwillingen die Wichtigkeit von genetischen Unterschieden gezeigt. Demnach sind im statistischen Mittel genetische Unterschiede innerhalb von Familien maßgeblicher für Persönlichkeit und kognitive Leistungsfähigkeit als Unterschiede in der Erziehung zwischen Familien. Eltern mit mehreren Kindern wissen auch wie unterschiedlich ihre Kinder sein können, obwohl ihre familiäre und soziale Umgebung ja ähnlich ist. Aber weder die menschliche Erfahrung und erst recht nicht die neuartigen genetischen Analysen können die Kritiker der Humangenetik überzeugen.</p>
+<p>Kürzlich bestritt zum Beispiel kürzlich der Regensburger Psychologieprofessor Christof Kuhbandner in der <a href="https://www.sueddeutsche.de/bildung/paedagogik-intelligenz-ist-nicht-angeboren-1.4245200">Süddeutschen Zeitung (14. Dezember 2018)</a>, dass Intelligenz überhaupt in einem nennenswerten Ausmaß erblich sei – und legt nahe, dass Kinder mehr lernen, wenn man sie glauben lässt, dass an Intelligenz nichts Angeborenes ist. Er kritisiert die Aussagekraft der Verhaltensgenetik und prognostiziert, dass das Genom niemals mehr als etwa vier Prozent der Streuung von gemessener Intelligenz vorhersagen können wird. In der Tat sind es aber bereits jetzt bis zu 10 Prozent, die sich molekulargenetisch erklären lassen, d. h. durch die Betrachtung des Genoms im Detail – Buchstabe für Buchstabe. Und selbst wenn es wirklich „nur“ vier Prozent wären, wäre das eine ganze Menge. Wenn jemand bei allen gefundenen Genen die intelligenzzuträglichen Varianten hätte, entspräche das dem Effekt eines zusätzlichen Schuljahrs. Und Kuhbandner unterschätzt die genetische Prognostik systematisch. Er hat zwar recht, dass Gen-Varianten, die mit Hilfe von immer größeren Stichproben von Menschen gefunden werden, immer weniger an Streuung erklären werden (weil man die größeren Effekte bereits mit kleineren Stichproben gefunden hat), aber das bedeutet nicht, dass deswegen die Analyse nicht lohnt. Denn es werden immer mehr einzelne Gen-Buchstaben gefunden werden, die in ihrem Zusammenwirken sehr wohl mehr erklären werden. Dies zeigen Studien beispielsweise zur Genetik von Körpergröße sehr eindeutig. Für diese Bereiche können wir bereits jetzt ein Viertel der Streuung mit Hilfe tausender Gen- Buchstaben erklärt werden. Forscher nehmen an, dass für den IQ über 30% mit riesengrossen Stichproben von Millionen von Menschen aus den Molekülen des Genoms vorhersagbar sein werden. Auch wenn 30 Prozent übertrieben sein mögen, zeigen die Molekulargenetik, dass angeborene Unterschiede der Intelligenz nicht ganz unwichtig sind. Das heisst aber natürlich nicht, dass deswegen die Schlaueren dies ungehemmt ausnützen können sollten. Wir werden darauf am Ende zurückkommen.</p>
+<p>Erziehungswissenschaftler wie auch Kuhbandner argumentieren auf einer pädagogischen Ebene. Sie sagen, dass es für Kinder in der Schule besser sein, wenn man gar nicht von angeborenen Unterschieden spricht. Wir behaupten das genaue Gegenteil. Es wäre offenbar ja unverantwortlich und grausam, von einem Kind mit eingeschränkter kognitiver Leistungsfähigkeit soviel zu erwarten wie vom begabten Geschwisterkind. Genauso wäre es grausam jemandem, der mit Mühe den Schulabschluss geschafft zu empfehlen, doch zum Softwarearchitekten umzuschulen, wenn seine berufliche Tätigkeit wegautomatisiert wird. Die Note von „nicht bestanden“ in „noch nicht bestanden“ zu ändern, wie Kuhbander nahe legt, wird auch kaum helfen – neuere Studien können die von Carol Dweck vermarkteten Erfolge des growth mindset jedenfalls <a href="https://osf.io/preprints/socarxiv/tsdwy/">nicht unabhängig replizieren</a>.</p>
+<p>Schule bildet ohne Zweifel, aber sie kann die Effekte genetischer Unterschiede nicht völlig einebnen. Man kann auch Menschen durch „Schulung“ nicht beliebig risikofreudig machen, um mehr Unternehmertum zu haben oder sich einiges an sozialer Sicherung zu ersparen, da risikofreudige Menschen große Einkommensschwankungen klaglos hinnähmen.</p>
+<p>Bei der modernen genetischen Forschung, wie sie hier berichtet wird, geht es auch nicht nur darum einzelnen Menschen bessere Therapien bei schweren Krankheiten oder maßgeschneiderte Lehr-Konzepte anzubieten (es bleibt ohnehin abzuwarten was da möglich sein wird). Es geht auch darum, und das mag sich am Ende vielleicht als noch wichtiger erweisen, bestimmte gesellschaftliche Strukturen, die immer wieder in Gefahr geraten zerstört zu werden, besser zu begründen und abzusichern als bislang. Also: Man sollte die Evidenz relevanter genetischer Unterschiede nicht leugnen. Sie bedeutet keineswegs, dass daraus ein „Survival of the Fittest“ als normative Leitlinie für das menschliche Zusammenleben folgen muss. Ganz im Gegenteil! Man kann auch ohne weiteres auch argumentieren, dass Nachteile, die einem Menschen durch seine „genetische Ausstattung“ entstehen, von der Gesellschaft zumindest teilweise kompensiert, vielleicht sogar möglichst weitgehend ausgeglichen werden sollten, da ja niemand was für seine Gene kann und sie mit dazu beitragen an welcher Stelle in der Gesellschaft sich jemand findet. Vielfältigkeit der Menschen ist ein Wert an sich. Genetische Vielfalt erhöht die Anpassungsfähigkeit einer Art und Gene, die heutzutage mit Nachteilen verbunden sind, können sich in Zukunft für die Menschheit als lebenswichtig erweisen. In der Tat orientiert sich unsere Steuer- und Sozialpolitik an diesen Überlegungen – in Deutschland und in vielen Ländern in der Welt. Wir wollen die Menschen nicht gleichmachen, sondern wir wollen Nachteile aller Art, mit denen wir ohne eigene Schuld durch das Leben gehen müssen, soweit es vernünftig ist, kompensieren.</p>
+<p>Ein Wirtschaftsphilosoph, John E. Roemer, hat diesen Standpunkt mit seiner Theorie zur Chancengleichheit (Equality of Opportunity) auf den Punkt gebracht: individuelle Anstrengung sollte sich lohnen, aber Unterschiede im Einkommen, die sich aufgrund der Chancen ergeben, die einem die Eltern mitgaben (sowohl genetisch wie sozial), sollten durch Steuern und Transfers ausgeglichen werden. Eine progressive Besteuerung hoher Einkommen einerseits und andererseits Transfers an Menschen, die Probleme haben ein ordentliches Einkommen zu erzielen, machen genau dieses. Natürlich nicht perfekt, aber weit jenseits eines ungebremsten individuellen Egoismus, der un-verdiente Vorteile, die jemand mitbekommen hat, ausnützt. Mit anderen Worten: Da eine günstige genetische Ausstattung im Wortsinne un-verdient ist, können die Analysen, die die Bedeutung der Gene für das menschliche Leben zeigen, die Argumente für einen starken Steuer- und Sozialstaat stärken.</p>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -1729,17 +991,9 @@ function init_posts_list() {
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom">
-<h3 id="updates-and-corrections">Corrections</h3>
-<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rubenarslan/rubenarslan.github.io/issues/new">create an issue</a> on the source repository.</p>
-<h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rubenarslan/rubenarslan.github.io">https://github.com/rubenarslan/rubenarslan.github.io</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
-</div>
+<div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
-<div class="radix-site-nav radix-site-footer">
-<p>© Copyright 2018 Ruben Arslan.</p>
-</div>
 <!--/radix_placeholder_navigation_after_body-->
 
 </body>
