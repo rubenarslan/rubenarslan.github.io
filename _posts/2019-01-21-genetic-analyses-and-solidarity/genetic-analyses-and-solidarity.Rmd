@@ -22,10 +22,10 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 <small>My colleagues and I wrote the following (in German) to announce the release of a new GWAS on risk preferences.
-We also respond to an article in the Süddeutsche Zeitung on the heritability of intelligence that we thought was misleading on
+We also respond to an article in the Sueddeutsche Zeitung on the heritability of intelligence that we thought was misleading on
 some major points. Maybe some of those misconceptions and the desire to reject genetic explanations for individual differences 
 come from an assumption that genetic research must lead to a "survival of the fittest" mentality. We disagree. A shorter
-version appeared in the SZ today.</small>
+version appeared in the Sueddeutsche Zeitung today.</small>
 
 _gekürzt erschienen unter dem Titel [„Argumente für mehr Solidarität“ in der Süddeutschen Zeitung](https://www.sueddeutsche.de/wirtschaft/forum-argumente-fuer-mehr-solidaritaet-1.4295164) am 21. Januar 2019, S. 18_
 
