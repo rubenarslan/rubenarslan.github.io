@@ -400,9 +400,8 @@ d-title {
 
 </style>
 
-<link href="../../site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet"/>
-<script src="../../site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="../../site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
 <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
@@ -415,6 +414,10 @@ body {
 
 .pandoc-table {
   width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
 }
 
 .pandoc-table th:not([align]) {
@@ -431,6 +434,10 @@ body {
 
 .l-screen-inset {
   padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
 }
 
 .shaded {
@@ -540,6 +547,10 @@ figure img.external {
 /* Tweak code blocks (note that this CSS is repeated above in an injection
    into the d-code shadow dom) */
 
+d-code {
+  overflow-x: auto !important;
+}
+
 pre.d-code code.d-code {
   padding-left: 10px;
   font-size: 12px;
@@ -570,6 +581,11 @@ pre.text-output {
 }
 
 @media(min-width: 768px) {
+
+d-code {
+  overflow-x: visible !important;
+}
+
 pre.d-code code.d-code  {
     padding-left: 18px;
     font-size: 14px;
@@ -1198,9 +1214,19 @@ function init_common() {
   // prevent underline for linked images
   $('a > img').parent().css({'border-bottom' : 'none'});
 
-  // mark figures created by knitr chunks as 100% width
+  // mark non-body figures created by knitr chunks as 100% width
   $('.layout-chunk').each(function(i, val) {
-    $(this).find('img, .html-widget').css('width', '100%');
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
   });
 
   // auto-append index.html to post-preview links in file: protocol
@@ -1221,6 +1247,8 @@ function init_common() {
   $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
   $('.kable-table').children('table').addClass('pandoc-table');
 
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
 
   // initialize posts list
   if (window.init_posts_list)
@@ -1232,6 +1260,7 @@ function init_common() {
     $('#disqus_thread').toggleClass('hidden');
     if (!$('#disqus_thread').hasClass('hidden')) {
       var offset = $(this).offset();
+      $(window).resize();
       $('html, body').animate({
         scrollTop: offset.top - 35
       });
