@@ -381,9 +381,8 @@
   
   </style>
   
-  <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet"/>
-  <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-  <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
@@ -396,6 +395,10 @@
   
   .pandoc-table {
     width: 100%;
+  }
+  
+  .pandoc-table>caption {
+    margin-bottom: 10px;
   }
   
   .pandoc-table th:not([align]) {
@@ -412,6 +415,10 @@
   
   .l-screen-inset {
     padding-right: 16px;
+  }
+  
+  .l-screen .caption {
+    margin-left: 10px;
   }
   
   .shaded {
@@ -521,6 +528,10 @@
   /* Tweak code blocks (note that this CSS is repeated above in an injection
      into the d-code shadow dom) */
   
+  d-code {
+    overflow-x: auto !important;
+  }
+  
   pre.d-code code.d-code {
     padding-left: 10px;
     font-size: 12px;
@@ -551,6 +562,11 @@
   }
   
   @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
   pre.d-code code.d-code  {
       padding-left: 18px;
       font-size: 14px;
@@ -1179,9 +1195,19 @@
     // prevent underline for linked images
     $('a > img').parent().css({'border-bottom' : 'none'});
   
-    // mark figures created by knitr chunks as 100% width
+    // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
-      $(this).find('img, .html-widget').css('width', '100%');
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+  
+      }
     });
   
     // auto-append index.html to post-preview links in file: protocol
@@ -1202,6 +1228,8 @@
     $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
     $('.kable-table').children('table').addClass('pandoc-table');
   
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
   
     // initialize posts list
     if (window.init_posts_list)
@@ -1213,6 +1241,7 @@
       $('#disqus_thread').toggleClass('hidden');
       if (!$('#disqus_thread').hasClass('hidden')) {
         var offset = $(this).offset();
+        $(window).resize();
         $('html, body').animate({
           scrollTop: offset.top - 35
         });
@@ -1309,7 +1338,7 @@
 <aside>
 <img src="https://formr.org/assets/build/img/ruben.jpg?v1489582723" class="img-circle" alt="Ruben Arslan">
 </aside>
-<p>You can reach me at <a href="mailto:ruben.arslan@gmail.com">ruben.arslan@gmail.com</a> or on <a href="https://twitter.com/rubenarslan">Twitter</a>. If you want to tell me I’m wrong about something anonymously, you can use <a href="https://tellmeimwrong.formr.org">this form</a>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>You can reach me at <a href="mailto:ruben.arslan@gmail.com" class="email">ruben.arslan@gmail.com</a> or on <a href="https://twitter.com/rubenarslan">Twitter</a>. If you want to tell me I’m wrong about something anonymously, you can use <a href="https://tellmeimwrong.formr.org">this form</a>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <h2 id="publications">Publications</h2>
 <p>For now, you can find my traditional publications on my <a href="https://scholar.google.com/citations?user=X6fXzMcAAAAJ&amp;hl=en">Google Scholar profile</a>. Here are the two main graphs from the two main papers of my dissertation.</p>
 <div class="l-body-outset">
@@ -1353,7 +1382,7 @@
 </p>
 </div>
 </center>
-<h3 id="maintaining-privacy-with-open-data"><a href="https://osf.io/7vnya/">Maintaining privacy with open data</a></h3>
+<h3 id="maintaining-privacy-with-open-data"><a href="https://osf.io/n2dsq/">Maintaining privacy with open data</a></h3>
 <details>
 <summary><strong>Abstract</strong></summary> In this workshop, we will try to tackle questions about privacy in the age of big and open data. Why should we even share our data? For what kind of research data do we need to maintain privacy? What is personally identifiable information and why is not sufficient to omit it to make data truly anonymous? How do we assess the risks of re-identification? How do we maintain our participants’ anonymity, when we need to stay in touch with them online? What novel risks are engendered by the massive trail of data we all leave on the web? How do we anonymise already collected data by binning, fuzzing, and omitting? We will also discuss novel technological solutions that can permit us to share data openly: synthetic data generation, scientific use files, or differential privacy algorithms. The workshop consists of some theoretical input, but will also focus on practical exercises. Ideally, participants bring their own laptop with a current R installation. Furthermore, participants can send in questions or typical scenarios from their own research fields in advance.
 </details>
