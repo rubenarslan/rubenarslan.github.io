@@ -19,7 +19,7 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>Ruben Arslan: Ruben C. Arslan</title>
+  <title>One lives only to make blunders: Ruben C. Arslan</title>
   
   <meta property="description" itemprop="description" content="About this page."/>
   
@@ -27,15 +27,15 @@
   
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Ruben Arslan: Ruben C. Arslan"/>
+  <meta property="og:title" content="One lives only to make blunders: Ruben C. Arslan"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="About this page."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Ruben Arslan"/>
+  <meta property="og:site_name" content="One lives only to make blunders"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Ruben Arslan: Ruben C. Arslan"/>
+  <meta property="twitter:title" content="One lives only to make blunders: Ruben C. Arslan"/>
   <meta property="twitter:description" content="About this page."/>
   <meta property="twitter:site" content="@rubenarslan"/>
   
@@ -388,9 +388,8 @@
   
   </style>
   
-  <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet"/>
-  <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-  <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
@@ -403,6 +402,10 @@
   
   .pandoc-table {
     width: 100%;
+  }
+  
+  .pandoc-table>caption {
+    margin-bottom: 10px;
   }
   
   .pandoc-table th:not([align]) {
@@ -419,6 +422,10 @@
   
   .l-screen-inset {
     padding-right: 16px;
+  }
+  
+  .l-screen .caption {
+    margin-left: 10px;
   }
   
   .shaded {
@@ -528,6 +535,10 @@
   /* Tweak code blocks (note that this CSS is repeated above in an injection
      into the d-code shadow dom) */
   
+  d-code {
+    overflow-x: auto !important;
+  }
+  
   pre.d-code code.d-code {
     padding-left: 10px;
     font-size: 12px;
@@ -558,6 +569,11 @@
   }
   
   @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
   pre.d-code code.d-code  {
       padding-left: 18px;
       font-size: 14px;
@@ -1186,9 +1202,19 @@
     // prevent underline for linked images
     $('a > img').parent().css({'border-bottom' : 'none'});
   
-    // mark figures created by knitr chunks as 100% width
+    // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
-      $(this).find('img, .html-widget').css('width', '100%');
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+  
+      }
     });
   
     // auto-append index.html to post-preview links in file: protocol
@@ -1209,6 +1235,8 @@
     $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
     $('.kable-table').children('table').addClass('pandoc-table');
   
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
   
     // initialize posts list
     if (window.init_posts_list)
@@ -1220,6 +1248,7 @@
       $('#disqus_thread').toggleClass('hidden');
       if (!$('#disqus_thread').hasClass('hidden')) {
         var offset = $(this).offset();
+        $(window).resize();
         $('html, body').animate({
           scrollTop: offset.top - 35
         });
@@ -1287,7 +1316,7 @@
 <header class="header header--fixed" role="banner">
 <nav class="radix-site-nav radix-site-header">
 <div class="nav-left">
-<a href="index.html" class="title">Ruben Arslan</a>
+<a href="index.html" class="title">One lives only to make blunders</a>
 </div>
 <div class="nav-right">
 <a href="index.html">Home</a>
@@ -1333,19 +1362,19 @@
 <p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
 <h3 id="changes-to-this-privacy-policy">Changes To This Privacy Policy</h3>
 <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
-<p>If you have any questions about this Privacy Policy, please contact me by email <a href="mailto:ruben.arslan@gmail.com">ruben.arslan@gmail.com</a></p>
+<p>If you have any questions about this Privacy Policy, please contact me by email <a href="mailto:ruben.arslan@gmail.com" class="email">ruben.arslan@gmail.com</a></p>
 <div id="refs" class="references">
 <div id="ref-radix">
-<p>Allaire, JJ, Rich Iannone, and Yihui Xie. 2018. <em>radix: ’R Markdown’ Format for Scientific and Technical Writing</em>. <a href="https://CRAN.R-project.org/package=radix" class="uri">https://CRAN.R-project.org/package=radix</a>.</p>
+<p>Allaire, JJ, Rich Iannone, and Yihui Xie. 2018. <em>radix: ’R Markdown’ Format for Scientific and Technical Writing</em>. <a href="https://CRAN.R-project.org/package=radix">https://CRAN.R-project.org/package=radix</a>.</p>
 </div>
 <div id="ref-rmarkdown">
-<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown" class="uri">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
+<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
 </div>
 <div id="ref-R">
-<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
 </div>
 <div id="ref-knitr">
-<p>Xie, Yihui. 2018. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://yihui.name/knitr/" class="uri">https://yihui.name/knitr/</a>.</p>
+<p>Xie, Yihui. 2018. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://yihui.name/knitr/">https://yihui.name/knitr/</a>.</p>
 </div>
 </div>
 <!--radix_placeholder_article_footer-->

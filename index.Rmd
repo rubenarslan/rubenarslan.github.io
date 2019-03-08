@@ -35,7 +35,7 @@ For now, you can find my traditional publications on my [Google Scholar profile]
 </p></div>
 
 ## Open Science
-I'm a child of the reproducibility crisis in psychology. To me, the open science movement is our best hope for fighting corruption of science. I occasionally give talks to advertise and teach tools and methods to do better work, including some of the software listed below. 
+I'm a child of the reproducibility crisis in psychology - I had to unlearn much of what I was taught. To me, the open science movement is our best hope to fight the corruption of science. I occasionally give talks and workshops to advertise and teach tools and methods to do better work, including some of the software listed below. 
 
 ### [Bad Science vs. Open Science](https://osf.io/7vnya/)
 The replication crisis and possible reforms. This is my main introductory talk that I have given in Greifswald, Copenhagen, Berlin, and Göttingen. I try to take slightly less than half of the time for the problems, and slightly more than half for the solutions.
@@ -98,7 +98,7 @@ statistical analyses on [Github](https://github.com/rubenarslan).
 
 ### [formr.org](https://formr.org)
 _formr.org_ is a study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata and Matthias Walther are helping me develop and maintain the software since 2015 and 2018, respectively. I also wrote
-an [R package called simply formr](https://github.com/rubenarslan/formr) to help users make the most of the data and metadata.
+an R package simply called [formr](https://github.com/rubenarslan/formr) to help users make the most of the data and metadata.
 
 In addition to extensive documentation supplied by us and supplemented by our users in a Wiki, there is also a [preprint](https://psyarxiv.com/pjasu) describing the software.
  
@@ -112,7 +112,7 @@ A small collaboration with a friend led to this player-vs-player online word gam
 You have to infer the other person's secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone.
 
 ### [brainfunnel.com](http://brainfunnel.com/)
-During a year abroad in Sweden, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn't work on Macs, I wrote one in the form of a website. I stopped working on this in 2011, but it still works, and I think it might still be the only one with easy support for gap texts.
+During a year abroad in Sweden in 2005, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn't work on Macs, I wrote one in the form of a website. I stopped working on this in 2011, but it still works, and I think it might still be the only one with easy support for gap texts.
 
 
 ## Blog
