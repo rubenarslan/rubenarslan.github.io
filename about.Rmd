@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 This page is intended to help me organize and document some of my (side) projects, especially my nontraditional publications, like preprints, blog posts, supplementary websites, software, tutorials, workshops and outreach slides, and small simulations.
 You can find my traditional publications on my [Google Scholar profile](https://scholar.google.com/citations?user=X6fXzMcAAAAJ&hl=en) for now.
+The blog's name (One lives only to make blunders) is taken from this famous letter from [Darwin to Lyell](https://www.darwinproject.ac.uk/letter/DCP-LETT-3272.xml).
 
 This website was generated using these great tools @R @rmarkdown @knitr @radix.
 

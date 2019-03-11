@@ -23,8 +23,12 @@ output:
 creative_commons: CC BY
 twitter:
    site: "@rubenarslan"
+
 collections:
   posts:
     feed_items_max: false
     subscribe: _subscribe.html
     share: [twitter, facebook, google-plus, linkedin]
+    disqus:
+      shortname: livetoblunder
+      hidden: true
