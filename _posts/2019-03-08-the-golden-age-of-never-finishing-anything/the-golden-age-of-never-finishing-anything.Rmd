@@ -1,5 +1,4 @@
 ---
-draft: true
 title: "The Golden Age of Never Finishing Anything"
 description: |
   Serialising the results from our sex diary study.
