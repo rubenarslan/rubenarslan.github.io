@@ -1,0 +1,50 @@
+---
+draft: true
+title: "The Golden Age of Never Finishing Anything"
+description: |
+  Serialising the results from our sex diary study.
+author:
+  - name: "Ruben C. Arslan"
+    url: https://rubenarslan.github.io
+    affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+date: 03-08-2019
+output:
+  radix::radix_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+I have too many unfinished projects. Thanks to social media, I know I'm not alone with
+this problem, but this is probably the only thing I can thank social media for with respect to this problem.
+
+<aside>
+```{r fig.cap="Sagrada Família. Unfinished projects can still be pretty neat. From [Wikipedia](https://en.wikipedia.org/wiki/File:Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia,_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg).", out.extra="class=external"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg/981px-Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg")
+```
+</aside>
+
+During my PhD I (barely) wrapped up two projects with supersized [supplementary](https://rubenarslan.github.io/ovulatory_shifts/) [websites](https://rubenarslan.github.io/paternal_age_fitness/) that contained lots of extra work, robustness analyses, so many little sidetracks, footnotes and so on. In one case, it took me so long to finish the project that I felt compelled by my newly gained statistical knowledge and love of brms to do over all main analyses. Although I'm not a perfectionist^[Try using [formr.org](https://formr.org) or [codebook](https://github.com/rubenarslan/formr.org) and you'll find this to be true], the fact that traditional publication is __final__ and corrections are difficult exacerbated any such tendencies in me.^[Not that the results [were anywhere close to perfect](../2018-10-26-on-making-mistakes-and-my-bug-bounty-program/).] In the end, making these websites was fun and I learned a lot, but few people ever really engaged with their contents.^[And I'm not saying I know this because I hid hilarious easter eggs in these supplements that no one ever found.]
+
+That is okay - not everyone needs to care about the intricacies behind the question whether older fathers have more harmful mutations in their sperm, or the many decisions on can make when calculating a fertile window probability. Nor do most people stay around me at parties when I start talking about a cool R package I found for easily using a computing cluster.
+
+Then again, some people may care. Potentially related to this, we are currently in the [Second Golden Age of Television](https://en.wikipedia.org/wiki/Golden_Age_of_Television_(2000s%E2%80%93present)) according to some. Some of this is due to the ability to reach more niche audiences using the internet. Maybe this format just takes advantage of our more limited attention spans. Anyway, it might work for me.
+
+<aside>
+```{r fig.cap="Tower of Babel by Lucas van Valckenborch (1594). Famously unfinished because of Netflix binging. From [Wikipedia](https://en.wikipedia.org/wiki/File:Tour_de_babel.jpeg).", out.extra="class=external"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Tour_de_babel.jpeg/1024px-Tour_de_babel.jpeg")
+```
+</aside>
+
+In an effort to stop myself accumulating results sections in need of introduction and discussion, and to get a chance to talk about some of the smaller steps in the process, I decided to start blogging a current project. Fittingly, there is a project that I started during the last year of my PhD. It would have provided ample data for my post-doc in Göttingen, but I moved back to Berlin to work at the MPI. The project suffered owing to the many new exciting collaborations that resulted from this move. We wrote a humongous preregistration for it, but did not give enough thought to the question how we would organize all these results.^[This experience is one of the reasons I'm a big believer in [Registered Reports](https://cos.io), which require us to be more realistic about these things.]
+
+I plan to blog preliminary results from this large sex diary study, but also nifty workflow stuff, lost trails with the literature, struggles with my own preregistration, and so on. I hope this bite size series on this project can start discussing some results sooner. I still hope to publish most of this in traditional journals at some point, but this approach makes make me feel less bad about working on some smaller projects before finishing the write-up of our fifty preregistered hypotheses.
+
+```{r layout='l-body-outset', fig.cap="The Berlin Babel Imitation. When I read about how they have to replace all monitors because they installed them six years before opening, I was painfully reminded of  transitioning my years-old code to dplyr 0.8.0. From [Wikipedia](https://en.wikipedia.org/wiki/File:BBI_2010-07-23_5.JPG).", out.extra="class=external"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/BBI_2010-07-23_5.JPG/1024px-BBI_2010-07-23_5.JPG")
+```
+
