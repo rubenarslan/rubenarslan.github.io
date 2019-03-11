@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 I have too many unfinished projects. Thanks to social media, I know I'm not alone with
-this problem, but this is probably the only thing I can thank social media for with respect to this problem.
+this problem, but this is probably the only thing I can thank social media for with respect to this.
 
 <aside>
 ```{r fig.cap="Sagrada Família. Unfinished projects can still be pretty neat. From [Wikipedia](https://en.wikipedia.org/wiki/File:Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia,_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg).", out.extra="class=external"}
