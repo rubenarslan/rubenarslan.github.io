@@ -7,7 +7,12 @@ author:
     url: https://rubenarslan.github.io
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
-date: 03-08-2019
+date: 03-11-2019
+categories: 
+  - sex diary
+  - open science
+creative_commons: CC BY
+preview: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg/981px-Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg
 output:
   radix::radix_article:
     self_contained: false
@@ -41,7 +46,7 @@ knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/8/
 
 In an effort to stop myself accumulating results sections in need of introduction and discussion, and to get a chance to talk about some of the smaller steps in the process, I decided to start blogging a current project. Fittingly, there is a project that I started during the last year of my PhD. It would have provided ample data for my post-doc in Göttingen, but I moved back to Berlin to work at the MPI. The project suffered owing to the many new exciting collaborations that resulted from this move. We wrote a humongous preregistration for it, but did not give enough thought to the question how we would organize all these results.^[This experience is one of the reasons I'm a big believer in [Registered Reports](https://cos.io), which require us to be more realistic about these things.]
 
-I plan to blog preliminary results from this large sex diary study, but also nifty workflow stuff, lost trails in the literature, struggles with my own preregistration, and so on. I hope this bite size series on this project can start discussing some results sooner. I still hope to publish most of this in traditional journals at some point, but this approach makes make me feel less bad about working on some smaller projects before finishing the write-up of our fifty preregistered hypotheses.
+I plan to blog preliminary^[But not _that_ preliminary. My [bug bounties](../bug_bounty.html) apply to these posts.] results from this large sex diary study, but also nifty workflow stuff, lost trails in the literature, struggles with my own preregistration, and so on. I hope this bite size series on this project can start discussing some results sooner. I still hope to publish most of this in traditional journals at some point, but this approach makes make me feel less bad about working on some smaller projects before finishing the write-up of our fifty preregistered hypotheses.
 
 ```{r layout='l-body-outset', fig.cap="The Berlin Babel Imitation. When I read about how they have to replace all monitors because they installed them six years before opening, I was painfully reminded of  transitioning my years-old code to dplyr 0.8.0. From [Wikipedia](https://en.wikipedia.org/wiki/File:BBI_2010-07-23_5.JPG).", out.extra="class=external"}
 knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/BBI_2010-07-23_5.JPG/1024px-BBI_2010-07-23_5.JPG")
