@@ -49,7 +49,7 @@
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/bowser-1.9.3/bowser.min.js","does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/distill-2.2.21/template.v2.js","does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/figure-html5/unnamed-chunk-4-1.png","does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/figure-html5/unnamed-chunk-8-1.png","does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/jquery-1.11.3/jquery.min.js","does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-12-1.png","moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -927,10 +927,10 @@
   </script>
   
   <!--/radix_placeholder_distill-->
-  <script src="does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/jquery-1.11.3/jquery.min.js"></script>
-  <script src="does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/bowser-1.9.3/bowser.min.js"></script>
-  <script src="does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/distill-2.2.21/template.v2.js"></script>
+  <script src="moderation-vs-distributional-regression_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="moderation-vs-distributional-regression_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="moderation-vs-distributional-regression_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="moderation-vs-distributional-regression_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <!--/radix_placeholder_site_in_header-->
 
@@ -963,115 +963,153 @@
 </div>
 
 <div class="d-article">
-<p>Yesterday, I sat down with <a href="https://twitter.com/_asilisa_">Lisa Reiber</a>, who is doing her master’s thesis with me. She is working on the question of the transmission of risk preferences in families. Many of the potential models we hope to test involve mean level predictions (e.g., children of divorcees will be more risk-averse because they learned the world is less certain). In other cases, once we get down to which models we want to test, it is a lot less clear.</p>
-<p>One question which I have struggled with in the past often comes up when the phrase “strength of influence” comes up. For example, some theories say that mothers have a stronger influence on their children’s traits if the dads are absent. Verbally, I have also seen this expressed “play a bigger role”.</p>
-<p>Initially, one of may tend to test such a model by testing an interaction between mother’s trait and divorce. However, my argument was that in many cases, it makes more sense to think of this differently, namely as a difference in correlations. I didn’t really have a lot of experience teaching this particular nuance. I think I left my graduate statistics classes thinking that correlations are basically regressions with the variables standardised.</p>
-<p>After trying and failing to explain this verbally, I decided we should instead generate some data. This is how I learnt about this myself. I am very fond of simulating things to figure out stuff that others may learn through math, I just grok it more quickly. Fortunately, it worked similarly for Lisa, so I decided to share this simple model.</p>
-<p>We start by generating families, half of which are divorced. Mums and dads aren’t mating assortatively in this example and all transmission is through parenting, which these hypothetical parents share equally, not genetics. Hence, in two-parent families, they both have the same influence on their child’s trait <code>0.6 * parent</code>. However, in divorced families, fathers have absolutely no influence <code>(1 - divorce) * 0.6 * dad</code> <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Despite all the power of parenting in this hypothetical world, children turn out somewhat differently from their parents, which is reflected by the final term <code>0.6 * rnorm(1000)</code>.</p>
+<p>Yesterday, I sat down with <a href="https://twitter.com/_asilisa_">Lisa Reiber</a>, who is doing her master’s thesis with me. She is working on the question of the transmission of risk preferences in families. Many of the potential predictions we hope to test involve mean level changes (e.g., children of divorcees will be more risk-averse because they learned the world is less certain). In other cases, once we get down to which models we want to test, it is a lot less clear.</p>
+<p>One question which I have struggled with in the past often comes up when the phrase “strength of influence” comes up. For example, some theories say that mothers have a stronger influence on their children’s traits if the fathers are absent. Verbally, I have also seen this expressed “play a bigger role”. Intuitively, how would you test this?</p>
+<p>We decided we should make a quick data-generating model to clarify what we mean when we talk about this.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>We start by generating families, half of which are divorced. Mothers and fathers aren’t mating assortatively in this example.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 library(tidyverse)
 library(brms)
 theme_set(theme_bw())
 fam &lt;- tibble(
-  mum = rnorm(1000),
-  dad = rnorm(1000),
-  divorce = rep(c(0,1), each = 500),
-  # child = 0.5 * mum + 0.5 * dad + 0.7 * rnorm(1000),
-  child = 0.6 * mum + (1 - divorce) * 0.6 * dad + 0.6 * rnorm(1000)
+  mother = rnorm(1000),
+  father = rnorm(1000),
+  divorce = rep(c(0,1), each = 500)
 )</code></pre>
 </div>
-<p>So far, so good. We have a 1000 families.</p>
-<p>Now, this is the model we would want to test.</p>
+<p>So far, so good. We have a 1000 couples - let’s make children. We’ll assume all transmission is through parenting, which these hypothetical parents share equally, not genetics. Hence, in two-parent families, they share parenting equally and both have the same influence on their child’s trait.</p>
+<p>If there was no divorce, we would expect the following. We have equal contributions by each parent (<code>0.6 * parent</code>). Despite all the power of parenting in this hypothetical world, children turn out somewhat differently from their parents, which is reflected by the final term <code>0.6 * rnorm(1000)</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
-summary(lm(child ~ mum + divorce * dad, data = fam))</code></pre>
-<pre><code>
-Call:
-lm(formula = child ~ mum + divorce * dad, data = fam)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--1.76553 -0.41175  0.01227  0.41224  1.77746 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.00700    0.02696  -0.260   0.7952    
-mum          0.57273    0.01893  30.248   &lt;2e-16 ***
-divorce     -0.08647    0.03807  -2.272   0.0233 *  
-dad          0.57576    0.02740  21.010   &lt;2e-16 ***
-divorce:dad -0.55089    0.03836 -14.361   &lt;2e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 0.5996 on 995 degrees of freedom
-Multiple R-squared:  0.5817,    Adjusted R-squared:   0.58 
-F-statistic: 345.9 on 4 and 995 DF,  p-value: &lt; 2.2e-16</code></pre>
+fam &lt;- fam %&gt;% 
+  mutate(
+   child = 0.6 * mother + 0.6 * father + 0.6 * rnorm(1000)
+  )</code></pre>
 </div>
-<p>Nice.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> However, in many datasets, divorced families will often have missing data for the fathers. So, we might instead test the following model; after all we think mums will have greater influence in divorced families and a lot of people seem to test “greater influence” via interaction tests.</p>
+<p>What happens in case of divorce? In divorced families, fathers have absolutely no influence.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> One thing that is pretty clear, is that the term for the father’s influence should be zero in our model (<code>(1 - divorce) * 0.6 * father</code>). And isn’t it logical that the mother’s regression weight should hence go up by the same amount <code>(divorce + 1) * 0.6 * mother</code>?</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
-summary(lm(child ~ divorce * mum, data = fam))</code></pre>
+fam &lt;- fam %&gt;% 
+  mutate(
+    child = (divorce + 1) * 0.6 * mother + (1 - divorce) * 0.6 * father + 0.6 * rnorm(1000)
+  )</code></pre>
+</div>
+<p>On thinking about this, we reconsidered. Does having a stronger influence mean that</p>
+<ol type="1">
+<li>we think risk-averse divorced mothers make their children twice as risk-averse as themselves compared to non-divorced mothers?</li>
+<li>that there is no difference between divorced and non-divorced mothers when the mothers are average in risk preference?</li>
+</ol>
+<p>This would mean that divorcee’s children are actually less similar to their mothers in absolute terms. No, we decided by “having a stronger influence” in this case, we actually meant simply that another systematic influence (the father) was removed, so the mothers’ contribution to differences in their children would be bigger and the childre would be more similar to them. This is a simpler model. We only say that the contribution by the father is removed <code>(1 - divorce) * 0.6 * father</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+fam &lt;- fam %&gt;% 
+  mutate(
+    child = 0.6 * mother + (1 - divorce) * 0.6 * father + 0.6 * rnorm(1000)
+  )</code></pre>
+</div>
+<p>If you think the second model makes more sense, you would probably tend to test an interaction between mother’s trait and divorce. But how would you test the third scenario? When there is distinct groups, I have been trained to think of this as a difference in correlations (similarity, variance explained). I didn’t really have a lot of experience teaching this particular nuance. I think I left my own graduate statistics classes thinking that correlations are basically regressions with the variables standardised.</p>
+<p>Now, really, this is the model we would want to test, the data-generating model.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+summary(brm(child ~ mother + divorce * father, data = fam, cores = 4, file = &quot;dgm&quot;))</code></pre>
 <pre><code>
-Call:
-lm(formula = child ~ divorce * mum, data = fam)
+ Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: child ~ mother + divorce * father 
+   Data: fam (Number of observations: 1000) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
 
-Residuals:
-     Min       1Q   Median       3Q      Max 
--2.11527 -0.50781  0.01336  0.48971  2.25507 
+Population-Level Effects: 
+               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept         -0.01      0.03    -0.06     0.05       4946 1.00
+mother             0.60      0.02     0.56     0.64       5755 1.00
+divorce           -0.01      0.04    -0.08     0.07       4605 1.00
+father             0.62      0.03     0.56     0.68       3208 1.00
+divorce:father    -0.61      0.04    -0.69    -0.53       3298 1.00
 
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  0.04053    0.03234   1.253  0.21044    
-divorce     -0.13335    0.04566  -2.921  0.00357 ** 
-mum          0.55516    0.03240  17.133  &lt; 2e-16 ***
-divorce:mum  0.03278    0.04548   0.721  0.47126    
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+sigma     0.63      0.01     0.60     0.66       5931 1.00
 
-Residual standard error: 0.7201 on 996 degrees of freedom
-Multiple R-squared:  0.3961,    Adjusted R-squared:  0.3943 
-F-statistic: 217.8 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<p>Nice.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> But in many datasets (and in ours), divorced families will have missing data for the fathers.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+fam$father &lt;- NA</code></pre>
+</div>
+<p>So, we might instead test the following model; after all we think mothers will have greater influence in divorced families and a lot of people seem to test “greater influence” via interaction tests.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+summary(brm(child ~ divorce * mother, data = fam, cores = 4, file = &quot;interaction_model&quot;))</code></pre>
+<pre><code>
+ Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: child ~ divorce * mother 
+   Data: fam (Number of observations: 1000) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Population-Level Effects: 
+               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept          0.01      0.03    -0.05     0.08       4321 1.00
+divorce           -0.03      0.05    -0.12     0.07       4354 1.00
+mother             0.60      0.03     0.54     0.67       3610 1.00
+divorce:mother    -0.00      0.05    -0.09     0.09       3381 1.00
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+sigma     0.75      0.02     0.72     0.78       5125 1.00
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>But the interaction is estimated at zero! A plot to the rescue!</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <pre class="r"><code>
-ggplot(fam, aes(mum, child)) +
+ggplot(fam, aes(mother, child)) +
   geom_point(alpha = I(0.1)) +
   geom_smooth(method = &#39;lm&#39;) +
   coord_cartesian(c(-3,3), c(-3,3)) +
   facet_wrap(~ divorce, 
              labeller = labeller(divorce = c(&quot;0&quot; = &quot;Not divorced&quot;, &quot;1&quot; = &quot;Divorced&quot;)))</code></pre>
-<p><img src="does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+<p><img src="moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
-<p>Here, we are looking at scatter plots of mum and child by marital status. We can see visually that the slopes of the regression lines are the same. However, now we notice that the scatter around the regression line is more dispersed in the non-divorced group. I have to say, I am not sure how easily this sort of thing is noticed in plots with real data, noisier relationships, or if the moderator of influence strength is continuous.</p>
+<p>Here, we are looking at scatter plots of mother and child by marital status. We can see visually that the slopes of the regression lines are the same. However, now we notice that the scatter around the regression line is more dispersed in the non-divorced group. I have to say, I am not sure how easily this sort of thing is noticed in plots with real data, noisier relationships, or if the moderator of influence strength is continuous.</p>
 <p>Instead of regressions, we can also run correlations</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 fam %&gt;%  
-  summarise(cor(child, mum))</code></pre>
+  summarise(cor(child, mother))</code></pre>
 <pre><code>
 # A tibble: 1 x 1
-  `cor(child, mum)`
-              &lt;dbl&gt;
-1             0.625</code></pre>
+  `cor(child, mother)`
+                 &lt;dbl&gt;
+1                0.633</code></pre>
 <pre class="r"><code>
 fam %&gt;% group_by(divorce) %&gt;% 
-  summarise(cor(child, mum))</code></pre>
+  summarise(cor(child, mother))</code></pre>
 <pre><code>
 # A tibble: 2 x 2
-  divorce `cor(child, mum)`
-    &lt;dbl&gt;             &lt;dbl&gt;
-1       0             0.561
-2       1             0.698</code></pre>
+  divorce `cor(child, mother)`
+    &lt;dbl&gt;                &lt;dbl&gt;
+1       0                0.564
+2       1                0.726</code></pre>
 </div>
-<p>Now, we see that the correlation between mum and child is indeed stronger in divorced families. However, I never particularly liked this approach to this problem. I find correlations harder to think about in terms of my data-generating model (you’ll notice that the correlations .55 and .70 appear no where in the code above). It also becomes difficult when moving to multiple regression, multilevel models, or non-normal data. That’s why I am so happy about <a href="https://cloud.r-project.org/web/packages/brms/"><code>brms</code></a>. It allows me to think about the models I want to fit in almost the same language that I use to think about data-generating models. This greatly reduces cognitive ease for me.</p>
-<p>What would this model look like in <code>brms</code>?</p>
+<p>Now, we see that the correlation between mother and child is indeed stronger in divorced families. However, I never particularly liked this approach to this problem. I find correlations harder to think about in terms of my data-generating model (you’ll notice that the correlations .55 and .70 appear nowhere in the code above). It also becomes difficult when moving to multiple regression, multilevel models, or non-normal data. That’s why I am so happy about <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a>. It allows me to think about the models I want to fit in almost the same language that I use to think about data-generating models. This greatly reduces cognitive friction for me.</p>
+<p>What would this model look like in <code>brms</code>? It’s an example of a <a href="https://cloud.r-project.org/web/packages/brms/vignettes/brms_distreg.html">distributional regression with unequal variances</a>. The <a href="https://rdrr.io/cran/brms/man/brmsformula.html">brmsformula</a> function allows us to group multivariable formulas.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
-model_formula &lt;- bf( # bf allows us to group multivariable formulas
-  child ~ mum, # the regression of mum on child
-  sigma ~ divorce # sigma is a reserved word. it means we are predicting the size of the residual variation using the divorce variable
+model_formula &lt;- brmsformula(
+  child ~ mother, # the regression of mother on child
+  sigma ~ divorce # sigma is a reserved word. 
+  # we are predicting the size of the residual variation 
+  # using the divorce variable
   )</code></pre>
 </div>
 <p>Let’s run this model.</p>
@@ -1084,7 +1122,7 @@ summary(mod)</code></pre>
 <pre><code>
  Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: child ~ mum 
+Formula: child ~ mother 
          sigma ~ divorce
    Data: fam (Number of observations: 1000) 
 Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
@@ -1092,33 +1130,37 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
                 Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-Intercept           0.00      0.02    -0.04     0.04       4019 1.00
-sigma_Intercept    -0.18      0.03    -0.24    -0.12       4095 1.00
-mum                 0.63      0.02     0.59     0.67       4020 1.00
-sigma_divorce      -0.41      0.05    -0.50    -0.32       4131 1.00
+Intercept          -0.00      0.02    -0.05     0.04       4246 1.00
+sigma_Intercept    -0.25      0.03    -0.31    -0.19       4111 1.00
+mother              0.60      0.02     0.56     0.64       3978 1.00
+sigma_divorce      -0.22      0.05    -0.32    -0.13       4361 1.00
 
 Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 is a crude measure of effective sample size, and Rhat is the potential 
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
-<p>Here we go. We see clearly that there is less residual variation when the mum is the only parent. We can visualise this too. We have to use “predict” method, because this leads <code>brms</code> to include the residuals (sigma) in the uncertainty intervals. This plot nicely recapitulates our scatter plots from above.</p>
+<p>Here we go. We see clearly that there is less residual variation when the mother is the only parent. We can visualise this too. We have to use “predict” method, because this leads <code>brms</code> to include the residuals (sigma) in the uncertainty intervals. This plot nicely recapitulates our scatter plots from above.</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <pre class="r"><code>
 conds &lt;- data.frame(divorce = c(0,1))
 rownames(conds) &lt;- c(&quot;not divorced&quot;, &quot;divorced&quot;)
-plot(marginal_effects(mod, effects = &quot;mum&quot;, 
+plot(marginal_effects(mod, effects = &quot;mother&quot;, 
                  method = &#39;predict&#39;,
                  conditions = conds))</code></pre>
-<p><img src="does-a-variable-have-a-stronger-influence-and-how-do-you-test-that_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+<p><img src="moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
 </div>
 <h2 id="summary">Summary</h2>
-<p>In many cases, it really helps me (and in this case also Lisa) to generate data according to the model I have in mind. Even such simple simulations can give us a sense of whether we are able to recover our model and sometimes they may lead us to notice that we are using a word like “influence” in a very vague sense.</p>
-<p>In personality psychology, I think a lot of us intuitively grok this problem when the two variables are the same thing measured twice (e.g. stability, consistency), but even then we sometimes lose sight of it. Maybe one reason is that for more complex models, these models are harder to fit. That’s where brms comes in handy.</p>
+<p>In many cases, it really helps me (and in this case also Lisa) to generate data according to the model I have in mind. Even such simple simulations can give us a sense of whether we are able to recover our model and sometimes they may lead us to notice that we are using a word like “influence” in a very vague sense and deriving the wrong test because of that.</p>
+<p>In personality psychology, I think a lot of us intuitively grok this problem when the two variables are the same thing measured twice (e.g. stability, consistency, items), but even then we sometimes lose sight of it.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> Maybe one reason is that for more complex models, these models are harder to fit. That’s where brms comes in handy.</p>
+<h2 id="acknowledgements" class="appendix">Acknowledgements</h2>
+<p>Thanks to Lisa Reiber, Julia Rohrer, and Paul Bürkner for related discussions.</p>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>This is a bit internally inconsistent with them wanting to share parenting equally before, but whatever, custody battles <em>really</em> favour mothers in this hypothetical world.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>You can see how it neatly recovers all the parameters in our data-generating model.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>I am very fond of simulating things to figure out stuff that others may learn through math, I just grok it more quickly. Fortunately, it works similarly for Lisa, so we decided to share this simple model.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>This is a bit internally inconsistent with them wanting to share parenting equally before, but whatever, custody battles <em>really</em> favour mothers in this hypothetical world.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>You can see how neatly it recovers all the parameters in our data-generating model.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>Another problem may be that our love-hate relationship with measurement error makes us regard absolute regression coefficients with suspicion, and as fickle.<a href="#fnref4" class="footnote-back">↩</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->

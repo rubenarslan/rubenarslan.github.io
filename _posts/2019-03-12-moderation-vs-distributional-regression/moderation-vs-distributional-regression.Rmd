@@ -1,0 +1,174 @@
+---
+draft: true
+title: "Do single mothers have a stronger influence on their kids?"
+description: |
+  And how do you test that?
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+date: 03-12-2019
+output:
+  radix::radix_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Yesterday, I sat down with [Lisa Reiber](https://twitter.com/_asilisa_), who is doing
+her master's thesis with me. She is working on the question of the transmission
+of risk preferences in families. Many of the potential predictions we hope to test
+involve mean level changes (e.g., children of divorcees will be more risk-averse because they learned the world is less certain). In other cases, once we get down to
+which models we want to test, it is a lot less clear.
+
+One question which I have struggled with in the past often comes up when the
+phrase "strength of influence" comes up. For example, some theories say that
+mothers have a stronger influence on their children's traits if the fathers are absent.
+Verbally, I have also seen this expressed "play a bigger role". Intuitively, how would you test this?
+
+We decided we should make a quick data-generating model to clarify what we mean when we talk about this.^[I am very fond of simulating things to figure out stuff that others may learn through math, I just grok it more quickly. Fortunately, it works similarly for Lisa, so we decided to share this simple model.]
+
+We start by generating families, half of which  are divorced. Mothers and fathers aren't mating assortatively in this example.
+
+```{r}
+library(tidyverse)
+library(brms)
+theme_set(theme_bw())
+fam <- tibble(
+  mother = rnorm(1000),
+  father = rnorm(1000),
+  divorce = rep(c(0,1), each = 500)
+)
+```
+
+So far, so good. We have a 1000 couples - let's make children. We'll assume all transmission is through parenting, which these hypothetical parents share equally, not genetics. Hence, in two-parent families, they share parenting equally and both have the same influence on their child's trait. 
+
+If there was no divorce, we would expect the following. We have equal contributions
+by each parent (`0.6 * parent`). Despite all the power of parenting in this hypothetical world, children turn out somewhat differently from their parents, which is reflected by
+the final term `0.6 * rnorm(1000)`.
+
+```{r}
+fam <- fam %>% 
+  mutate(
+   child = 0.6 * mother + 0.6 * father + 0.6 * rnorm(1000)
+  )
+```
+
+What happens in case of divorce? In divorced families, fathers have absolutely no influence.^[This is a bit internally inconsistent with them wanting to share parenting equally before, but whatever, custody battles _really_ favour mothers in this hypothetical world.]
+One thing that is pretty clear, is that the term for the father's influence should be zero in our model (`(1 - divorce) * 0.6 * father`).
+And isn't it logical that the mother's regression weight should hence go up by the same amount `(divorce + 1) * 0.6 * mother`?
+
+```{r}
+fam <- fam %>% 
+  mutate(
+    child = (divorce + 1) * 0.6 * mother + (1 - divorce) * 0.6 * father + 0.6 * rnorm(1000)
+  )
+```
+
+On thinking about this, we reconsidered. Does having a stronger influence mean that 
+
+1. we think risk-averse divorced mothers make their children twice as risk-averse as themselves compared to non-divorced mothers?
+2. that there is no difference between divorced and non-divorced mothers when the mothers are average in risk preference?
+
+This would mean that divorcee's children are actually less similar to their mothers in absolute terms. No, we decided by "having a stronger influence" in this case, we actually meant simply that another systematic influence (the father) was removed, so the mothers' contribution to differences in their children would be bigger and the childre would be more similar to them. This is a simpler model. We only say that the contribution by the father is removed `(1 - divorce) * 0.6 * father`.
+
+```{r}
+fam <- fam %>% 
+  mutate(
+    child = 0.6 * mother + (1 - divorce) * 0.6 * father + 0.6 * rnorm(1000)
+  )
+```
+
+
+If you think the second model makes more sense, you would probably tend to test an interaction between mother's trait and divorce. But how would you test the third scenario?
+When there is distinct groups, I have been trained to think of this as a difference in correlations (similarity, variance explained). I didn't really have a lot of experience teaching this particular nuance. I think I left my own graduate statistics classes thinking that correlations are basically regressions with the variables standardised.
+
+Now, really, this is the model we would want to test, the data-generating model.
+
+```{r}
+summary(brm(child ~ mother + divorce * father, data = fam, cores = 4, file = "dgm"))
+```
+
+Nice.^[You can see how neatly it recovers all the parameters in our data-generating model.] But in many datasets (and in ours), divorced families will have missing data for the fathers. 
+
+```{r}
+fam$father <- NA
+```
+
+So, we might instead test the following model; after all we think mothers will have greater influence in divorced families and a lot of people seem to test "greater influence" via interaction tests.
+
+```{r}
+summary(brm(child ~ divorce * mother, data = fam, cores = 4, file = "interaction_model"))
+```
+
+But the interaction is estimated at zero! A plot to the rescue!
+
+```{r layout='l-body-outset'}
+ggplot(fam, aes(mother, child)) +
+  geom_point(alpha = I(0.1)) +
+  geom_smooth(method = 'lm') +
+  coord_cartesian(c(-3,3), c(-3,3)) +
+  facet_wrap(~ divorce, 
+             labeller = labeller(divorce = c("0" = "Not divorced", "1" = "Divorced")))
+```
+
+Here, we are looking at scatter plots of mother and child by marital status. We can see visually that the slopes of the regression lines are the same. However, now we notice that the scatter around the regression line is more dispersed in the non-divorced group. I have to say, I am not sure how easily this sort of thing is noticed in plots with real data, noisier relationships, or if the moderator of influence strength is continuous.
+
+Instead of regressions, we can also run correlations
+
+```{r}
+fam %>%  
+  summarise(cor(child, mother))
+fam %>% group_by(divorce) %>% 
+  summarise(cor(child, mother))
+```
+
+Now, we see that the correlation between mother and child is indeed stronger in divorced families. However, I never particularly liked this approach to this problem. I find correlations harder to think about in terms of my data-generating model (you'll notice that the correlations .55 and .70 appear nowhere in the code above). It also becomes
+difficult when moving to multiple regression, multilevel models, or non-normal data. That's why I am so happy about [`brms`](https://github.com/paul-buerkner/brms). It allows me to think about the models I want to fit in almost the same language that I use to think about data-generating models. This greatly reduces cognitive friction for me.
+
+What would this model look like in `brms`? It's an example of a [distributional regression with unequal variances](https://cloud.r-project.org/web/packages/brms/vignettes/brms_distreg.html). The [brmsformula](https://rdrr.io/cran/brms/man/brmsformula.html) function allows us to group multivariable formulas.
+
+```{r}
+model_formula <- brmsformula(
+  child ~ mother, # the regression of mother on child
+  sigma ~ divorce # sigma is a reserved word. 
+  # we are predicting the size of the residual variation 
+  # using the divorce variable
+  )
+```
+
+Let's run this model.
+
+```{r}
+mod <- brm(model_formula, 
+  data = fam, cores = 4, 
+  file = "divorce_importance")
+summary(mod)
+```
+
+Here we go. We see clearly that there is less residual variation when the mother is the only parent. We can visualise this too. We have to use "predict" method, because this leads
+`brms` to include the residuals (sigma) in the uncertainty intervals. This plot
+nicely recapitulates our scatter plots from above.
+
+```{r layout='l-body-outset'}
+conds <- data.frame(divorce = c(0,1))
+rownames(conds) <- c("not divorced", "divorced")
+plot(marginal_effects(mod, effects = "mother", 
+                 method = 'predict',
+                 conditions = conds))
+```
+
+## Summary
+In many cases, it really helps me (and in this case also Lisa) to generate data
+according to the model I have in mind. Even such simple simulations can give us 
+a sense of whether we are able to recover our model and sometimes they may lead
+us to notice that we are using a word like "influence" in a very vague sense and
+deriving the wrong test because of that.
+
+In personality psychology, I think a lot of us intuitively grok this problem when the two variables are the same thing measured twice (e.g. stability, consistency, items), but even then we sometimes lose sight of it.^[Another problem may be that our love-hate relationship with measurement error makes us regard absolute regression coefficients with suspicion, and as fickle.] Maybe one reason is that for more complex models, these models are harder to fit. That's where brms comes in handy.
+
+
+## Acknowledgements {.appendix}
+
+Thanks to Lisa Reiber, Julia Rohrer, and Paul Bürkner for related discussions.
