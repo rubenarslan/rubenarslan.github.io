@@ -164,9 +164,11 @@ In many cases, it really helps me (and in this case also Lisa) to generate data
 according to the model I have in mind. Even such simple simulations can give us 
 a sense of whether we are able to recover our model and sometimes they may lead
 us to notice that we are using a word like "influence" in a very vague sense and
-deriving the wrong test because of that.
+deriving the wrong test because of that. A way to help me think about this, is 
+to ask whether I am really thinking about another influencing variable that is 
+reduced in importance (here, the father).
 
-In personality psychology, I think a lot of us intuitively grok this problem when the two variables are the same thing measured twice (e.g. stability, consistency, items), but even then we sometimes lose sight of it.^[Another problem may be that our love-hate relationship with measurement error makes us regard absolute regression coefficients with suspicion, and as fickle.] Maybe one reason is that for more complex models, these models are harder to fit. That's where brms comes in handy.
+In personality psychology, I think a lot of us intuitively grok this problem when the two variables are the same thing measured twice (e.g. stability, consistency, items), but even then we sometimes lose sight of it.^[Another problem may be that our love-hate relationship with measurement error makes us regard absolute regression coefficients with suspicion, and as fickle.] Maybe one reason is that for more complex questions, the right models are harder to fit. That's where brms comes in handy.
 
 
 ## Acknowledgements {.appendix}

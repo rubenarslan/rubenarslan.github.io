@@ -49,7 +49,7 @@
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-12-1.png","moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png"]}
+  {"type":"character","attributes":{},"value":["moderation-vs-distributional-regression_files/bowser-1.9.3/bowser.min.js","moderation-vs-distributional-regression_files/distill-2.2.21/template.v2.js","moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-12-1.png","moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png","moderation-vs-distributional-regression_files/jquery-1.11.3/jquery.min.js","moderation-vs-distributional-regression_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1090,7 +1090,7 @@ fam %&gt;%
 # A tibble: 1 x 1
   `cor(child, mother)`
                  &lt;dbl&gt;
-1                0.633</code></pre>
+1                0.618</code></pre>
 <pre class="r"><code>
 fam %&gt;% group_by(divorce) %&gt;% 
   summarise(cor(child, mother))</code></pre>
@@ -1098,8 +1098,8 @@ fam %&gt;% group_by(divorce) %&gt;%
 # A tibble: 2 x 2
   divorce `cor(child, mother)`
     &lt;dbl&gt;                &lt;dbl&gt;
-1       0                0.564
-2       1                0.726</code></pre>
+1       0                0.541
+2       1                0.712</code></pre>
 </div>
 <p>Now, we see that the correlation between mother and child is indeed stronger in divorced families. However, I never particularly liked this approach to this problem. I find correlations harder to think about in terms of my data-generating model (you’ll notice that the correlations .55 and .70 appear nowhere in the code above). It also becomes difficult when moving to multiple regression, multilevel models, or non-normal data. That’s why I am so happy about <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a>. It allows me to think about the models I want to fit in almost the same language that I use to think about data-generating models. This greatly reduces cognitive friction for me.</p>
 <p>What would this model look like in <code>brms</code>? It’s an example of a <a href="https://cloud.r-project.org/web/packages/brms/vignettes/brms_distreg.html">distributional regression with unequal variances</a>. The <a href="https://rdrr.io/cran/brms/man/brmsformula.html">brmsformula</a> function allows us to group multivariable formulas.</p>
@@ -1150,8 +1150,8 @@ plot(marginal_effects(mod, effects = &quot;mother&quot;,
 <p><img src="moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
 </div>
 <h2 id="summary">Summary</h2>
-<p>In many cases, it really helps me (and in this case also Lisa) to generate data according to the model I have in mind. Even such simple simulations can give us a sense of whether we are able to recover our model and sometimes they may lead us to notice that we are using a word like “influence” in a very vague sense and deriving the wrong test because of that.</p>
-<p>In personality psychology, I think a lot of us intuitively grok this problem when the two variables are the same thing measured twice (e.g. stability, consistency, items), but even then we sometimes lose sight of it.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> Maybe one reason is that for more complex models, these models are harder to fit. That’s where brms comes in handy.</p>
+<p>In many cases, it really helps me (and in this case also Lisa) to generate data according to the model I have in mind. Even such simple simulations can give us a sense of whether we are able to recover our model and sometimes they may lead us to notice that we are using a word like “influence” in a very vague sense and deriving the wrong test because of that. A way to help me think about this, is to ask whether I am really thinking about another influencing variable that is reduced in importance (here, the father).</p>
+<p>In personality psychology, I think a lot of us intuitively grok this problem when the two variables are the same thing measured twice (e.g. stability, consistency, items), but even then we sometimes lose sight of it.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> Maybe one reason is that for more complex questions, the right models are harder to fit. That’s where brms comes in handy.</p>
 <h2 id="acknowledgements" class="appendix">Acknowledgements</h2>
 <p>Thanks to Lisa Reiber, Julia Rohrer, and Paul Bürkner for related discussions.</p>
 <section class="footnotes">
