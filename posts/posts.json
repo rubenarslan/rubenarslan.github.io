@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2019-03-12-moderation-vs-distributional-regression/",
+    "title": "Do single mothers have a stronger influence on their kids?",
+    "description": "And how would you test that?",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      }
+    ],
+    "date": "2019-03-13",
+    "categories": [],
+    "preview": "posts/2019-03-12-moderation-vs-distributional-regression/moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png",
+    "last_modified": "2019-03-14T13:02:52+01:00",
+    "preview_width": 1248,
+    "preview_height": 768
+  },
+  {
     "path": "posts/2019-03-08-the-golden-age-of-never-finishing-anything/",
     "title": "The Golden Age of Never Finishing Anything",
     "description": "Serialising the results from our sex diary study.",

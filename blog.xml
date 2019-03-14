@@ -7,14 +7,23 @@
     <description>Personal blog
 </description>
     <generator>Radix</generator>
-    <lastBuildDate>Sun, 10 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Do single mothers have a stronger influence on their kids?</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression</link>
+      <description>And how would you test that?</description>
+      <guid>https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression</guid>
+      <pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression/moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>The Golden Age of Never Finishing Anything</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-03-08-the-golden-age-of-never-finishing-anything</link>
       <description>Serialising the results from our sex diary study.</description>
       <guid>https://rubenarslan.github.io/posts/2019-03-08-the-golden-age-of-never-finishing-anything</guid>
-      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
       <media:content url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg/981px-Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
