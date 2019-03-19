@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2019-03-13-intra-individual-feedback/",
+    "title": "Intra-individual feedback",
+    "description": "Thinking through an intra-individual menstrual cycle feedback.",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      }
+    ],
+    "date": "2019-03-19",
+    "categories": [],
+    "preview": "posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png",
+    "last_modified": "2019-03-19T12:57:39+01:00",
+    "preview_width": 1920,
+    "preview_height": 1344
+  },
+  {
     "path": "posts/2019-03-12-moderation-vs-distributional-regression/",
     "title": "Do single mothers have a stronger influence on their kids?",
     "description": "And how would you test that?",

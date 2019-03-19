@@ -7,14 +7,23 @@
     <description>Personal blog
 </description>
     <generator>Radix</generator>
-    <lastBuildDate>Tue, 12 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Intra-individual feedback</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback</link>
+      <description>Thinking through an intra-individual menstrual cycle feedback.</description>
+      <guid>https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback</guid>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1920" height="1344"/>
+    </item>
     <item>
       <title>Do single mothers have a stronger influence on their kids?</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression</link>
       <description>And how would you test that?</description>
       <guid>https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression</guid>
-      <pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 13 Mar 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression/moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>

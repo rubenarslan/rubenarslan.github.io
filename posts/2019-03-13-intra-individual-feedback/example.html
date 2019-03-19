@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>example.utf8.md</title>
+
+<script src="example_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="example_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="example_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="example_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="example_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="example_files/navigation-1.1/tabsets.js"></script>
+<link href="example_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="example_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="example_files/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="example_files/proj4js-2.3.15/proj4.js"></script>
+<link href="example_files/highcharts-7.0.1/css/motion.css" rel="stylesheet" />
+<link href="example_files/highcharts-7.0.1/css/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="example_files/highcharts-7.0.1/highcharts.js"></script>
+<script src="example_files/highcharts-7.0.1/highcharts-3d.js"></script>
+<script src="example_files/highcharts-7.0.1/highcharts-more.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/stock.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/map.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/annotations.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/boost.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/data.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/drag-panes.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/drilldown.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/item-series.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/offline-exporting.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/overlapping-datalabels.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/exporting.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/export-data.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/funnel.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/heatmap.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/treemap.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/sankey.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/solid-gauge.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/streamgraph.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/sunburst.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/vector.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/wordcloud.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/xrange.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/tilemap.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/venn.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/gantt.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/timeline.js"></script>
+<script src="example_files/highcharts-7.0.1/modules/parallel-coordinates.js"></script>
+<script src="example_files/highcharts-7.0.1/plugins/grouped-categories.js"></script>
+<script src="example_files/highcharts-7.0.1/plugins/motion.js"></script>
+<script src="example_files/highcharts-7.0.1/plugins/multicolor_series.js"></script>
+<script src="example_files/highcharts-7.0.1/custom/reset.js"></script>
+<script src="example_files/highcharts-7.0.1/custom/symbols-extra.js"></script>
+<script src="example_files/highcharts-7.0.1/custom/text-symbols.js"></script>
+<script src="example_files/highchart-binding-0.7.0/highchart.js"></script>
+<script src="example_files/detect-resize-0.5.3/jquery.resize.js"></script>
+<link href="example_files/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+<script src="example_files/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="example_files/d3-3.5.2/d3.min.js"></script>
+<script src="example_files/vega-1.4.3/vega.min.js"></script>
+<script src="example_files/lodash-2.2.1/lodash.min.js"></script>
+<script>var lodash = _.noConflict();</script>
+<link href="example_files/ggvis-0.4.4/css/ggvis.css" rel="stylesheet" />
+<script src="example_files/ggvis-0.4.4/js/ggvis.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="alltag-sexualitat" class="section level1">
+<h1>Alltag &amp; Sexualität</h1>
+</div>
+<div id="ruckmeldung" class="section level1 tabset">
+<h1>Rückmeldung</h1>
+<div id="einleitung" class="section level2">
+<h2>Einleitung</h2>
+<p><strong>Vielen Dank für Ihre Teilnahme an unserer Studie.</strong> Es folgt nun Ihre persönliche Rückmeldung. Bitte beachten Sie, dass die Auswertung automatisch erfolgt ist. Die Analysen und Grafiken basieren auf Ihren Aussagen über die vergangenen 70 Tage hinweg. 70 Tage sind keine kurze Zeit, aber bitte beachten Sie trotzdem die folgenden Hinweise:</p>
+<ul>
+<li>Zufallsfehler können Muster verursachen, die hier recht deutlich aussehen, aber doch nicht bedeuten, dass es bei Ihnen immer so abläuft. Genau so wie der menschliche Blick Figuren in den Wolken findet, finden wir auch manchmal Muster in den Punktwolken Ihrer Daten, die keine überdauernde Bedeutung haben</li>
+<li>Sie sind die Expertin für die Interpretation Ihrer Daten, nicht wir. Deswegen bieten wir viele Daten ohne Interpretation dar.</li>
+<li>Wenn ein Muster für Sie überhaupt keinen Sinn ergibt, dann ist es in vielen Fällen wohl wahrscheinlicher, dass statistische Zufallsfehler zugeschlagen haben, unsere Operationalisierungen von komplexen psychischen Abläufen zu kurz gegriffen haben, die vergangenen 70 Tage einfach ungewöhnlich waren, oder dass entscheidende <abbr title="gleichzeitig auftretende Umstände, die es so aussehen lassen, als gäbe es einen Zusammenhang, wo keiner ist.">konfundierende</abbr> Faktoren unberücksichtigt blieben.</li>
+<li>Erhoben haben hier rein <abbr title="Wechselbeziehung - unsere Daten sind nicht experimentell, deswegen ist oft unklar, ob eine Ursache-Wirkungs-Zusammenhang besteht">korrelative</abbr> Daten, die auf Ihren Selbstberichten basieren. In solchen Fällen sollte nur mit enormer Vorsicht eine kausale Interpretation erfolgen. Vielleicht kennen Sie die wahren Gründe selbst, aber unsere Entscheidungen eine Variable auf die X-Achse (waagerecht) oder Y-Achse (senkrecht) einer statistischen Grafik zu legen, haben hierfür wenig zu bedeuten.</li>
+<li>Diese Rückmeldung ist technisch recht komplex zu erstellen. Falls Ihnen Fehler auffallen, oder Sie sich Informationen wünschen, die bislang fehlen, zögern Sie nicht, sich direkt <a href="mailto:alltag-und-sexualitaet@uni-goettingen.de">an uns zu wenden</a>.</li>
+</ul>
+<p>Sie können nun wie folgt Ihre Rückmeldung für die verschiedenen Bereiche lesen: Oben sehen Sie die groben Oberkategorien der Rückmeldung. Wenn Sie auf eine klicken, gelangen Sie zu mehr Erklärungen und den Grafiken, sowie weiteren Erklärungen.</p>
+</div>
+<div id="ihre-personlichkeit" class="section level2 tabset">
+<h2>Ihre Persönlichkeit</h2>
+<div id="big-5-personlichkeit" class="section level3">
+<h3>Big 5 Persönlichkeit</h3>
+<p>Die Big Five oder auch, eng verwandt, das Fünf-Faktoren-Modell (FFM), ist ein Modell der Persönlichkeitspsychologie, nach dem sich Persönlichkeit in fünf Hauptdimensionen zusammenfassen lässt. Neurotizismus (hier im Gegenpol: emotionale Stabilität), Extraversion, Offenheit für Erfahrungen, Verträglichkeit und Gewissenhaftigkeit. Werte auf diesen Dimensionen dienen als relativ sparsame Zusammenfassung der Arten und Weisen, in denen sich Menschen unterscheiden.</p>
+<p><img src="example_files/figure-html/motiv.opt-1.png" width="1440" /></p>
+</div>
+<div id="ihre-extraversion" class="section level3">
+<h3>Ihre Extraversion</h3>
+<p>Die Dimension Extraversion beschreibt Aktivität und zwischenmenschliches Verhalten. Sie wird auch Begeisterungsfähigkeit genannt und ist der Introversion gegenübergestellt. Personen mit hohen Extraversionswerten sind gesellig, aktiv, gesprächig, personenorientiert, herzlich, optimistisch und heiter.</p>
+<p>Sie sind zudem empfänglich für Anregungen und Aufregungen. Introvertierte Personen sind zurückhaltend bei sozialen Interaktionen, gerne allein und unabhängig. Sie können auch sehr aktiv sein, aber weniger in Gesellschaft.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Sie sind sehr introvertiert.</p>
+</div>
+<div id="ihre-gewissenhaftigkeit" class="section level3">
+<h3>Ihre Gewissenhaftigkeit</h3>
+<p>Personen mit hohen Gewissenhaftigkeitswerten handeln organisiert, sorgfältig, planend, effektiv, verantwortlich, zuverlässig und überlegt. Gewissenhafte Menschen sind sich der Verantwortung ihrer Aufgaben bewusst und arbeiten zielstrebig und entschlossen auf ihre Ziele hin.</p>
+<p>Unter den 5 Hauptfaktoren der Persönlichkeit sagt selbstbeurteilte Gewissenhaftigkeit das Vorgesetztenurteil über den Berufserfolg am besten vorher. Personen mit niedrigen Gewissenhaftigkeitswerten handeln unsorgfältig, spontan und ungenau, gelten auch eher als gelassen und weniger leistungsmotiviert. Sie haben ein geringeres Risiko für Perfektionismus und Zwanghaftigkeit. Sie reden offener über Sex, schnallen sich seltener an und nehmen eher Anhalter mit. Sie neigen auch mehr zu Tagträumen und <abbr title="Vor-sich-her-schieben von Aufgaben">Prokrastination</abbr>.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Sie sind eher wenig gewissenhaft.</p>
+</div>
+<div id="ihre-vertraglichkeit" class="section level3">
+<h3>Ihre Verträglichkeit</h3>
+<p>Ein zentrales Merkmal von Personen mit hohen Verträglichkeitswerten ist ihr Altruismus. Sie begegnen anderen mit Verständnis, Wohlwollen und Mitgefühl, sie sind bemüht, anderen zu helfen, und überzeugt, dass diese sich ebenso hilfsbereit verhalten werden. Sie neigen zu zwischenmenschlichem Vertrauen, zur Kooperation und zur Nachgiebigkeit.</p>
+<p>Personen mit niedrigen Verträglichkeitswerten beschreiben sich im Gegensatz dazu als antagonistisch, egozentrisch und misstrauisch gegenüber den Absichten anderer Menschen. Sie verhalten sich eher kompetitiv (mit anderen in den „Wettstreit“ tretend) als kooperativ. Somit scheint die verträgliche Seite der Dimension eindeutig sozial erwünschter zu sein. Dennoch darf nicht vergessen werden, dass die Fähigkeit, für eigene Interessen zu kämpfen, in vielen Situationen hilfreich ist. So ist Verträglichkeit im Gerichtssaal nicht unbedingt eine Tugend.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Sie sind durchschnittlich verträglich.</p>
+</div>
+<div id="ihre-offenheit-fur-neue-erfahrungen" class="section level3">
+<h3>Ihre Offenheit für neue Erfahrungen</h3>
+<p>Mit dieser Eigenschaft werden das Interesse und das Ausmaß der Beschäftigung mit neuen Erfahrungen, Erlebnissen und Eindrücken zum Ausdruck gebracht.</p>
+<p>Personen mit hohen Offenheitswerten geben häufig an, dass sie ein reges Fantasieleben haben, ihre positiven und negativen Gefühle deutlich wahrnehmen sowie an vielen persönlichen und öffentlichen Vorgängen interessiert sind. Sie beschreiben sich als wissbegierig, intellektuell, fantasievoll, experimentierfreudig und künstlerisch interessiert. Sie sind eher bereit, bestehende Normen kritisch zu hinterfragen und auf neuartige soziale, ethische und politische Wertvorstellungen einzugehen. Sie sind unabhängig in ihrem Urteil, verhalten sich häufig unkonventionell, erproben neue Handlungsweisen und bevorzugen Abwechslung.</p>
+<p>Personen mit niedrigen Offenheitswerten neigen demgegenüber eher zu konventionellem Verhalten und zu konservativen Einstellungen. Sie ziehen Bekanntes und Bewährtes dem Neuen vor und sie nehmen ihre emotionalen Reaktionen eher gedämpft wahr.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Sie sind durchschnittlich offen für neue Erfahrungen.</p>
+</div>
+<div id="ihre-emotionale-stabilitat" class="section level3">
+<h3>Ihre emotionale Stabilität</h3>
+<p>Dieses Konstrukt spiegelt individuelle Unterschiede im Erleben von negativen Emotionen wider und wird von einigen Autoren auch als emotionale Labilität oder Neurotizismus bezeichnet.</p>
+<p>Emotional labile Personen erleben häufiger Angst, Nervosität, Anspannung, Trauer, Unsicherheit und Verlegenheit. Zudem bleiben diese Empfindungen bei ihnen länger bestehen und werden leichter ausgelöst. Sie tendieren zu mehr Sorgen um ihre Gesundheit, neigen zu unrealistischen Ideen und haben Schwierigkeiten, auf Stresssituationen gelassen zu reagieren. Emotional stabile Personen sind eher ruhig, zufrieden, stabil, entspannt und sicher. Sie erleben seltener negative und häufiger positive Gefühle.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Sie sind eher emotional labil.</p>
+</div>
+</div>
+<div id="ihr-zyklus" class="section level2 tabset">
+<h2>Ihr Zyklus</h2>
+<div id="einleitung-1" class="section level3">
+<h3>Einleitung</h3>
+<p>Hier stellen für Sie grafisch dar, wie sich Ihre Berichte über Ihren Zyklus hinweg verändert haben. Unten sehen Sie noch eine erklärende Grafik zum typischen Zyklus.</p>
+<p>Einige Einschränkungen wollen wir aber vorwegschicken:</p>
+<ol style="list-style-type: decimal">
+<li>In unserer Forschung betrachten wir gleichzeitig hunderte und tausende Zyklen von vielen verschiedenen Frauen. Sie haben (im Normallfall) nur zwei Zyklen zu unserer Studie beigetragen. Deshalb sollten Sie die Ergebnisse hier nur unter Vorsicht interpretieren.</li>
+<li>Manche Frauen haben kürzere und längere Zyklen als andere. Falls Ihre Zykluslänge deutlich kürzer oder länger ist als die anderer Frauen (im Mittel ungefähr 29 Tage), dann ist das fertile Fenster (in blau) vielleicht nicht richtig positioniert.</li>
+<li>Wir zählen die Tage vom Beginn der letzten Menstruation rückwarts. Dies tun wir, weil die luteale Phase (ab dem Eisprung zur Menstruation) weniger variabel über Frauen und Zyklen ist. Dies bedeutet, dass Daten am Ende des Tagebuchs teils nicht mit einfließen können (deswegen gibt es unsere Nachbefragung).</li>
+<li>Es gibt beträchtliche Unsicherheiten bei der Schätzung der Position des fertilen Fenster (der fruchtbaren Tage). Im statistischen Mittel können wir damit umgehen, aber Sie sollten Ihre Daten mit Vorsicht interpretieren, insbesondere wenn Ihr Zyklus eher unregelmäßig ist.</li>
+<li>Da Sie laut Ihren Angaben nicht hormonell verhüten und regelmäßig menstruieren, ovulieren Sie wahrscheinlich in den meisten Zyklen. In unserer Forschung haben wir bislang gefunden, dass hormonell verhütende Frauen im grünen Fenster sich selbst nicht signifikant anders erleben als sonst.</li>
+<li>Die hier dargestellten Grafiken benötigen eine gewisse Mindestmenge an Daten. Da wir nicht alle Fragen jeden Tag gestellt haben, um Ihre Zeit zu schonen, kann es, insbesondere wenn Sie nicht sehr regelmäßig teilgenommen haben, zu Fehlern bei der Grafikerstellung und/oder wirren Mustern kommen.</li>
+</ol>
+<div id="der-menstruationszyklus" class="section level4">
+<h4>der Menstruationszyklus</h4>
+<div class="figure">
+<img src="https://formr.org/assets/tmp/admin/AklAt3ZevW3Wnz5n_AXmcZDfQYPEJusI7AiFi_ImH8jq.png?v1464334804" alt="Zyklus" />
+<p class="caption">Zyklus</p>
+</div>
+</div>
+</div>
+<div id="stimmung" class="section level3">
+<h3>Stimmung</h3>
+<p>Im Tagebuch: “Meine Stimmung war gut.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-9-1.png" width="960" /></p>
+</div>
+<div id="selbstwertgefuhl" class="section level3">
+<h3>Selbstwertgefühl</h3>
+<p>Im Tagebuch: “Ich war zufrieden mit mir.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
+</div>
+<div id="beziehungszufriedenheit" class="section level3">
+<h3>Beziehungszufriedenheit</h3>
+<p>Im Tagebuch: “Ich war zufrieden mit meiner Beziehung.”</p>
+<p>.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
+</div>
+<div id="stress" class="section level3">
+<h3>Stress</h3>
+<p>Im Tagebuch: “Ich war gestresst.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+</div>
+<div id="reizbarkeit" class="section level3">
+<h3>Reizbarkeit</h3>
+<p>Im Tagebuch: “Ich war leicht reizbar.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-13-1.png" width="960" /></p>
+</div>
+<div id="einsamkeit" class="section level3">
+<h3>Einsamkeit</h3>
+<p>Im Tagebuch: “Ich war einsam.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
+</div>
+<div id="attraktivitat" class="section level3">
+<h3>Attraktivität</h3>
+<p>Im Tagebuch drei verschieden Aussagen zu Ihrem Aussehen:</p>
+<p>“Ich war mit meinem Aussehen zufrieden.” “Ich habe mich gerne im Spiegel angeschaut.” “Ich habe meinen Körper gerne angeschaut.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+</div>
+<div id="libido-sex" class="section level3 tabset">
+<h3>Libido &amp; Sex</h3>
+<div id="libido" class="section level4">
+<h4>Libido</h4>
+<p>Im Tagebuch: “Ich hatte eine hohe <abbr title="Lust, Geschlechtsverkehr zu haben/zu masturbieren/sexuell aktiv zu werden">Libido</abbr>.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
+</div>
+<div id="initiation" class="section level4">
+<h4>Initiation</h4>
+<p>Im Tagebuch “Ich habe sexuelle Handlungen mit meinem Partner initiiert.”</p>
+<p>.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
+<p>Im Tagebuch “Mein Partner hat sexuelle Handlungen mit mir initiiert.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
+</div>
+<div id="hingezogen-zu-partner" class="section level4">
+<h4>Hingezogen zu Partner</h4>
+<p>Gemittelt über 13 ähnliche Fragen, die Ihnen im Laufe des Tagebuchs gestellt wurden.</p>
+<p>.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-19-1.png" width="960" /></p>
+</div>
+<div id="hingezogen-zu-anderen-mannern" class="section level4">
+<h4>Hingezogen zu anderen Männern</h4>
+<p>Gemittelt über 13 ähnliche Fragen, die Ihnen im Laufe des Tagebuchs gestellt wurden.</p>
+<p><img src="example_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
+</div>
+</div>
+<div id="schlaf" class="section level3">
+<h3>Schlaf</h3>
+<p>Im Tagebuch: “Mein Schlaf letzte Nacht war gut.”</p>
+<p><img src="example_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
+<p>Im Tagebuch: “So viel habe ich letzte Nacht geschlafen.” (mehr/weniger als sonst)</p>
+<p><img src="example_files/figure-html/unnamed-chunk-22-1.png" width="960" /></p>
+<p>Im Tagebuch: “Von wann bis wann haben Sie geschlafen?” (Angabe der Uhrzeiten)</p>
+<p><img src="example_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+</div>
+</div>
+<div id="ihr-schlaf" class="section level2 tabset">
+<h2>Ihr Schlaf</h2>
+<div id="schlaf-und-alkohol" class="section level3">
+<h3>Schlaf und Alkohol</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+<div id="schlaf-und-stimmung" class="section level3">
+<h3>Schlaf und Stimmung</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+<div id="schlaf-und-libido" class="section level3">
+<h3>Schlaf und Libido</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+</div>
+</div>
+<div id="ihre-stimmung-in-abhangigkeit-von" class="section level2 tabset">
+<h2>Ihre Stimmung in Abhängigkeit von</h2>
+<div id="ihrem-alkoholkonsum" class="section level3">
+<h3>…Ihrem Alkoholkonsum</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="ihrem-zigarettenkonsum" class="section level3">
+<h3>…Ihrem Zigarettenkonsum</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+</div>
+<div id="ihre-zeit" class="section level2">
+<h2>Ihre Zeit</h2>
+<div id="htmlwidget-b58513ad1edc4e23b25b" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b58513ad1edc4e23b25b">{"x":{"hc_opts":{"title":{"text":"Wie haben Sie Ihre Zeit verbracht?"},"yAxis":{"title":{"text":null},"gridLineInterpolation":"polygon","lineWidth":0,"min":0,"max":4},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"chart":{"polar":true,"type":"line"},"xAxis":{"categories":["mit Freunden","mit Arbeit/Uni","mit Sport","mit Menschen","mit Familie","mit Schlaf"],"tickmarkPlacement":"on","lineWidth":0},"series":[{"name":"Montag-Donnerstag","data":[1,0.71,0.18,1.58,2,1.94],"pointPlacement":"on"},{"name":"Wochenende","data":[1.1,0,0.35,1.26,2.21,1.92],"pointPlacement":"on"}]},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="ihre-stimmung-uber-die-zeit-hinweg" class="section level2">
+<h2>Ihre Stimmung über die Zeit hinweg</h2>
+<p>Hier haben wir sehr viel Informationen an einem Ort zusammengetragen. In der untenstehenden Grafik sehen Sie, wie Ihre Stimmung über die Zeit hinweg war. Wir haben versucht es mit einer Linie zusammenzufassen, aber das ist bei einem kurzen Zeitraum und wenig Daten nicht gut statistisch abgesichert.</p>
+<p>Sie sehen kleine Punkte und Quadrate. Wenn Sie mit der Maus rechts von <strong>Quadraten</strong> entlang fahren, können Sie die Notizen lesen, die Sie sich an diesem Tag gemacht haben. Bei den <strong>Punkten</strong> haben Sie sich keine Notizen gemacht. Aus technischen Gründen mussten wir leider sehr lange Notizen abkürzen.</p>
+<p>Die Angaben, die Sie gemacht haben, haben Werte von 0, 1, 3, und 4, wobei 0 “weniger als sonst” und 4 “mehr als sonst” hieß. Wir haben die Werte ein wenig voneinander wegbewegt, damit Sie sie besser sehen können, diese kleinen Schwankungen haben aber nichts zu bedeuten.</p>
+<p>Die Kürzel neben Ihren Notizen beziehen sich auf folgende Felder: N: Notizen am Ende des Fragebogens G: Menschen, die Sie getroffen haben D: Menschen, an die Sie gedacht haben S: Notizen zu Ihrem Sozialleben</p>
+<div id="plot_id168444183-container" class="ggvis-output-container">
+<div id="plot_id168444183" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id168444183_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id168444183" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id168444183_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id168444183" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id168444183_download" class="ggvis-download" data-plot-id="plot_id168444183">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id168444183_spec = {
+  "data": [
+    {
+      "name": ".0/group_by1_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "created": "number",
+          "value": "number",
+          "id": "number"
+        }
+      },
+      "values": "\"created\",\"value\",\"variable\",\"has_notes\",\"id\",\"Notes\"\n1476901106000,1.89777145143598,\"Einsamkeit\",\"no\",209,\"\"\n1477063325000,2.09111250881106,\"Einsamkeit\",\"no\",211,\"\"\n1477497525000,2.99071715772152,\"Einsamkeit\",\"no\",216,\"\"\n1477584557000,2.84903968339786,\"Einsamkeit\",\"no\",217,\"\"\n1477755415000,0.809375619888306,\"Einsamkeit\",\"no\",219,\"\"\n1477848127000,2.1104814841412,\"Einsamkeit\",\"no\",220,\"\"\n1478110653000,3.00533225163817,\"Einsamkeit\",\"no\",223,\"\"\n1478278460000,3.19070319440216,\"Einsamkeit\",\"no\",225,\"\"\n1478455609000,2.85597212938592,\"Einsamkeit\",\"no\",227,\"\"\n1478798262000,1.98299043523148,\"Einsamkeit\",\"no\",231,\"\"\n1479144269000,3.19248836804181,\"Einsamkeit\",\"no\",235,\"\"\n1479230887000,1.90911570554599,\"Einsamkeit\",\"no\",236,\"\"\n1479489867000,1.98923276830465,\"Einsamkeit\",\"no\",239,\"\"\n1479571689000,1.97921975255013,\"Einsamkeit\",\"no\",240,\"\"\n1479663214000,1.99609590452164,\"Einsamkeit\",\"no\",241,\"\"\n1479747006000,1.86895760921761,\"Einsamkeit\",\"no\",242,\"\"\n1480442255000,2.16957456544042,\"Einsamkeit\",\"no\",249,\"\"\n1480525357000,2.07735715955496,\"Einsamkeit\",\"no\",250,\"\"\n1480610607000,1.84874170059338,\"Einsamkeit\",\"no\",251,\"\"\n1480704840000,1.0398322221823,\"Einsamkeit\",\"no\",252,\"\"\n1480957957000,0.813164440076798,\"Einsamkeit\",\"no\",255,\"\"\n1481136575000,1.85103465281427,\"Einsamkeit\",\"no\",257,\"\"\n1481216053000,1.92914925012738,\"Einsamkeit\",\"no\",258,\"\"\n1481300820000,2.02385160410777,\"Einsamkeit\",\"no\",259,\"\"\n1481392874000,1.88855756958947,\"Einsamkeit\",\"no\",260,\"\"\n1481560720000,2.13247427176684,\"Einsamkeit\",\"no\",262,\"\"\n1481647555000,1.89786430550739,\"Einsamkeit\",\"no\",263,\"\"\n1481733526000,3.15938994586468,\"Einsamkeit\",\"no\",264,\"\"\n1482337781000,1.82498817844316,\"Einsamkeit\",\"no\",271,\"\"\n1482522027000,2.15999306235462,\"Einsamkeit\",\"no\",273,\"\"\n1482624325000,1.19282352151349,\"Einsamkeit\",\"no\",274,\"\"\n1476804421000,1.98125335853547,\"Gute Laune\",\"no\",277,\"\"\n1476901106000,1.92060052445158,\"Gute Laune\",\"no\",278,\"\"\n1476979150000,3.05313221737742,\"Gute Laune\",\"no\",279,\"\"\n1477063325000,1.86328972568735,\"Gute Laune\",\"no\",280,\"\"\n1477158356000,0.801821960415691,\"Gute Laune\",\"no\",281,\"\"\n1477236562000,1.18395603252575,\"Gute Laune\",\"no\",282,\"\"\n1477325932000,1.11111448341981,\"Gute Laune\",\"no\",283,\"\"\n1477409231000,0.840698703937232,\"Gute Laune\",\"no\",284,\"\"\n1477497525000,0.978711054380983,\"Gute Laune\",\"no\",285,\"\"\n1477931771000,1.8893451246433,\"Gute Laune\",\"no\",290,\"\"\n1478110653000,0.81827152390033,\"Gute Laune\",\"no\",292,\"\"\n1478191698000,1.96198080619797,\"Gute Laune\",\"no\",293,\"\"\n1478278460000,2.02366741420701,\"Gute Laune\",\"no\",294,\"\"\n1478369742000,0.802966518234462,\"Gute Laune\",\"no\",295,\"\"\n1478455609000,1.13868119707331,\"Gute Laune\",\"no\",296,\"\"\n1478537284000,1.12015850646421,\"Gute Laune\",\"no\",297,\"\"\n1478625770000,0.842315649241209,\"Gute Laune\",\"no\",298,\"\"\n1478710942000,1.01492533069104,\"Gute Laune\",\"no\",299,\"\"\n1478798262000,0.805238376092166,\"Gute Laune\",\"no\",300,\"\"\n1478884333000,1.83798785945401,\"Gute Laune\",\"no\",301,\"\"\n1479144269000,1.87206973554567,\"Gute Laune\",\"no\",304,\"\"\n1479230887000,0.90890715168789,\"Gute Laune\",\"no\",305,\"\"\n1479316022000,2.10095303123817,\"Gute Laune\",\"no\",306,\"\"\n1479403313000,1.13745858930051,\"Gute Laune\",\"no\",307,\"\"\n1479663214000,2.08180406177416,\"Gute Laune\",\"no\",310,\"\"\n1479834826000,0.916914166137576,\"Gute Laune\",\"no\",312,\"\"\n1479918777000,0.956008432619274,\"Gute Laune\",\"no\",313,\"\"\n1480006360000,0.875010127387941,\"Gute Laune\",\"no\",314,\"\"\n1480182098000,1.83189447373152,\"Gute Laune\",\"no\",315,\"\"\n1480300533000,1.99115557884797,\"Gute Laune\",\"no\",316,\"\"\n1480360282000,2.06122704148293,\"Gute Laune\",\"no\",317,\"\"\n1480442255000,1.17645543524995,\"Gute Laune\",\"no\",318,\"\"\n1480525357000,0.820554130896926,\"Gute Laune\",\"no\",319,\"\"\n1480704840000,1.83156748004258,\"Gute Laune\",\"no\",321,\"\"\n1480871027000,2.02880548080429,\"Gute Laune\",\"no\",323,\"\"\n1481045355000,1.81857318934053,\"Gute Laune\",\"no\",325,\"\"\n1481136575000,1.9483940159902,\"Gute Laune\",\"no\",326,\"\"\n1481216053000,1.88616779996082,\"Gute Laune\",\"no\",327,\"\"\n1481392874000,0.866224743705243,\"Gute Laune\",\"no\",329,\"\"\n1481486515000,2.13329840758815,\"Gute Laune\",\"no\",330,\"\"\n1481560720000,2.01484389677644,\"Gute Laune\",\"no\",331,\"\"\n1481733526000,2.15108302943408,\"Gute Laune\",\"no\",333,\"\"\n1481821110000,0.954564033262432,\"Gute Laune\",\"no\",334,\"\"\n1481906023000,0.824352707155049,\"Gute Laune\",\"no\",335,\"\"\n1481993979000,2.0552636933513,\"Gute Laune\",\"no\",336,\"\"\n1482080930000,2.05094565041363,\"Gute Laune\",\"no\",337,\"\"\n1482179025000,2.12126090163365,\"Gute Laune\",\"no\",338,\"\"\n1482251193000,2.06808006921783,\"Gute Laune\",\"no\",339,\"\"\n1482522027000,2.05897494647652,\"Gute Laune\",\"no\",342,\"\"\n1482624325000,2.9750196447596,\"Gute Laune\",\"no\",343,\"\"\n1482685310000,2.03531248308718,\"Gute Laune\",\"no\",344,\"\"\n1482792770000,1.82209545494989,\"Gute Laune\",\"no\",345,\"\"\n1476901106000,2.18756672218442,\"Reizbarkeit\",\"no\",140,\"\"\n1477063325000,2.16889929277822,\"Reizbarkeit\",\"no\",142,\"\"\n1477236562000,2.17487571556121,\"Reizbarkeit\",\"no\",144,\"\"\n1477325932000,2.0050904831849,\"Reizbarkeit\",\"no\",145,\"\"\n1477497525000,2.15675059882924,\"Reizbarkeit\",\"no\",147,\"\"\n1477677059000,2.13357034428045,\"Reizbarkeit\",\"no\",149,\"\"\n1477848127000,2.00806449232623,\"Reizbarkeit\",\"no\",151,\"\"\n1478369742000,2.06123591400683,\"Reizbarkeit\",\"no\",157,\"\"\n1478537284000,3.06865188581869,\"Reizbarkeit\",\"no\",159,\"\"\n1478884333000,2.13301653536037,\"Reizbarkeit\",\"no\",163,\"\"\n1478974663000,2.02012094827369,\"Reizbarkeit\",\"no\",164,\"\"\n1479230887000,2.88640056708828,\"Reizbarkeit\",\"no\",167,\"\"\n1479316022000,2.09081696104258,\"Reizbarkeit\",\"no\",168,\"\"\n1479403313000,2.80042021395639,\"Reizbarkeit\",\"no\",169,\"\"\n1479489867000,2.19152992404997,\"Reizbarkeit\",\"no\",170,\"\"\n1479834826000,2.10368874138221,\"Reizbarkeit\",\"no\",174,\"\"\n1479918777000,2.02163566788658,\"Reizbarkeit\",\"no\",175,\"\"\n1480442255000,2.0021496492438,\"Reizbarkeit\",\"no\",180,\"\"\n1480525357000,1.97703363960609,\"Reizbarkeit\",\"no\",181,\"\"\n1480610607000,1.97904381612316,\"Reizbarkeit\",\"no\",182,\"\"\n1480704840000,1.93063193466514,\"Reizbarkeit\",\"no\",183,\"\"\n1481136575000,1.96659168209881,\"Reizbarkeit\",\"no\",188,\"\"\n1481300820000,1.04907095916569,\"Reizbarkeit\",\"no\",190,\"\"\n1481486515000,1.85526392413303,\"Reizbarkeit\",\"no\",192,\"\"\n1481821110000,0.930251534096897,\"Reizbarkeit\",\"no\",196,\"\"\n1481906023000,3.1957253953442,\"Reizbarkeit\",\"no\",197,\"\"\n1482337781000,2.02540601715446,\"Reizbarkeit\",\"no\",202,\"\"\n1482426096000,1.16313111493364,\"Reizbarkeit\",\"no\",203,\"\"\n1482685310000,2.07880911007524,\"Reizbarkeit\",\"no\",206,\"\"\n1476804421000,1.08386346697807,\"Selbstwert\",\"no\",1,\"\"\n1476901106000,1.00826145317405,\"Selbstwert\",\"no\",2,\"\"\n1477158356000,1.84697702461854,\"Selbstwert\",\"no\",5,\"\"\n1477236562000,1.14436086909845,\"Selbstwert\",\"no\",6,\"\"\n1477584557000,0.943222451768815,\"Selbstwert\",\"no\",10,\"\"\n1477677059000,1.96113500939682,\"Selbstwert\",\"no\",11,\"\"\n1477755415000,1.03741625342518,\"Selbstwert\",\"no\",12,\"\"\n1477848127000,1.9366652530618,\"Selbstwert\",\"no\",13,\"\"\n1477931771000,1.98851015930995,\"Selbstwert\",\"no\",14,\"\"\n1478021524000,1.8614545725286,\"Selbstwert\",\"no\",15,\"\"\n1478110653000,0.911680443771184,\"Selbstwert\",\"no\",16,\"\"\n1478191698000,1.05543617429212,\"Selbstwert\",\"no\",17,\"\"\n1478369742000,1.91820815792307,\"Selbstwert\",\"no\",19,\"\"\n1478455609000,0.900224155932665,\"Selbstwert\",\"no\",20,\"\"\n1478537284000,1.02531953053549,\"Selbstwert\",\"no\",21,\"\"\n1478625770000,0.810315643902868,\"Selbstwert\",\"no\",22,\"\"\n1478798262000,0.974652724899352,\"Selbstwert\",\"no\",24,\"\"\n1478884333000,1.18026638105512,\"Selbstwert\",\"no\",25,\"\"\n1478974663000,0.920784689392894,\"Selbstwert\",\"no\",26,\"\"\n1479056940000,2.12895927820355,\"Selbstwert\",\"no\",27,\"\"\n1479144269000,2.0656492610462,\"Selbstwert\",\"no\",28,\"\"\n1479230887000,0.809235549811274,\"Selbstwert\",\"no\",29,\"\"\n1479316022000,2.01397389629856,\"Selbstwert\",\"no\",30,\"\"\n1479403313000,1.10847313124686,\"Selbstwert\",\"no\",31,\"\"\n1479489867000,0.805222570337355,\"Selbstwert\",\"no\",32,\"\"\n1479663214000,1.89155601086095,\"Selbstwert\",\"no\",34,\"\"\n1479747006000,1.97265246259049,\"Selbstwert\",\"no\",35,\"\"\n1479834826000,0.861629393696785,\"Selbstwert\",\"no\",36,\"\"\n1479918777000,1.02367677856237,\"Selbstwert\",\"no\",37,\"\"\n1480006360000,0.838048717193306,\"Selbstwert\",\"no\",38,\"\"\n1480182098000,2.05427768966183,\"Selbstwert\",\"no\",39,\"\"\n1480300533000,0.937754562683404,\"Selbstwert\",\"no\",40,\"\"\n1480360282000,2.15258098756894,\"Selbstwert\",\"no\",41,\"\"\n1480442255000,2.17098857378587,\"Selbstwert\",\"no\",42,\"\"\n1480525357000,-0.0950273481197655,\"Selbstwert\",\"no\",43,\"\"\n1480610607000,1.84517833236605,\"Selbstwert\",\"no\",44,\"\"\n1480704840000,1.91334920497611,\"Selbstwert\",\"no\",45,\"\"\n1480871027000,4.12866550805047,\"Selbstwert\",\"no\",47,\"\"\n1480957957000,2.01528076147661,\"Selbstwert\",\"no\",48,\"\"\n1481045355000,2.00731228366494,\"Selbstwert\",\"no\",49,\"\"\n1481136575000,0.87248360523954,\"Selbstwert\",\"no\",50,\"\"\n1481216053000,1.99906915379688,\"Selbstwert\",\"no\",51,\"\"\n1481300820000,1.09224151400849,\"Selbstwert\",\"no\",52,\"\"\n1481392874000,2.11533611090854,\"Selbstwert\",\"no\",53,\"\"\n1481486515000,1.97874701041728,\"Selbstwert\",\"no\",54,\"\"\n1481560720000,2.06904593976215,\"Selbstwert\",\"no\",55,\"\"\n1481647555000,0.833933091443032,\"Selbstwert\",\"no\",56,\"\"\n1481733526000,2.03014710303396,\"Selbstwert\",\"no\",57,\"\"\n1481821110000,2.09574063522741,\"Selbstwert\",\"no\",58,\"\"\n1481906023000,2.13453274639323,\"Selbstwert\",\"no\",59,\"\"\n1481993979000,2.15991777041927,\"Selbstwert\",\"no\",60,\"\"\n1482080930000,1.07771355742589,\"Selbstwert\",\"no\",61,\"\"\n1482179025000,1.81466693095863,\"Selbstwert\",\"no\",62,\"\"\n1482251193000,2.10436101965606,\"Selbstwert\",\"no\",63,\"\"\n1482337781000,2.14385199863464,\"Selbstwert\",\"no\",64,\"\"\n1482426096000,1.82057489333674,\"Selbstwert\",\"no\",65,\"\"\n1482522027000,1.89912628112361,\"Selbstwert\",\"no\",66,\"\"\n1482624325000,2.10148755302653,\"Selbstwert\",\"no\",67,\"\"\n1482685310000,2.06407686537132,\"Selbstwert\",\"no\",68,\"\"\n1482792770000,1.99470548033714,\"Selbstwert\",\"no\",69,\"\"\n1477236562000,2.93636801121756,\"Stress\",\"no\",75,\"\"\n1477584557000,1.12384783513844,\"Stress\",\"no\",79,\"\"\n1478021524000,2.03867342257872,\"Stress\",\"no\",84,\"\"\n1478191698000,1.95610848963261,\"Stress\",\"no\",86,\"\"\n1478369742000,2.05846763830632,\"Stress\",\"no\",88,\"\"\n1478455609000,1.0071953991428,\"Stress\",\"no\",89,\"\"\n1478710942000,2.93407647265121,\"Stress\",\"no\",92,\"\"\n1478884333000,2.81784922508523,\"Stress\",\"no\",94,\"\"\n1479056940000,0.961394473072141,\"Stress\",\"no\",96,\"\"\n1479144269000,2.03723395243287,\"Stress\",\"no\",97,\"\"\n1479316022000,2.04349312540144,\"Stress\",\"no\",99,\"\"\n1479571689000,0.960632895119488,\"Stress\",\"no\",102,\"\"\n1479663214000,2.17653551800176,\"Stress\",\"no\",103,\"\"\n1479834826000,1.9451686850749,\"Stress\",\"no\",105,\"\"\n1479918777000,1.80626054666936,\"Stress\",\"no\",106,\"\"\n1480871027000,3.02467554919422,\"Stress\",\"no\",116,\"\"\n1480957957000,1.94468838348985,\"Stress\",\"no\",117,\"\"\n1481045355000,1.9527725437656,\"Stress\",\"no\",118,\"\"\n1481136575000,1.09709532232955,\"Stress\",\"no\",119,\"\"\n1481300820000,2.18173716291785,\"Stress\",\"no\",121,\"\"\n1481486515000,2.13259936785325,\"Stress\",\"no\",123,\"\"\n1481560720000,1.91568704675883,\"Stress\",\"no\",124,\"\"\n1481733526000,1.83987759677693,\"Stress\",\"no\",126,\"\"\n1482522027000,1.80501794200391,\"Stress\",\"no\",135,\"\"\n1482685310000,1.98214022992179,\"Stress\",\"no\",137,\"\"\n1482792770000,2.02064348319545,\"Stress\",\"no\",138,\"\""
+    },
+    {
+      "name": ".0/group_by1",
+      "source": ".0/group_by1_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.variable"
+          ]
+        }
+      ]
+    },
+    {
+      "name": ".0/group_by1/model_prediction2_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "pred_": "number",
+          "resp_": "number"
+        }
+      },
+      "values": "\"pred_\",\"resp_\",\"variable\"\n1476901106000,1.97562050510637,\"Einsamkeit\"\n1476973551810,2.02935001703738,\"Einsamkeit\"\n1477045997620,2.08051275621961,\"Einsamkeit\"\n1477118443430,2.12904608869384,\"Einsamkeit\"\n1477190889240,2.17488738050102,\"Einsamkeit\"\n1477263335050,2.21797399768162,\"Einsamkeit\"\n1477335780860,2.25824330627658,\"Einsamkeit\"\n1477408226670,2.29563267232669,\"Einsamkeit\"\n1477480672481,2.33007946187273,\"Einsamkeit\"\n1477553118291,2.36152104095549,\"Einsamkeit\"\n1477625564101,2.38980827332545,\"Einsamkeit\"\n1477698009911,2.41459278791535,\"Einsamkeit\"\n1477770455721,2.43603808475173,\"Einsamkeit\"\n1477842901531,2.45436748301085,\"Einsamkeit\"\n1477915347341,2.46980430186898,\"Einsamkeit\"\n1477987793151,2.48257186050239,\"Einsamkeit\"\n1478060238962,2.49289347808736,\"Einsamkeit\"\n1478132684772,2.5009924738001,\"Einsamkeit\"\n1478205130582,2.5070921668169,\"Einsamkeit\"\n1478277576392,2.51141587631404,\"Einsamkeit\"\n1478350022202,2.51294013807396,\"Einsamkeit\"\n1478422468012,2.51063502783124,\"Einsamkeit\"\n1478494913822,2.50480765610387,\"Einsamkeit\"\n1478567359632,2.49576532557483,\"Einsamkeit\"\n1478639805443,2.48381533892704,\"Einsamkeit\"\n1478712251253,2.46926499884343,\"Einsamkeit\"\n1478784697063,2.45242160800694,\"Einsamkeit\"\n1478857142873,2.43359246910051,\"Einsamkeit\"\n1478929588683,2.413084884807,\"Einsamkeit\"\n1479002034493,2.39120615780948,\"Einsamkeit\"\n1479074480303,2.36826359079083,\"Einsamkeit\"\n1479146926113,2.34456448643397,\"Einsamkeit\"\n1479219371924,2.32041614742185,\"Einsamkeit\"\n1479291817734,2.29094333268323,\"Einsamkeit\"\n1479364263544,2.24933071832444,\"Einsamkeit\"\n1479436709354,2.19951283204195,\"Einsamkeit\"\n1479509155164,2.1456254208893,\"Einsamkeit\"\n1479581600974,2.09180423192015,\"Einsamkeit\"\n1479654046784,2.04218501218817,\"Einsamkeit\"\n1479726492594,2.00090350874702,\"Einsamkeit\"\n1479798938405,1.9684460566133,\"Einsamkeit\"\n1479871384215,1.93710715221593,\"Einsamkeit\"\n1479943830025,1.90672490936587,\"Einsamkeit\"\n1480016275835,1.87765635288179,\"Einsamkeit\"\n1480088721645,1.85025850758234,\"Einsamkeit\"\n1480161167455,1.8248883982862,\"Einsamkeit\"\n1480233613265,1.80190304981194,\"Einsamkeit\"\n1480306059075,1.78165948697838,\"Einsamkeit\"\n1480378504886,1.76451473460411,\"Einsamkeit\"\n1480450950696,1.75082581750779,\"Einsamkeit\"\n1480523396506,1.74094976050807,\"Einsamkeit\"\n1480595842316,1.73524358842362,\"Einsamkeit\"\n1480668288126,1.7340643260731,\"Einsamkeit\"\n1480740733936,1.73817598407415,\"Einsamkeit\"\n1480813179746,1.7494766672597,\"Einsamkeit\"\n1480885625556,1.76631580202998,\"Einsamkeit\"\n1480958071367,1.78651312270866,\"Einsamkeit\"\n1481030517177,1.80788836361942,\"Einsamkeit\"\n1481102962987,1.828261259086,\"Einsamkeit\"\n1481175408797,1.84545154343193,\"Einsamkeit\"\n1481247854607,1.85727895098096,\"Einsamkeit\"\n1481320300417,1.86193633482567,\"Einsamkeit\"\n1481392746227,1.86492427177814,\"Einsamkeit\"\n1481465192037,1.86848938619192,\"Einsamkeit\"\n1481537637848,1.872283232437,\"Einsamkeit\"\n1481610083658,1.87595736488335,\"Einsamkeit\"\n1481682529468,1.87916333790097,\"Einsamkeit\"\n1481754975278,1.88158852434317,\"Einsamkeit\"\n1481827421088,1.88355786366008,\"Einsamkeit\"\n1481899866898,1.88523489985693,\"Einsamkeit\"\n1481972312708,1.88660856859576,\"Einsamkeit\"\n1482044758518,1.88766780553856,\"Einsamkeit\"\n1482117204329,1.88840154634738,\"Einsamkeit\"\n1482189650139,1.88879872668422,\"Einsamkeit\"\n1482262095949,1.88884828221112,\"Einsamkeit\"\n1482334541759,1.8885391485901,\"Einsamkeit\"\n1482406987569,1.88786026148316,\"Einsamkeit\"\n1482479433379,1.88680055655234,\"Einsamkeit\"\n1482551879189,1.88534896945967,\"Einsamkeit\"\n1482624325000,1.88349443586715,\"Einsamkeit\"\n1476804421000,1.83139236165172,\"Gute Laune\"\n1476880222886,1.7827416808452,\"Gute Laune\"\n1476956024772,1.73602995296533,\"Gute Laune\"\n1477031826658,1.6913612840025,\"Gute Laune\"\n1477107628544,1.64883977994708,\"Gute Laune\"\n1477183430430,1.60856954678961,\"Gute Laune\"\n1477259232316,1.57065469052021,\"Gute Laune\"\n1477335034202,1.53519862228181,\"Gute Laune\"\n1477410836088,1.50220907092006,\"Gute Laune\"\n1477486637974,1.47159453250259,\"Gute Laune\"\n1477562439860,1.44327736076223,\"Gute Laune\"\n1477638241746,1.41717990943181,\"Gute Laune\"\n1477714043632,1.39322453224416,\"Gute Laune\"\n1477789845518,1.3713335829321,\"Gute Laune\"\n1477865647405,1.35142941522845,\"Gute Laune\"\n1477941449291,1.3334343828661,\"Gute Laune\"\n1478017251177,1.31727083957777,\"Gute Laune\"\n1478093053063,1.30286113909633,\"Gute Laune\"\n1478168854949,1.29012763515462,\"Gute Laune\"\n1478244656835,1.27899268148546,\"Gute Laune\"\n1478320458721,1.27006614114215,\"Gute Laune\"\n1478396260607,1.2661999894901,\"Gute Laune\"\n1478472062493,1.26676112696642,\"Gute Laune\"\n1478547864379,1.27063677550174,\"Gute Laune\"\n1478623666265,1.2767141570267,\"Gute Laune\"\n1478699468151,1.28388049347191,\"Gute Laune\"\n1478775270037,1.29102300676807,\"Gute Laune\"\n1478851071924,1.29702891884579,\"Gute Laune\"\n1478926873810,1.30155273943983,\"Gute Laune\"\n1479002675696,1.30748874744901,\"Gute Laune\"\n1479078477582,1.31507733710484,\"Gute Laune\"\n1479154279468,1.32411916390591,\"Gute Laune\"\n1479230081354,1.33441488335083,\"Gute Laune\"\n1479305883240,1.34576515093818,\"Gute Laune\"\n1479381685126,1.35797062216657,\"Gute Laune\"\n1479457487012,1.37083195253454,\"Gute Laune\"\n1479533288898,1.38414979754078,\"Gute Laune\"\n1479609090784,1.39772481268384,\"Gute Laune\"\n1479684892670,1.41135765346232,\"Gute Laune\"\n1479760694556,1.4248489753748,\"Gute Laune\"\n1479836496443,1.4379999905362,\"Gute Laune\"\n1479912298329,1.45176949556321,\"Gute Laune\"\n1479988100215,1.46687358058891,\"Gute Laune\"\n1480063902101,1.48289783424425,\"Gute Laune\"\n1480139703987,1.49942784516017,\"Gute Laune\"\n1480215505873,1.51604920196757,\"Gute Laune\"\n1480291307759,1.53234749329749,\"Gute Laune\"\n1480367109645,1.54790830778083,\"Gute Laune\"\n1480442911531,1.56231723404853,\"Gute Laune\"\n1480518713417,1.57515986073155,\"Gute Laune\"\n1480594515303,1.58643453165701,\"Gute Laune\"\n1480670317189,1.59676026868726,\"Gute Laune\"\n1480746119075,1.60647735785401,\"Gute Laune\"\n1480821920962,1.61592323876456,\"Gute Laune\"\n1480897722848,1.62543535102621,\"Gute Laune\"\n1480973524734,1.63535113424621,\"Gute Laune\"\n1481049326620,1.64600802803195,\"Gute Laune\"\n1481125128506,1.65774347199067,\"Gute Laune\"\n1481200930392,1.67089490572967,\"Gute Laune\"\n1481276732278,1.68579976885627,\"Gute Laune\"\n1481352534164,1.70279550097775,\"Gute Laune\"\n1481428336050,1.72200115669726,\"Gute Laune\"\n1481504137936,1.74214116721074,\"Gute Laune\"\n1481579939822,1.76295638941661,\"Gute Laune\"\n1481655741708,1.78445471950771,\"Gute Laune\"\n1481731543594,1.80664405367681,\"Gute Laune\"\n1481807345481,1.82953228811689,\"Gute Laune\"\n1481883147367,1.85312731902072,\"Gute Laune\"\n1481958949253,1.87743704258116,\"Gute Laune\"\n1482034751139,1.90246935499103,\"Gute Laune\"\n1482110553025,1.92823943136584,\"Gute Laune\"\n1482186354911,1.95482152331801,\"Gute Laune\"\n1482262156797,1.9822295752405,\"Gute Laune\"\n1482337958683,2.01045907538121,\"Gute Laune\"\n1482413760569,2.03950551198805,\"Gute Laune\"\n1482489562455,2.06936437330883,\"Gute Laune\"\n1482565364341,2.10003114759161,\"Gute Laune\"\n1482641166227,2.13150132308422,\"Gute Laune\"\n1482716968113,2.16377038803456,\"Gute Laune\"\n1482792770000,2.19683383069051,\"Gute Laune\"\n1476901106000,2.07756424540353,\"Reizbarkeit\"\n1476974323772,2.09028519732902,\"Reizbarkeit\"\n1477047541544,2.10268120793205,\"Reizbarkeit\"\n1477120759316,2.11494087915983,\"Reizbarkeit\"\n1477193977088,2.12725281295971,\"Reizbarkeit\"\n1477267194860,2.13980561127891,\"Reizbarkeit\"\n1477340412632,2.15279074945165,\"Reizbarkeit\"\n1477413630405,2.16641007058326,\"Reizbarkeit\"\n1477486848177,2.18058758930604,\"Reizbarkeit\"\n1477560065949,2.19516257400825,\"Reizbarkeit\"\n1477633283721,2.20997429307803,\"Reizbarkeit\"\n1477706501493,2.22486201490354,\"Reizbarkeit\"\n1477779719265,2.23966500787295,\"Reizbarkeit\"\n1477852937037,2.2542225403744,\"Reizbarkeit\"\n1477926154810,2.26837388079613,\"Reizbarkeit\"\n1477999372582,2.28195829752629,\"Reizbarkeit\"\n1478072590354,2.29481505895304,\"Reizbarkeit\"\n1478145808126,2.30678343346455,\"Reizbarkeit\"\n1478219025898,2.31770268944896,\"Reizbarkeit\"\n1478292243670,2.32741209529451,\"Reizbarkeit\"\n1478365461443,2.33575091938934,\"Reizbarkeit\"\n1478438679215,2.34355575602424,\"Reizbarkeit\"\n1478511896987,2.35178557943105,\"Reizbarkeit\"\n1478585114759,2.36007801246237,\"Reizbarkeit\"\n1478658332531,2.36806671554442,\"Reizbarkeit\"\n1478731550303,2.37538534910335,\"Reizbarkeit\"\n1478804768075,2.38166757356534,\"Reizbarkeit\"\n1478877985848,2.38654704935656,\"Reizbarkeit\"\n1478951203620,2.38965743690317,\"Reizbarkeit\"\n1479024421392,2.39063239663138,\"Reizbarkeit\"\n1479097639164,2.38910558896734,\"Reizbarkeit\"\n1479170856936,2.38471067433724,\"Reizbarkeit\"\n1479244074708,2.37701477346931,\"Reizbarkeit\"\n1479317292481,2.36390166109523,\"Reizbarkeit\"\n1479390510253,2.34709581159106,\"Reizbarkeit\"\n1479463728025,2.3301381848238,\"Reizbarkeit\"\n1479536945797,2.31432262506909,\"Reizbarkeit\"\n1479610163569,2.29400520375635,\"Reizbarkeit\"\n1479683381341,2.26930502039698,\"Reizbarkeit\"\n1479756599113,2.24097465460663,\"Reizbarkeit\"\n1479829816886,2.2097666860012,\"Reizbarkeit\"\n1479903034658,2.1764336941965,\"Reizbarkeit\"\n1479976252430,2.14172825880847,\"Reizbarkeit\"\n1480049470202,2.10640295945268,\"Reizbarkeit\"\n1480122687974,2.07121037574507,\"Reizbarkeit\"\n1480195905746,2.03690308730146,\"Reizbarkeit\"\n1480269123518,2.00423367373765,\"Reizbarkeit\"\n1480342341291,1.97395471466956,\"Reizbarkeit\"\n1480415559063,1.94681878971281,\"Reizbarkeit\"\n1480488776835,1.92357847848331,\"Reizbarkeit\"\n1480561994607,1.90446178371695,\"Reizbarkeit\"\n1480635212379,1.88681995327397,\"Reizbarkeit\"\n1480708430151,1.87022154625272,\"Reizbarkeit\"\n1480781647924,1.85472935909754,\"Reizbarkeit\"\n1480854865696,1.84040618825292,\"Reizbarkeit\"\n1480928083468,1.82731483016332,\"Reizbarkeit\"\n1481001301240,1.81551808127318,\"Reizbarkeit\"\n1481074519012,1.80507873802697,\"Reizbarkeit\"\n1481147736784,1.79605420169274,\"Reizbarkeit\"\n1481220954556,1.78821312262649,\"Reizbarkeit\"\n1481294172329,1.78144356369734,\"Reizbarkeit\"\n1481367390101,1.77579926934406,\"Reizbarkeit\"\n1481440607873,1.77133398400544,\"Reizbarkeit\"\n1481513825645,1.76810145212025,\"Reizbarkeit\"\n1481587043417,1.76615541812726,\"Reizbarkeit\"\n1481660261189,1.76554962646528,\"Reizbarkeit\"\n1481733478962,1.76633782157306,\"Reizbarkeit\"\n1481806696734,1.7685737478894,\"Reizbarkeit\"\n1481879914506,1.77231114985308,\"Reizbarkeit\"\n1481953132278,1.7775699186312,\"Reizbarkeit\"\n1482026350050,1.78425398526219,\"Reizbarkeit\"\n1482099567822,1.79234034274502,\"Reizbarkeit\"\n1482172785594,1.80181494548506,\"Reizbarkeit\"\n1482246003367,1.81266374788778,\"Reizbarkeit\"\n1482319221139,1.82487270435856,\"Reizbarkeit\"\n1482392438911,1.83842776930281,\"Reizbarkeit\"\n1482465656683,1.85331489712593,\"Reizbarkeit\"\n1482538874455,1.86952004223328,\"Reizbarkeit\"\n1482612092227,1.88702915903036,\"Reizbarkeit\"\n1482685310000,1.90582820192254,\"Reizbarkeit\"\n1476804421000,1.34298668816311,\"Selbstwert\"\n1476880222886,1.34173908255293,\"Selbstwert\"\n1476956024772,1.34059212925493,\"Selbstwert\"\n1477031826658,1.33953248613592,\"Selbstwert\"\n1477107628544,1.33854681106271,\"Selbstwert\"\n1477183430430,1.3376217619021,\"Selbstwert\"\n1477259232316,1.3367439965209,\"Selbstwert\"\n1477335034202,1.33590017278592,\"Selbstwert\"\n1477410836088,1.33507694856395,\"Selbstwert\"\n1477486637974,1.33426098172181,\"Selbstwert\"\n1477562439860,1.3334389301263,\"Selbstwert\"\n1477638241746,1.33259745164423,\"Selbstwert\"\n1477714043632,1.3317232041424,\"Selbstwert\"\n1477789845518,1.33080284548762,\"Selbstwert\"\n1477865647405,1.32980773405106,\"Selbstwert\"\n1477941449291,1.32838733913068,\"Selbstwert\"\n1478017251177,1.32654095677836,\"Selbstwert\"\n1478093053063,1.32445706479523,\"Selbstwert\"\n1478168854949,1.32232414098238,\"Selbstwert\"\n1478244656835,1.32033066314094,\"Selbstwert\"\n1478320458721,1.31866510907202,\"Selbstwert\"\n1478396260607,1.31751595657672,\"Selbstwert\"\n1478472062493,1.31707168345615,\"Selbstwert\"\n1478547864379,1.31747249022882,\"Selbstwert\"\n1478623666265,1.31599379837453,\"Selbstwert\"\n1478699468151,1.31163814636858,\"Selbstwert\"\n1478775270037,1.30533388101593,\"Selbstwert\"\n1478851071924,1.29800934912157,\"Selbstwert\"\n1478926873810,1.29059289749048,\"Selbstwert\"\n1479002675696,1.28401287292766,\"Selbstwert\"\n1479078477582,1.27919762223807,\"Selbstwert\"\n1479154279468,1.27707549222672,\"Selbstwert\"\n1479230081354,1.27857482969858,\"Selbstwert\"\n1479305883240,1.28462398145863,\"Selbstwert\"\n1479381685126,1.29681308997162,\"Selbstwert\"\n1479457487012,1.31574015645159,\"Selbstwert\"\n1479533288898,1.33991608368542,\"Selbstwert\"\n1479609090784,1.36782871977318,\"Selbstwert\"\n1479684892670,1.39796591281499,\"Selbstwert\"\n1479760694556,1.42881551091096,\"Selbstwert\"\n1479836496443,1.4588653621612,\"Selbstwert\"\n1479912298329,1.48660331466584,\"Selbstwert\"\n1479988100215,1.510517216525,\"Selbstwert\"\n1480063902101,1.53127632763493,\"Selbstwert\"\n1480139703987,1.553139677866,\"Selbstwert\"\n1480215505873,1.57596920474251,\"Selbstwert\"\n1480291307759,1.59941845618142,\"Selbstwert\"\n1480367109645,1.6231409800995,\"Selbstwert\"\n1480442911531,1.6467903244136,\"Selbstwert\"\n1480518713417,1.67002003704054,\"Selbstwert\"\n1480594515303,1.69248366589715,\"Selbstwert\"\n1480670317189,1.71383475890028,\"Selbstwert\"\n1480746119075,1.73372686396676,\"Selbstwert\"\n1480821920962,1.75181352901341,\"Selbstwert\"\n1480897722848,1.76784207725656,\"Selbstwert\"\n1480973524734,1.78269368091825,\"Selbstwert\"\n1481049326620,1.79672546625192,\"Selbstwert\"\n1481125128506,1.81000630921834,\"Selbstwert\"\n1481200930392,1.82260508577838,\"Selbstwert\"\n1481276732278,1.83459067189287,\"Selbstwert\"\n1481352534164,1.84603194352268,\"Selbstwert\"\n1481428336050,1.85699777662864,\"Selbstwert\"\n1481504137936,1.867547254989,\"Selbstwert\"\n1481579939822,1.87748849782449,\"Selbstwert\"\n1481655741708,1.88673046287508,\"Selbstwert\"\n1481731543594,1.89528303871322,\"Selbstwert\"\n1481807345481,1.90315611391143,\"Selbstwert\"\n1481883147367,1.91035957704215,\"Selbstwert\"\n1481958949253,1.91690331667787,\"Selbstwert\"\n1482034751139,1.92279722139104,\"Selbstwert\"\n1482110553025,1.92805117975414,\"Selbstwert\"\n1482186354911,1.93267582671757,\"Selbstwert\"\n1482262156797,1.93676832429202,\"Selbstwert\"\n1482337958683,1.94037570672483,\"Selbstwert\"\n1482413760569,1.94347547257485,\"Selbstwert\"\n1482489562455,1.94604512040088,\"Selbstwert\"\n1482565364341,1.94806214876179,\"Selbstwert\"\n1482641166227,1.94950405621639,\"Selbstwert\"\n1482716968113,1.95034834132351,\"Selbstwert\"\n1482792770000,1.95057250264198,\"Selbstwert\"\n1477236562000,2.2557105376203,\"Stress\"\n1477306893746,2.22560141694534,\"Stress\"\n1477377225493,2.19653258908159,\"Stress\"\n1477447557240,2.16876762859537,\"Stress\"\n1477517888987,2.14257011005298,\"Stress\"\n1477588220734,2.1182022962502,\"Stress\"\n1477658552481,2.09535155373385,\"Stress\"\n1477728884227,2.07363942344481,\"Stress\"\n1477799215974,2.05308522279808,\"Stress\"\n1477869547721,2.03370826920867,\"Stress\"\n1477939879468,2.01552788009159,\"Stress\"\n1478010211215,1.99856337286182,\"Stress\"\n1478080542962,1.98283406493439,\"Stress\"\n1478150874708,1.96835927372429,\"Stress\"\n1478221206455,1.95529997466523,\"Stress\"\n1478291538202,1.94469125378484,\"Stress\"\n1478361869949,1.93631513403378,\"Stress\"\n1478432201696,1.9296522699218,\"Stress\"\n1478502533443,1.92418331595863,\"Stress\"\n1478572865189,1.91938892665403,\"Stress\"\n1478643196936,1.91474975651772,\"Stress\"\n1478713528683,1.90975265993777,\"Stress\"\n1478783860430,1.908384164044,\"Stress\"\n1478854192177,1.91247868737308,\"Stress\"\n1478924523924,1.91927074855988,\"Stress\"\n1478994855670,1.92599486623924,\"Stress\"\n1479065187417,1.929885559046,\"Stress\"\n1479135519164,1.928177345615,\"Stress\"\n1479205850911,1.91885989300656,\"Stress\"\n1479276182658,1.90344233109137,\"Stress\"\n1479346514405,1.88440564753012,\"Stress\"\n1479416846151,1.86422911420015,\"Stress\"\n1479487177898,1.84539200297858,\"Stress\"\n1479557509645,1.83037358574277,\"Stress\"\n1479627841392,1.82165313436997,\"Stress\"\n1479698173139,1.8183799392955,\"Stress\"\n1479768504886,1.80576733178615,\"Stress\"\n1479838836632,1.79045185563469,\"Stress\"\n1479909168379,1.78281229837623,\"Stress\"\n1479979500126,1.7871921289973,\"Stress\"\n1480049831873,1.79742928227044,\"Stress\"\n1480120163620,1.81249503477183,\"Stress\"\n1480190495367,1.83147665498879,\"Stress\"\n1480260827113,1.85346141140867,\"Stress\"\n1480331158860,1.8775365725188,\"Stress\"\n1480401490607,1.90278940680653,\"Stress\"\n1480471822354,1.92830718275919,\"Stress\"\n1480542154101,1.95317716886414,\"Stress\"\n1480612485848,1.9764866336087,\"Stress\"\n1480682817594,1.99732284548017,\"Stress\"\n1480753149341,2.01477307296601,\"Stress\"\n1480823481088,2.02792458455351,\"Stress\"\n1480893812835,2.03586464873,\"Stress\"\n1480964144582,2.03768495029901,\"Stress\"\n1481034476329,2.03379638913337,\"Stress\"\n1481104808075,2.02664898076534,\"Stress\"\n1481175139822,2.01868296056336,\"Stress\"\n1481245471569,2.0123385638959,\"Stress\"\n1481315803316,2.00988329948679,\"Stress\"\n1481386135063,2.00816579338154,\"Stress\"\n1481456466810,2.00540548690644,\"Stress\"\n1481526798556,2.00196426794198,\"Stress\"\n1481597130303,1.99820402436863,\"Stress\"\n1481667462050,1.99448664406687,\"Stress\"\n1481737793797,1.99117188701183,\"Stress\"\n1481808125544,1.9879152514283,\"Stress\"\n1481878457291,1.98428389653485,\"Stress\"\n1481948789037,1.98030575981637,\"Stress\"\n1482019120784,1.97600877875775,\"Stress\"\n1482089452531,1.97142089084391,\"Stress\"\n1482159784278,1.96657003355972,\"Stress\"\n1482230116025,1.96148414439009,\"Stress\"\n1482300447772,1.95619116081991,\"Stress\"\n1482370779518,1.95071902033408,\"Stress\"\n1482441111265,1.94509566041749,\"Stress\"\n1482511443012,1.93934901855506,\"Stress\"\n1482581774759,1.93350703223164,\"Stress\"\n1482652106506,1.92759763893215,\"Stress\"\n1482722438253,1.92164877614149,\"Stress\"\n1482792770000,1.91568838134454,\"Stress\""
+    },
+    {
+      "name": ".0/group_by1/model_prediction2",
+      "source": ".0/group_by1/model_prediction2_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.variable"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scale/fill",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"Selbstwert\"\n\"Gute Laune\"\n\"Reizbarkeit\"\n\"Einsamkeit\"\n\"Stress\""
+    },
+    {
+      "name": "scale/shape",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"no\"\n\"yes\""
+    },
+    {
+      "name": "scale/stroke",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"Einsamkeit\"\n\"Gute Laune\"\n\"Reizbarkeit\"\n\"Selbstwert\"\n\"Stress\""
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n1476505003550\n1483092187450"
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n-0.306211990928277\n4.33985015085898"
+    }
+  ],
+  "scales": [
+    {
+      "name": "fill",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/fill",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "name": "shape",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/shape",
+        "field": "data.domain"
+      },
+      "range": ["circle", "square"],
+      "points": true,
+      "sort": false
+    },
+    {
+      "name": "stroke",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/stroke",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "name": "x",
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "type": "time",
+      "clamp": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1/model_prediction2"
+      },
+      "marks": [
+        {
+          "type": "line",
+          "properties": {
+            "update": {
+              "strokeWidth": {
+                "value": 2
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.pred_"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.resp_"
+              },
+              "stroke": {
+                "scale": "stroke",
+                "field": "data.variable"
+              },
+              "fill": {
+                "value": "transparent"
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1/model_prediction2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1"
+      },
+      "marks": [
+        {
+          "type": "symbol",
+          "properties": {
+            "update": {
+              "size": {
+                "value": 50
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.created"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.value"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.variable"
+              },
+              "shape": {
+                "scale": "shape",
+                "field": "data.has_notes"
+              },
+              "fillOpacity": {
+                "value": 0.5
+              }
+            },
+            "hover": {
+              "fillOpacity": {
+                "value": 1
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1"
+              }
+            }
+          }
+        }
+      ],
+      "key": "data.id"
+    },
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1"
+      },
+      "marks": [
+        {
+          "type": "text",
+          "properties": {
+            "update": {
+              "fill": {
+                "value": "#333333"
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.created"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.value"
+              },
+              "text": {
+                "field": "data.Notes"
+              },
+              "fillOpacity": {
+                "value": 0
+              }
+            },
+            "hover": {
+              "fillOpacity": {
+                "value": 1
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "orient": "right",
+      "title": "Variable",
+      "fill": "fill"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "title": "Datum",
+      "layer": "back",
+      "grid": true
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "title": "Auftreten (weniger - mehr als sonst)",
+      "values": [0, 1, 2, 3, 4],
+      "layer": "back",
+      "grid": true
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": "800px",
+    "height": "500px"
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id168444183").parseSpec(plot_id168444183_spec);
+</script>
+</div>
+<div id="wochentage" class="section level2 tabset">
+<h2>Wochentage</h2>
+<p>Hier sehen Sie die Mittelwerte verschiedener Variablen noch einmal nach Wochentag aufgeschlüsselt.</p>
+<div id="ihre-stimmung" class="section level3">
+<h3>Ihre Stimmung</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+<div id="ihr-selbstwertgefuhl" class="section level3">
+<h3>Ihr Selbstwertgefühl</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</div>
+<div id="ihre-reizbarkeit" class="section level3">
+<h3>Ihre Reizbarkeit</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>
+<div id="ihr-stress" class="section level3">
+<h3>Ihr Stress</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="ihre-libido" class="section level3">
+<h3>Ihre Libido</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
+<div id="ihre-attraktivitat" class="section level3">
+<h3>Ihre Attraktivität</h3>
+<p><img src="example_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="section" class="section level1">
+<h1> </h1>
+<hr />
+<p>Wenden Sie sich bei Fehlern und Fragen bitte direkt an <a href="mailto:alltag-und-sexualitaet@uni-goettingen.de">das Studienteam</a>.</p>
+<p><small>Bild oben © <a href="https://www.flickr.com/photos/anyvanille/">Kévin V. Pxl</a></small></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

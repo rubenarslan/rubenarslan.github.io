@@ -1,0 +1,593 @@
+---
+output: 
+  html_document: 
+    self_contained: no
+---
+
+```{r settings,warning=T,message=T,error=T,echo=F}
+library(knitr); library(formr)
+opts_chunk$set(warning=T,message=T,error=T,echo=F,fig.height=7,fig.width=10)
+source("example_data.R")
+```
+
+# Alltag & Sexualität
+
+
+```{r}
+opts_chunk$set(message=F, warning = F)
+```
+
+
+```{r, error=FALSE}
+library(ggplot2); library(reshape2); library(car); library(formr); library(dplyr)
+opts_chunk$set(fig.width = 7,fig.height = 7)
+# # the next lines should stay for the real deal
+s3_daily = formr_recognise(results = s3_daily, item_list = NULL)
+s2_initial = formr_recognise(results = s2_initial, item_list = NULL)
+s2_initial = formr_aggregate(results = s2_initial, item_list = NULL)
+s3_daily = formr_aggregate(results = s3_daily, item_list = NULL, fallback_max = 4)
+
+formr_theme = theme_minimal() +
+  theme(text = element_text(size = 18))
+theme_set(formr_theme)
+
+s3_daily$Wochentag = format(as.POSIXct(s3_daily$created), format = "%w")
+s3_daily$Wochenende = ifelse(s3_daily$Wochentag %in% c(0,5,6), "Wochenende", "Montag-Donnerstag")
+s3_daily$Wochentag = car::Recode(s3_daily$Wochentag,												"0='Sonntag';1='Montag';2='Dienstag';3='Mittwoch';4='Donnerstag';5='Freitag';6='Samstag'",levels = 	c('Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'))
+
+library(lubridate)
+hour_string_to_period = function(hour_string) {
+  duration(as.numeric(stringr::str_sub(hour_string, 1,2)), units = "hours") + duration(as.numeric(stringr::str_sub(hour_string, 4,5)), units = "minutes")
+}
+s3_daily$sleep_awoke_time = hour_string_to_period(s3_daily$sleep_awoke_time)
+s3_daily$sleep_fell_asleep_time = hour_string_to_period(s3_daily$sleep_fell_asleep_time)
+
+s3_daily$sleep_duration = ifelse(
+  s3_daily$sleep_awoke_time >= s3_daily$sleep_fell_asleep_time,
+  s3_daily$sleep_awoke_time - s3_daily$sleep_fell_asleep_time,
+  dhours(24) - s3_daily$sleep_fell_asleep_time + s3_daily$sleep_awoke_time
+) / 60 / 60
+
+s1_demo$hetero_relationship = if_else(s1_demo$hetero_relationship == 1, TRUE, FALSE)
+```
+
+```{r menstrual.phase.calcs}
+s3_daily = s3_daily %>%
+  arrange(created) %>%
+  mutate(
+    created_date = as.Date(created - hours(4)), # don't count night time as next day
+    menstrual_onset_date = as.Date(menstrual_onset_date),
+    menstrual_onset_date_inferred = as.Date(ifelse(!is.na(menstrual_onset_date),
+                                                   menstrual_onset_date, # if date was given, take it
+                                                   ifelse(!is.na(menstrual_onset), # if days ago was given
+                                                          created_date - days(menstrual_onset - 1), # subtract them from current date
+                                                          as.Date(NA)) # if
+    ), origin = "1970-01-01"),
+    menstrual_onset_date_numeric = as.numeric(menstrual_onset_date_inferred),
+    next_menstrual_onset_date_numeric = zoo::na.locf(menstrual_onset_date_numeric, fromLast = T,maxgap = 40, na.rm = F), # use zoo::na.locf function to carry the last observation (the last observed menstrual onset) backward (within person), but we don't do this if we'd bridge more than 40 days this way
+    next_menstrual_onset_date =  as.Date.numeric(next_menstrual_onset_date_numeric, origin = "1970-01-01"),
+
+    # now, since reporting can be backward in time make sure it's always really the next date (forward in time)
+    next_menstrual_onset_date_numeric = ifelse(next_menstrual_onset_date < created_date, NA, next_menstrual_onset_date_numeric),
+    next_menstrual_onset_date_numeric = zoo::na.locf(next_menstrual_onset_date_numeric, fromLast = T,maxgap = 40, na.rm = F), # carry forward again
+    next_menstrual_onset_date =  as.Date.numeric(next_menstrual_onset_date_numeric, origin = "1970-01-01"),
+    menstrual_onset_days_until = as.numeric(created_date - next_menstrual_onset_date),
+
+
+    last_menstrual_onset_date_numeric = zoo::na.locf(menstrual_onset_date_numeric, fromLast = F,maxgap = 40, na.rm = F), # use zoo::na.locf function to carry the last observation (the last observed menstrual onset) backward (within person), but we don't do this if we'd bridge more than 40 days this way
+    last_menstrual_onset_date =  as.Date.numeric(last_menstrual_onset_date_numeric, origin = "1970-01-01"),
+
+    # now, since reporting can be backward in time make sure it's always really the next date (forward in time)
+    last_menstrual_onset_date_numeric = ifelse(last_menstrual_onset_date > created_date, NA, last_menstrual_onset_date_numeric),
+    last_menstrual_onset_date_numeric = zoo::na.locf(last_menstrual_onset_date_numeric, fromLast = F,maxgap = 40, na.rm = F), # carry forward again
+    last_menstrual_onset_date =  as.Date.numeric(last_menstrual_onset_date_numeric, origin = "1970-01-01"),
+    menstrual_onset_days_since = as.numeric(created_date - last_menstrual_onset_date),
+    menstruation_labelled = factor(if_else(! is.na(menstruation_today),
+       if_else(menstruation_today == 1, "ja", "nein"),
+       if_else(menstrual_onset_days_since <= 5, 
+              if_else(menstrual_onset_days_since == 0, "ja", "vielleicht", "nein"), 
+                "nein", "nein")),
+ 				 levels = c('ja', 'vielleicht', 'nein'))
+  )
+
+
+plot_menstruation = function(data, y, ylab, ylim = c(0, 4)) {
+  if (!is.null(ylim)) {
+    ymax = ylim[2]; ymin = ylim[1]
+  } else {
+    ymax = max(data %>% select_(y), na.rm = T)
+    ymin = min(data %>% select_(y), na.rm = T)
+  }
+  ggplot(data, aes_string(x = "menstrual_onset_days_until", y = y)) +
+    annotate('rect', xmin = -20, xmax = -16, ymin = ymin, ymax = ymax + 1, fill = '#37af9bAA', color = NA) +
+    annotate('rect', xmin = -6, xmax = 0, ymin = ymin, ymax = ymax + 1, fill = '#ed9383AA', color = NA) +
+    annotate('text', label = 'fertiles\nFenster', x = -19.5, y = ymax, size = 4, hjust = 0) +
+    annotate('text', label = 'prämenstru-\nelle Phase', x = -5.5, y = ymax, size = 4, hjust = 0) +
+    geom_jitter(aes_string(shape = "menstruation_labelled", color = "menstruation_labelled"), size = 1.5) +
+    scale_color_manual("Menstruation", values = c("nein" = "black", "vielleicht" = "#b86147", "ja" = "#cf6030")) +
+    scale_shape_manual("Menstruation", values = c("nein" = 16, "vielleicht" = 17, "ja" = 17)) +
+    geom_smooth(aes(group = 1), color = "#ee00ee", fill = "#ee00ee", alpha = 0.1) +
+    ylab(ylab) + xlab("Tage bis zur Menstruation") +
+    theme(legend.title = element_text(size = 10), legend.text = element_text(size = 8)) +
+    coord_cartesian(ylim = ylim)
+}
+save(s3_daily, participant, file = "example_data.rdata")
+```
+
+# Rückmeldung {.tabset}
+
+## Einleitung
+__Vielen Dank für Ihre Teilnahme an unserer Studie.__ Es folgt nun Ihre persönliche Rückmeldung. Bitte beachten Sie, dass die Auswertung automatisch erfolgt ist.
+Die Analysen und Grafiken basieren auf Ihren Aussagen über die vergangenen 70 Tage hinweg. 70 Tage sind keine kurze Zeit, aber bitte beachten Sie trotzdem die folgenden Hinweise:
+
+  - Zufallsfehler können Muster verursachen, die hier recht deutlich aussehen, aber doch nicht bedeuten, dass es bei Ihnen immer so abläuft. Genau so wie der menschliche Blick Figuren in den Wolken findet, finden wir auch manchmal Muster in den Punktwolken Ihrer Daten, die keine überdauernde Bedeutung haben
+- Sie sind die Expertin für die Interpretation Ihrer Daten, nicht wir. Deswegen bieten wir viele Daten ohne Interpretation dar.
+- Wenn ein Muster für Sie überhaupt keinen Sinn ergibt, dann ist es in vielen Fällen wohl wahrscheinlicher, dass statistische Zufallsfehler zugeschlagen haben, unsere Operationalisierungen von komplexen psychischen Abläufen zu kurz gegriffen haben, die vergangenen 70 Tage einfach ungewöhnlich waren, oder dass entscheidende <abbr title="gleichzeitig auftretende Umstände, die es so aussehen lassen, als gäbe es einen Zusammenhang, wo keiner ist.">konfundierende</abbr> Faktoren unberücksichtigt blieben.
+- Erhoben haben hier rein <abbr title="Wechselbeziehung - unsere Daten sind nicht experimentell, deswegen ist oft unklar, ob eine Ursache-Wirkungs-Zusammenhang besteht">korrelative</abbr> Daten, die auf Ihren Selbstberichten basieren. In solchen Fällen sollte nur mit enormer Vorsicht eine kausale Interpretation erfolgen. Vielleicht kennen Sie die wahren Gründe selbst, aber unsere Entscheidungen eine Variable auf die X-Achse (waagerecht) oder Y-Achse (senkrecht) einer statistischen Grafik zu legen, haben hierfür wenig zu bedeuten.
+- Diese Rückmeldung ist technisch recht komplex zu erstellen. Falls Ihnen Fehler auffallen, oder Sie sich Informationen wünschen, die bislang fehlen, zögern Sie nicht, sich direkt [an uns zu wenden ](mailto:alltag-und-sexualitaet@uni-goettingen.de).
+
+
+Sie können nun wie folgt Ihre Rückmeldung für die verschiedenen Bereiche lesen: Oben sehen Sie die groben Oberkategorien der Rückmeldung. Wenn Sie auf eine klicken, gelangen Sie zu mehr Erklärungen und den Grafiken, sowie weiteren Erklärungen.
+
+## Ihre Persönlichkeit {.tabset}
+
+### Big 5 Persönlichkeit
+Die Big Five oder auch, eng verwandt, das Fünf-Faktoren-Modell (FFM), ist ein Modell der Persönlichkeitspsychologie, nach dem sich Persönlichkeit in  fünf Hauptdimensionen zusammenfassen lässt. Neurotizismus (hier im Gegenpol: emotionale Stabilität), Extraversion, Offenheit für Erfahrungen, Verträglichkeit und Gewissenhaftigkeit.
+Werte auf diesen Dimensionen dienen als relativ sparsame Zusammenfassung der Arten und Weisen, in denen sich Menschen unterscheiden.
+
+```{r motiv.opt,fig.height=12,fig.width=15}
+s2_initial$Extraversion = (s2_initial$bfi_extra - 3.50) / 0.64
+s2_initial$Gewissenhaftigkeit = (s2_initial$bfi_consc - 3.77 ) / 0.50
+s2_initial$Vertraeglichkeit = (s2_initial$bfi_agree - 3.68 ) / 0.49
+s2_initial$Offenheit = (s2_initial$bfi_open - 3.50 ) / 0.54
+s2_initial$EmoStab = -1* (s2_initial$bfi_neuro - 2.61 ) / 0.59
+
+big5 = melt(s2_initial[,c( "Extraversion", "Gewissenhaftigkeit", "Vertraeglichkeit", "Offenheit", "EmoStab")])
+
+ggplot(big5,aes(x=variable,y=value, fill = variable))+
+  geom_bar(stat="identity",position=position_dodge())+
+  ylab('Ihr Wert')+
+  labs(title="Ihre Big 5 Persönlichkeit")+
+  scale_fill_brewer("",palette="Set1", breaks = c("Extraversion", "Gewissenhaftigkeit", "Vertraeglichkeit", "EmoStab","Offenheit"), labels = c("Extraversion", "Gewissenhaftigkeit", "Verträglichkeit", "Emotionale Stabilität","Offenheit für \nneue Erfahrungen"))+
+  scale_y_continuous(breaks=c(-2,-1,0,1,2),labels=c('stark unter-\ndurchschnitlich','unterdurchschnittlich','Durchschnitt','überdurchschnittlich','stark über-\ndurchschnittlich')) +
+  scale_x_discrete("", breaks = c("Extraversion", "Gewissenhaftigkeit", "Vertraeglichkeit", "EmoStab","Offenheit"), labels = c("Extraversion", "Gewissenhaftigkeit", "Verträglichkeit", "Emotionale Stabilität","Offenheit für \nneue Erfahrungen")) + expand_limits(y = c(-3, 3))
+```
+
+### Ihre Extraversion
+Die Dimension Extraversion beschreibt Aktivität und zwischenmenschliches Verhalten. Sie wird auch Begeisterungsfähigkeit genannt und ist der Introversion gegenübergestellt. Personen mit hohen Extraversionswerten sind gesellig, aktiv, gesprächig, personenorientiert, herzlich, optimistisch und heiter.
+
+Sie sind zudem empfänglich für Anregungen und Aufregungen. Introvertierte Personen sind zurückhaltend bei sozialen Interaktionen, gerne allein und unabhängig. Sie können auch sehr aktiv sein, aber weniger in Gesellschaft.
+
+```{r}
+qplot_on_normal(s2_initial$Extraversion, xlab = "Extraversion", ylab = "Prozentzahl anderer Menschen mit diesem Wert")
+```
+
+`r feedback_chunk(s2_initial$Extraversion, c("Sie sind äußert introvertiert.","Sie sind sehr introvertiert.", "Sie sind durchschnittlich extravertiert.", "Sie sind sehr extravertiert", "Sie sind äußerst extravertiert."))`
+
+### Ihre Gewissenhaftigkeit
+
+Personen mit hohen Gewissenhaftigkeitswerten handeln organisiert, sorgfältig, planend, effektiv, verantwortlich, zuverlässig und überlegt. Gewissenhafte Menschen sind sich der Verantwortung ihrer Aufgaben bewusst und arbeiten zielstrebig und entschlossen auf ihre Ziele hin.
+
+Unter den 5 Hauptfaktoren der Persönlichkeit sagt selbstbeurteilte Gewissenhaftigkeit das Vorgesetztenurteil über den Berufserfolg am besten vorher.
+Personen mit niedrigen Gewissenhaftigkeitswerten handeln unsorgfältig, spontan und ungenau, gelten auch eher als gelassen und weniger leistungsmotiviert. Sie haben ein geringeres Risiko für Perfektionismus und Zwanghaftigkeit. Sie reden offener über Sex, schnallen sich seltener an und nehmen eher Anhalter mit. Sie neigen auch mehr zu Tagträumen und <abbr title="Vor-sich-her-schieben von Aufgaben">Prokrastination</abbr>.
+
+```{r}
+qplot_on_normal(s2_initial$Gewissenhaftigkeit, xlab = "Gewissenhaftigkeit", ylab = "Prozentzahl anderer Menschen mit diesem Wert")
+```
+
+`r feedback_chunk(s2_initial$Gewissenhaftigkeit, c("Sie sind äußert wenig gewissenhaft.","Sie sind eher wenig gewissenhaft.", "Sie sind durchschnittlich gewissenhaft.", "Sie sind sehr gewissenhaft", "Sie sind äußerst gewissenhaft."))`
+
+
+### Ihre Verträglichkeit
+Ein zentrales Merkmal von Personen mit hohen Verträglichkeitswerten ist ihr Altruismus. Sie begegnen anderen mit Verständnis, Wohlwollen und Mitgefühl, sie sind bemüht, anderen zu helfen, und überzeugt, dass diese sich ebenso hilfsbereit verhalten werden. Sie neigen zu zwischenmenschlichem Vertrauen, zur Kooperation und zur Nachgiebigkeit.
+
+Personen mit niedrigen Verträglichkeitswerten beschreiben sich im Gegensatz dazu als antagonistisch, egozentrisch und misstrauisch gegenüber den Absichten anderer Menschen. Sie verhalten sich eher kompetitiv (mit anderen in den „Wettstreit“ tretend) als kooperativ. Somit scheint die verträgliche Seite der Dimension eindeutig sozial erwünschter zu sein. Dennoch darf nicht vergessen werden, dass die Fähigkeit, für eigene Interessen zu kämpfen, in vielen Situationen hilfreich ist. So ist Verträglichkeit im Gerichtssaal nicht unbedingt eine Tugend.
+
+```{r}
+qplot_on_normal(s2_initial$Vertraeglichkeit, xlab = "Verträglichkeit", ylab = "Prozentzahl anderer Menschen mit diesem Wert")
+```
+
+`r feedback_chunk(s2_initial$Vertraeglichkeit, c("Sie sind äußert wenig verträglich.","Sie sind eher wenig verträglich.", "Sie sind durchschnittlich verträglich.", "Sie sind sehr verträglich", "Sie sind äußerst verträglich."))`
+
+
+### Ihre Offenheit für neue Erfahrungen
+
+Mit dieser Eigenschaft werden das Interesse und das Ausmaß der Beschäftigung mit neuen Erfahrungen, Erlebnissen und Eindrücken zum Ausdruck gebracht.
+
+Personen mit hohen Offenheitswerten geben häufig an, dass sie ein reges Fantasieleben haben, ihre positiven und negativen Gefühle deutlich wahrnehmen sowie an vielen persönlichen und öffentlichen Vorgängen interessiert sind. Sie beschreiben sich als wissbegierig, intellektuell, fantasievoll, experimentierfreudig und künstlerisch interessiert. Sie sind eher bereit, bestehende Normen kritisch zu hinterfragen und auf neuartige soziale, ethische und politische Wertvorstellungen einzugehen. Sie sind unabhängig in ihrem Urteil, verhalten sich häufig unkonventionell, erproben neue Handlungsweisen und bevorzugen Abwechslung.
+
+Personen mit niedrigen Offenheitswerten neigen demgegenüber eher zu konventionellem Verhalten und zu konservativen Einstellungen. Sie ziehen Bekanntes und Bewährtes dem Neuen vor und sie nehmen ihre emotionalen Reaktionen eher gedämpft wahr.
+
+```{r}
+qplot_on_normal(s2_initial$Offenheit, xlab = "Offenheit für neue Erfahrungen", ylab = "Prozentzahl anderer Menschen mit diesem Wert")
+```
+
+`r feedback_chunk(s2_initial$Offenheit, c("Sie sind kaum offen für neue Erfahrungen.","Sie sind eher wenig offen für neue Erfahrungen.", "Sie sind durchschnittlich offen für neue Erfahrungen.", "Sie sind sehr offen für neue Erfahrungen", "Sie sind äußerst offen für neue Erfahrungen."))`
+
+
+### Ihre emotionale Stabilität
+Dieses Konstrukt spiegelt individuelle Unterschiede im Erleben von negativen Emotionen wider und wird von einigen Autoren auch als emotionale Labilität oder Neurotizismus bezeichnet.
+
+Emotional labile Personen erleben häufiger Angst, Nervosität, Anspannung, Trauer, Unsicherheit und Verlegenheit. Zudem bleiben diese Empfindungen bei ihnen länger bestehen und werden leichter ausgelöst. Sie tendieren zu mehr Sorgen um ihre Gesundheit, neigen zu unrealistischen Ideen und haben Schwierigkeiten, auf Stresssituationen gelassen zu
+reagieren. Emotional stabile Personen sind eher ruhig, zufrieden, stabil, entspannt und sicher. Sie erleben seltener negative und häufiger positive Gefühle.
+
+```{r}
+qplot_on_normal(s2_initial$EmoStab, xlab = "Emotionale Stabilität", ylab = "Prozentzahl anderer Menschen mit diesem Wert")
+```
+
+`r feedback_chunk(s2_initial$EmoStab, c("Sie sind äußerst emotional labil.","Sie sind eher emotional labil.", "Sie sind durchschnittlich emotional stabil.", "Sie sind sehr emotional stabil.", "Sie sind äußerst emotional stabil."))`
+
+## Ihr Zyklus {.tabset}
+
+### Einleitung
+
+Hier stellen für Sie grafisch dar, wie sich Ihre Berichte über Ihren Zyklus hinweg verändert haben.
+Unten sehen Sie noch eine erklärende Grafik zum typischen Zyklus.
+
+Einige Einschränkungen wollen wir aber vorwegschicken:
+
+  1. In unserer Forschung betrachten wir gleichzeitig hunderte und tausende Zyklen von vielen verschiedenen Frauen. Sie haben (im Normallfall) nur zwei Zyklen zu unserer Studie beigetragen. Deshalb sollten Sie die Ergebnisse hier nur unter Vorsicht interpretieren.
+2. Manche Frauen haben kürzere und längere Zyklen als andere. Falls Ihre Zykluslänge deutlich kürzer oder länger ist als die anderer Frauen (im Mittel ungefähr 29 Tage), dann ist das fertile Fenster (in blau) vielleicht nicht richtig positioniert.
+3. Wir zählen die Tage vom Beginn der letzten Menstruation rückwarts. Dies tun wir, weil die luteale Phase (ab dem Eisprung zur Menstruation) weniger variabel über Frauen und Zyklen ist. Dies bedeutet, dass Daten am Ende des Tagebuchs teils nicht mit einfließen können (deswegen gibt es unsere Nachbefragung).
+4. Es gibt beträchtliche Unsicherheiten bei der Schätzung der Position des fertilen Fenster (der fruchtbaren Tage). Im statistischen Mittel können wir damit umgehen, aber Sie sollten Ihre Daten mit Vorsicht interpretieren, insbesondere wenn Ihr Zyklus eher unregelmäßig ist.
+5. Da Sie laut Ihren Angaben `r ifelsena(s1_demo$contraception_method %contains% "hormonal" | s1_demo$menstruation_regular == 0, "hormonell verhüten und/oder nicht regelmäßig menstruieren, ovulieren Sie wahrscheinlich nicht im grünen Fenster.", "nicht hormonell verhüten und regelmäßig menstruieren, ovulieren Sie wahrscheinlich in den meisten Zyklen")`. In unserer Forschung haben wir bislang gefunden, dass hormonell verhütende Frauen im grünen Fenster sich selbst nicht signifikant anders erleben als sonst.
+6. Die hier dargestellten Grafiken benötigen eine gewisse Mindestmenge an Daten. Da wir nicht alle Fragen jeden Tag gestellt haben, um Ihre Zeit zu schonen, kann es, insbesondere wenn Sie nicht sehr regelmäßig teilgenommen haben, zu Fehlern bei der Grafikerstellung und/oder wirren Mustern kommen.
+
+
+#### der Menstruationszyklus
+
+![Zyklus](https://formr.org/assets/tmp/admin/AklAt3ZevW3Wnz5n_AXmcZDfQYPEJusI7AiFi_ImH8jq.png?v1464334804)
+
+```{r}
+opts_chunk$set(fig.width = 10,fig.height = 7)
+```
+
+### Stimmung
+
+Im Tagebuch: "Meine Stimmung war gut."
+
+```{r}
+plot_menstruation(s3_daily, "good_mood", "Gute Stimmung")
+```
+
+### Selbstwertgefühl
+
+Im Tagebuch: "Ich war zufrieden mit mir."
+
+
+```{r}
+plot_menstruation(s3_daily, "self_esteem", "Selbstwertgefühl")
+```
+
+### Beziehungszufriedenheit
+
+Im Tagebuch: "Ich  war zufrieden mit meiner Beziehung."
+
+`r ifelse(s1_demo$hetero_relationship, "", "Da Sie zu Anfang des Tagebuch keine Beziehung angegeben haben, wurde Ihnen diese Frage nicht gestellt")`.
+
+
+```{r}
+if(s1_demo$hetero_relationship) {
+  plot_menstruation(s3_daily, "relationship_satisfaction", "Beziehungszufriedenheit")
+}
+```
+
+### Stress
+
+Im Tagebuch: "Ich war gestresst."
+
+```{r}
+plot_menstruation(s3_daily, "stressed", "Stress")
+```
+
+### Reizbarkeit
+
+Im Tagebuch: "Ich war leicht reizbar."
+
+```{r}
+plot_menstruation(s3_daily, "irritable", "leicht reizbar")
+```
+
+### Einsamkeit
+
+Im Tagebuch: "Ich war einsam."
+
+```{r}
+plot_menstruation(s3_daily, "loneliness", "einsam")
+```
+
+### Attraktivität
+
+Im Tagebuch drei verschieden Aussagen zu Ihrem Aussehen:
+
+  "Ich war mit meinem Aussehen zufrieden."
+"Ich habe mich gerne im Spiegel angeschaut."
+"Ich habe meinen Körper gerne angeschaut."
+
+```{r}
+s3_daily$vanity = rowMeans(s3_daily %>% select(matches("^vanity_\\d+$")), na.rm = T)
+plot_menstruation(s3_daily, "vanity", "Zufriedenheit mit Aussehen")
+```
+
+
+### Libido & Sex {.tabset}
+
+#### Libido
+Im Tagebuch: "Ich hatte eine hohe <abbr title="Lust, Geschlechtsverkehr zu haben/zu masturbieren/sexuell aktiv zu werden">Libido</abbr>. "
+
+```{r}
+plot_menstruation(s3_daily, "high_libido", "hohe Libido")
+```
+
+
+#### Initiation
+Im Tagebuch "Ich habe sexuelle Handlungen mit meinem Partner initiiert."
+
+`r ifelse(s1_demo$hetero_relationship, "", "Da Sie zu Anfang des Tagebuch keine Beziehung angegeben haben, wurde Ihnen diese Frage nicht gestellt")`.
+
+```{r}
+if (s1_demo$hetero_relationship) {
+  plot_menstruation(s3_daily, "sexual_initiation_self", "selbst Sex initiiert")
+}
+```
+
+`r ifelse(s1_demo$hetero_relationship, 'Im Tagebuch "Mein Partner hat sexuelle Handlungen mit mir initiiert."', '')`
+
+```{r}
+if (s1_demo$hetero_relationship) {
+  plot_menstruation(s3_daily, "sexual_initiation_partner", "Partner hat Sex initiiert")
+}
+```
+
+#### Hingezogen zu Partner
+
+Gemittelt über 13 ähnliche Fragen, die Ihnen im Laufe des Tagebuchs gestellt wurden.
+
+`r ifelse(s1_demo$hetero_relationship, "", "Da Sie zu Anfang des Tagebuch keine Beziehung angegeben haben, wurde Ihnen diese Frage nicht gestellt")`.
+
+```{r}
+s3_daily$in_pair_desire = rowMeans(s3_daily %>% select(matches("^in_pair_desire_\\d+$")), na.rm = T)
+if (s1_demo$hetero_relationship) {
+  plot_menstruation(s3_daily, "in_pair_desire", "Hingezogen zu Partner")
+}
+```
+
+#### Hingezogen zu `r ifelse(s1_demo$hetero_relationship, 'anderen', '')` Männern
+Gemittelt über 13 ähnliche Fragen, die Ihnen im Laufe des Tagebuchs gestellt wurden.
+
+```{r}
+s3_daily$extra_pair_desire = rowMeans(s3_daily %>% select(matches("^extra_pair_desire_\\d+$")), na.rm = T)
+plot_menstruation(s3_daily, "extra_pair_desire", paste0("Hingezogen zu ",ifelse(s1_demo$hetero_relationship, 'anderen ', ''),"Männern"))
+```
+
+### Schlaf
+
+Im Tagebuch: "Mein Schlaf letzte Nacht war  gut."
+
+```{r}
+plot_menstruation(s3_daily, "sleep_quality", "Schlafqualität")
+```
+
+Im Tagebuch: "So viel habe ich letzte Nacht geschlafen." (mehr/weniger als sonst)
+
+```{r}
+plot_menstruation(s3_daily, "sleep_amount", "Schlafmenge")
+```
+
+Im Tagebuch: "Von wann bis wann haben Sie geschlafen?" (Angabe der Uhrzeiten)
+
+```{r}
+plot_menstruation(s3_daily, "sleep_duration", "Schlafdauer", NULL)
+```
+
+
+## Ihr Schlaf {.tabset}
+```{r}
+opts_chunk$set(fig.width = 7,fig.height = 7)
+```
+
+
+### Schlaf und Alkohol
+```{r}
+if (all(s3_daily$alcohol == 0,na.rm = T)) {
+  cat("Sie haben während des Tagebuchzeitraums keinen Alkohol getrunken.")
+} else {
+  ggplot(s3_daily, aes(lag(alcohol), sleep_quality)) + geom_jitter(width = 0) + scale_y_continuous("Schlafqualität", limits = c(0,4)) + scale_x_continuous("relativer Alkoholkonsum am Vortag") + geom_smooth(method = 'gam')
+
+  ggplot(s3_daily, aes(lag(alcohol), sleep_duration)) + geom_jitter(width = 0) + scale_y_continuous("Schlafdauer in Stunden") + scale_x_continuous("relativer Alkoholkonsum am Vortag") + geom_smooth(method = 'gam')
+}
+```
+
+### Schlaf und Stimmung
+```{r}
+ggplot(s3_daily, aes(sleep_duration, good_mood)) + geom_jitter(width = 0) + scale_x_continuous("Schlafdauer in Stunden")  + scale_y_continuous("Gute Laune", limits = c(0,4)) + geom_smooth(method = 'gam')
+```
+
+### Schlaf und Libido
+```{r}
+ggplot(s3_daily, aes(sleep_duration, high_libido)) + geom_jitter(width = 0) + scale_x_continuous("Schlafdauer in Stunden")  + scale_y_continuous("Hohe Libido", limits = c(0,4)) + geom_smooth(method = 'gam')
+```
+
+## Ihre Stimmung in Abhängigkeit von {.tabset}
+
+### ...Ihrem Alkoholkonsum
+
+```{r}
+if (all(s3_daily$alcohol == 0,na.rm = T)) {
+  cat("Sie haben während des Tagebuchzeitraums keinen Alkohol getrunken.")
+} else {
+
+  ggplot(s3_daily, aes(alcohol, good_mood)) + geom_jitter(width = 0) + scale_y_continuous("Gute Laune", limits = c(0,4)) + scale_x_continuous("relativer Alkoholkonsum") + geom_smooth(method = 'gam')
+
+  ggplot(s3_daily, aes(lag(alcohol), good_mood)) + geom_jitter(width = 0) + scale_y_continuous("Gute Laune", limits = c(0,4)) + scale_x_continuous("relativer Alkoholkonsum am Vortag") + geom_smooth(method = 'gam')
+}
+```
+
+### ...Ihrem Zigarettenkonsum
+```{r}
+if (all(s3_daily$smoking == 0,na.rm = T)) {
+  cat("Sie haben während des Tagebuchzeitraums nicht geraucht.")
+} else {
+  ggplot(s3_daily, aes(smoking, good_mood)) + geom_jitter(width = 0) + scale_y_continuous("Gute Laune", limits = c(0,4)) + scale_x_continuous("Zigarettenkonsum") + geom_smooth(method = 'gam')
+}
+```
+
+## Ihre Zeit
+
+```{r}
+s3_daily %>%
+  group_by(Wochenende) %>%
+  select(starts_with("time_"), sleep_amount) %>%
+  summarise_each(funs(round(mean(., na.rm = T),2))) ->
+  time_use
+
+cat_names_german = c("time_friends" = "mit Freunden", "time_work_uni" = "mit Arbeit/Uni", "time_sports" = "mit Sport", "time_people" = "mit Menschen",
+                     "time_family" = "mit Familie", "sleep_amount" = "mit Schlaf")
+categories = as.character(cat_names_german[names(time_use[,-1])])
+
+get_wday = function(wday, data) {
+  list(name = wday,
+       data = data %>% ungroup() %>% filter(Wochenende == wday) %>% select(-Wochenende) %>% as.numeric(),
+       pointPlacement = 'on'
+  )
+}
+
+library(highcharter)
+highchart() %>%
+  hc_chart(polar = TRUE, type = "line") %>%
+  hc_title(text = "Wie haben Sie Ihre Zeit verbracht?") %>%
+  hc_xAxis(categories = categories,
+           tickmarkPlacement = 'on',
+           lineWidth = 0) %>%
+  hc_yAxis(gridLineInterpolation = 'polygon',
+           lineWidth = 0,
+           min = 0, max = 4) %>%
+  hc_series(
+    get_wday("Montag-Donnerstag", time_use),
+    get_wday("Wochenende", time_use)
+  )
+```
+
+
+## Ihre Stimmung über die Zeit hinweg
+Hier haben wir sehr viel Informationen an einem Ort zusammengetragen. In der untenstehenden Grafik sehen Sie, wie Ihre Stimmung über die Zeit hinweg war. Wir haben versucht es mit einer Linie zusammenzufassen, aber das ist bei einem kurzen Zeitraum und wenig Daten nicht gut statistisch abgesichert.
+
+Sie sehen kleine Punkte und Quadrate. Wenn Sie mit der Maus rechts von __Quadraten__ entlang fahren, können Sie die Notizen lesen, die Sie sich an diesem Tag gemacht haben. Bei den __Punkten__ haben Sie sich keine Notizen gemacht. Aus technischen Gründen mussten wir leider sehr lange Notizen abkürzen.
+
+Die Angaben, die Sie gemacht haben, haben Werte von 0, 1, 3, und 4, wobei 0 "weniger als sonst" und 4 "mehr als sonst" hieß. Wir haben die Werte ein wenig voneinander wegbewegt, damit Sie sie besser sehen können, diese kleinen Schwankungen haben aber nichts zu bedeuten.
+
+Die Kürzel neben Ihren Notizen beziehen sich auf folgende Felder:
+  N: Notizen am Ende des Fragebogens
+`r ifelse(s1_demo$hetero_relationship, 'G: Menschen, die Sie getroffen haben','')`
+`r ifelse(s1_demo$hetero_relationship, 'D: Menschen, an die Sie gedacht haben','')`
+`r ifelse(s1_demo$hetero_relationship, 'S: Notizen zu Ihrem Sozialleben','')`
+
+```{r}
+s3_daily$Notizen = stringr::str_replace_all(s3_daily$special_events_love_life, "\n", "\n")
+s3_daily$Getroffen = stringr::str_replace_all(s3_daily$social_life_saw_people, "\n", "\n")
+s3_daily$`Gedacht an` = stringr::str_replace_all(s3_daily$social_life_thought_about, "\n", "\n")
+s3_daily$`Notizen Sozialleben` = stringr::str_replace_all(s3_daily$social_life_free, "\n", "\n")
+stimmungsdaten = melt(s3_daily, id = c('created', 'Notizen', 'Gedacht an', 'Getroffen', 'Notizen Sozialleben'), measure=c('self_esteem', 'stressed', 'irritable', 'loneliness', 'good_mood') )
+stimmungsdaten$id = 1:nrow(stimmungsdaten)
+stimmungsdaten$has_notes = ifelse(rowSums(! is.na(stimmungsdaten[,c('Notizen', "Getroffen", 'Gedacht an', 'Notizen Sozialleben')] )) == 0, "no", "yes")
+stimmungsdaten$value = stimmungsdaten$value + runif(nrow(stimmungsdaten), min = -0.2, 0.2)
+library(ggvis)
+
+notes = stimmungsdaten[,c('Notizen', "Getroffen", 'Gedacht an', 'Notizen Sozialleben')]
+no_notes = is.na(notes)
+notes$Notizen = paste0("N: ", notes$Notizen)
+notes$Getroffen = paste0("G: ", notes$Getroffen)
+notes$`Gedacht an` = paste0("D: ", notes$`Gedacht an`)
+notes$`Notizen Sozialleben` = paste0("S: ", notes$`Notizen Sozialleben`)
+notes[no_notes] = ""
+notes[!no_notes] = paste0(notes[!no_notes], "\n ")
+notes$Notes = paste0(notes$Notizen, notes$Getroffen, notes$`Gedacht an`, notes$`Notizen Sozialleben`)
+stimmungsdaten$Notes = stringr::str_sub(stringr::str_trim(notes$Notes),1, 50)
+to_german = c("Selbstwert", "Stress", "Reizbarkeit", "Einsamkeit", "Gute Laune")
+names(to_german) = c('self_esteem', 'stressed', 'irritable', 'loneliness', 'good_mood')
+stimmungsdaten$variable = to_german[stimmungsdaten$variable]
+
+stimmungsdaten = stimmungsdaten %>% filter(!is.na(value))  %>% group_by(variable) %>% arrange(created)
+
+stimmungsdaten  %>%
+  ggvis(x = ~created, y = ~value) %>%
+  group_by(variable) %>%
+  layer_smooths(stroke = ~variable) %>%
+  # ungroup() %>%
+  layer_points(key := ~id, fill = ~variable, shape = ~has_notes, fillOpacity := 0.5, fillOpacity.hover := 1) %>%
+  layer_text(text := ~Notes, fillOpacity := 0, fillOpacity.hover := 1) %>%
+  # add_tooltip(get_special_events, "hover") %>%
+  scale_nominal("shape", domain = c("no","yes"), range = c("circle", "square")) %>%
+  add_axis("x", title = "Datum") %>%
+  add_axis("y", title = "Auftreten (weniger - mehr als sonst)", values = 0:4) %>%
+  set_options(height = 500, width = 800) %>%
+  add_legend(title = "Variable", scales = c("fill")) %>%
+  hide_legend("stroke") %>%
+  hide_legend("shape")
+```
+
+## Wochentage {.tabset}
+Hier sehen Sie die Mittelwerte verschiedener Variablen noch einmal nach Wochentag aufgeschlüsselt.
+
+```{r}
+qplot_on_polar =
+  function (normed_data, ylab = "Your value", title = "")
+  {
+    if (!all(c("value", "variable") %in% names(normed_data)))
+      stop("Malformed file, check help.")
+    if (exists("se", where = normed_data)) {
+      normed_data$ymin = normed_data$value - normed_data$se
+      normed_data$ymax = normed_data$value + normed_data$se
+    }
+    plot = ggplot(normed_data, aes_string(x = "variable", y = "value",
+                                          fill = "value")) + ggtitle(title) + scale_y_continuous("", limits = c(0,4), breaks = c(-2,-1)) + xlab("") + scale_fill_continuous(ylab, guide = F) +
+      theme_minimal() + theme(text = element_text(size = 18)) +
+      coord_polar()
+    if (exists("ymin", where = normed_data)) {
+      plot + geom_linerange(aes_string(ymin = "ymin", ymax = "ymax",
+                                       colour = "value"), size = 1) + geom_bar(stat = "identity",
+                                                                               position = position_dodge(), alpha = 0.7) + scale_colour_continuous(ylab)
+    }
+    else plot + geom_bar(stat = "identity", position = position_dodge(), show.legend = F) + theme(axis.text = element_text(size = 9))
+  }
+clock = dcast(melt(s3_daily, id=c('Wochentag'), measure = c('self_esteem', 'stressed', 'irritable', 'risk_taking', 'loneliness', 'good_mood', 'high_libido', 'vanity') ), formula = Wochentag ~ variable, fun.aggregate= function(x) { mean(x, na.rm = T) } )
+clock$variable = clock$Wochentag
+```
+
+### Ihre Stimmung
+```{r}
+clock$value = clock$good_mood
+qplot_on_polar(clock,title="Ihre Stimmung")
+```
+
+### Ihr Selbstwertgefühl
+```{r}
+clock$value = clock$self_esteem
+qplot_on_polar(clock,title="Selbstwert")
+```
+
+### Ihre Reizbarkeit
+```{r}
+clock$value = clock$irritable
+qplot_on_polar(clock, title="Ihre Reizbarkeit")
+```
+
+### Ihr Stress
+```{r}
+clock$value = clock$stressed
+qplot_on_polar(clock, title="Ihr Stress")
+```
+
+### Ihre Libido
+```{r}
+clock$value = clock$high_libido
+qplot_on_polar(clock, title="Ihre Libido")
+```
+
+### Ihre Attraktivität
+```{r}
+clock$value = clock$vanity
+qplot_on_polar(clock, title="Ihre Attr.")
+```
+
+

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="radix" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Intra-individual feedback</title>
+  
+  <meta property="description" itemprop="description" content="Thinking through an intra-individual menstrual cycle feedback."/>
+  
+  
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2019-03-19"/>
+  <meta property="article:created" itemprop="dateCreated" content="2019-03-19"/>
+  <meta name="article:author" content="Ruben C. Arslan"/>
+  
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Intra-individual feedback"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Thinking through an intra-individual menstrual cycle feedback."/>
+  <meta property="og:locale" content="en_US"/>
+  
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Intra-individual feedback"/>
+  <meta property="twitter:description" content="Thinking through an intra-individual menstrual cycle feedback."/>
+  
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Intra-individual feedback"]},{"type":"character","attributes":{},"value":["Thinking through an intra-individual menstrual cycle feedback.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]}]},{"type":"character","attributes":{},"value":["03-19-2019"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["example_files/bootstrap-3.3.5/css/bootstrap-theme.css","example_files/bootstrap-3.3.5/css/bootstrap-theme.css.map","example_files/bootstrap-3.3.5/css/bootstrap-theme.min.css","example_files/bootstrap-3.3.5/css/bootstrap.css","example_files/bootstrap-3.3.5/css/bootstrap.css.map","example_files/bootstrap-3.3.5/css/bootstrap.min.css","example_files/bootstrap-3.3.5/css/cerulean.min.css","example_files/bootstrap-3.3.5/css/cosmo.min.css","example_files/bootstrap-3.3.5/css/darkly.min.css","example_files/bootstrap-3.3.5/css/flatly.min.css","example_files/bootstrap-3.3.5/css/fonts/Lato.ttf","example_files/bootstrap-3.3.5/css/fonts/LatoBold.ttf","example_files/bootstrap-3.3.5/css/fonts/LatoItalic.ttf","example_files/bootstrap-3.3.5/css/fonts/NewsCycle.ttf","example_files/bootstrap-3.3.5/css/fonts/NewsCycleBold.ttf","example_files/bootstrap-3.3.5/css/fonts/OpenSans.ttf","example_files/bootstrap-3.3.5/css/fonts/OpenSansBold.ttf","example_files/bootstrap-3.3.5/css/fonts/OpenSansBoldItalic.ttf","example_files/bootstrap-3.3.5/css/fonts/OpenSansItalic.ttf","example_files/bootstrap-3.3.5/css/fonts/OpenSansLight.ttf","example_files/bootstrap-3.3.5/css/fonts/OpenSansLightItalic.ttf","example_files/bootstrap-3.3.5/css/fonts/Raleway.ttf","example_files/bootstrap-3.3.5/css/fonts/RalewayBold.ttf","example_files/bootstrap-3.3.5/css/fonts/Roboto.ttf","example_files/bootstrap-3.3.5/css/fonts/RobotoBold.ttf","example_files/bootstrap-3.3.5/css/fonts/RobotoLight.ttf","example_files/bootstrap-3.3.5/css/fonts/RobotoMedium.ttf","example_files/bootstrap-3.3.5/css/fonts/SourceSansPro.ttf","example_files/bootstrap-3.3.5/css/fonts/SourceSansProBold.ttf","example_files/bootstrap-3.3.5/css/fonts/SourceSansProItalic.ttf","example_files/bootstrap-3.3.5/css/fonts/SourceSansProLight.ttf","example_files/bootstrap-3.3.5/css/fonts/Ubuntu.ttf","example_files/bootstrap-3.3.5/css/journal.min.css","example_files/bootstrap-3.3.5/css/lumen.min.css","example_files/bootstrap-3.3.5/css/paper.min.css","example_files/bootstrap-3.3.5/css/readable.min.css","example_files/bootstrap-3.3.5/css/sandstone.min.css","example_files/bootstrap-3.3.5/css/simplex.min.css","example_files/bootstrap-3.3.5/css/spacelab.min.css","example_files/bootstrap-3.3.5/css/united.min.css","example_files/bootstrap-3.3.5/css/yeti.min.css","example_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.eot","example_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.svg","example_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.ttf","example_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.woff","example_files/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.woff2","example_files/bootstrap-3.3.5/js/bootstrap.js","example_files/bootstrap-3.3.5/js/bootstrap.min.js","example_files/bootstrap-3.3.5/js/npm.js","example_files/bootstrap-3.3.5/shim/html5shiv.min.js","example_files/bootstrap-3.3.5/shim/respond.min.js","example_files/d3-3.5.2/d3.js","example_files/d3-3.5.2/d3.min.js","example_files/detect-resize-0.5.3/jquery.resize.js","example_files/figure-html/motiv.opt-1.png","example_files/figure-html/unnamed-chunk-10-1.png","example_files/figure-html/unnamed-chunk-11-1.png","example_files/figure-html/unnamed-chunk-12-1.png","example_files/figure-html/unnamed-chunk-13-1.png","example_files/figure-html/unnamed-chunk-14-1.png","example_files/figure-html/unnamed-chunk-15-1.png","example_files/figure-html/unnamed-chunk-16-1.png","example_files/figure-html/unnamed-chunk-17-1.png","example_files/figure-html/unnamed-chunk-18-1.png","example_files/figure-html/unnamed-chunk-19-1.png","example_files/figure-html/unnamed-chunk-20-1.png","example_files/figure-html/unnamed-chunk-21-1.png","example_files/figure-html/unnamed-chunk-22-1.png","example_files/figure-html/unnamed-chunk-23-1.png","example_files/figure-html/unnamed-chunk-25-1.png","example_files/figure-html/unnamed-chunk-26-1.png","example_files/figure-html/unnamed-chunk-27-1.png","example_files/figure-html/unnamed-chunk-28-1.png","example_files/figure-html/unnamed-chunk-29-1.png","example_files/figure-html/unnamed-chunk-3-1.png","example_files/figure-html/unnamed-chunk-33-1.png","example_files/figure-html/unnamed-chunk-34-1.png","example_files/figure-html/unnamed-chunk-35-1.png","example_files/figure-html/unnamed-chunk-36-1.png","example_files/figure-html/unnamed-chunk-37-1.png","example_files/figure-html/unnamed-chunk-38-1.png","example_files/figure-html/unnamed-chunk-4-1.png","example_files/figure-html/unnamed-chunk-5-1.png","example_files/figure-html/unnamed-chunk-6-1.png","example_files/figure-html/unnamed-chunk-7-1.png","example_files/figure-html/unnamed-chunk-9-1.png","example_files/ggvis-0.4.4/css/gear.png","example_files/ggvis-0.4.4/css/ggvis.css","example_files/ggvis-0.4.4/js/ggvis.js","example_files/ggvis-0.4.4/js/shiny-ggvis.js","example_files/highchart-binding-0.7.0/highchart.js","example_files/highcharts-7.0.1/css/htmlwdgtgrid.css","example_files/highcharts-7.0.1/css/motion.css","example_files/highcharts-7.0.1/custom/reset.js","example_files/highcharts-7.0.1/custom/symbols-extra.js","example_files/highcharts-7.0.1/custom/text-symbols.js","example_files/highcharts-7.0.1/highcharts-3d.js","example_files/highcharts-7.0.1/highcharts-custom.js","example_files/highcharts-7.0.1/highcharts-more.js","example_files/highcharts-7.0.1/highcharts.js","example_files/highcharts-7.0.1/modules/accessibility.js","example_files/highcharts-7.0.1/modules/annotations-advanced.js","example_files/highcharts-7.0.1/modules/annotations.js","example_files/highcharts-7.0.1/modules/arrow-symbols.js","example_files/highcharts-7.0.1/modules/boost-canvas.js","example_files/highcharts-7.0.1/modules/boost.js","example_files/highcharts-7.0.1/modules/broken-axis.js","example_files/highcharts-7.0.1/modules/bullet.js","example_files/highcharts-7.0.1/modules/current-date-indicator.js","example_files/highcharts-7.0.1/modules/cylinder.js","example_files/highcharts-7.0.1/modules/data.js","example_files/highcharts-7.0.1/modules/debugger.js","example_files/highcharts-7.0.1/modules/drag-panes.js","example_files/highcharts-7.0.1/modules/draggable-points.js","example_files/highcharts-7.0.1/modules/drilldown.js","example_files/highcharts-7.0.1/modules/export-data.js","example_files/highcharts-7.0.1/modules/exporting.js","example_files/highcharts-7.0.1/modules/full-screen.js","example_files/highcharts-7.0.1/modules/funnel.js","example_files/highcharts-7.0.1/modules/gantt.js","example_files/highcharts-7.0.1/modules/grid-axis.js","example_files/highcharts-7.0.1/modules/heatmap.js","example_files/highcharts-7.0.1/modules/histogram-bellcurve.js","example_files/highcharts-7.0.1/modules/item-series.js","example_files/highcharts-7.0.1/modules/map.js","example_files/highcharts-7.0.1/modules/networkgraph.js","example_files/highcharts-7.0.1/modules/no-data-to-display.js","example_files/highcharts-7.0.1/modules/offline-exporting.js","example_files/highcharts-7.0.1/modules/oldie-polyfills.js","example_files/highcharts-7.0.1/modules/oldie.js","example_files/highcharts-7.0.1/modules/overlapping-datalabels.js","example_files/highcharts-7.0.1/modules/parallel-coordinates.js","example_files/highcharts-7.0.1/modules/pareto.js","example_files/highcharts-7.0.1/modules/pathfinder.js","example_files/highcharts-7.0.1/modules/pattern-fill.js","example_files/highcharts-7.0.1/modules/price-indicator.js","example_files/highcharts-7.0.1/modules/sankey.js","example_files/highcharts-7.0.1/modules/series-label.js","example_files/highcharts-7.0.1/modules/solid-gauge.js","example_files/highcharts-7.0.1/modules/sonification.js","example_files/highcharts-7.0.1/modules/static-scale.js","example_files/highcharts-7.0.1/modules/stock-tools.js","example_files/highcharts-7.0.1/modules/stock.js","example_files/highcharts-7.0.1/modules/streamgraph.js","example_files/highcharts-7.0.1/modules/sunburst.js","example_files/highcharts-7.0.1/modules/tilemap.js","example_files/highcharts-7.0.1/modules/timeline.js","example_files/highcharts-7.0.1/modules/treegrid.js","example_files/highcharts-7.0.1/modules/treemap.js","example_files/highcharts-7.0.1/modules/variable-pie.js","example_files/highcharts-7.0.1/modules/variwide.js","example_files/highcharts-7.0.1/modules/vector.js","example_files/highcharts-7.0.1/modules/venn.js","example_files/highcharts-7.0.1/modules/windbarb.js","example_files/highcharts-7.0.1/modules/wordcloud.js","example_files/highcharts-7.0.1/modules/xrange.js","example_files/highcharts-7.0.1/plugins/draggable-legend.js","example_files/highcharts-7.0.1/plugins/grouped-categories.js","example_files/highcharts-7.0.1/plugins/highcharts-regression.js","example_files/highcharts-7.0.1/plugins/motion.js","example_files/highcharts-7.0.1/plugins/multicolor_series.js","example_files/highcharts-7.0.1/plugins/pattern-fill-v2.js","example_files/highcharts-7.0.1/plugins/tooltip-delay.js","example_files/highlightjs-9.12.0/default.css","example_files/highlightjs-9.12.0/highlight.js","example_files/highlightjs-9.12.0/textmate.css","example_files/htmlwidgets-1.3/htmlwidgets.js","example_files/jquery-1.11.3/jquery.min.js","example_files/jquery-ui-1.11.4/images/ui-bg_diagonals-thick_18_b81900_40x40.png","example_files/jquery-ui-1.11.4/images/ui-bg_diagonals-thick_20_666666_40x40.png","example_files/jquery-ui-1.11.4/images/ui-bg_flat_10_000000_40x100.png","example_files/jquery-ui-1.11.4/images/ui-bg_glass_100_f6f6f6_1x400.png","example_files/jquery-ui-1.11.4/images/ui-bg_glass_100_fdf5ce_1x400.png","example_files/jquery-ui-1.11.4/images/ui-bg_glass_65_ffffff_1x400.png","example_files/jquery-ui-1.11.4/images/ui-bg_gloss-wave_35_f6a828_500x100.png","example_files/jquery-ui-1.11.4/images/ui-bg_highlight-soft_100_eeeeee_1x100.png","example_files/jquery-ui-1.11.4/images/ui-bg_highlight-soft_75_ffe45c_1x100.png","example_files/jquery-ui-1.11.4/images/ui-icons_222222_256x240.png","example_files/jquery-ui-1.11.4/images/ui-icons_228ef1_256x240.png","example_files/jquery-ui-1.11.4/images/ui-icons_ef8c08_256x240.png","example_files/jquery-ui-1.11.4/images/ui-icons_ffd27a_256x240.png","example_files/jquery-ui-1.11.4/images/ui-icons_ffffff_256x240.png","example_files/jquery-ui-1.11.4/index.html","example_files/jquery-ui-1.11.4/jquery-ui.css","example_files/jquery-ui-1.11.4/jquery-ui.js","example_files/jquery-ui-1.11.4/jquery-ui.min.css","example_files/jquery-ui-1.11.4/jquery-ui.min.js","example_files/jquery-ui-1.11.4/jquery-ui.structure.css","example_files/jquery-ui-1.11.4/jquery-ui.structure.min.css","example_files/jquery-ui-1.11.4/jquery-ui.theme.css","example_files/jquery-ui-1.11.4/jquery-ui.theme.min.css","example_files/lodash-2.2.1/lodash.min.js","example_files/navigation-1.1/codefolding.js","example_files/navigation-1.1/sourceembed.js","example_files/navigation-1.1/tabsets.js","example_files/proj4js-2.3.15/proj4.js","example_files/vega-1.4.3/vega.js","example_files/vega-1.4.3/vega.min.js","example.html","intra-individual-feedback_files/bowser-1.9.3/bowser.min.js","intra-individual-feedback_files/distill-2.2.21/template.v2.js","intra-individual-feedback_files/figure-html5/unnamed-chunk-2-1.png","intra-individual-feedback_files/figure-html5/unnamed-chunk-3-1.png","intra-individual-feedback_files/figure-html5/unnamed-chunk-4-1.png","intra-individual-feedback_files/figure-html5/unnamed-chunk-5-1.png","intra-individual-feedback_files/figure-html5/unnamed-chunk-6-1.png","intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png","intra-individual-feedback_files/jquery-1.11.3/jquery.min.js","intra-individual-feedback_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+  
+  <style type="text/css">
+  
+  body {
+    background-color: white;
+  }
+  
+  .pandoc-table {
+    width: 100%;
+  }
+  
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+  
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+  
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+  
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+  
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+  
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+  
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .shaded-content {
+    background: white;
+  }
+  
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  d-article {
+    padding-bottom: 30px;
+  }
+  
+  d-appendix {
+    padding-top: 30px;
+  }
+  
+  d-article>p>img {
+    width: 100%;
+  }
+  
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+  
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  /* CSS for table of contents */
+  
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+  
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+  
+  .d-toc a {
+    border-bottom: none;
+  }
+  
+  .d-toc ul {
+    padding-left: 0;
+  }
+  
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+  
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+  
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+  
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+  
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  
+  
+  
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+  
+  d-code {
+    overflow-x: auto !important;
+  }
+  
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+  
+  pre.text-output {
+  
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+  
+  /* Figure */
+  
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+  
+  .figure img {
+    width: 100%;
+  }
+  
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+  
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+  
+  
+  
+  /* Tweak 1000px media break to show more text */
+  
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+  
+    .grid {
+      grid-column-gap: 16px;
+    }
+  
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+  
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+  
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+  
+  
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+  
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  
+  /* Social footer */
+  
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+  
+  .disqus-comments {
+    margin-right: 30px;
+  }
+  
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+  
+  #disqus_thread {
+    margin-top: 30px;
+  }
+  
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+  
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+  
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+  
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+  
+  
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+  
+  
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+  
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+  
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+  
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+  
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+  
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  
+  
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+  
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+  
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+  
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  </style>
+  
+  <script type="application/javascript">
+  
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+  
+  // show body when load is complete
+  function on_load_complete() {
+  
+    // set body to visible
+    document.body.style.visibility = 'visible';
+  
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+  
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+  
+  function init_distill() {
+  
+    init_common();
+  
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+  
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+  
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+  
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+  
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+  
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+  
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+  
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+  
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+  
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+  
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+  
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+  
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+  
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+  
+      // capture layout
+      var layout = $(this).attr('data-layout');
+  
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+  
+  
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+  
+    // load distill framework
+    load_distill_framework();
+  
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+  
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+  
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+  
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+  
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+  
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+  
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+  
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+  
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+  
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+  
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+  
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+  
+      // clear polling timer
+      clearInterval(tid);
+  
+      // show body now that everything is ready
+      on_load_complete();
+    }
+  
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+  
+  }
+  
+  function init_downlevel() {
+  
+    init_common();
+  
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+  
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+  
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+  
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+  
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+  
+  
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+  
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+  
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+  
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+  
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+  
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+  
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+  
+    $('body').addClass('downlevel');
+  
+    on_load_complete();
+  }
+  
+  
+  function init_common() {
+  
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+  
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+  
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+  
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+  
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+  
+      }
+    });
+  
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+  
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.radix-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+  
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+  
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+  
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+  
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+  
+  </script>
+  
+  <!--/radix_placeholder_distill-->
+  <script src="intra-individual-feedback_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="intra-individual-feedback_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="intra-individual-feedback_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="intra-individual-feedback_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Intra-individual feedback","description":"Thinking through an intra-individual menstrual cycle feedback.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin","affiliationURL":"https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"}],"publishedDate":"2019-03-19T00:00:00.000+01:00","citationText":"Arslan, 2019"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Intra-individual feedback</h1>
+<p>Thinking through an intra-individual menstrual cycle feedback.</p>
+</div>
+
+<div class="d-byline">
+  Ruben C. Arslan <a href="https://rubenarslan.github.io" class="uri">https://rubenarslan.github.io</a> (Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin)<a href="https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan" class="uri">https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan</a>
+  
+<br/>03-19-2019
+</div>
+
+<div class="d-article">
+<p>In our <a href="https://psycnet.apa.org/record/2018-41799-001">first sex diary study</a>, we had no real budget, so we encouraged users to participate by promising them detailed feedback. This worked great<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and was well-received by participants. In the second study, we could pay participants up to 45€, but of course I wanted to one-up the feedback from the first study, given that we were using <a href="https://formr.org">formr.org</a> and I’m super proud of its feedback capabilities.</p>
+<p>Specifically, I wanted to also include intra-individual feedback on menstrual cycle changes. After all, we had collected up to 70 days worth of data from each woman and asked them quite many questions. Even if the results wouldn’t always be diagnostic (there may well be cycles changes that are missed), we could at least show that. After all, many women have theories about how they personally change over the cycle.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Most women do not explicitly track or notice ovulation.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> So, for most it is easier to notice menstrual changes rather than ovulatory changes. Our feedback might actually uncover something about them that they did not already know better themselves. I would not say this about most personality feedback based on self-report.</p>
+<h2 id="decisions">Decisions</h2>
+<p>When designing feedback plots that will be generated live without a human in the loop, you have to make many decisions.</p>
+<ol type="1">
+<li>Do you require a minimum of data?</li>
+<li>(How) do you display uncertainty?</li>
+<li>Do you show the raw data?</li>
+<li>Which outcomes are interesting?</li>
+</ol>
+<p>We pretty much free-styled these decisions. Given that my collaborators in Göttingen might run such studies again, I thought I’d show what we did and ask for reader input. We didn’t require a minimum of data, but we showed uncertainty and raw data instead. I’ve gotten the feedback from my collaborators at Clue that they would not show their users such complex plots though, so I’m very interested in simplifying them or the messages they contain.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-2"></span>
+<img src="intra-individual-feedback_files/figure-html5/unnamed-chunk-2-1.png" alt="An example feedback plot. On the X axis you see the days until the next menstruation. On the Y axis, you see the outcome (here, high sex drive). The line is a locally weighted regression smooth with a 95% confidence interval." width="960" />
+<p class="caption">
+Figure 1: An example feedback plot. On the X axis you see the days until the next menstruation. On the Y axis, you see the outcome (here, high sex drive). The line is a locally weighted regression smooth with a 95% confidence interval.
+</p>
+</div>
+</div>
+<h2 id="planned-revisions">Planned revisions</h2>
+<p>Of course, for many women the answers from the plots were pretty equivocal, like this plot.</p>
+<ol type="1">
+<li>I should not have used LOESS, but a GAM with a cyclic spline <code>s(menstrual_onset_days_until, bs = &quot;cc&quot;)</code>, given that it is, you know, a <em>cycle</em>. I did not know that then. Thanks to <a href="https://twitter.com/MikeLwrnc">Mike Lawrence</a> for pointing this out in response to our first study’s graphs.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="intra-individual-feedback_files/figure-html5/unnamed-chunk-3-1.png" alt="The same graph as above with cyclic splines." width="960" />
+<p class="caption">
+Figure 2: The same graph as above with cyclic splines.
+</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>I should have included menstruation dates from our screening and follow-up surveys, not just the diary. I forgot or didn’t get the code working in time. This meant that some days on either side of the diary could not be included. Doing this for this participant, we get 20 days more and a clearer pattern.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-5"></span>
+<img src="intra-individual-feedback_files/figure-html5/unnamed-chunk-5-1.png" alt="The same graph as above with all days included." width="960" />
+<p class="caption">
+Figure 3: The same graph as above with all days included.
+</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>I’m not happy about how we showed the fertile window. In our research work, we use a continuous measure of conception risk and of course we cannot be sure that we estimate the day of ovulation precisely with counting data. So, our precise fertile window above actually went against our own philosophy of showing uncertainty.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-6"></span>
+<img src="intra-individual-feedback_files/figure-html5/unnamed-chunk-6-1.png" alt="The same graph as above with a more continuous fertile window." width="960" />
+<p class="caption">
+Figure 4: The same graph as above with a more continuous fertile window.
+</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Lastly, showing an intra-individual plot is great, but in the end, we are giving particpants something they could have found for themselves by tracking their cycle and psychological changes. And it is simply interesting to compare yourself to others.</li>
+</ol>
+<p>To this end, it would have been cool to show norm data as well. We did not have such data yet because the feedback was generated live, while the study was running. Now, I can add data for other women as well. I’ll show the code for the “final” plot function here.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<pre class="r"><code>
+diary_comparable &lt;- diary %&gt;% 
+  group_by(session, cycle_nr) %&gt;% 
+  filter(!is.na(prc_stirn_b), 
+         hetero_relationship == 1,
+         RCD &gt; -30, reasons_for_exclusion == &quot;&quot;,
+         between(cycle_length, 27, 30))
+
+plot_menstruation = function(data, y, ylab, ylim = c(0, 4)) {
+  if (!is.null(ylim)) {
+    ymax = ylim[2]; ymin = ylim[1]
+  } else {
+    ymax = max(data %&gt;% select_(y), na.rm = T)
+    ymin = min(data %&gt;% select_(y), na.rm = T)
+  }
+  alphas &lt;- s3_daily %&gt;% 
+    ungroup() %&gt;% 
+    select(menstrual_onset_days_until, prc_stirn_b) %&gt;% 
+    distinct() %&gt;% 
+    filter(prc_stirn_b &gt; 0.1) %&gt;% 
+    deframe()
+
+  rects &lt;- alphas %&gt;% 
+    imap(~ annotate(&#39;rect&#39;, 
+                    xmin = as.numeric(.y), xmax = as.numeric(.y) + 1, 
+                    ymin = ymin, ymax = ymax + 1, 
+                    fill = &#39;#37af9bAA&#39;, color = NA, alpha = .x))
+  
+  ggplot(data, aes_string(x = &quot;menstrual_onset_days_until&quot;, y = y)) +
+    rects +
+    annotate(&#39;rect&#39;, xmin = -6, xmax = 0, 
+             ymin = ymin, ymax = ymax + 1, fill = &#39;#ed9383AA&#39;, color = NA) +
+    annotate(&#39;text&#39;, label = &#39;fertile\nwindow&#39;, x = -19.5, 
+             y = ymax, size = 4, hjust = 0) +
+    annotate(&#39;text&#39;, label = &#39;premenstrual\nphase&#39;, x = -5.5, 
+             y = ymax, size = 4, hjust = 0) +
+    geom_jitter(aes_string(shape = &quot;menstruation_labelled&quot;, 
+                           color = &quot;menstruation_labelled&quot;), size = 1.5) +
+    scale_color_manual(&quot;Menstruation&quot;, 
+                       values = c(&quot;no&quot; = &quot;black&quot;, &quot;probably&quot; = &quot;#b86147&quot;, 
+                                  &quot;yes&quot; = &quot;#cf6030&quot;)) +
+    scale_shape_manual(&quot;Menstruation&quot;, 
+                       values = c(&quot;no&quot; = 16, &quot;probably&quot; = 17, &quot;yes&quot; = 17)) +
+    geom_smooth(aes(group = 3), data = diary_comparable %&gt;% 
+                  filter(hormonal_contraception == &quot;FALSE&quot;), 
+                method = &quot;gam&quot;, formula = y ~ s(x, bs = &#39;cc&#39;), 
+                color = &quot;red&quot;, fill = &quot;red&quot;, alpha = 0.1) +
+    geom_smooth(aes(group = 2), data = diary_comparable %&gt;% 
+                  filter(estrogen_progestogen == &quot;progestogen_and_estrogen&quot;), 
+                method = &quot;gam&quot;, formula = y ~ s(x, bs = &#39;cc&#39;), 
+                color = &quot;black&quot;, fill = &quot;black&quot;, alpha = 0.1) +
+    geom_smooth(aes(group = 1), 
+                method = &quot;gam&quot;, formula = y ~ s(x, bs = &#39;cc&#39;), 
+                color = &quot;#ee00ee&quot;, fill = &quot;#ee00ee&quot;, alpha = 0.1) +
+    ylab(ylab) + 
+    xlab(&quot;Days until next menstruation&quot;) +
+    theme(legend.title = element_text(size = 10), 
+          legend.text = element_text(size = 8)) +
+    coord_cartesian(ylim = ylim)
+}
+plot_menstruation(s3_daily, &quot;high_libido&quot;, &quot;High sex drive&quot;)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-7"></span>
+<img src="intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png" alt="The same graph as above with the average curves. The black curve shows women who use combined hormonal contraceptives. The red curve shows women who don't use hormonal contraception." width="960" data-radix-preview=1 />
+<p class="caption">
+Figure 5: The same graph as above with the average curves. The black curve shows women who use combined hormonal contraceptives. The red curve shows women who don’t use hormonal contraception.
+</p>
+</div>
+</div>
+<p>As you can see, this woman, whether by chance or because of meaningful individual differences<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>, seems to show a larger-than-average increase in libido in the fertile window.</p>
+<h2 id="summary">Summary</h2>
+<p>The last graph does a better job than the original. It shows the uncertainty for the participant (including the fertile window estimate), includes more of their data, uses cyclic splines, and shows the normative pattern.</p>
+<p>I’m sure it could still be improved. For example, the splines for the rest of the sample ignore the multilevel structure of the data. I have fit models with <code>brms</code> that could do a better job of this, but I’ll save those for another day. Do you have any other suggestions?</p>
+<h2 id="more-feedback">More feedback</h2>
+<p>I didn’t want to bore my audience too much, but if anyone is curious and doesn’t mind reading German, I uploaded an example of a <a href="example.html">full feedback</a> for this participant. It includes personality feedback, notes on how to interpret the cycle graphs, and several interactive graphs (on time use on weekends versus weekdays, and on mood across the period of the entire diary). You can find the <a href="example.Rmd">code here</a>. I did not share the data to protect participant privacy, but it may still be useful if you want to make your own feedback plots.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Ok, we didn’t randomise this, so I don’t actually know whether it wasn’t something else - we really went all-in on recruiting too.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>We asked about these theories after the diary concluded, but that is a story for another day.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>With the exception of the large minority, ca. 30%, of women who experience mittelschmerz, or ovulation pain.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>You can find the intermediate steps on Github.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>I plan to rigorously test such questions soon.<a href="#fnref5" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
