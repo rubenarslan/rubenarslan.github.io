@@ -8,6 +8,9 @@ author:
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 date: 10-26-2018
+categories: 
+  - mistakes
+  - bug bounty
 output:
   radix::radix_article:
     self_contained: false

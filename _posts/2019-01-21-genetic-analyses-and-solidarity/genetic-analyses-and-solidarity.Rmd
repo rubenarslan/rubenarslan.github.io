@@ -12,6 +12,9 @@ author:
   - name: "Philipp Köllinger"
     affiliation: "Free University Amsterdam (VU), German Institute for Economic Research (DIW Berlin)" 
 date: 01-21-2019
+categories: 
+  - commentary
+  - genetics
 output:
   radix::radix_article:
     self_contained: false

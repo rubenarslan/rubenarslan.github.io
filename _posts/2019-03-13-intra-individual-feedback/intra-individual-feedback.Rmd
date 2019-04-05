@@ -8,6 +8,11 @@ author:
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 date: 03-19-2019
+categories: 
+  - sex diary
+  - open science
+  - feedback
+  - visualization
 output:
   radix::radix_article:
     self_contained: false

@@ -8,6 +8,10 @@ author:
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 date: 03-13-2019
+categories: 
+  - simulation
+  - data-generating model
+  - brms
 output:
   radix::radix_article:
     self_contained: false
@@ -41,6 +45,7 @@ fam <- tibble(
   father = rnorm(1000),
   divorce = rep(c(0,1), each = 500)
 )
+
 ```
 
 So far, so good. We have a 1000 couples - let's make children. We'll assume all transmission is through parenting, which these hypothetical parents share equally, not genetics. Hence, in two-parent families, they share parenting equally and both have the same influence on their child's trait. 
