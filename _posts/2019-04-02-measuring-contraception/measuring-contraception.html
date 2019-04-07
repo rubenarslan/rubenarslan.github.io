@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="radix" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Measuring contraception</title>
+  
+  <meta property="description" itemprop="description" content="How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness."/>
+  
+  
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2019-04-02"/>
+  <meta property="article:created" itemprop="dateCreated" content="2019-04-02"/>
+  <meta name="article:author" content="Ruben C. Arslan"/>
+  
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Measuring contraception"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness."/>
+  <meta property="og:locale" content="en_US"/>
+  
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Measuring contraception"/>
+  <meta property="twitter:description" content="How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness."/>
+  
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","draft"]}},"value":[{"type":"character","attributes":{},"value":["Measuring contraception"]},{"type":"character","attributes":{},"value":["How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]}]},{"type":"character","attributes":{},"value":["04-02-2019"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"logical","attributes":{},"value":[true]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["measuring-contraception_files/bowser-1.9.3/bowser.min.js","measuring-contraception_files/crosstalk-1.0.0/css/crosstalk.css","measuring-contraception_files/crosstalk-1.0.0/js/crosstalk.js","measuring-contraception_files/crosstalk-1.0.0/js/crosstalk.js.map","measuring-contraception_files/crosstalk-1.0.0/js/crosstalk.min.js","measuring-contraception_files/crosstalk-1.0.0/js/crosstalk.min.js.map","measuring-contraception_files/datatables-binding-0.5/datatables.js","measuring-contraception_files/datatables-css-0.0.0/datatables-crosstalk.css","measuring-contraception_files/distill-2.2.21/template.v2.js","measuring-contraception_files/dt-core-1.10.16/css/jquery.dataTables.extra.css","measuring-contraception_files/dt-core-1.10.16/css/jquery.dataTables.min.css","measuring-contraception_files/dt-core-1.10.16/js/jquery.dataTables.min.js","measuring-contraception_files/dt-ext-buttons-1.10.16/css/buttons.dataTables.min.css","measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.colVis.min.js","measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.flash.min.js","measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.html5.min.js","measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.print.min.js","measuring-contraception_files/dt-ext-buttons-1.10.16/js/dataTables.buttons.min.js","measuring-contraception_files/figure-html5/unnamed-chunk-10-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-11-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-12-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-12-2.png","measuring-contraception_files/figure-html5/unnamed-chunk-13-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-14-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-15-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-2-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-2-2.png","measuring-contraception_files/figure-html5/unnamed-chunk-3-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-4-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-5-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-6-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-7-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-8-1.png","measuring-contraception_files/figure-html5/unnamed-chunk-9-1.png","measuring-contraception_files/htmlwidgets-1.3/htmlwidgets.js","measuring-contraception_files/jquery-1.12.4/jquery.min.js","measuring-contraception_files/jquery-1.12.4/LICENSE.txt","measuring-contraception_files/jszip-1.10.16/jszip.min.js","measuring-contraception_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+  
+  <style type="text/css">
+  
+  body {
+    background-color: white;
+  }
+  
+  .pandoc-table {
+    width: 100%;
+  }
+  
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+  
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+  
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+  
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+  
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+  
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+  
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .shaded-content {
+    background: white;
+  }
+  
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  d-article {
+    padding-bottom: 30px;
+  }
+  
+  d-appendix {
+    padding-top: 30px;
+  }
+  
+  d-article>p>img {
+    width: 100%;
+  }
+  
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+  
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  /* CSS for table of contents */
+  
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+  
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+  
+  .d-toc a {
+    border-bottom: none;
+  }
+  
+  .d-toc ul {
+    padding-left: 0;
+  }
+  
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+  
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+  
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+  
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+  
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  
+  
+  
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+  
+  d-code {
+    overflow-x: auto !important;
+  }
+  
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+  
+  pre.text-output {
+  
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+  
+  /* Figure */
+  
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+  
+  .figure img {
+    width: 100%;
+  }
+  
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+  
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+  
+  
+  
+  /* Tweak 1000px media break to show more text */
+  
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+  
+    .grid {
+      grid-column-gap: 16px;
+    }
+  
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+  
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+  
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+  
+  
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+  
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  
+  /* Social footer */
+  
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+  
+  .disqus-comments {
+    margin-right: 30px;
+  }
+  
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+  
+  #disqus_thread {
+    margin-top: 30px;
+  }
+  
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+  
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+  
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+  
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+  
+  
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+  
+  
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+  
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+  
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+  
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+  
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+  
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  
+  
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+  
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+  
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+  
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  </style>
+  
+  <script type="application/javascript">
+  
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+  
+  // show body when load is complete
+  function on_load_complete() {
+  
+    // set body to visible
+    document.body.style.visibility = 'visible';
+  
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+  
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+  
+  function init_distill() {
+  
+    init_common();
+  
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+  
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+  
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+  
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+  
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+  
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+  
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+  
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+  
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+  
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+  
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+  
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+  
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+  
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+  
+      // capture layout
+      var layout = $(this).attr('data-layout');
+  
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+  
+  
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+  
+    // load distill framework
+    load_distill_framework();
+  
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+  
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+  
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+  
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+  
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+  
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+  
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+  
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+  
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+  
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+  
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+  
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+  
+      // clear polling timer
+      clearInterval(tid);
+  
+      // show body now that everything is ready
+      on_load_complete();
+    }
+  
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+  
+  }
+  
+  function init_downlevel() {
+  
+    init_common();
+  
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+  
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+  
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+  
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+  
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+  
+  
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+  
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+  
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+  
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+  
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+  
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+  
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+  
+    $('body').addClass('downlevel');
+  
+    on_load_complete();
+  }
+  
+  
+  function init_common() {
+  
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+  
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+  
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+  
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+  
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+  
+      }
+    });
+  
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+  
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.radix-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+  
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+  
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+  
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+  
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+  
+  </script>
+  
+  <!--/radix_placeholder_distill-->
+  <script src="measuring-contraception_files/htmlwidgets-1.3/htmlwidgets.js"></script>
+  <script src="measuring-contraception_files/jquery-1.12.4/jquery.min.js"></script>
+  <link href="measuring-contraception_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+  <script src="measuring-contraception_files/datatables-binding-0.5/datatables.js"></script>
+  <link href="measuring-contraception_files/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link href="measuring-contraception_files/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+  <script src="measuring-contraception_files/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="measuring-contraception_files/jszip-1.10.16/jszip.min.js"></script>
+  <link href="measuring-contraception_files/dt-ext-buttons-1.10.16/css/buttons.dataTables.min.css" rel="stylesheet" />
+  <script src="measuring-contraception_files/dt-ext-buttons-1.10.16/js/dataTables.buttons.min.js"></script>
+  <script src="measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.flash.min.js"></script>
+  <script src="measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.html5.min.js"></script>
+  <script src="measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.colVis.min.js"></script>
+  <script src="measuring-contraception_files/dt-ext-buttons-1.10.16/js/buttons.print.min.js"></script>
+  <link href="measuring-contraception_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+  <script src="measuring-contraception_files/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+  <script src="measuring-contraception_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="measuring-contraception_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="measuring-contraception_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Measuring contraception","description":"How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin","affiliationURL":"https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"}],"publishedDate":"2019-04-02T00:00:00.000+02:00","citationText":"Arslan, 2019"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Measuring contraception</h1>
+<p>How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness.</p>
+</div>
+
+<div class="d-byline">
+  Ruben C. Arslan <a href="https://rubenarslan.github.io" class="uri">https://rubenarslan.github.io</a> (Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin)<a href="https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan" class="uri">https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan</a>
+  
+<br/>04-02-2019
+</div>
+
+<div class="d-article">
+<p>In our sex diary study, one of the most important components was our contraception questionnaire. Surprisingly, to us, we did not find a good, open standard questionnaire for this that fit our needs.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> We needed something that would measure</p>
+<ul>
+<li>not only the main, but all methods of contraception</li>
+<li>fertility awareness<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> independently of whether it was used for contraceptive purposes, i.e. including apps like <a href="https://helloclue.com/">Clue</a></li>
+<li>the reasons why people mix contraceptive methods</li>
+<li>the exact contraceptive pill, intra-uterine device, ring, patch etc.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></li>
+<li>what fertility-awareness method users do when fertile</li>
+<li>all potential contraceptive methods that we could imagine</li>
+</ul>
+<p>Today, I want to show the questions we chose and share the questionnaire. We’re definitely still in the market for improvements. At the same time, I want to encourage others to more fully report contraception information in their menstrual cycle studies. When you are reporting effects on sexual desire or activity, we need to know more than that participants were not on the pill and not pregnant. I’ll try to show why in the coming blog posts.</p>
+<details>
+<p><summary>Translation details</summary></p>
+<p>To be able to show the descriptive graphs below, I first got the questions translated.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+</details>
+<h2 id="contraception-or-not">Contraception or not?</h2>
+<p>We began by asking whether women used contraception at all. This time, we only asked women who were not pregnant. Next time, we plan to ask all women about contraception because even pregnant women could e.g. use condoms to prevent sexually transmitted infections, urinary tract infections. However, so that it does not like a lack of forethought, we should probably optionally display some explanation to this effect for e.g. menopausal and pregnant women, because some women found it odd to be asked these questions. In this study, we gave women a free text field to write in if they wanted to specify other reasons why they didn’t use contraception.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:unnamed-chunk-2"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-2-1.png" alt="Pregnant women were excluded from the contraception questionnaire." width="624" />
+<p class="caption">
+Figure 1: Pregnant women were excluded from the contraception questionnaire.
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-3-1.png" alt="Different degrees of using contraception" width="624" />
+<p class="caption">
+Figure 2: Different degrees of using contraception
+</p>
+</div>
+</div>
+<h2 id="methods">Methods</h2>
+<p>Next, we asked all women who used contraception, which methods they used. Multiple methods could be checked. As you can see, condoms and the the pill were the two most common methods. A lot of women also used both. Next, you might be surprised at the number of women who report using <em>coitus interruptus</em> (in the lower left graph), the pull-out method. However, more women combined this with condoms or a fertility awareness method than used only <em>coitus interruptus</em>. Next were intra-uterine devices and hormonal contraceptives other than the pill. We will look at these in detail next.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-4"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-4-1.png" alt="Methods of contraception and how they are combined" width="960" />
+<p class="caption">
+Figure 3: Methods of contraception and how they are combined
+</p>
+</div>
+</div>
+<p>As you can see, the non-pill hormonal methods were mainly NuvaRing (a combined contraceptive) and Mirena (a progestogen-only contraceptive).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:unnamed-chunk-5"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-5-1.png" alt="Other hormonal contraceptives" width="624" />
+<p class="caption">
+Figure 4: Other hormonal contraceptives
+</p>
+</div>
+</div>
+<h2 id="combining-methods">Combining methods</h2>
+<p>Above, we saw that many women combine multiple contraceptives. We had a list of reasons that we considered likely, but many women also gave reasons we hadn’t included.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-6"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-6-1.png" alt="Why combine several contraceptives?" width="960" />
+<p class="caption">
+Figure 5: Why combine several contraceptives?
+</p>
+</div>
+</div>
+<p>The most common reason was as a fallback method during fertile days (i.e., for women using fertility awareness methods). Many used condoms in addition to the pill to also prevent STDs, but many also used the pill and condoms to decrease conception risk even further. Fallback methods were also common (e.g. condoms as a fallback to the pill, or pull-out as a fallback to condoms). A substantial number of women also used different methods for different partners, and a small minority also said they used condoms when their partner has a cold.</p>
+<p>From the reasons we hadn’t included in our list, we should include at least the following in the future:</p>
+<ul>
+<li>fallback in case the pill might not have worked (e.g., stomach flu, throwing up, travel, medication)</li>
+<li>pill against acne/hypermenorrhoe/menstrual pain/other reasons, another method for contraception</li>
+<li>condoms for hygienic reasons</li>
+<li>condoms to avoid urinary tract infections</li>
+<li>according to mood</li>
+</ul>
+<h3 id="fertility-awareness">Fertility awareness</h3>
+<p>A special case of combining contraceptive methods are the fertility awareness methods. How many of our participants are sexually abstinent during the fertile phase, how many switch to other methods? As you can see, most switch to other methods. Total sexual abstinence is rare, although quite a few report having penetrative sex less often, or not at all.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-7"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-7-1.png" alt="What do fertility awareness method users do during their fertile phase?" width="960" />
+<p class="caption">
+Figure 6: What do fertility awareness method users do during their fertile phase?
+</p>
+</div>
+</div>
+<details>
+<p><summary>Methods and reasons for combining methods in two big graphs</summary></p>
+<p>We can of course also merge the reasons for combining contraceptives with the contraceptive information itself.</p>
+<div class="layout-chunk" data-layout="l-screen-inset">
+<div class="figure"><span id="fig:unnamed-chunk-8"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-8-1.png" alt="Which contraceptives are combined for which reasons?" width="1440" />
+<p class="caption">
+Figure 7: Which contraceptives are combined for which reasons?
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-screen-inset">
+<div class="figure"><span id="fig:unnamed-chunk-9"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-9-1.png" alt="Which contraceptive method do fertility awareness method users switch to during their fertile phase?" width="1440" />
+<p class="caption">
+Figure 8: Which contraceptive method do fertility awareness method users switch to during their fertile phase?
+</p>
+</div>
+</div>
+</details>
+<h2 id="the-pill">The pill</h2>
+<p>To help our participants identify their pill, we used a searchable drop-down that showed the brand name of the pill together with a picture of the packaging. Most women found their pill in our list; the others were asked to enter name and details (gestagen type and amount, estrogen amount) into text fields.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:unnamed-chunk-10"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-10-1.png" alt="Common oral contraceptive pills. Only those used by at least 10 women shown." width="624" />
+<p class="caption">
+Figure 9: Common oral contraceptive pills. Only those used by at least 10 women shown.
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:unnamed-chunk-11"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-11-1.png" alt="Micrograms of estrogen in a pill (unified to average content over 21 days, without pill break)" width="624" />
+<p class="caption">
+Figure 10: Micrograms of estrogen in a pill (unified to average content over 21 days, without pill break)
+</p>
+</div>
+</div>
+<h2 id="awareness">Awareness</h2>
+<p>Quite a few women used some sort of cycle app.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-12-1.png" alt="Cycle apps. Only those used by at least 10 women shown." width="624" />
+<p class="caption">
+Figure 11: Cycle apps. Only those used by at least 10 women shown.
+</p>
+</div>
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-12-2.png" alt="Cycle apps. Only those used by at least 10 women shown." width="624" />
+<p class="caption">
+Figure 11: Cycle apps. Only those used by at least 10 women shown.
+</p>
+</div>
+</div>
+<p>Some of these are just pill reminders, whereas others really lead to fertility awareness.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="measuring-contraception_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+</div>
+<p>We are really glad we asked about apps. As you can see below, the vast majority of cycle awareness app users do not use them as a primary method of contraception; most use condoms and IUDs.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-14"></span>
+<img src="measuring-contraception_files/figure-html5/unnamed-chunk-14-1.png" alt="Cycle awareness app users' contraceptive methods." width="960" />
+<p class="caption">
+Figure 12: Cycle awareness app users’ contraceptive methods.
+</p>
+</div>
+</div>
+<h2 id="estrogen-and-progestogen">Estrogen and progestogen</h2>
+<p>As you could see above, our participants used a wide variety of contraceptives. Among them were quite a few progestogen-only contraceptives (hormonal IUDs, such as Mirena, patches and depots, and of course various mini-pills, such as Jaydess, Cyprella, Desirett, Cerazette, etc.). When we add all this together, we see that a substantial minority uses progestogen-only contraceptives.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="measuring-contraception_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<h2 id="summary">Summary</h2>
+<p>So, these were the main questions from our questionnaire. I didn’t get into how we combined this with questions about the period (menarche/menoapuse, regularity, cycle length, etc.), family planning, and so on. What questions are others asking? What can we improve in the next study?</p>
+<p>I added the entire list of questions, including skipping logic (which takes some forethought) below. You can export these to Excel and use them directly in <a href="https://formr.org">formr.org</a>.</p>
+<h2 id="our-questions">Our questions</h2>
+<div class="layout-chunk" data-layout="l-screen-inset">
+<p><div id="htmlwidget-9922245e03ba95c52f91" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9922245e03ba95c52f91">{"x":{"filter":"none","extensions":["Buttons"],"caption":"<caption>Table 1. Survey sheet<\/caption>","data":[["mc_button yes_no","mc_button yes_no","submit","note","rating_button 1,6,1","rating_button 1,6,1","mc wish_for_children","note","mc contraception_at_all","textarea","mc_multiple contraception_method","text","mc_multiple contraception_combi","textarea","mc_multiple behavior_in_fertile_window","select_one pills","text","mc hormonal_other","text","number 0,100,1","mc gestagens","number 0,4000,1","number 0,100,1","mc gestagens","number 0,4000,1","mc_button yes_no","text","mc_button yes_no","mc_button yes_no","submit"],["pregnant","breast_feeding","submit_2","instr_family_planning","pregnant_stress","pregnant_trying","wish_for_children","instr_verhuetung","contraception_at_all","contraception_other_reasons_not_to","contraception_method","contraception_method_other","contraception_combi","contraception_method_combination_other","contraception_calendar_abstinence","contraception_hormonal_pill","other_pill_name","contraception_hormonal_other","contraception_hormonal_other_name","contraception_pill_estrogen","contraception_pill_gestagen_type","contraception_pill_gestagen","contraception_other_estrogen","contraception_other_gestagen_type","contraception_other_gestagen","contraception_app","contraception_app_name","hormonal_contraception_last3m","contraception_meeting_partner","end_family_planning"],["","","","","pregnant == 0","pregnant == 0","pregnant_trying &lt; 4","","","contraception_at_all == 6","contraception_at_all &lt; 4","contraception_method %contains% 'not_listed'","contraception_method %contains% \",\"","contraception_combi %contains% \"other\"","contraception_method %contains% \"awareness\"","contraception_method %contains% 'hormonal_pill'","contraception_hormonal_pill == 'other'","contraception_method %contains% 'hormonal_other'","contraception_hormonal_other == 'other'","contraception_hormonal_pill == 'other'","contraception_hormonal_pill == 'other'","contraception_hormonal_pill == 'other'","contraception_hormonal_pill == 'other'","contraception_hormonal_pill == 'other'","contraception_hormonal_pill == 'other'","","contraception_app == 1","","relationship_status &gt; 1",""],["","","","","","","","","","","!","","!","","!","","","","","","","","","","","","","","",""],["Sind Sie aktuell schwanger oder waren Sie es in den letzten drei Monaten?","Stillen Sie aktuell oder haben Sie in den letzten drei Monaten gestillt?","Weiter!","Nachdem wir Ihnen ein paar Fragen zu Ihrer bisherigen sozialen Situation gestellt haben, haben wir nun ein paar Fragen zu Ihrer Familienplanung","Wenn Sie heute erfahren würden, dass Sie schwanger sind, fänden Sie das...","Versuchen Sie derzeit schwanger zu werden?","Warum nicht?","Im Folgenden möchten wir Sie nach einigen Details zu Ihrer Verhütungsmethode fragen.","Verhüten Sie üblicherweise, wenn Sie Sex haben (Pille, Kondom, Kalendermethode, coitus interruptus, etc.) ?","Hier können Sie andere Gründe, die in unser Fragebogenformat nicht gut passen, angeben","Wie verhüten Sie zur Zeit üblicherweise?\n\nSie können mehrere Methoden angeben.","Welche andere, nicht in der Liste vorkommende, Methode benutzen Sie?","Sie haben angegeben, mehrere Verhütungsmethoden zu kombinieren. Aus welchem Grund, oder welchen Gründen tun Sie das?","anderer Grund:","Sie haben angegeben, dass Sie mit einer Methode verhüten, bei der Sie Ihr fertiles Fenster abpassen. Wie verhalten Sie sich normalerweise während des fertilen Fenster?","Wie heißt Ihre Anti-Baby-Pille?\n\nFalls Sie ein &lt;abbr title=\"Eine wirkstoffgleiche Kopie, Nachahmerpräparat, bspw. Dienovel=Valette\" class=\"hastooltip\"&gt;Generikum&lt;/abbr&gt; nehmen und es in dieser Liste fehlt, können Sie gerne den Markennamen angeben.","Sie haben angegeben, dass Ihre Pille in der Liste nicht vorkommt. Bitte nennen Sie hier den Namen Ihrer Pille.","Welches hormonelle Verhütungsmittel verwenden Sie?","Sie haben angegeben, dass Ihr Verhütungsmittel in der Liste nicht vorkommt. Bitte nennen Sie hier den Namen Ihres Verhütungsmittels.","Bitte lesen Sie in der Packungsbeilage Ihrer Pille nach, wieviel Mikrogramm (*µ*g) Östrogen Ihre Pille enthält. Die meisten Pillen enthalten zwischen 0 und 50 Mikrogramm Östrogen. Manchmal wird die Gewichtsangabe auch in Milligramm (mg) gemacht. Diese Zahl müssen Sie dann mit 1000 multiplizieren, um Mikrogramm (*µ*g)  zu erhalten.","Bitte lesen Sie in der Packungsbeilage Ihrer Pille nach, welcher Typ Gestagen verwendet wird.","Bitte lesen Sie in der Packungsbeilage Ihrer Pille nach, wieviel Mikrogramm (*µ*g) des jeweiligen Gestagens Ihre Pille enthält. Die meisten Pillen enthalten zwischen 50 und 3000 Mikrogramm Gestagen. Häufig wird die Gewichtsangabe auch in Milligramm (mg) gemacht. Diese Zahl müssen Sie dann mit 1000 multiplizieren, um Mikrogramm (*µ*g)  zu erhalten.","Bitte lesen Sie in der Packungsbeilage Ihres Verhütungsmittels nach, wieviel Mikrogramm (*µ*g) Östrogen Ihr Verhütungsmittel enthält. Die meisten Verhütungsmittel enthalten zwischen 0 und 50 Mikrogramm Östrogen. Manchmal wird die Gewichtsangabe auch in Milligramm (mg) gemacht. Diese Zahl müssen Sie dann mit 1000 multiplizieren, um Mikrogramm (*µ*g)  zu erhalten.","Bitte lesen Sie in der Packungsbeilage Ihres Verhütungsmittels nach, welcher Typ Gestagen verwendet wird.","Bitte lesen Sie in der Packungsbeilage Ihres Verhütungsmittels nach, wieviel Mikrogramm (*µ*g) des jeweiligen Gestagens Ihr Verhütungsmittel enthält. Die meisten Verhütungsmittel enthalten zwischen 50 und 3000 Mikrogramm Gestagen. Häufig wird die Gewichtsangabe auch in Milligramm (mg) gemacht. Diese Zahl müssen Sie dann mit 1000 multiplizieren, um Mikrogramm (*µ*g)  zu erhalten.","Benutzen Sie eine Zyklus-App?","Wie heißt diese App?","Haben Sie in den letzten drei Monaten hormonell verhütet?","Haben Sie hormonell verhütet (z.B. Pille), als Sie Ihren Partner kennengelernt haben?","Weiter"],["Are you pregnant or have been in the last three months?","Are you currently breastfeeding or have you breastfed in the last three months?\n","Continue!","After having asked you a few questions about your social life, we would now like to ask you a few questions concerning your family planning.","If you were to find out today that you are pregnant that would be...","Are you currently trying to fall pregnant?\n","Why not?","Subsequently we would like to ask you about details concerning your method of contraception.","Do you generally use contraception (e.g. the pill, condoms, rhythm method, pull-out method, etc.) when having sex?","You can state other reasons here.","What kind of contraception are you currently using? You can name more than one method of contraception.","Which other method, that is not listed here, do you use?","You have stated that you combine different contraceptives. What is your reason or are your reasons for doing so?","Other reason:","You have stated that you use a form of contraception in which you determine your fertile window. How do you normally behave when in your fertile window?","What is the name of your contraceptive pill?  In case you are taking a \"Replica with the identical active substances, generic drug...\" and it's missing in our list, you are welcome to state the trademark here.","You have stated that your pill isn't on this list. Please state the name of your pill here.","What hormonal contraceptive do you use?","You have stated that your hormonal contraceptive isn't on this list. Please state the name of your hormonal contraceptive here.","Please look up how many mircograms (*µ*g) of oestrogen your pill contains by reading the package insert of your contraceptive pill. Most contraceptive pills contain between 0 and 50 micrograms of oestrogen. In some instances the weight indication is made in milligrams (mg). You have to multiply this number by 1000 in order to recieve the weight indication in micrograms (*µ*g).","Please look up what type of gestagen is used in your contraceptive pill by reading the package insert.","Please look up how many mircograms (*µ*g) of gestagen your pill contains by reading the package insert of your contraceptive pill. Most contraceptive pills contain between 50 and 3000 micrograms of oestrogen. In some instances the weight indication is made in milligrams (mg). You have to multiply this number by 1000 in order to recieve the weight indication in micrograms (*µ*g).","Please look up how many mircograms (*µ*g) of oestrogen your contraceptive contains by reading the package insert of your contraceptive. Most contraceptives contain between 0 and 50 micrograms of oestrogen. In some instances the weight indication is made in milligrams (mg). You have to multiply this number by 1000 in order to recieve the weight indication in micrograms (*µ*g).","Please look up what type of gestagen is used in your contraceptive by reading the package insert.","Please look up how many mircograms (*µ*g) of gestagen your contraceptive contains by reading the package insert of your contraceptive. Most contraceptives contain between 50 and 3000 micrograms of gestagen. In some instances the weight indication is made in milligrams (mg). You have to multiply this number by 1000 in order to recieve the weight indication in micrograms (*µ*g).","Do you use a cycle-app?","What is this app called?","Have you used hormonal contraception in the last three months?","Where you using hormonal contraception (e.g. contraceptive pill) when you met your partner?","Continue"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>type<\/th>\n      <th>name<\/th>\n      <th>showif<\/th>\n      <th>optional<\/th>\n      <th>label<\/th>\n      <th>label_en<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["copy","csv","excel"],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div id="htmlwidget-7280e32da7140584e7eb" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7280e32da7140584e7eb">{"x":{"filter":"none","extensions":["Buttons"],"caption":"<caption>Table 2. Choices sheet<\/caption>","data":[["pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","pills","hormonal_other","hormonal_other","hormonal_other","hormonal_other","hormonal_other","hormonal_other","hormonal_other","hormonal_other","gestagens","gestagens","gestagens","gestagens","gestagens","gestagens","gestagens","gestagens","gestagens","gestagens","gestagens","gestagens","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_method","contraception_combi","contraception_combi","contraception_combi","contraception_combi","contraception_combi","contraception_combi","contraception_combi","education_level","education_level","education_level","education_level","education_level","education_level","education_level","education_level","education_level","education_level","education_level","education_level","education_level","yes_no","yes_no","contraception_at_all","contraception_at_all","contraception_at_all","contraception_at_all","contraception_at_all","contraception_at_all","behavior_in_fertile_window","behavior_in_fertile_window","behavior_in_fertile_window","behavior_in_fertile_window"],["other","28_mini","aida","alessia_hexal","asumate_20","attempta_35","balanca","belara","bellahexal_35","bellissima","bilmon","biviol","bonadea","cerazette","chariva","chloee","cilest","clevia","conceplan_m","cyprella","cyproderm","cypronette_al","damara","daylette","desirett","desmin_20","desmin_30","diamilla","diane_35","enriqa","ergalea","estelle","eufem","evaluna_20","evaluna_30","eve_20","femigoa","femigyne_ratiopharm","femikadin_20","femikadin_30","femovan","finic","gabrielle","gravistat_125","illina","jennifer","jubrele","juliane_20","juliane_30","juliette","lamuna_20","lamuna_30","leios","leonahexal","levina","levomin","liana","lilia","lisette","lovelle","madinette","maitalon_20","maitalon_30","marvelon","maxim","mayra","microgynon","microlut","minette","minisiston","minisiston_20_fem","minulet","miranova","monahexal","monostep","morea_sanol","neo_eunomin","novastep","novial","petibelle","pink_luna","pramino","qlaira","seculact","synphasec","trigoa","trinovum","triquilar","trisiston","valette","vatrice","velafee","verana","yasmin","yasminelle","yaz","zoely","nuvaring","circlet","evra","mirena","depo_provera","depo_clinovir","implanon","other","CMA","CPA","DNG","DSG","DSP","GSD","LYN","LNG","NEA","NES","NGT","other_gestagen","hormonal_pill","hormonal_other","barrier_condoms","barrier_other","barrier_intrauterine_pessar","barrier_coitus_interruptus","barrier_no_penetrative_sex","awareness_calendar","awareness_temperature_billings","awareness_computer","barrier_spermicide","barrier_chemical","hormonal_morning_after_pill","breast_feeding","infertile","partner_infertile","sterilised","partner_sterilised","not_listed","multiple_to_decrease_infection_risk","multiple_to_decrease_conception_risk","fallback_if_forgotten","fallback_if_fertile","barrier_if_partner_sick","different_methods_for_different_partners","other","0_not_finished","1_hauptschule","2_realschule","3_polytechnic","4_professional_school","5_fachabitur","6_abitur","7_vocational_uni_bachelor","8_uni_bachelor","9_vocational_uni_master_level","10_uni_master_level","11_uni_doctorate","12_uni_habilitation","0","1","1","2","3","4","5","6","1","2","3","4"],["Meine Pille kommt in dieser Liste nicht vor.","28 mini ","Aida","Alessia HEXAL","Asumate 20","Attempta ratiopharm-35","Balanca","Belara","BellaHexal-35","Bellissima","Bilmon","Biviol","BonaDea","Cerazette ","Chariva","Chloee","Cilest","Clevia","Conceplan M","Cyprella ","Cyproderm","Cypronette AL","Damara ","Daylette","Desirett","Desmin  20","Desmin  30","Diamilla","Diane-35","Enriqa","Ergalea","Estelle","eufem","Evaluna 20","Evaluna 30","EVE 20","Femigoa","Femigyne-ratiopharm","Femikadin 20","Femikadin 30","Femovan","Finic","Gabrielle","Gravistat 125","Illina","Jennifer","Jubrele ","Juliane 20","Juliane 30","Juliette","Lamuna20","Lamuna30","Leios","LeonaHexal","Levina","Levomin","Liana","Lilia","Lisette","Lovelle","Madinette","Maitalon 20","Maitalon 30","Marvelon","Maxim","mayra","Microgynon","Microlut ","Minette","Minisiston","Minisiston 20 fem","Minulet","Miranova","MonaHexal","MonoStep","Morea sanol","Neo-Eunomin","NovaStep","Novial","Petibelle","Pink Luna","Pramino","Qlaira","Seculact","Synphasec","Trigoa","TriNovum","Triquilar","Trisiston","Valette","Vatrice","Velafee","Verana","Yasmin","Yasminelle","Yaz","Zoely","NuvaRing","Circlet","Evra","Mirena","Depo Provera","Depo Clinovir","Implanon NXT","Der Name meines Verhütungsmittels kommt in dieser Liste nicht vor.","Chlormadinonacetat","Cyproteronacetat","Dienogest","Desogestrel","Drospirenon","Gestoden","Lynestrenol","Levonorgestrel","Norethisteronacetat","Norethisteron","Norgestimat","Kommt in dieser Liste nicht vor.","Orale Kontrazeptiva (Pille)","andere hormonelle Verhütung (Depotspritze, Hormonimplantat, Verhütungsring, Verhütungspflaster, Hormonspirale)","Kondome","Andere Barrieremethoden (Diaphragma, Frauenkondom, Portiokappe)","Kupferspirale oder -kette (Intrauterinpessar)","Coitus interruptus","Verzicht auf penetrativen Geschlechtsverkehr","Kalendermethode","Temperatur- / Billings- / Symptothermale Methode","Verhütungscomputer (Persona, LadyComp, Cyclotest, …)","Spermizide","Chemische Verhütung","\"\"Pille danach\"\"","Stillen","ich bin unfruchtbar","mein Partner ist unfruchtbar","ich bin sterilisiert","mein Partner ist sterilisiert","Andere","immer mehrere gleichzeitig (Verhütung + sexuelle übertragbare Krankheiten vermeiden)","immer mehrere gleichzeitig (Verhütungssicherheit erhöhen)","falle auf zweite Methode zurück, wenn ich oder mein Partner die erste vergessen habe zu nehmen/ zu kaufen (z.B. Pille + Kondome, oder Kondome + Koitus interruptus)","falle auf zweite Methode zurück, wenn ich fruchtbar bin (z.B. Kalendermethode + Kondome oder Koitus interruptus im fruchtbaren Fenster)","eine Methode zur Verhütung, andere zur Vermeidung von nicht-sexueller Ansteckung (z.B. Pille + Abstinenz, wenn Geschlechtspartner gerade erkältet)","eine Methode für bestimmte Partner, andere Methode für andere Partner (z.B. Pille bei Sex mit gut bekannter/vertrauter Person, Kondome bei Sex mit weniger gut bekannter Person)","anderer Grund","ohne Schulabschluss","Hauptschulabschluss","Realschulabschluss","Abschluss der polytechnischen Oberschule","Berufsschulabschluss","Fachhochschulreife","Hochschulreife","Fachhochschulabschluss Bachelor","Hochschulabschluss Bachelor","Fachhochschulabschluss Master/Magister/Diplom","Hochschulabschluss Master/Magister/Diplom","Promotion","Habilitation","Nein","Ja","ja","meistens","ja, aber ich lasse es auch etwas \"\"drauf ankommen\"\"","nein, ich lasse es \"\"drauf ankommen\"\"","nein, ich habe zur Zeit gar keinen Sex","nein, andere Gründe","Ich habe keinen sexuellen Kontakt (Abstinenz).","Ich habe nicht-penetrativen sexuellen Kontakt.","Ich habe weniger Sex.","Ich benutze eine andere Verhütungsmethode (oben angegeben)."],["My pill is not in the list.","28 mini ","Aida","Alessia HEXAL","Asumate 20","Attempta ratiopharm-35","Balanca","Belara","BellaHexal-35","Bellissima","Bilmon","Biviol","BonaDea","Cerazette ","Chariva","Chloee","Cilest","Clevia","Conceplan M","Cyprella ","Cyproderm","Cypronette AL","Damara ","Daylette","Desirett","Desmin  20","Desmin  30","Diamilla","Diane-35","Enriqa","Ergalea","Estelle","eufem","Evaluna 20","Evaluna 30","EVE 20","Femigoa","Femigyne-ratiopharm","Femikadin 20","Femikadin 30","Femovan","Finic","Gabrielle","Gravistat 125","Illina","Jennifer","Jubrele ","Juliane 20","Juliane 30","Juliette","Lamuna20","Lamuna30","Leios","LeonaHexal","Levina","Levomin","Liana","Lilia","Lisette","Lovelle","Madinette","Maitalon 20","Maitalon 30","Marvelon","Maxim","mayra","Microgynon","Microlut ","Minette","Minisiston","Minisiston 20 fem","Minulet","Miranova","MonaHexal","MonoStep","Morea sanol","Neo-Eunomin","NovaStep","Novial","Petibelle","Pink Luna","Pramino","Qlaira","Seculact","Synphasec","Trigoa","TriNovum","Triquilar","Trisiston","Valette","Vatrice","Velafee","Verana","Yasmin","Yasminelle","Yaz","Zoely","NuvaRing","Circlet","Evra","Mirena","Depo Provera","Depo Clinovir","Implanon NXT","My contraceptive is not in this list.","Chlormadinonacetat","Cyproteronacetat","Dienogest","Desogestrel","Drospirenon","Gestoden","Lynestrenol","Levonorgestrel","Norethisteronacetat","Norethisteron","Norgestimat","Not in this list.","Oral contraceptives (pill)","other hormonal contraceptive (depot injections, hormonal implant, vaginal ring, hormone plasters, hormonal intrauterine device)","condoms","Other barrier methods (diaphragm, female condom, cervical cap)","copper spiral or chain (IUD)","coitus interruptus","waive penatrative sexual intercourse\n","calender method","temperature- / Billings ovulation-/ symptothermal method","fertility monitor","spermicide","chemical contraception","morning-after pill","breastfeeding","I am infertile","My partner is infertile","I have been sterilized","My partner has been sterilized","Other","Always more than one (contraception + prevent sexually transmitted diseases)","Always more than one (increase contraception safety)","fall back on second method, if my parter or I forget to take/ buy the first (e.g. pill+condoms, or condoms+coitus interruptus)","fall back on second method, when I am fertile (e.g. calendermethod + condoms or coitus interruptus while in my fertile window)","one method of contraception, others to prevent non-sexual infection (e.g. pill + abstinence, if partner is currently ill)","one method for certain partners, other method for other partners (e.g. pill when having sex with a acquainted/trustworthy person, condoms when having sex with less acquainted/well-known person)","other reason","without a school-leaving qualification","basic school certificate (9 years of schooling)","secondary school certificate (10 years of schooling)","graduation of polytechnical secondary school","vocational qualification","advanced technical college certificate","higher education entrance qualification","polytechnic bachelors degree","bachelors degree","polytechnic master's degree/diploma","master's degree/diploma","Phd/doctoral degree","postdoctoral lecture qualification/habilitation","No","Yes","yes","most of the time","Yes, but I also \"\"take my chances\"\" sometimes.","No, I currently \"\"take my chances\"\".","No, I don't currently have sex at all.","No, I have other reasons.","I don't have sexual contact (abstinence).","I have non-penetrative sexual contact.","I have less sex.","I use a different method of contraception (stated above)."],["","(Jenapharm)","(Jenapharm)","(Hexal)","(Velvian)","(ratiopharm)","(Grünenthal)","(Grünenthal)","(Hexal)","(Rottapharm-M)","(1A Pharma)","(Nourypharma)","(Zentiva)","(MSD Sharp &amp; Dohme)","(Gedeon Richter)","(Winthrop)","(Janssen-Cilag)","(Almirall Hermal)","(Grünenthal)","(Stada)","(Dermapharm)","(Aliut Pharma)","(Madaus)","(Gedeon Richter)","(Velvian)","(Grünenthal)","(Grünenthal)","Actavis","(BayerVital)","(Jenapharm)","(Taurus Pharma)","(Mylan dura )","(Sandoz)","(Madaus)","(Madaus)","(Grünenthal)","(Wyeth)","(ratiopharm)","(Dr. Kade)","(Dr. Kade)","(BayerVital)","(Dr.Kade)","(Mylan dura )","(Jenapharm)","(Sandoz)","(Steiner)","(MSD Sharp &amp; Dohme)","(Zentiva)","(Zentiva)","(Mylan dura)","(Hexal)","(Hexal)","(Wyeth)","(Hexal)","(Stada)","(Mibe)","(ratiopharm)","(Steiner)","(Mylan dura )","(Organon)","(Mibe)","(Gedeon Richter)","(Gedeon Richter)","(Organon)","(Jenapharm)","(Madaus)","(BayerVital)","(Schering)","(Dr. Kade/Besins)","(Jenapharm)","(Jenapharm)","(Wyeth)","(BayerVital)","(Hexal)","(Asche)","(Sanol/Schwarz)","(Grünenthal)","(Asche)","(Organon)","(Jenapharm)","(STADA)","(Janssen-Cilag)","(Jenapharm)","(Winthrop)","(Grünenthal)","(Wyeth)","(Janssen-Cilag)","(BayerVital)","(Jenapharm)","(Jenapharm)","(Pfizer)","(Velvian)","(ratiopharm)","(BayerVital)","(BayerVital)","(BayerVital)","(MSD Sharp &amp;)","MSD","Pfizer","Janssen-Cilag","Bayer","Pfizer","Pfizer","MSD","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["","","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Zweist.","Einst.","","Einst.","Einst.","Einst.","Einst.","Einst.","","Einst.","Einst.","","Einst.","","Einst.","Einst.","","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Zweistuf.","Dreistuf.","Dreistuf.","Einst.","Einst.","Dreistuf.","Vierst.","","Dreistuf.","Dreistuf.","Dreistuf.","Dreistuf.","Dreistuf.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Einst.","Ethinylestradiol","Ethinylestradiol","Ethinylestradiol","-","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],[null,28,21,24,21,21,21,21,21,21,21,7,21,28,21,21,21,21,21,28,21,21,28,24,28,21,21,28,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,28,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,35,21,21,21,21,21,21,21,21,11,6,7,21,21,7,26,28,7,6,7,6,6,21,21,21,21,21,21,24,24,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["","","","","","","","","","","","15","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","11","5","7","","","7","*","","9","5","7","5","6","","","","","","","","*","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","10","7","","","7","*","","5","10","7","10","9","","","","","","","","*","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["","","20","15","20","35","30","30","35","30","30","40/30","30","","30","30","35","35","30","","35","35","","20","","20","30","","35","30","35","20","30","20","30","20","30","30","20","30","30","30","20","50","20","35","","20","30","35","20","30","20","20","30","30","20","30","30","20","30","20","30","30","30","30","30","","30","30","20","30","20","30","30","35","50/50","30/40/30","35/30/30","30","30","35/35/35","*","","35/35/35","30/40/30","35/35/35","30/40/30","30/40/30","30","30","30","30","30","20","20","*","0,015 mg","0,015 mg","0,2 mg","0","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["","","420","360","420","735","630","630","735","630","630","730","630","","630","630","735","735","630","","735","735","","480","","420","630","","735","630","735","420","630","420","630","420","630","630","420","630","630","630","420","1050","420","735","","420","630","735","420","630","420","420","630","630","420","630","630","420","630","420","630","630","630","630","630","","630","630","420","630","420","630","630","735","1150","680","665","630","630","735","*","","735","680","735","680","680","630","630","630","630","630","420","480","*","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["","Levonorgestrel","DSP","GSD","LNG","CPA","CMA","CMA","CPA","CMA","CMA","DSG","DNG","Desogestrel","CMA","CMA","NGT","CPA","NES","Desogestrel","CPA","CPA","Desogestrel","DSP","Desogestrel","DSG","DSG","Desogestrel","CPA","CMA","CPA","LNG","CMA","LNG","LNG","NES","LNG","LNG","LNG","LNG","GSD","Dienogest","DSG","LNG","LNG","CPA","Desogestrel","Desogestrel","Desogestrel","CPA","DSG","DSG","LNG","LNG","Levonorgestrel","Levonorgestrel","Levonorgestrel","CMA","CMA","DSG","CMA","DSP","DSP","DSG","DNG","DNG","LNG","Levonorgestrel","CMA","LNG","LNG","GSD","LNG","CMA","LNG","CPA","CMA","LNG","DSG","DSP","CMA","NGT","DNG","Desogestrel","NES","LNG","NES","LNG","LNG","DNG","DNG","DNG","CMA","DSP","DSP","DSP","NOMAC","Etonogestrel","Etonogestrel","Norelgestromin","Levonogestrel","Medroxyprogesteronacetat","Medroxyprogesteronacetat","Etonogestrel","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>list_name<\/th>\n      <th>name<\/th>\n      <th>label<\/th>\n      <th>label_en<\/th>\n      <th>Firma<\/th>\n      <th>Art<\/th>\n      <th>AnzahlPillen/ Packg<\/th>\n      <th>V8<\/th>\n      <th>V9<\/th>\n      <th>Östrogenmikrogramm pro Pille<\/th>\n      <th>Östrogenmikrogramm pro Zyklus<\/th>\n      <th>Art des Gestagens<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["copy","csv","excel"],"columnDefs":[{"className":"dt-right","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script></p>
+</div>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>We checked a few familiar demographic surveys, which erred on the side of asking fewer questions, and the psychological literature, which erred on the side of not reporting exactly which questions were asked<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Counting days, measuring temperature, mucus<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>so we could differentiate between contraceptives with different kinds and amounts of gestagens and different amounts of estrogens<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>Luckily, I had one already. If you ever find yourself in the situation of wanting to re-label items in your language with English labels, you can follow along the code for this post on Github. It’s really simple as long as you have a well-structured item sheet.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

@@ -1,0 +1,410 @@
+---
+title: "Measuring contraception"
+description: |
+  How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness.
+author:
+  - name: "Ruben C. Arslan"
+    url: https://rubenarslan.github.io
+    affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+date: 04-02-2019
+output:
+  radix::radix_article:
+    self_contained: false
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+In our sex diary study, one of the most important components was our contraception
+questionnaire. Surprisingly, to us, we did not find a good, open standard questionnaire
+for this that fit our needs.^[We checked a few familiar demographic surveys, which erred on the side of asking fewer questions, and the psychological literature, which erred on the side of not reporting exactly which questions were asked] We needed something that would measure
+
+- not only the main, but all methods of contraception
+- fertility awareness^[Counting days, measuring temperature, mucus] independently of whether it was used for contraceptive purposes, i.e. including apps like [Clue](https://helloclue.com/)
+- the reasons why people mix contraceptive methods
+- the exact contraceptive pill, intra-uterine device, ring, patch etc.^[so we could differentiate between contraceptives with different kinds and amounts of gestagens and different amounts of estrogens]
+- what fertility-awareness method users do when fertile
+- all potential contraceptive methods that we could imagine
+
+Today, I want to show the questions we chose and share the questionnaire. We're definitely
+still in the market for improvements. At the same time, I want to encourage others to more fully
+report contraception information in their menstrual cycle studies. When you are reporting effects on
+sexual desire or activity, we need to know more than that participants were not on the pill and not pregnant. I'll try to show why in the coming blog posts.
+
+
+<details>
+<summary>Translation details</summary>
+
+To be able to show the descriptive graphs below, I first got the questions translated.^[Luckily, I had one already. If you ever find yourself in the situation of wanting to re-label items in your language with English labels, you can follow along the code for this post on Github. It's really simple as long as you have a well-structured item sheet.]
+
+```{r}
+library(formr)
+library(codebook)
+library(tidyverse)
+theme_set(theme_bw())
+load("~/research/routine_and_sex/cleaned.rdata")
+questions <- rio::import("https://docs.google.com/spreadsheets/d/1tLQDVyYUAXLBkblTT8BXow_rcg5G6xK9Vi3xTGieN20/edit#gid=0", format = "xlsx")
+choices <- rio::import("https://docs.google.com/spreadsheets/d/1tLQDVyYUAXLBkblTT8BXow_rcg5G6xK9Vi3xTGieN20/edit#gid=1116762580", which = 2)
+questions <- questions %>% 
+  slice(43:72) %>% 
+  mutate_if(is.character, ~ if_na(., "")) %>% select(type:label_en)
+
+choices <- choices %>% 
+  slice(1:182) %>% 
+  filter(!is.na(name), name != "") %>% 
+  mutate(
+    list_name = na_if(list_name, ""),
+    list_name = zoo::na.locf(list_name)
+    )
+
+# loop over all questions in the sheet
+for (i in seq_along(questions$name)) {
+  var <- questions$name[i]
+  # replace the variable label
+  if (exists(var, all_surveys)) {
+    var_label(all_surveys[[var]]) <- questions %>% filter(name == var) %>% pull(label_en)
+    choice_list_name <- questions %>% filter(name == var) %>% 
+      select(type) %>%
+      separate(type, c("type", "list_name"), sep = " ", fill = "right") %>% 
+      pull(list_name)
+    # find out if there were labelled choices
+    translated_choices <- choices %>% 
+          filter(list_name == choice_list_name) %>% 
+          select(label_en, name) %>% 
+          mutate(name = type.convert(name, as.is = TRUE)) %>% 
+          mutate_if(is.numeric, as.double) %>% 
+      # make sure they're the right type
+          deframe()
+    if ( !is.null(val_labels(all_surveys[[var]]) ) && length(translated_choices) > 0) {
+    # if so overwrite
+      val_labels(all_surveys[[var]]) <- translated_choices
+    }
+  }
+}
+
+```
+
+</details>
+
+## Contraception or not?
+
+We began by asking whether women used contraception at all. This time, we only asked
+women who were not pregnant. Next time, we plan to ask all women about contraception
+because even pregnant women could e.g. use condoms to prevent sexually transmitted infections,
+urinary tract infections. However, so that it does not like a lack of forethought, 
+we should probably optionally display some explanation to this effect for e.g. menopausal and pregnant women, because some women found it odd to be asked these questions. In this study, we gave
+women a free text field to write in if they wanted to specify other reasons why they 
+didn't use contraception. 
+
+```{r fig.cap="Pregnant women were excluded from the contraception questionnaire."}
+plot_labelled(all_surveys$pregnant) + 
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = "count", 
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 0, na.rm = TRUE) +
+  ggtitle("Pregnant")
+```
+
+```{r fig.cap="Different degrees of using contraception"}
+contraception_at_all <- haven::as_factor(na.omit(all_surveys$contraception_at_all), levels = "labels")
+plot_labelled(contraception_at_all) + 
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = "count", 
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 0, na.rm = TRUE) +
+  ggtitle("Contraception at all?")
+```
+
+
+## Methods
+
+Next, we asked all women who used contraception, which methods they used. Multiple
+methods could be checked. As you can see, condoms and the the pill were the two most
+common methods. A lot of women also used both. Next, you might be surprised at the
+number of women who report using _coitus interruptus_ (in the lower left graph), 
+the pull-out method. However, more women combined this with condoms or a fertility
+awareness method than used only _coitus interruptus_. 
+Next were intra-uterine devices and hormonal contraceptives other than the pill.
+We will look at these in detail next.
+
+```{r fig.width=10, fig.height=9, layout = "l-body-outset", fig.cap = "Methods of contraception and how they are combined"}
+library(UpSetR)
+comma_separated_to_columns <- function(df, col) {
+  colname <- deparse(substitute(col))
+  df$splitcol <- df %>% pull(colname)
+  separate_rows(df, splitcol, convert = TRUE, sep = ", ") %>% 
+    mutate(splitcol = if_else(is.na(splitcol), "no", 
+                        if_else(splitcol == "" | 
+                                  splitcol %in% c(), "other", as.character(splitcol)))) %>% 
+    mutate(#splitcol = stringr::str_c(colname, "_", splitcol), 
+           value = 1) %>% 
+    spread(splitcol, value, fill = 0) %>% 
+    select(-colname)
+}
+library(UpSetR)
+all_surveys %>% select(session, contraception_method) %>% 
+  filter(!is.na(contraception_method), contraception_method != "") %>% 
+  comma_separated_to_columns(contraception_method) %>% 
+  select(-session) %>% 
+  {
+  upset(., ncol(.), 20, show.numbers = TRUE, order.by = "freq",
+      main.bar.color = "#6E8691",
+      matrix.color = "#6E8691",
+      sets.bar.color = "#4F94B0")
+  }
+```
+
+
+As you can see, the non-pill hormonal methods were mainly NuvaRing (a combined contraceptive)
+and Mirena (a progestogen-only contraceptive).
+
+```{r fig.cap="Other hormonal contraceptives"}
+plot_labelled(na.omit(all_surveys$contraception_hormonal_other)) + 
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = "count", 
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 0, na.rm = TRUE) +
+  ggtitle("Other hormonal contraceptives")
+```
+
+## Combining methods
+
+Above, we saw that many women combine multiple contraceptives. We had a list of reasons
+that we considered likely, but many women also gave reasons we hadn't included.
+
+```{r fig.width=10, fig.height=8, layout = "l-body-outset", fig.cap = "Why combine several contraceptives?"}
+all_surveys %>% select(session, contraception_combi) %>% 
+  filter(!is.na(contraception_combi), contraception_combi != "") %>% 
+  comma_separated_to_columns(contraception_combi) %>% 
+  select(-session) %>% 
+  {
+  upset(., ncol(.), 20, show.numbers = TRUE, order.by = "freq",
+      main.bar.color = "#6E8691",
+      matrix.color = "#6E8691",
+      sets.bar.color = "#4F94B0")
+  }
+```
+
+The most common reason was as a fallback method during fertile days (i.e., for women using
+fertility awareness methods). Many used condoms in addition to the pill to also prevent
+STDs, but many also used the pill and condoms to decrease conception risk even further.
+Fallback methods were also common (e.g. condoms as a fallback to the pill, or pull-out
+as a fallback to condoms). A substantial number of women also used different methods for
+different partners, and a small minority also said they used condoms when their partner
+has a cold.
+
+From the reasons we hadn't included in our list, we should include at least the following
+in the future:
+
+- fallback in case the pill might not have worked (e.g., stomach flu, throwing up, travel, medication)
+- pill against acne/hypermenorrhoe/menstrual pain/other reasons, another method for contraception
+- condoms for hygienic reasons
+- condoms to avoid urinary tract infections
+- according to mood
+
+### Fertility awareness
+
+A special case of combining contraceptive methods are the fertility awareness methods.
+How many of our participants are sexually abstinent during the fertile phase, how many switch
+to other methods? As you can see, most switch to other methods. Total sexual abstinence is rare, although
+quite a few report having penetrative sex less often, or not at all.
+
+```{r fig.width=10, fig.height=8, layout = "l-body-outset", fig.cap = "What do fertility awareness method users do during their fertile phase?"}
+all_surveys %>% select(session, contraception_calendar_abstinence) %>% 
+  filter(!is.na(contraception_calendar_abstinence), contraception_calendar_abstinence != "") %>% 
+  comma_separated_to_columns(contraception_calendar_abstinence) %>% 
+  select(-session) %>% 
+  {
+  upset(., ncol(.), 20, show.numbers = TRUE, order.by = "freq",
+      main.bar.color = "#6E8691",
+      matrix.color = "#6E8691",
+      sets.bar.color = "#4F94B0")
+  }
+```
+
+<details><summary>Methods and reasons for combining methods in two big graphs</summary>
+
+We can of course also merge the reasons for combining contraceptives with the contraceptive information itself.
+
+```{r fig.width=15, fig.height=10, layout = "l-screen-inset", fig.cap = "Which contraceptives are combined for which reasons?"}
+all_surveys %>% select(session, contraception_combi) %>% 
+  filter(!is.na(contraception_combi), contraception_combi != "") %>% 
+  comma_separated_to_columns(contraception_combi) %>% 
+  left_join(all_surveys %>% select(session, contraception_method) %>% 
+  filter(!is.na(contraception_method), contraception_method != "") %>% 
+  comma_separated_to_columns(contraception_method), by = 'session') %>% 
+  select(-session) %>% 
+  {
+  upset(., ncol(.), 20, show.numbers = TRUE, order.by = "freq",
+      main.bar.color = "#6E8691",
+      matrix.color = "#6E8691",
+      sets.bar.color = "#4F94B0")
+  }
+```
+
+
+```{r fig.width=15, fig.height=10, layout = "l-screen-inset", fig.cap = "Which contraceptive method do fertility awareness method users switch to during their fertile phase?"}
+all_surveys %>% select(session, contraception_calendar_abstinence) %>% 
+  filter(!is.na(contraception_calendar_abstinence), contraception_calendar_abstinence != "") %>% 
+  comma_separated_to_columns(contraception_calendar_abstinence) %>% 
+  left_join(all_surveys %>% select(session, contraception_method) %>% 
+  filter(!is.na(contraception_method), contraception_method != "") %>% 
+  comma_separated_to_columns(contraception_method), by = 'session') %>% 
+  select(-session) %>% 
+  {
+  upset(., ncol(.), 20, show.numbers = TRUE, order.by = "freq",
+      main.bar.color = "#6E8691",
+      matrix.color = "#6E8691",
+      sets.bar.color = "#4F94B0")
+  }
+```
+</details>
+
+## The pill
+
+To help our participants identify their pill, we used a searchable drop-down that showed the brand name
+of the pill together with a picture of the packaging. Most women found their pill in our list; the others
+were asked to enter name and details (gestagen type and amount, estrogen amount) into text fields.
+
+```{r fig.cap="Common oral contraceptive pills. Only those used by at least 10 women shown."}
+pills <- all_surveys %>% 
+  group_by(contraception_hormonal_pill) %>% 
+  summarise(count = n()) %>% 
+  arrange(count) %>% 
+  filter(count > 9, !is.na(contraception_hormonal_pill)) %>% 
+  mutate(contraception_hormonal_pill = forcats::fct_inorder(contraception_hormonal_pill))
+ggplot(pills, aes(contraception_hormonal_pill, count)) +
+  geom_col() + 
+  coord_flip() +
+    geom_text(aes(y = count, label = count), 
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 270, na.rm = TRUE) +
+  ggtitle("Common pills")
+```
+
+```{r fig.cap = "Micrograms of estrogen in a pill (unified to average content over 21 days, without pill break)"}
+all_surveys %>% 
+  drop_na(contraception_hormonal_pill_estrogen) %>% 
+  mutate(contraception_hormonal_pill_estrogen = round(contraception_hormonal_pill_estrogen)) %>% 
+  group_by(contraception_hormonal_pill_estrogen) %>% 
+ggplot(., aes(factor(contraception_hormonal_pill_estrogen))) +
+  geom_bar() +
+  geom_text(aes(y = ..count.., label = ..count..), 
+              stat = "count", 
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 0, na.rm = TRUE) +
+  xlab("Micrograms of estrogen in a pill")
+```
+
+## Awareness
+
+Quite a few women used some sort of cycle app.
+
+```{r fig.cap="Cycle apps. Only those used by at least 10 women shown."}
+plot_labelled(na.omit(all_surveys$contraception_app)) + 
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = "count", 
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 0, na.rm = TRUE) +
+  ggtitle("Cycle apps")
+
+contraception_apps <- all_surveys %>% 
+  mutate(contraception_app_name = str_trim(str_to_title(contraception_app_name))) %>% 
+  group_by(contraception_app_name) %>% 
+  summarise(count = n()) %>% 
+  arrange(count) %>% 
+  filter(count > 9, !is.na(contraception_app_name)) %>% 
+  mutate(contraception_app_name = forcats::fct_inorder(contraception_app_name))
+ggplot(contraception_apps, aes(contraception_app_name, count)) +
+  geom_col() + 
+  coord_flip() +
+    geom_text(aes(y = count, label = count), 
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 270, na.rm = TRUE) +
+  ggtitle("Cycle apps")
+```
+
+Some of these are just pill reminders, whereas others really lead to fertility awareness.
+
+```{r}
+ggplot(all_surveys %>% filter(cycle_awareness_app != "none"), 
+       aes(cycle_awareness_app)) +
+  geom_bar() + 
+  coord_flip() +
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = 'count',
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 270, na.rm = TRUE) +
+  ggtitle("Cycle app awareness")
+```
+
+We are really glad we asked about apps. As you can see below, the vast majority
+of cycle awareness app users do not use them as a primary method of contraception; 
+most use condoms and IUDs.
+
+```{r fig.width=10, fig.height=8, layout = "l-body-outset", fig.cap="Cycle awareness app users' contraceptive methods."}
+all_surveys %>% 
+  filter(cycle_awareness_app == "cycle_phase_aware", 
+         !is.na(contraception_method), contraception_method != "") %>% 
+  select(session, contraception_method) %>% 
+  comma_separated_to_columns(contraception_method) %>% 
+  select(-session) %>% 
+  {
+  upset(., ncol(.), 20, show.numbers = TRUE, order.by = "freq",
+      main.bar.color = "#6E8691",
+      matrix.color = "#6E8691",
+      sets.bar.color = "#4F94B0")
+  }
+```
+
+## Estrogen and progestogen
+
+As you could see above, our participants used a wide variety of contraceptives. Among them were quite a few progestogen-only contraceptives (hormonal IUDs, such as Mirena, patches and depots, and of course various mini-pills, such as Jaydess, Cyprella, Desirett, Cerazette, etc.). When we add all this together, we see that a substantial minority uses progestogen-only contraceptives.
+
+```{r}
+qplot(all_surveys %>% drop_na(estrogen_progestogen) %>% pull(estrogen_progestogen)) +
+  xlab("Contraceptives by hormones") +
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = 'count',
+              color = "#4F94B0",
+              vjust = -0.25, 
+              angle = 0, na.rm = TRUE)
+```
+
+
+## Summary
+So, these were the main questions from our questionnaire. I didn't get into how
+we combined this with questions about the period (menarche/menoapuse, regularity, cycle length, etc.),
+family planning, and so on. What questions are others asking? What can we improve in the next study?
+
+I added the entire list of questions, including skipping logic (which takes some forethought) below. You can export these to Excel and use them directly in [formr.org](https://formr.org).
+
+## Our questions
+
+```{r layout="l-screen-inset", echo = FALSE}
+DT::datatable(questions, escape = T, caption = "Table 1. Survey sheet",
+extensions = 'Buttons', rownames = F, options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel')
+  )
+)
+
+DT::datatable(choices, escape = T, caption = "Table 2. Choices sheet",
+extensions = 'Buttons', rownames = F, options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel')
+  )
+)
+```
+

@@ -17,7 +17,7 @@ exclude:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-I'm a evolutionary personality psychologist by training, who dabbles in genetic research, software development, and open science activism. I live and work in Berlin. 
+I'm a evolutionary personality psychologist by training, who dabbles in genetic research, software development, and open science activism. I live and [work](https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan) in Berlin. 
 
 <aside>
 <img src="https://formr.org/assets/build/img/ruben.jpg?v1489582723" class="img-circle" alt="Ruben Arslan">
