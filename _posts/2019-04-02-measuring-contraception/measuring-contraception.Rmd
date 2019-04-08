@@ -246,7 +246,7 @@ all_surveys %>% select(session, contraception_calendar_abstinence) %>%
 
 We can of course also merge the reasons for combining contraceptives with the contraceptive information itself.
 
-```{r fig.width=15, fig.height=10, layout = "l-screen-inset", fig.cap = "Which contraceptives are combined for which reasons?"}
+```{r fig.width=15, fig.height=10, layout = "l-screen-inset", fig.cap = "Which contraceptives are combined for which reasons?", preview = TRUE}
 all_surveys %>% select(session, contraception_combi) %>% 
   filter(!is.na(contraception_combi), contraception_combi != "") %>% 
   comma_separated_to_columns(contraception_combi) %>% 
