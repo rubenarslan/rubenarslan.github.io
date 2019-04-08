@@ -7,11 +7,20 @@ author:
     url: https://rubenarslan.github.io
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+journal: 
+  title: "Open Science Framework"
+doi: "10.17605/OSF.IO/3DKYS"
+slug: arslanetal2019contraception
+citation_url: https://osf.io/3dkys/
 date: 04-02-2019
+categories: 
+  - sex diary
+  - open science
+  - contraception
 output:
   radix::radix_article:
     self_contained: false
-draft: true
+draft: false
 ---
 
 ```{r setup, include=FALSE}
@@ -20,16 +29,22 @@ knitr::opts_chunk$set(echo = FALSE)
 
 In our sex diary study, one of the most important components was our contraception
 questionnaire. Surprisingly, to us, we did not find a good, open standard questionnaire
-for this that fit our needs.^[We checked a few familiar demographic surveys, which erred on the side of asking fewer questions, and the psychological literature, which erred on the side of not reporting exactly which questions were asked] We needed something that would measure
+that fit our needs.^[We checked a few familiar demographic surveys, which erred on the side of asking fewer questions, and the psychological literature, which erred on the side of not reporting exactly which questions were asked] We needed something that would measure
 
-- not only the main, but all methods of contraception
+- not only one main, but all methods of contraception
 - fertility awareness^[Counting days, measuring temperature, mucus] independently of whether it was used for contraceptive purposes, i.e. including apps like [Clue](https://helloclue.com/)
 - the reasons why people mix contraceptive methods
-- the exact contraceptive pill, intra-uterine device, ring, patch etc.^[so we could differentiate between contraceptives with different kinds and amounts of gestagens and different amounts of estrogens]
+- the exact contraceptive pill, intra-uterine device, ring, patch etc.^[so we could differentiate between contraceptives with different kinds and amounts of progestogens and different amounts of estrogens]
 - what fertility-awareness method users do when fertile
 - all potential contraceptive methods that we could imagine
 
-Today, I want to show the questions we chose and share the questionnaire. We're definitely
+Why do we need such detailed information on contraception to study ovulatory effects?
+
+1. Combined hormonal contraceptives suppress ovulation—we could use them as a quasi-control group for [our last study](https://psycnet.apa.org/record/2018-41799-001). However, progestogen-only contraceptives do not reliably suppress ovulation.
+2. Some fertility awareness method users are sexually abstinent in the fertile window. When we are interested in whether ovulation whets the appetite for sex and changes sexual behaviour, we should probably exclude these women or at least treat them separately.
+3. Awareness of the cycle phase could lead to different responses. Potentially, women actually feel or report feeling more desirable, or more sexual when they _believe_ they are fertile—independently of, or on top of any hormonally caused changes.^[In our last study, we only found some descriptive differences between non-hormonal methods. The only significant difference was between hormonal and non-hormonal methods, but our sample size for fertility awareness methods was small and potentially women who used condoms also used a fertility tracking app for fun, but not contraception. Descriptively, fertile window increases in extra-pair desire [were larger for women using awareness methods than for barrier method (condoms, mostly) users](https://rubenarslan.github.io/ovulatory_shifts/3_fertility_robustness.html#m_m1-moderation-by-contraceptive-method), but [the opposite pattern held for in-pair desire](https://rubenarslan.github.io/ovulatory_shifts/3_fertility_robustness.html#m_m1-moderation-by-contraceptive-method-3), and we found [no apparent difference for self-perceived desirability](https://rubenarslan.github.io/ovulatory_shifts/3_fertility_robustness.html#m_m1-moderation-by-contraceptive-method-4).]
+
+Today, I want to show the questions we chose and share the questionnaire. We're 
 still in the market for improvements. At the same time, I want to encourage others to more fully
 report contraception information in their menstrual cycle studies. When you are reporting effects on
 sexual desire or activity, we need to know more than that participants were not on the pill and not pregnant. I'll try to show why in the coming blog posts.
@@ -38,7 +53,7 @@ sexual desire or activity, we need to know more than that participants were not 
 <details>
 <summary>Translation details</summary>
 
-To be able to show the descriptive graphs below, I first got the questions translated.^[Luckily, I had one already. If you ever find yourself in the situation of wanting to re-label items in your language with English labels, you can follow along the code for this post on Github. It's really simple as long as you have a well-structured item sheet.]
+To be able to show the descriptive graphs below, we translated the questions.^[If you ever find yourself in the situation of wanting to re-label items in your language with English labels, you can follow along the code for this post on Github. It's really simple as long as you have a well-structured item sheet.]
 
 ```{r}
 library(formr)
@@ -109,7 +124,7 @@ plot_labelled(all_surveys$pregnant) +
   ggtitle("Pregnant")
 ```
 
-```{r fig.cap="Different degrees of using contraception"}
+```{r fig.cap="Different degrees of using contraception", fig.height=7}
 contraception_at_all <- haven::as_factor(na.omit(all_surveys$contraception_at_all), levels = "labels")
 plot_labelled(contraception_at_all) + 
     geom_text(aes(y = ..count.., label = ..count..), 
@@ -123,9 +138,9 @@ plot_labelled(contraception_at_all) +
 
 ## Methods
 
-Next, we asked all women who used contraception, which methods they used. Multiple
+Next, we asked all women who used contraception which methods they used. Multiple
 methods could be checked. As you can see, condoms and the the pill were the two most
-common methods. A lot of women also used both. Next, you might be surprised at the
+common methods. A lot of women also combined both. Next, you might be surprised at the
 number of women who report using _coitus interruptus_ (in the lower left graph), 
 the pull-out method. However, more women combined this with condoms or a fertility
 awareness method than used only _coitus interruptus_. 
@@ -160,8 +175,7 @@ all_surveys %>% select(session, contraception_method) %>%
 ```
 
 
-As you can see, the non-pill hormonal methods were mainly NuvaRing (a combined contraceptive)
-and Mirena (a progestogen-only contraceptive).
+As you can see, the non-pill hormonal methods were mainly NuvaRing (a estrogen/progestogen vaginal ring) and Mirena (a progestogen-only intra-uterine contraceptive).
 
 ```{r fig.cap="Other hormonal contraceptives"}
 plot_labelled(na.omit(all_surveys$contraception_hormonal_other)) + 
@@ -200,7 +214,7 @@ different partners, and a small minority also said they used condoms when their 
 has a cold.
 
 From the reasons we hadn't included in our list, we should include at least the following
-in the future:
+in the future:^[Taken from the written responses to the other reasons prompt.]
 
 - fallback in case the pill might not have worked (e.g., stomach flu, throwing up, travel, medication)
 - pill against acne/hypermenorrhoe/menstrual pain/other reasons, another method for contraception
@@ -270,7 +284,7 @@ all_surveys %>% select(session, contraception_calendar_abstinence) %>%
 
 To help our participants identify their pill, we used a searchable drop-down that showed the brand name
 of the pill together with a picture of the packaging. Most women found their pill in our list; the others
-were asked to enter name and details (gestagen type and amount, estrogen amount) into text fields.
+were asked to enter name and details (progestogen type and amount, estrogen amount) into text fields.
 
 ```{r fig.cap="Common oral contraceptive pills. Only those used by at least 10 women shown."}
 pills <- all_surveys %>% 
@@ -334,7 +348,7 @@ ggplot(contraception_apps, aes(contraception_app_name, count)) +
   ggtitle("Cycle apps")
 ```
 
-Some of these are just pill reminders, whereas others really lead to fertility awareness.
+We looked at all of these apps and coded their purposee. Some of them are just pill reminders, some additionally allow you to track symptoms, whereas others really lead to fertility awareness (i.e., tell you when they estimate you will be fertile).
 
 ```{r}
 ggplot(all_surveys %>% filter(cycle_awareness_app != "none"), 
@@ -385,10 +399,10 @@ qplot(all_surveys %>% drop_na(estrogen_progestogen) %>% pull(estrogen_progestoge
 
 ## Summary
 So, these were the main questions from our questionnaire. I didn't get into how
-we combined this with questions about the period (menarche/menoapuse, regularity, cycle length, etc.),
-family planning, and so on. What questions are others asking? What can we improve in the next study?
+we combined this with questions about the period (menarche/menopause, regularity, cycle length, etc.),
+family planning, and so on.
 
-I added the entire list of questions, including skipping logic (which takes some forethought) below. You can export these to Excel and use them directly in [formr.org](https://formr.org).
+I added the entire list of questions, including skipping logic (which takes some forethought) below. You can export these to Excel and use them directly in [formr.org](https://formr.org). This is already an adapted version of the questionnaire we used and I'm sure it can be improved further.  What questions are you asking? What can we improve in our next study?
 
 ## Our questions
 
@@ -408,3 +422,6 @@ extensions = 'Buttons', rownames = F, options = list(
 )
 ```
 
+## Acknowledgements {.appendix}
+
+Thanks to Tessa Cappelle and Kim Gloystein for help translating the questionnaire. Thanks to Julie Driebe and Iro Eleftheriadou who helped me clean and code the contraception questionnaire data. The questionnaire was designed by our study team (Julie Driebe, Tanja M. Gerlach, Lars Penke, Julia Jünger (now: Julia Stern), Julia Ostner).
