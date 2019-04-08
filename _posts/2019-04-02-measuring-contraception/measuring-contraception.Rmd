@@ -147,7 +147,7 @@ awareness method than used only _coitus interruptus_.
 Next were intra-uterine devices and hormonal contraceptives other than the pill.
 We will look at these in detail next.
 
-```{r fig.width=10, fig.height=9, layout = "l-body-outset", fig.cap = "Methods of contraception and how they are combined"}
+```{r fig.width=10, fig.height=9, layout = "l-body-outset", fig.cap = "Methods of contraception and how they are combined. In this UpSet plot, we see how common each contraceptive is (on its own or in combination with others) in the small bar chart in the lower left. We see which combinations are common by checking which circles are connected in the panel at the bottom and checking the height of the intersection bar.", preview = TRUE}
 library(UpSetR)
 comma_separated_to_columns <- function(df, col) {
   colname <- deparse(substitute(col))
@@ -242,11 +242,13 @@ all_surveys %>% select(session, contraception_calendar_abstinence) %>%
   }
 ```
 
-<details><summary>Methods and reasons for combining methods in two big graphs</summary>
+<details class="l-screen-inset">
+
+<summary>Methods and reasons for combining methods in two big graphs</summary>
 
 We can of course also merge the reasons for combining contraceptives with the contraceptive information itself.
 
-```{r fig.width=15, fig.height=10, layout = "l-screen-inset", fig.cap = "Which contraceptives are combined for which reasons?", preview = TRUE}
+```{r fig.width=15, fig.height=10, layout = "l-screen-inset", fig.cap = "Which contraceptives are combined for which reasons?"}
 all_surveys %>% select(session, contraception_combi) %>% 
   filter(!is.na(contraception_combi), contraception_combi != "") %>% 
   comma_separated_to_columns(contraception_combi) %>% 
@@ -297,9 +299,9 @@ ggplot(pills, aes(contraception_hormonal_pill, count)) +
   geom_col() + 
   coord_flip() +
     geom_text(aes(y = count, label = count), 
-              color = "#4F94B0",
-              vjust = -0.25, 
-              angle = 270, na.rm = TRUE) +
+              color = "white",
+              hjust = 1.2,
+              angle = 0, na.rm = TRUE) +
   ggtitle("Common pills")
 ```
 
@@ -322,7 +324,7 @@ ggplot(., aes(factor(contraception_hormonal_pill_estrogen))) +
 
 Quite a few women used some sort of cycle app.
 
-```{r fig.cap="Cycle apps. Only those used by at least 10 women shown."}
+```{r fig.cap="Cycle app users"}
 plot_labelled(na.omit(all_surveys$contraception_app)) + 
     geom_text(aes(y = ..count.., label = ..count..), 
               stat = "count", 
@@ -330,7 +332,9 @@ plot_labelled(na.omit(all_surveys$contraception_app)) +
               vjust = -0.25, 
               angle = 0, na.rm = TRUE) +
   ggtitle("Cycle apps")
-
+```
+  
+```{r fig.cap="Cycle apps. Only those used by at least 10 women shown."}
 contraception_apps <- all_surveys %>% 
   mutate(contraception_app_name = str_trim(str_to_title(contraception_app_name))) %>% 
   group_by(contraception_app_name) %>% 
@@ -342,24 +346,24 @@ ggplot(contraception_apps, aes(contraception_app_name, count)) +
   geom_col() + 
   coord_flip() +
     geom_text(aes(y = count, label = count), 
-              color = "#4F94B0",
-              vjust = -0.25, 
-              angle = 270, na.rm = TRUE) +
+
+              color = "white",
+              hjust = 1.2,
+              angle = 0, na.rm = TRUE) +
   ggtitle("Cycle apps")
 ```
 
-We looked at all of these apps and coded their purposee. Some of them are just pill reminders, some additionally allow you to track symptoms, whereas others really lead to fertility awareness (i.e., tell you when they estimate you will be fertile).
+We looked at all of these apps and coded their purpose. Some of them are just pill reminders, some additionally allow you to track symptoms, whereas others really lead to fertility awareness (i.e., tell you when they estimate you will be fertile).
 
 ```{r}
 ggplot(all_surveys %>% filter(cycle_awareness_app != "none"), 
        aes(cycle_awareness_app)) +
   geom_bar() + 
-  coord_flip() +
     geom_text(aes(y = ..count.., label = ..count..), 
               stat = 'count',
               color = "#4F94B0",
               vjust = -0.25, 
-              angle = 270, na.rm = TRUE) +
+              angle = 0, na.rm = TRUE) +
   ggtitle("Cycle app awareness")
 ```
 
@@ -398,6 +402,43 @@ qplot(all_surveys %>% drop_na(estrogen_progestogen) %>% pull(estrogen_progestoge
 
 
 ## Summary
+
+```{r layout="l-body-outset",fig.width=10, fig.height=7, fig.cap="To summarise all this for our purposes, we constructed the above categories. In A, we do not yet include information on cycle tracking apps and on the different hormones in contraceptives. In B, we account for this but lump women who combine hormones and barrier methods with other hormonal contraception users. To do so, we differentiate two hormonal methods, awareness methods, condoms, non-hormonal IUDs, and no contraception. The rest are lumped. For women who combine several contraceptives, the order in the preceding sentence determines precedence."}
+library(cowplot)
+plot_grid(
+  labels = c("A.", "B."), vjust = 1.5,
+  qplot(all_surveys %>% 
+        mutate(contraception_approach = forcats::fct_infreq(contraception_approach)) %>% 
+      drop_na(contraception_approach) %>% pull(contraception_approach)) +
+  xlab("Contraceptive methods") +
+  coord_flip() +
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = 'count',
+              color = "white",
+              hjust = 1.2, 
+              angle = 0, na.rm = TRUE),
+qplot(all_surveys %>% 
+        mutate(contraception_approach = 
+                 case_when(
+                   contraception_approach %contains% "hormonal" ~ estrogen_progestogen,
+                   contraception_approach %contains% "awareness" |  
+                     cycle_awareness_app == "cycle_phase_aware" ~ "awareness",
+                   TRUE ~ as.character(contraception_approach))) %>% 
+        # group_by(contraception_approach) %>% 
+        # arrange(desc(n())) %>% 
+        mutate(contraception_approach = forcats::fct_infreq(contraception_approach)) %>% 
+      drop_na(contraception_approach) %>% pull(contraception_approach)) +
+  xlab("Contraceptive methods") +
+  coord_flip() +
+    geom_text(aes(y = ..count.., label = ..count..), 
+              stat = 'count',
+              color = "white",
+              hjust = 1.2, 
+              angle = 0, na.rm = TRUE)
+)
+```
+
+
 So, these were the main questions from our questionnaire. I didn't get into how
 we combined this with questions about the period (menarche/menopause, regularity, cycle length, etc.),
 family planning, and so on.
