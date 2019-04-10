@@ -65,7 +65,7 @@ If you report a bug anonymously, I will donate the fee to [Against Malaria](http
 
 I will count the errors (by type, not by repetitions), not the numbers, or conclusions changed.
 
-Please note that these bounties do not necessarily reflect only the gravity of a bug (i.e., missing a citation can be pretty bad), but also my perception which of these are actually determinable objectively. So, by reducing the sum for omitting citations, I hope to forestall drawn-out arguments by reducing both side's temptation to bargain.
+Please note that these bounties do not necessarily reflect only the gravity of a bug (i.e., missing a citation can be pretty bad), but also my perception which of these are actually determinable objectively. So, by reducing the sum for omitting citations, I hope to forestall drawn-out arguments by reducing both sides' temptation to bargain.
 
 Any one person can claim at most 5 items, so up to 760€. If multiple people notice the same error, second and third reporters only get a beer, and my heartfelt gratitude.
 

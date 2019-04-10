@@ -439,6 +439,22 @@ qplot(all_surveys %>%
 ```
 
 
+```{r}
+all_surveys <- all_surveys %>% 
+        mutate(contraception_approach = 
+                 case_when(
+                   contraception_approach %contains% "hormonal" ~ estrogen_progestogen,
+                   contraception_approach %contains% "awareness" |  
+                     cycle_awareness_app == "cycle_phase_aware" ~ "awareness",
+                   TRUE ~ as.character(contraception_approach))) %>% 
+        # group_by(contraception_approach) %>% 
+        # arrange(desc(n())) %>% 
+        mutate(contraception_approach = forcats::fct_infreq(contraception_approach))
+
+ggplot(all_surveys, aes(contraception_approach, pregnant_trying)) + geom_violin(fill = "black", alpha = 0.2, color = NA) + geom_pointrange(stat = 'summary', color = "#4F94B0", fun.data = "mean_cl_boot")
+```
+
+
 So, these were the main questions from our questionnaire. I didn't get into how
 we combined this with questions about the period (menarche/menopause, regularity, cycle length, etc.),
 family planning, and so on.

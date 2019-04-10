@@ -11,6 +11,7 @@ date: 10-26-2018
 categories: 
   - mistakes
   - bug bounty
+preview: https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg
 output:
   radix::radix_article:
     self_contained: false

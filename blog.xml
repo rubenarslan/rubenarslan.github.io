@@ -7,14 +7,14 @@
     <description>Personal blog
 </description>
     <generator>Radix</generator>
-    <lastBuildDate>Mon, 01 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Measuring contraception</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception</link>
       <description>How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness.</description>
       <guid>https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception</guid>
-      <pubDate>Mon, 01 Apr 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1920" height="1728"/>
     </item>
     <item>
@@ -71,6 +71,7 @@
       <description>Accounting for mistakes in my scientific work and announcing a bug bounty program.</description>
       <guid>https://rubenarslan.github.io/posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program</guid>
       <pubDate>Fri, 26 Oct 2018 00:00:00 +0000</pubDate>
+      <media:content url="https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
       <title>Are big studies cited more?</title>

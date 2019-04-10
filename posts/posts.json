@@ -16,7 +16,7 @@
       "contraception"
     ],
     "preview": "posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-4-1.png",
-    "last_modified": "2019-04-08T14:33:01+02:00",
+    "last_modified": "2019-04-10T09:25:01+02:00",
     "preview_width": 1920,
     "preview_height": 1728
   },
@@ -132,9 +132,12 @@
       }
     ],
     "date": "2018-10-26",
-    "categories": [],
-    "preview": {},
-    "last_modified": "2018-10-30T13:56:57+01:00"
+    "categories": [
+      "mistakes",
+      "bug bounty"
+    ],
+    "preview": "https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg",
+    "last_modified": "2019-04-10T16:23:35+02:00"
   },
   {
     "path": "posts/2018-10-15-are-big-studies-cited-more/",

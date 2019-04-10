@@ -23,7 +23,7 @@ output:
 creative_commons: CC BY
 twitter:
    site: "@rubenarslan"
-
+google_analytics: "UA-2102103-6"
 collections:
   posts:
     feed_items_max: false
