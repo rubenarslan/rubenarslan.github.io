@@ -1,7 +1,7 @@
 ---
 title: "Sexual activity by time of day"
 description: |
-  A short description of the post.
+  Examining when women in our diary study were sexually active.
 author:
   - name: "Ruben C. Arslan"
     url: https://rubenarslan.github.io
@@ -22,518 +22,198 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Radix is a publication format for scientific and technical writing, native to the web.
 
-Learn more about using Radix at <https://rstudio.github.io/radix>.
+We collected detailed data on sexual activity in our diary study. After a lot of discussion in the team,
+we agreed on the following method:
+
+- We asked women whether they had been sexually active (including masturbation, kissing and cuddling^[probably the German word _Zärtlichkeiten_ sounds less weird than this translation. Or more so.])
+- If they said yes, we asked how often
+- If they gave a number higher than two, we asked them to describe only the first two activities
+- Then, for each sexual activity, we asked
+  - When?
+  - With whom?
+  - What did you do?
+  - If they mentioned a partner, we asked about contraception.
+  - If they mentioned masturbation, we asked about sexual fantasies
+    - Who/what did you think about?
+  - We then asked about own satisfaction and partner satisfaction, and whether it made them happy.
+
+A big part of our discussion was which sexual activities we should list. A very long list of activities seemed a bit intimidating, plus many sexual activities in German have either weirdly academic or vulgar names, but nothing that seemed usable. In the end, we opted for a subset of activities and the ability to write in unlisted options, which we coded afterwards. We think this worked quite well, but it is possible that the activities we listed were "normalised" more than unlisted activities. I'm curious how others go about this.
+
+Because we tried to impose as few restrictions as possible, cleaning this data was a bit cumbersome though (people have sex in manifold ways!). To motivate myself to do it, I wanted to blog a few descriptive statistics. I don't have a sexology background, so I don't know what is well-known to experts in the field and what isn't. Of course, we mainly plan to use the data to study sex across the menstrual cycle, but I think there are many interesting aspects to the data unrelated to that.
 
 ```{r}
 library(formr)
 library(codebook)
 library(tidyverse)
+library(lubridate)
+library(UpSetR)
+
 theme_set(theme_bw())
 load("~/research/routine_and_sex/cleaned.rdata")
-questions <- rio::import("https://docs.google.com/spreadsheets/d/1tLQDVyYUAXLBkblTT8BXow_rcg5G6xK9Vi3xTGieN20/edit#gid=0", format = "xlsx")
-choices <- rio::import("https://docs.google.com/spreadsheets/d/1tLQDVyYUAXLBkblTT8BXow_rcg5G6xK9Vi3xTGieN20/edit#gid=1116762580", which = 2)
-questions <- questions %>% 
-  slice(43:72) %>% 
-  mutate_if(is.character, ~ if_na(., "")) %>% select(type:label_en)
-
-choices <- choices %>% 
-  slice(1:182) %>% 
-  filter(!is.na(name), name != "") %>% 
-  mutate(
-    list_name = na_if(list_name, ""),
-    list_name = zoo::na.locf(list_name)
-    )
-
-# loop over all questions in the sheet
-for (i in seq_along(questions$name)) {
-  var <- questions$name[i]
-  # replace the variable label
-  if (exists(var, all_surveys)) {
-    var_label(all_surveys[[var]]) <- questions %>% filter(name == var) %>% pull(label_en)
-    choice_list_name <- questions %>% filter(name == var) %>% 
-      select(type) %>%
-      separate(type, c("type", "list_name"), sep = " ", fill = "right") %>% 
-      pull(list_name)
-    # find out if there were labelled choices
-    translated_choices <- choices %>% 
-          filter(list_name == choice_list_name) %>% 
-          select(label_en, name) %>% 
-          mutate(name = type.convert(name, as.is = TRUE)) %>% 
-          mutate_if(is.numeric, as.double) %>% 
-      # make sure they're the right type
-          deframe()
-    if ( !is.null(val_labels(all_surveys[[var]]) ) && length(translated_choices) > 0) {
-    # if so overwrite
-      val_labels(all_surveys[[var]]) <- translated_choices
-    }
-  }
-}
 ```
 
+First off, how many sexual acts do women report across days?
 
-```{r}
-library(UpSetR)
-separate_to_columns <- function(df, col) {
-  colname <- deparse(substitute(col))
-  df$splitcol <- df %>% pull(colname)
-  df$`_identifier` <- 1:nrow(df)
-  separate_rows(df, splitcol, convert = TRUE, sep = ", ") %>% 
-    mutate(splitcol = if_else(is.na(splitcol), "no", 
-                        if_else(splitcol == "" | 
-                                  splitcol %in% c(), "other", as.character(splitcol)))) %>% 
-    mutate(splitcol = stringr::str_c(colname, "_", splitcol), 
-           `_value` = 1) %>% 
-    spread(splitcol, `_value`, fill = 0) %>% 
-    select(-colname, -`_identifier`)
-}
-diary <- diary %>% select(session, contraception_method) %>% 
-  filter(!is.na(contraception_method), contraception_method != "") %>% 
-  separate_to_columns(contraception_method)
+```{r fig.cap="Number of sexual acts on each diary day. X-axis is log1p-scaled."}
+diary <- diary %>% filter(!is.na(sex_active))
+diary <- diary %>% 
+  mutate(sex_acts = if_na(sex_acts, 0))
 
-library(UpSetR)
+sex_long$sex_activities <- rowSums(sex_long %>% select(starts_with("sex_activity_")))
+sex_long <- sex_long %>% 
+  mutate(sex_active_sexual = if_else((sex_activities - sex_activity_cuddling - sex_activity_kissing - sex_activity_cybersex - sex_activity_dirty_talk - sex_activity_other - sex_activity_pornography  - sex_activity_touch_other - sex_activity_unclear)  > 0, 1, 0))
 
-plot_labelled(diary %>% drop_na(sex_1_time) %>% pull(sex_1_time))
-diary %>% drop_na(sex_1_time) %>% 
-  ggplot(aes(haven::as_factor(sex_1_time, levels = "values"), 
-             as.numeric(sexual_initiation_self))) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot')
-diary %>% drop_na(sex_1_time) %>% 
-  ggplot(aes(haven::as_factor(sex_1_time, levels = "values"), 
-             as.numeric(sexual_initiation_partner))) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot')
+diary$sex_activities <- rowSums(diary %>% select(starts_with("sex_activity_")))
+diary <- diary %>% 
+  mutate(sex_active_sexual = if_else((sex_activities - sex_activity_cuddling - sex_activity_kissing - sex_activity_cybersex - sex_activity_dirty_talk - sex_activity_other - sex_activity_pornography  - sex_activity_touch_other - sex_activity_unclear)  > 0, 1, 0))
 
-diary %>% 
-  select(sex_1_time, initiation = sexual_initiation_partner) %>% 
-  mutate(by = "partner") %>% 
-  bind_rows(diary %>% 
-  select(sex_1_time, initiation = sexual_initiation_self) %>% 
-  mutate(by = "self")) %>% 
-  mutate(sex_1_time = if_na(sex_1_time, "no_sex")) %>% 
-  ggplot(aes(sex_1_time, 
-             as.numeric(initiation), color = by)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
+# crosstabs(~ sex_active_partnered + sex_active_sexual, data = sex_long)
+# crosstabs(~ sex_active_solo + sex_active_sexual, data = sex_long)
 
-diary %>% 
-  select(time = sex_1_time, initiation = sexual_initiation_partner) %>% 
-  mutate(by = "partner") %>% 
-  bind_rows(diary %>% 
-  select(time = sex_1_time, initiation = sexual_initiation_self) %>% 
-  mutate(by = "self")) %>% 
-  mutate(time = if_na(time, "no_sex")) %>% 
-  ggplot(aes(time, 
-             as.numeric(initiation), color = by)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
+qplot(sex_acts, data = diary) + 
+  scale_x_continuous("Sexual acts", trans = "log1p", breaks = c(0:5,10, 20))
+```
 
-diary %>% 
-  ggplot(aes(weekday, sex_active)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
+This looks good. Women rarely report more than two acts a day, so we are not missing much in our survey. On average, people in our sample engaged in some sexual activity (including kissing and cuddling) on `r round(sum(diary$sex_acts>0)/nrow(diary)*100)`% of days. Excluding kissing and cuddling, women in our sample either masturbate or have some sort of sex on `r round(sum(diary$sex_active_sexual)/nrow(diary)*100)`% of days. Broken down even further, women in our sample have sex with a partner on `r round(sum((diary$sex_active_sexual == 1 & diary$sex_active_partnered == 1))/nrow(diary)*100)`% of days and masturbate on `r round(sum((diary$sex_active_sexual == 1 & diary$sex_active_solo == 1))/nrow(diary)*100)`% of days. In the following, I will exclude kissing and cuddling, although it makes little difference for the results.
 
-diary %>% 
-  ggplot(aes(weekday, 0+masturbated)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
-
-diary %>% 
-  ggplot(aes(weekday, 0+had_penetrative_sex)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
+Most readers probably know people are more sexually active on weekends:
 
 
-diary %>% 
-  select(time = sex_1_time, sex_1_happy, sex_1_enjoyed, sex_1_partner_enjoyed) %>% 
-  gather(variable, value, -time) %>% 
-  bind_rows(
-    diary %>% 
-    select(time = sex_2_time, sex_2_happy, sex_2_enjoyed, sex_2_partner_enjoyed) %>% 
-    gather(variable, value, -time)) %>% 
-  separate(variable, into = c("sex", "nr", "variable"), extra = "merge") %>% 
-  drop_na() %>% 
-  ggplot(aes(time, value, color = variable)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
+```{r fig.cap="More sex on the weekends"}
+ggplot(diary, aes(weekday, sex_active_sexual)) + 
+  geom_pointrange(stat = 'summary', fun.data = "mean_se") +
+  scale_y_continuous()
+```
 
-diary %>% 
-  select(person, contraception = sex_1_contraception, sex_1_happy, sex_1_enjoyed, sex_1_partner_enjoyed) %>% 
-  gather(variable, value, -contraception, -person) %>% 
-  bind_rows(
-    diary %>% 
-    select(person, contraception = sex_2_contraception, sex_2_happy, sex_2_enjoyed, sex_2_partner_enjoyed) %>% 
-    gather(variable, value, -contraception, -person)) %>% 
-  separate(variable, into = c("sex", "nr", "variable"), extra = "merge") %>% 
-  drop_na() %>% 
-  separate_rows(contraception, convert = TRUE, sep = ", ") %>% 
-  ggplot(aes(contraception, value, color = variable)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
+What's up with Monday though? Because women filled out our diary from 17:00-03:00, they also reported on sex the previous night. Maybe some of the increase we're seeing is due to this? I excluded sex on the previous night in the below graph.
 
-choices <- rio::import("https://docs.google.com/spreadsheets/d/1Xo4fRvIzPYbWibVgJ9nm7vES39DSAWQBztnB8j7PdIo/edit#gid=1837266155")
+```{r fig.cap="Without sex the previous night"}
+ggplot(diary %>% filter(!sex_time %in% c("multiple", "t0_yesterday_evening", "t1_before_falling_asleep")), aes(weekday, sex_active_sexual)) + 
+  geom_pointrange(stat = 'summary', fun.data = "mean_se") +
+  scale_y_continuous()
+```
 
-sex_acts <- diary %>% 
-  select(person, created_diary, weekday, time = sex_1_time, activity = sex_1_activity, sex_1_happy, sex_1_enjoyed, sex_1_partner_enjoyed, sex_1_initiation_self = sexual_initiation_self, sex_1_initiation_partner = sexual_initiation_partner) %>% 
-  gather(variable, value, -activity, -person, -created_diary, -time, -weekday) %>% 
-  bind_rows(
-    diary %>% 
-    select(person, created_diary, weekday, time = sex_2_time, activity = sex_2_activity, sex_2_happy, sex_2_enjoyed, sex_2_partner_enjoyed, sex_1_initiation_self = sexual_initiation_self, sex_1_initiation_partner = sexual_initiation_partner) %>% 
-    gather(variable, value, -activity, -person, -created_diary, -time, -weekday)) %>% 
-  separate(variable, into = c("sex", "nr", "variable"), extra = "merge") %>% 
-  drop_na() %>% 
-  separate_rows(activity, convert = TRUE, sep = ",") %>% 
-  group_by(activity) %>% 
-  mutate(n = n_distinct(person, created_diary), 
-         mean_enjoyed = mean(value[variable == "enjoyed"], na.rm = TRUE)) %>% 
-  filter(n > 40) %>% 
-  arrange(desc(mean_enjoyed)) %>%
-  ungroup() %>% 
-  left_join(choices %>% select(activity = label, `Sex act` = name) %>% distinct()) %>% 
-  mutate(activity = fct_inorder(paste(`Sex act`, "n=",  n)),
-         variable = fct_infreq(variable), 
-         nr = fct_infreq(nr), 
-         time = factor(time)) %>% 
-  select(-sex) %>% 
-  group_by(person, created_diary, variable, nr) %>% 
-  mutate(diff_acts = n_distinct(activity)) %>% 
-  ungroup() %>% 
-  distinct() #uggly
+<details><summary>Detailed break-up by time of day</summary>
 
-sex_acts %>% group_by(person, created_diary, activity) %>% filter(activity == first(activity), variable == "enjoyed", !is.na(value)) %>% nrow
+```{r fig.cap="Sexual activity by time of day"}
+sex_long <- sex_long %>% 
+  filter(sex_active_sexual == 1)
 
-sex_combos <- sex_acts %>% 
-  filter(variable == "enjoyed") %>% 
-  distinct() %>% 
-  mutate(value = 1) %>% 
-  select(-activity, -n, -mean_enjoyed) %>% 
-  spread(`Sex act`, value, fill = 0)
+sex_long$weekday = format(as.POSIXct(sex_long$created_diary), format = "%w")
+sex_long$weekday <- car::Recode(sex_long$weekday,												"0='Sunday';1='Monday';2='Tuesday';3='Wednesday';4='Thursday';5='Friday';6='Saturday'",as.factor =T, levels = 	c('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'))
 
-nrow(sex_combos)
-
-sex_combos %>% select(`anal_sex`:`toys`) %>% 
-  as.data.frame() %>% 
-  {
-  upset(., ncol(.), 100, show.numbers = TRUE, order.by = "freq",
-      main.bar.color = "#6E8691",
-      matrix.color = "#6E8691",
-      sets.bar.color = "#4F94B0")
-  }
-
-sex_combos %>% select(`anal_sex`:`toys`) %>% select(-cuddling, -kissing, -masturbation, -toys) %>% 
-  as.data.frame() %>% 
-  {
-  upset(., ncol(.), 100, show.numbers = TRUE, order.by = "freq",
-      main.bar.color = "#6E8691",
-      matrix.color = "#6E8691",
-      sets.bar.color = "#4F94B0")
-  }
-
-summary(mod <- lme4::lmer(value ~ variable * activity + weekday + time + nr + (1 | person) + (1 | person:created_diary), data = sex_acts))
-library(effects)
-x <- effect( "variable:activity", mod)
-x %>% 
-as_tibble() %>% 
-  group_by(activity) %>% 
-  mutate(mean_enjoyed = mean(fit[variable == "enjoyed"], na.rm = TRUE)) %>% 
-  arrange(desc(mean_enjoyed)) %>%
-  ungroup() %>%
-  mutate(`Sex act` = forcats::fct_inorder(forcats::fct_drop(activity))) %>%
-  ggplot(aes(`Sex act`, fit, color = variable, ymin = lower, ymax = upper)) + 
-  coord_flip() +
-  geom_pointrange(position = position_dodge(width = 0.2)) +
-  scale_color_viridis_d() +
-  scale_y_continuous("Value", limits = c(0,4), breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much"))
-
-sex_acts %>% 
-  filter(diff_acts == 1) %>%
-  # mutate(value = residuals(lme4::lmer(value ~ (1|person)))) %>%
-  group_by(activity) %>% 
-  mutate(mean_enjoyed = mean(value[variable == "enjoyed"], na.rm = TRUE)) %>% 
-  arrange(desc(mean_enjoyed)) %>%
-  ungroup() %>% 
-  mutate(activity = forcats::fct_inorder(fct_drop(activity))) %>% 
-  ggplot(aes(activity, value, color = variable)) + 
-  coord_flip() +
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
+sex_long %>% drop_na(time) %>% group_by(weekday) %>% 
+  mutate(n_day = n()) %>% 
+  group_by(weekday, time) %>% 
+  summarise(freq = n()/(nrow(sex_long)/7)) %>% 
+ggplot(aes(weekday, freq, colour = time)) + 
+  geom_point(stat = 'identity',
                   position = position_dodge(width = 0.2)) +
-  scale_color_viridis_d() +
-  scale_y_continuous("Value", limits = c(0,4), breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much"))
+  geom_line(aes(group = time)) +
+  scale_y_continuous() +
+  scale_color_viridis_d(option = "A")
+```
 
+</details>
 
-sex_acts %>% 
-  # mutate(value = residuals(lme4::lmer(value ~ (1|person)))) %>%
-  group_by(activity) %>% 
-  mutate(mean_enjoyed = mean(value[variable == "enjoyed"], na.rm = TRUE)) %>% 
-  arrange(desc(mean_enjoyed)) %>%
-  ungroup() %>% 
-  mutate(activity = forcats::fct_inorder(fct_drop(activity))) %>% 
-  group_by(variable, activity) %>% 
-  mutate(responses = n()) %>% 
-  group_by(variable, activity, value) %>% 
-  summarise(frac = n()/first(responses)) %>% 
-  ggplot(aes(activity, value)) + 
-  coord_flip() +
-  geom_tile(aes(fill = frac)) +
-  scale_fill_viridis_c() +
-  scale_y_continuous("Value", breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much")) + 
-  facet_wrap(~ variable, nrow = 1)
+It seems the Monday bump is just Sunday night sex (see also the details graph, if you are interested). We can also move all last night's sexual activity to the day before and see whether Mondays look more like we expect Mondays to look.^[Steering clear of any Garfield references here.]
 
-
-
-sex_acts %>% 
-  filter(diff_acts == 1) %>% 
-  # mutate(value = residuals(lme4::lmer(value ~ (1|person)))) %>%
-  group_by(activity) %>% 
-  mutate(mean_enjoyed = mean(value[variable == "enjoyed"], na.rm = TRUE)) %>% 
-  arrange(desc(mean_enjoyed)) %>%
-  ungroup() %>% 
-  mutate(activity = forcats::fct_inorder(fct_drop(activity))) %>% 
-  group_by(variable, activity) %>% 
-  mutate(responses = n()) %>% 
-  group_by(variable, activity, value) %>% 
-  summarise(frac = n()/first(responses)) %>% 
-  ggplot(aes(activity, value)) + 
-  coord_flip() +
-  geom_tile(aes(fill = frac)) +
-  scale_fill_viridis_c() +
-  scale_y_continuous("Value", breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much")) + 
-  facet_wrap(~ variable, nrow = 1)
-
-
-separate_to_columns <- function(df, col) {
-  colname <- deparse(substitute(col))
-  df$splitcol <- df %>% pull(colname)
-  df$`_identifier` <- 1:nrow(df)
-  separate_rows(df, splitcol, convert = TRUE, sep = ", ") %>% 
-    mutate(splitcol = if_else(is.na(splitcol), "no", 
-                        if_else(splitcol == "" | 
-                                  splitcol %in% c(), "other", as.character(splitcol)))) %>% 
-    mutate(splitcol = stringr::str_c(colname, "_", splitcol), 
-           `_value` = 1) %>% 
-    spread(splitcol, `_value`, fill = 0) %>% 
-    select(-colname, -`_identifier`)
-}
-
-sex_acts_in_diary <- diary %>%  drop_na(short, created_diary) %>% ungroup() %>% summarise(acts = sum(!is.na(sex_1_activity)) + sum(!is.na(sex_2_activity))) %>% pull(acts)
-
-sex_long <- diary %>% 
-  drop_na(short, created_diary) %>% 
-  group_by(short) %>% 
-  select(short, created_diary, hetero_relationship, hormonal_contraception, contraception_approach, matches("^sex_\\d")) %>% 
-  gather(key, value, matches("^sex_\\d")) %>% 
-  mutate(key = str_sub(key, 5)) %>% 
-  separate(key, into = c("sex_nr", "key"), sep = "_", extra = "merge") %>% 
-  spread(key, value, convert = T) %>% 
-  ungroup() %>% 
-  
-  mutate(sex_active = if_else(is.na(activity), 0, 1),
-         sex_active_solo = if_else(withwhom == "alleine", 1, 0),
-         sex_active_partnered = if_else(withwhom != "alleine", 1, 0)) %>% 
-  
-  filter(sex_active == 1)
-
-
-
-
-to_code_sex_acts <- sex_long %>% 
-  separate_rows(activity, convert = TRUE, sep = ",") %>% 
-  left_join(choices %>% select(activity = label, activity_en = name) %>% distinct()) %>% 
-  bind_rows(
-    sex_long %>% 
-    select(fantasy_actions) %>% 
-    separate_rows(fantasy_actions, convert = TRUE, sep = ",") %>% 
-    rename(activity = fantasy_actions) %>% 
-    left_join(choices %>% select(activity = label, activity_en = name) %>% distinct())) %>% 
-  drop_na(activity) %>% 
-  group_by(activity) %>% 
-  summarise(n = n(), first(activity_en)) %>% 
-  arrange(desc(n))
-
-
-to_code_sex_partners <- sex_long %>% 
-  separate_rows(withwhom, convert = TRUE, sep = ",") %>% 
-  left_join(choices %>% select(withwhom = label_parsed, withwhom_en = name) %>% distinct()) %>% 
-  drop_na(withwhom) %>% 
-  group_by(withwhom) %>% 
-  summarise(n = n(), first(withwhom_en)) %>% 
-  arrange(desc(n))
-
-
-
-  
-sex_long <- sex_long %>% 
-  
-  separate_rows(contraception, convert = TRUE, sep = ", ") %>% 
-  mutate(contraception = str_c("sex_contraception_", if_else(is.na(contraception)
-                                                    & sex_active == 1, "not_necessary", contraception)),
-         dummy = 1) %>% 
-  # distinct() %>% 
-  spread(contraception, dummy, fill = 0) %>% 
-
-  
-  separate_rows(activity, convert = TRUE, sep = ",") %>% 
-  left_join(choices %>% select(activity = label, activity_en = name) %>% distinct()) %>% 
-  mutate(activity = str_c("sex_activity_", if_else(is.na(activity_en)
-                                                    & !is.na(activity), "other", activity_en)),
-         dummy = 1) %>% 
-  select(-activity_en) %>% 
-  distinct() %>% 
-  spread(activity, dummy, fill = 0) %>% 
-  
-  
-  separate_rows(withwhom, convert = TRUE, sep = ",") %>% 
-  left_join(choices %>% select(withwhom = label_parsed, withwhom_en = name) %>% distinct()) %>% 
-  mutate(withwhom = str_c("sex_", if_else(is.na(withwhom_en)
-                                                    & !is.na(withwhom), "other", withwhom_en)),
-         dummy = 1) %>% 
-  select(-withwhom_en) %>% 
-  distinct() %>% 
-  spread(withwhom, dummy, fill = 0) %>% 
-  
-  separate_rows(fantasy_actions, convert = TRUE, sep = ",") %>% 
-  left_join(choices %>% select(fantasy_actions = label, fantasy_actions_en = name) %>% distinct()) %>% 
-  mutate(fantasy_actions = str_c("sex_fantasy_act_", if_else(is.na(fantasy_actions_en)
-                                                    & !is.na(fantasy_actions), "other", fantasy_actions_en)),
-         dummy = 1) %>% 
-  select(-fantasy_actions_en) %>% 
-  distinct() %>% 
-  spread(fantasy_actions, dummy, fill = 0) %>% 
-  
-  separate_rows(fantasy_partner, convert = TRUE, sep = ", ") %>% 
-  mutate(fantasy_partner = str_c("sex_fantasy_about_", fantasy_partner),
-         dummy = 1) %>% 
-  spread(fantasy_partner, dummy, fill = 0) %>% 
-  
-  select(-`<NA>`)
-
-testthat::expect_equal(sex_acts_in_diary, nrow(sex_long))
-
-sex_long %>% 
-  select(time, starts_with("sex_act")) %>% 
-  gather(act, value, -time) %>% 
-  ggplot(aes(time, value, color = act)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
-
-library(lubridate)
-sex_long <- sex_long %>% 
+```{r fig.width=8, fig.cap="Sex and time of sex across the week. Y axis shows the count of sex acts on that day at that time as a percentage of the total number of diary days divided by 7. We can see that daytime sex increases", preview = TRUE}
+sex_long_moved <- sex_long %>% 
   mutate(created_date = if_else(time %in% c("t0_yesterday_evening", "t1_before_falling_asleep", "t2_night_time"),
            as.Date(created_diary - hours(6)) - days(1),
-           as.Date(created_diary - hours(6))))
-sex_summary <- sex_long %>% 
-  group_by(short, created_date) %>% 
-  summarise_at(vars(enjoyed:partner_enjoyed), funs(mean(., na.rm = TRUE))) %>% 
-  left_join(sex_long %>% 
-  group_by(short, created_date) %>% 
-  summarise_at(vars(sex_active:sex_fantasy_about_woman_pornography), funs(max))
-  )
+           as.Date(created_diary - hours(6)))) %>% 
+  mutate(time = recode(time, "t0_yesterday_evening" = "t6_evening",
+                       "t1_before_falling_asleep" = "t7_before_falling_asleep",
+                       "t2_night_time" = "t8_night_time"))
 
-diary <- diary %>% 
-  select(-sex_active) %>% 
-  left_join(sex_summary, by = c("short", "created_date")) %>% 
-  mutate_at(vars(sex_active:sex_fantasy_about_woman_pornography), funs(if_na(., 0)))
+sex_long_moved$weekday = format(as.POSIXct(sex_long_moved$created_date), format = "%w")
+sex_long_moved$weekday <- car::Recode(sex_long_moved$weekday,												"0='Sunday';1='Monday';2='Tuesday';3='Wednesday';4='Thursday';5='Friday';6='Saturday'",as.factor =T, levels = 	c('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'))
 
-
-diary %>% 
-  drop_na(weekday) %>% 
-  ggplot(aes(weekday, sex_activity_sex)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
-
-diary %>% 
-  drop_na(weekday) %>% 
-  ggplot(aes(weekday, sex_activity_fellatio)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
-
-
-diary %>% 
-  drop_na(weekday) %>% 
-    ggplot(aes(weekday, sex_activity_masturbation, color = factor(hetero_relationship))) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
-
-diary %>% 
-  drop_na(weekday) %>% 
-    ggplot(aes(weekday, sex_activity_sex, color = factor(hetero_relationship))) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
-
-diary %>% 
-  drop_na(weekday) %>% 
-  ggplot(aes(weekday, sex_activity_cunnilingus)) + 
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
-                  position = position_dodge(width = 0.2))
-
-# crosstabs(~ sex_active_solo + sex_active_partnered + hetero_relationship, sex_long)
-names(sex_long) %>% paste0(collapse = " + ")
-
-
-library(effects)
-x <- effect( "variable:activity", mod)
-x %>% 
-as_tibble() %>% 
-  group_by(activity) %>% 
-  mutate(mean_enjoyed = mean(fit[variable == "enjoyed"], na.rm = TRUE)) %>% 
-  arrange(desc(mean_enjoyed)) %>%
-  ungroup() %>%
-  mutate(`Sex act` = forcats::fct_inorder(forcats::fct_drop(activity))) %>%
-  ggplot(aes(`Sex act`, fit, color = variable, ymin = lower, ymax = upper)) + 
-  coord_flip() +
-  geom_pointrange(position = position_dodge(width = 0.2)) +
-  scale_color_viridis_d() +
-  scale_y_continuous("Value", limits = c(0,4), breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much"))
-
-sex_summary %>% ungroup() %>%  select(contains("fantasy_act")) %>% 
-  as.data.frame() %>% 
-  {
-  upset(., ncol(.), 100, show.numbers = "yes", order.by = "freq",
-      main.bar.color = "#6E8691",
-      matrix.color = "#6E8691",
-      sets.bar.color = "#4F94B0")
-  }
-
-diary %>% ungroup() %>% filter(hetero_relationship == 0) %>%  
-  select(contains("fantasy_about")) %>% 
-  as.data.frame() %>% 
-  {
-  upset(., ncol(.), 100, show.numbers = "yes", order.by = "freq",
-      main.bar.color = "#6E8691",
-      matrix.color = "#6E8691",
-      sets.bar.color = "#4F94B0")
-  }
-
-diary %>% ungroup() %>% 
-  filter(hetero_relationship == 1, sex_activity_sex == 1) %>%  
-  select(contains("sex_with_"), -sex_with_solo, -sex_with_with_partner_tele) %>% 
-  as.data.frame() %>% 
-  {
-  upset(., ncol(.), 100, 
-      show.numbers = "yes", order.by = "freq",
-      main.bar.color = "#6E8691",
-      matrix.color = "#6E8691",
-      # scale.intersections = "log10",
-      # scale.sets = "log10",
-      sets.bar.color = "#4F94B0")
-  }
-
-diary %>% ungroup() %>% 
-  filter(sex_activity_sex == 1) %>%  
-  select(hetero_relationship, contains("sex_contraception_")) %>% 
-  as.data.frame() %>% 
-  {
-  upset(., ncol(.), 40, 
-      show.numbers = "yes", order.by = "freq",
-      main.bar.color = "#6E8691",
-      matrix.color = "#6E8691",
-      scale.intersections = "log10",
-      scale.sets = "log10",
-      sets.bar.color = "#4F94B0")
-  }
-
-summary(mod <- lme4::lmer(enjoyed ~ hetero_relationship + contraception_approach + weekday +
-                            sex_active_solo + sex_active_partnered + sex_contraception_coitus_interruptus + sex_contraception_condom + sex_contraception_counted_days + sex_contraception_diaphragm + sex_contraception_did_not_want + sex_contraception_long_term + sex_contraception_not_necessary + sex_contraception_risked_it + sex_contraception_spermicide + sex_activity_anal_sex + sex_activity_bdsm_dom + sex_activity_bdsm_sub + sex_activity_cuddling + sex_activity_cunnilingus + sex_activity_fellatio + sex_activity_kissing + sex_activity_masturbated_by_partner + sex_activity_masturbated_partner + sex_activity_masturbation + sex_activity_other + sex_activity_phone_skype_sex + sex_activity_sex + sex_activity_toys + sex_with_other + sex_with_other_female + sex_with_other_male + (1 | person) + (1 | person:created_diary), data = diary))
-
+sex_long_moved %>% 
+  drop_na(time) %>% group_by(weekday) %>% 
+  mutate(n_day = n()) %>% 
+  group_by(weekday, time) %>% 
+  summarise(freq = n()/(nrow(diary)/7)) %>% 
+ggplot(aes(weekday, freq, colour = time)) + 
+  geom_point(stat = 'identity',
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = time)) +
+  scale_y_continuous() +
+  scale_color_viridis_d(option = "E")
 ```
 
+Looks reasonable. So far, I have lumped all sexual activity, partnered and non-partnered.
+
+```{r layout="l-body-outset", fig.width=11, fig.height=6,fig.cap="The weekend bump appears only for partnered sexual activity. But there is an interesting decrease in masturbation before falling asleep on Thursday, Fridays, and Saturdays."}
+sex_long_moved %>% drop_na(time, sex_active_partnered) %>% 
+  group_by(sex_active_partnered, weekday, time) %>% 
+  summarise(freq = n()/(nrow(diary)/7)) %>% 
+ggplot(aes(weekday, freq, colour = time)) + 
+  geom_point(stat = 'identity',
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = time)) +
+  scale_y_continuous() +
+  scale_color_viridis_d(option = "E") +
+  facet_grid(. ~ sex_active_partnered, labeller = label_both)
+```
+
+
+So, maybe it's not mainly about having more time on the weekend, but rather about coordination? We have a lot of data about whether people are living together, in the same city, or in a long-distance relationship.
+
+
+```{r fig.width=8,fig.cap="Long-distance relationships make the week-end gap worse, but even couples who live together have more sex on week-ends."}
+diary <- diary %>% 
+  mutate(
+    living_arrangements = if_else(hetero_relationship == 0, "single", 
+                                  if_else(abode_with_partner == 1, 
+                                          "living with\npartner", 
+                                  if_else(long_distance_relationship == 1, 
+                                          "long-distance", 
+                                          "same place as partner")
+                                  )
+    )
+  )
+ggplot(diary, aes(weekday, sex_active_sexual - sex_active_solo, color = living_arrangements)) + 
+  geom_pointrange(stat = 'summary', fun.data = "mean_se",
+                  position = position_dodge(width = 0.4)) +
+  geom_line(aes(group = living_arrangements), stat = 'summary', fun.data = "mean_se",
+                  position = position_dodge(width = 0.4)) +
+  scale_y_continuous("Sex with a partner") +
+  scale_color_viridis_d(option = "C")
+```
+
+
+```{r fig.cap="The week-end gap is smaller, but not gone for couples who spend the more days a week together."}
+ggplot(diary %>% drop_na(days_with_partner) %>% mutate(weekend = factor(weekend),days_with_partner = as.numeric(days_with_partner)), aes(weekend, sex_active_sexual - sex_active_solo, color = days_with_partner)) + 
+  geom_pointrange(aes(group = days_with_partner), stat = 'summary', fun.data = "mean_se",
+                  position = position_dodge(width = 0.4)) +
+  geom_line(aes(group = days_with_partner), stat = 'summary', fun.data = "mean_se",
+                  position = position_dodge(width = 0.4)) +
+  scale_y_continuous("Sex with a partner") +
+  scale_color_viridis_c("Days with\npartner", option = "B")
+```
+
+We can also relate the timing of sex to own/partner satisfaction and happiness. For example, we
+saw above that women report masturbating in the morning and during the night quite rarely, whereas
+partnered sexual activity was comparatively more common then.
+
+```{r layout="l-body-outset", fig.width=9, fig.cap="Women's own satisfaction and happiness and their partner's satisfaction as a function of time of day."}
+sex_long_moved %>% 
+  drop_na(sex_active_partnered) %>% 
+  # filter(sex_active_partnered == 1, sex_with_partner == 1) %>% 
+  gather(variable, value, one_of("enjoyed", "partner_enjoyed", "happy")) %>% 
+    ggplot(aes(time, value, color = variable)) + 
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', 
+                  position = position_dodge(width = 0.4)) +
+  scale_color_viridis_d(option = "D") +
+  facet_grid(. ~ sex_active_partnered, labeller = label_both) +
+  theme(axis.text.x = element_text(angle = -20, hjust = -0)) 
+```
+
+In fact, women report being less satisfied with and happy about morning sex.^[They say the same thing about their partner's enjoyment.] The difference is small and there could be a ton of factors (from circadian hormone change, to different activities by time of day, to differing partner attentiveness, to feeling rushed before work, and so on).
+
+We have data on aspects of the sexual activity other than time, so we can potentially pull apart different influences on happiness and enjoyment (although still with much less than experimental rigour).
+
+This is an incredibly rich dataset, so I am very interested in suggestions what else to look at and how.

@@ -7,7 +7,16 @@
     <description>Personal blog
 </description>
     <generator>Radix</generator>
-    <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Sexual activity by time of day</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</link>
+      <description>Examining when women in our diary study were sexually active.</description>
+      <guid>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</guid>
+      <pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-6-1.png" medium="image" type="image/png" width="1536" height="768"/>
+    </item>
     <item>
       <title>Measuring contraception</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
