@@ -7,7 +7,7 @@ author:
     url: https://rubenarslan.github.io
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
-date: 04-08-2019
+date: 04-12-2019
 categories: 
   - sex diary
   - open science
@@ -194,8 +194,9 @@ diary <- diary %>%
                                   )
     )
   )
-ggplot(diary, aes(weekday, sex_active_sexual - sex_active_solo, color = living_arrangements)) + 
-  geom_pointrange(stat = 'summary', fun.data = "mean_se",
+
+ggplot(diary %>% mutate(weekend = factor(weekend)), aes(weekend, sex_active_sexual - sex_active_solo, color = living_arrangements)) + 
+  geom_pointrange(aes(group = living_arrangements), stat = 'summary', fun.data = "mean_se",
                   position = position_dodge(width = 0.4)) +
   geom_line(aes(group = living_arrangements), stat = 'summary', fun.data = "mean_se",
                   position = position_dodge(width = 0.4)) +
