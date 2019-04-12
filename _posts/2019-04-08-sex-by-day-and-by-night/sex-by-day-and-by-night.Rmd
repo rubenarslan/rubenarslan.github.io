@@ -53,7 +53,7 @@ theme_set(theme_bw())
 load("~/research/routine_and_sex/cleaned.rdata")
 ```
 
-First off, how many sexual acts do women report across days?
+Here, I am looking at all data (1345 women over 61,365 days, ~45 days per woman). First off, how many sexual acts do women report across days?
 
 ```{r fig.cap="Number of sexual acts on each diary day. X-axis is log1p-scaled."}
 diary <- diary %>% filter(!is.na(sex_active))
@@ -219,7 +219,7 @@ We can also relate the timing of sex to own/partner satisfaction and happiness. 
 saw above that women report masturbating in the morning and during the night quite rarely, whereas
 partnered sexual activity was comparatively more common then.
 
-```{r layout="l-body-outset", fig.width=9, fig.cap="Women's own satisfaction and happiness and their partner's satisfaction as a function of time of day."}
+```{r layout="l-body-outset", fig.width=9, fig.cap="Women's own satisfaction and happiness and their partner's satisfaction as a function of time of day. The scale went from 0 [not at all] to 4 [very much so]."}
 sex_long_moved %>% 
   drop_na(sex_active_partnered) %>% 
   # filter(sex_active_partnered == 1, sex_with_partner == 1) %>% 
