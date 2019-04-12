@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = FALSE)
 We collected detailed data on sexual activity in our diary study. After a lot of discussion in the team,
 we agreed on the following method:
 
-- We asked women whether they had been sexually active (including masturbation, kissing and cuddling^[probably the German word _Zärtlichkeiten_ sounds less weird than this translation. Or more so.])
+- We asked women whether they had been sexually active (including masturbation, and caresses^[probably the German word _Zärtlichkeiten_ sounds less weird than this translation. Or more so.])
 - If they said yes, we asked how often
 - If they gave a number higher than two, we asked them to describe only the first two activities
 - Then, for each sexual activity, we asked
@@ -38,7 +38,7 @@ we agreed on the following method:
     - Who/what did you think about?
   - We then asked about own satisfaction and partner satisfaction, and whether it made them happy.
 
-A big part of our discussion was which sexual activities we should list. A very long list of activities seemed a bit intimidating, plus many sexual activities in German have either weirdly academic or vulgar names, but nothing that seemed usable. In the end, we opted for a subset of activities and the ability to write in unlisted options, which we coded afterwards. We think this worked quite well, but it is possible that the activities we listed were "normalised" more than unlisted activities. I'm curious how others go about this.
+A big part of our discussion was which sexual activities we should list. A very long list of activities seemed a bit intimidating, plus many sexual activities in German have either weirdly academic or vulgar names, but nothing that seemed usable. We didn't want to exclude non-genital sexual contact from consideration, but also didn't want to ask our participants to report every goodbye kiss or hug. In the end, we opted for a subset of activities (including kissing and cuddling) and the ability to write in unlisted options, which we coded afterwards. We think this worked quite well, but it is possible that the activities we listed were "normalised" more than unlisted activities. I'm curious how others go about this.^[I'll blog about this list of activities another time.]
 
 Because we tried to impose as few restrictions as possible, cleaning this data was a bit cumbersome though (people have sex in manifold ways!). To motivate myself to do it, I wanted to blog a few descriptive statistics. I don't have a sexology background, so I don't know what is well-known to experts in the field and what isn't. Of course, we mainly plan to use the data to study sex across the menstrual cycle, but I think there are many interesting aspects to the data unrelated to that.
 
@@ -73,9 +73,28 @@ diary <- diary %>%
 
 qplot(sex_acts, data = diary) + 
   scale_x_continuous("Sexual acts", trans = "log1p", breaks = c(0:5,10, 20))
+
+ind_diffs <- diary %>% group_by(hetero_relationship, short) %>% 
+  filter(n() > 40) %>% 
+  summarise(any_act = sum(sex_active)/n(),
+            sex_act = sum(sex_active_sexual)/n(),
+            kiss_cuddling = sum(sex_active_sexual == 0 & (sex_activity_kissing ==1 | sex_activity_cuddling == 1))/n(),
+            masturbation = sum(sex_active_solo)/n(),
+            sex_partnered = sum(sex_active_partnered)/n()) %>% 
+  gather(act, freq, -short, -hetero_relationship)
 ```
 
-This looks good. Women rarely report more than two acts a day, so we are not missing much in our survey. On average, people in our sample engaged in some sexual activity (including kissing and cuddling) on `r round(sum(diary$sex_acts>0)/nrow(diary)*100)`% of days. Excluding kissing and cuddling, women in our sample either masturbate or have some sort of sex on `r round(sum(diary$sex_active_sexual)/nrow(diary)*100)`% of days. Broken down even further, women in our sample have sex with a partner on `r round(sum((diary$sex_active_sexual == 1 & diary$sex_active_partnered == 1))/nrow(diary)*100)`% of days and masturbate on `r round(sum((diary$sex_active_sexual == 1 & diary$sex_active_solo == 1))/nrow(diary)*100)`% of days. In the following, I will exclude kissing and cuddling, although it makes little difference for the results.
+This looks good. Women rarely report more than two acts a day, so we are not missing much in our survey. On average, people in our sample engaged in some sexual activity (including kissing and cuddling) on `r round(sum(diary$sex_acts>0)/nrow(diary)*100)`% of days.^[If this seems low to you: as you can see in the aside, most women did not report kissing and cuddling if there was not also some other sexual contact.] Excluding kissing and cuddling, women in our sample either masturbate or have some sort of sex on `r round(sum(diary$sex_active_sexual)/nrow(diary)*100)`% of days. Broken down even further, women in our sample have sex with a partner on `r round(sum((diary$sex_active_sexual == 1 & diary$sex_active_partnered == 1))/nrow(diary)*100)`% of days and masturbate on `r round(sum((diary$sex_active_sexual == 1 & diary$sex_active_solo == 1))/nrow(diary)*100)`% of days. In the following, I will exclude kissing and cuddling, although it makes little difference for the results.
+
+<aside>
+Of course, there are individual differences in these frequencies. In blue, you see women in relationships, in yellow single women.^[I restricted the dataset to the 878 women who had participated for at least 40 days to make sure we could estimate the frequency with some accuracy.]
+
+```{r fig.height=5, fig.width=2, fig.cap="Sexual act frequency differences"}
+ggplot(ind_diffs, aes(freq, fill = factor(hetero_relationship))) + geom_density(alpha = 0.4) +
+  facet_grid(act ~ . , scales = "free_y") +
+  scale_fill_viridis_d(option = "E", guide = FALSE)
+```
+</aside>
 
 Most readers probably know people are more sexually active on weekends:
 
