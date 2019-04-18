@@ -129,7 +129,8 @@ sex_long %>% drop_na(time) %>% group_by(weekday) %>%
 ggplot(aes(weekday, freq, colour = time)) + 
   geom_point(stat = 'identity',
                   position = position_dodge(width = 0.2)) +
-  geom_line(aes(group = time)) +
+  geom_line(aes(group = time),
+                  position = position_dodge(width = 0.2)) +
   scale_y_continuous() +
   scale_color_viridis_d(option = "A")
 ```
@@ -158,7 +159,8 @@ sex_long_moved %>%
 ggplot(aes(weekday, freq, colour = time)) + 
   geom_point(stat = 'identity',
                   position = position_dodge(width = 0.2)) +
-  geom_line(aes(group = time)) +
+  geom_line(aes(group = time),
+                  position = position_dodge(width = 0.2)) +
   scale_y_continuous() +
   scale_color_viridis_d(option = "E")
 ```
@@ -172,7 +174,8 @@ sex_long_moved %>% drop_na(time, sex_active_partnered) %>%
 ggplot(aes(weekday, freq, colour = time)) + 
   geom_point(stat = 'identity',
                   position = position_dodge(width = 0.2)) +
-  geom_line(aes(group = time)) +
+  geom_line(aes(group = time),
+                  position = position_dodge(width = 0.2)) +
   scale_y_continuous() +
   scale_color_viridis_d(option = "E") +
   facet_grid(. ~ sex_active_partnered, labeller = label_both)
@@ -237,3 +240,55 @@ In fact, women report being less satisfied with and happy about morning sex.^[Th
 We have data on aspects of the sexual activity other than time, so we can potentially pull apart different influences on happiness and enjoyment (although still with much less than experimental rigour).
 
 This is an incredibly rich dataset, so I am very interested in suggestions what else to look at and how.
+
+## PS 
+In follow-up discussions, it occurred to me that I never included two of the most obvious graphs. Luckily, I can remedy that now.
+
+```{r layout="l-body-outset", fig.width=11, fig.height=6,fig.cap="People have the most sex in the evenings. On week-ends, they also get a chance during the day and in the mornings. "}
+sex_long_moved %>% drop_na(time) %>% 
+  group_by(weekday) %>% 
+  arrange(time) %>% 
+  mutate(time = fct_inorder(recode(time, 
+                       "t3_after_waking_up" = "\nafter waking up",
+                       "t4_morning" = "morning",
+                      "t5_during_day" = "\nduring day",
+                      "t6_evening" = "evening",
+                      "t7_before_falling_asleep" = "\nbefore falling asleep",
+                      "t8_night_time" = "night time"))) %>%  
+  mutate(n_day = n()) %>% 
+  group_by(weekday, time, sex_active_partnered) %>% 
+  summarise(freq = n()/(nrow(sex_long)/7)) %>% 
+ggplot(aes(time, freq, colour = weekday)) + 
+  geom_point(stat = 'identity',
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = weekday),
+                   position = position_dodge(width = 0.2)) +
+  scale_y_continuous() +
+facet_grid(. ~ sex_active_partnered, labeller = label_both) +
+  scale_color_viridis_d(option = "D")
+
+```
+
+
+```{r layout="l-body-outset", fig.width=11, fig.height=6,fig.cap="We can show it even more strongly by collapsing the two evening and the two morning categories"}
+sex_long_moved %>% drop_na(time) %>% 
+  mutate(time = recode(time, 
+                       "t3_after_waking_up" = "t1_morning",
+                       "t4_morning" = "t1_morning",
+                      "t5_during_day" = "t2_daytime",
+                      "t6_evening" = "t3_evening",
+                      "t7_before_falling_asleep" = "t3_evening",
+                      "t8_night_time" = "t4_night_time")) %>% 
+  group_by(weekday) %>% 
+  mutate(n_day = n()) %>% 
+  group_by(weekday, time, sex_active_partnered) %>% 
+  summarise(freq = n()/(nrow(sex_long)/7)) %>% 
+ggplot(aes(time, freq, fill = weekday)) + 
+  geom_col(position = 'dodge') +
+  # geom_line(aes(group = weekday),
+  #                 position = position_dodge(width = 0.2)) +
+  scale_y_continuous("Daily frequency") +
+facet_grid(. ~ sex_active_partnered, labeller = label_both) +
+  scale_fill_viridis_d(option = "D")
+```
+
