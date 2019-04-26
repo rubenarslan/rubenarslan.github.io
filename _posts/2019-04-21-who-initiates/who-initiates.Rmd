@@ -1,0 +1,437 @@
+---
+title: "Who initiates sex?"
+description: |
+  A chicken-and-egg-question?
+author:
+  - name: "Ruben C. Arslan"
+    url: https://rubenarslan.github.io
+    affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
+date: 04-26-2019
+categories: 
+  - sex diary
+  - open science
+  - sexual activity
+  - sex
+  - quick job
+output:
+  radix::radix_article:
+    self_contained: false
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+I'm tempted to say I started writing this post over Easter, because the question
+"who initiates sexual behaviour in relationships" seems like a chicken-and-egg-question.
+There are no easy answers. Of course, societal expectations and relationship
+habits imply that we cannot take whatever answers we find to mean that this translates
+to who wants (certain) sex (acts) more. And of course, none of this gets any 
+easier given that in our dataset women reported their perceptions of both their
+partner and themselves—we did not hear from the partners.
+
+But this is just a blog post, so I'll ask you to kindly keep these caveats in mind.^[Lest I sell the data short, the initiation questions do show reasonable associations with a bunch of other questions we asked, see Appendix. However, I have tagged this post a "quick job", so it is excluded from by Bug Bounty program. I still appreciate hearing about errors of course.]
+
+```{r}
+library(formr)
+library(codebook)
+library(tidyverse)
+library(lubridate)
+library(UpSetR)
+
+theme_set(theme_bw())
+load("~/research/routine_and_sex/cleaned.rdata")
+diary <- diary %>% filter(!is.na(sex_active))
+diary <- diary %>% 
+  mutate(sex_acts = if_na(sex_acts, 0))
+
+
+cut_common_stem <- function(x) {
+  i = 1
+  while (i <= max(stringr::str_length(x)) & dplyr::n_distinct(stringr::str_sub(x, 1, i)) == 1) {
+    i = i + 1
+  }
+  stringr::str_sub(x, i)
+}
+
+
+# ggplot(diary, aes(str_wrap(as_factor(contact_partner, "both"),10), sexual_initiation_partner)) + 
+  # geom_pointrange(stat = 'summary', fun.data = "mean_se")
+
+diary <- diary %>% 
+  group_by(person) %>% 
+  filter(sum(!is.na(ended_diary)) > 30,
+         hetero_relationship == 1) %>% 
+  ungroup() %>% 
+  filter(contact_partner < 5)
+```
+
+To do look at who initiates sex more often, I'll restrict the diary dataset to the `r n_distinct(diary$person)` women who filled out the diary on more than 30 days and who were in a heterosexual relationship. I'll also restrict it to days, on which women had seen their partners at least briefly. We asked women in heterosexual relationships to endorse the following specific, awkwardly pointed statements. Because we were trying not to bore our participants out of their minds we only asked these questions on 30% of days.
+This still lets me examine `r sum(!is.na(diary$sexual_initiation_self))` days, with sexual activity on `r sum(diary$sex_active == 1 & !is.na(diary$sexual_initiation_self))` of those days.
+
+- My partner initiated sexual acts with me.
+- I initiated sexual acts with my partner.
+
+Single women and women who had non-heterosexual relationships filled out detailed questions about their
+love lives as well, but we'll leave that for another day. 
+
+## Women and men
+
+```{r fig.cap="As you can maybe already see, women reported their partners initiated sex more often, on average."}
+diary %>% 
+  select(person, created_diary, sexual_initiation_self, sexual_initiation_partner) %>% 
+  gather(who, value, sexual_initiation_self, sexual_initiation_partner) %>% 
+  ggplot(aes(value, fill = value, group = value)) +
+    geom_bar(position = "stack") +
+  scale_fill_gradient() +
+  scale_x_continuous("Endorsement", breaks = 0:4, labels = c("0\nnot true", "1", "2", "3", "4\nvery true")) +
+  facet_wrap(~ who)
+```
+
+```{r fig.cap="By looking at this in two dimensions, we can see a bit more detail. On most days, women report equal initiative by both, but on many days they also report initiative from the partner, when they themselves showed zero initiative. It becomes apparent that stretching the response options out from zero to four may not have made that much of a difference."}
+diary %>% 
+  select(person, created_diary, sexual_initiation_self, sexual_initiation_partner) %>% 
+  ggplot(aes(sexual_initiation_self, sexual_initiation_partner)) +
+    geom_bin2d(bins = 5) +
+  scale_fill_viridis_c(trans = "log", breaks = c(0, 100, 200, 500, 1000, 2000, 4000)) +
+  scale_x_continuous("Own initiative", breaks = 0:4, labels = c("0\nnot true", "1", "2", "3", "4\nvery true")) +
+  scale_y_continuous("Partner initiative", breaks = 0:4, labels = c("0\nnot true", "1", "2", "3", "4\nvery true"))
+```
+
+```{r fig.cap="Let's simplify it down to yes or no."}
+diary %>% 
+  select(person, created_diary, sexual_initiation_self, sexual_initiation_partner) %>% 
+  ggplot(aes(if_else(sexual_initiation_self > 0, 1, 0), if_else(sexual_initiation_partner > 0, 1, 0))) +
+    geom_bin2d(bins = 2) +
+  scale_fill_viridis_c(trans = "log", breaks = c(0, 100, 200, 500, 1000, 2000, 4000)) +
+  scale_x_continuous("Showed initiative", breaks = 0:1, labels = c("0\nno", "1\nyes")) +
+  scale_y_continuous("Partner showed initiative", breaks = 0:1, labels = c("0\nno", "1\nyes"))
+```
+
+<details><summary>Individual differences</summary>
+
+I don't want to neglect individual differences, but visualising them well is hard! Therefore,
+I hid these attempts here.
+
+```{r fig.cap="Simplifying it gives us a chance to make a tapestry of the individual differences in these patterns I'm restricting it to women with a lot of data here, so we can still see. Each four-coloured square is one couple/woman."}
+tapestry <- diary %>% 
+  group_by(person) %>% 
+  filter(sum(!is.na(sexual_initiation_self)) > 20, !is.na(sexual_initiation_self)) %>% 
+  select(person, created_diary, sexual_initiation_self, sexual_initiation_partner) %>% 
+  ggplot(aes(if_else(sexual_initiation_self > 0, 1, 0), if_else(sexual_initiation_partner > 0, 1, 0))) +
+    geom_bin2d(bins = 2, drop = FALSE) +
+  scale_fill_gradient(breaks = c(0, 100, 200, 500, 1000, 2000, 4000)) +
+  scale_x_continuous("Showed initiative", breaks = NULL) +
+  scale_y_continuous("Partner showed initiative", breaks = NULL) +
+  facet_wrap(~ person)
+
+tapestry +
+  theme(strip.text = element_blank(), panel.spacing = unit(0, "mm"))
+```
+
+```{r fig.cap="We can also look at the number of days on which both. Each color is one woman/couple."}
+diffs <- diary %>% 
+  ungroup() %>% 
+  mutate(
+    both_init = sexual_initiation_partner > 0 & sexual_initiation_self > 0,
+    partner_more = sexual_initiation_partner > sexual_initiation_self,
+    partner_less = sexual_initiation_partner < sexual_initiation_self,
+    partner_same = sexual_initiation_partner == sexual_initiation_self,
+    partner_same_and_nonzero = sexual_initiation_partner == sexual_initiation_self & sexual_initiation_partner > 0
+    ) %>% 
+  group_by(person) %>% 
+  filter(sum(!is.na(sexual_initiation_self)) > 20, !is.na(sexual_initiation_self)) %>% 
+  summarise(sexual_initiation_self = mean(sexual_initiation_self),
+            sexual_initiation_partner = mean(sexual_initiation_partner),
+            partner_more = sum(partner_more),
+            partner_less = sum(partner_less),
+            partner_same = sum(partner_same),
+            partner_same_and_nonzero = sum(partner_same_and_nonzero),
+            both_init = sum(both_init)
+  )
+
+ggplot(diffs %>% select(person, both_init, partner_more, partner_less, partner_same, partner_same_and_nonzero) %>% 
+         gather(key, value, -person), aes(value, fill = factor(person))) +
+  scale_fill_discrete("Person", guide = FALSE) +
+  geom_bar() +
+  facet_wrap(~ key, nrow = 1)
+```
+
+
+```{r}
+diffs %>% 
+  arrange(sexual_initiation_partner - sexual_initiation_self) %>% 
+  select(both_init, starts_with("partner")) %>% 
+  filter(row_number() < 5 | row_number() > n() - 5) %>% 
+  knitr::kable(caption = "We can look at the five women those whose initiative exceeded their partners' most, and those five women whose initiative was lower than their partners most often.")
+```
+
+</details>
+
+## By time
+
+In the last post, we looked at sexual activity across the day and week. So, you have
+some idea when sex happens. But who initiates sex on these days? Unsurprsingly, it seems both (or more in some cases) parties are initiating sex more on the weekend.
+
+```{r fig.width=8, fig.cap="Are their partners more likely to initiate sex during the week than our participants? The difference does not seem large."}
+sex_long_moved <- sex_long %>% 
+  mutate(created_date = if_else(time %in% c("t0_yesterday_evening", "t1_before_falling_asleep", "t2_night_time"),
+           as.Date(created_diary - hours(6)) - days(1),
+           as.Date(created_diary - hours(6)))) %>% 
+  mutate(time = recode(time, "t0_yesterday_evening" = "t6_evening",
+                       "t1_before_falling_asleep" = "t7_before_falling_asleep",
+                       "t2_night_time" = "t8_night_time")) %>% 
+  right_join(diary %>% 
+              select(short, created_date, sexual_initiation_partner, sexual_initiation_self))
+
+sex_long_moved$weekday <- format(as.POSIXct(sex_long_moved$created_date), format = "%w")
+sex_long_moved$weekday <- car::Recode(sex_long_moved$weekday,												"0='Sunday';1='Monday';2='Tuesday';3='Wednesday';4='Thursday';5='Friday';6='Saturday'",as.factor =T, levels = 	c('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'))
+
+sex_long_moved %>% 
+  gather(who, value, sexual_initiation_partner, sexual_initiation_self) %>% 
+ggplot(aes(weekday, value, color = who)) + 
+  geom_pointrange(stat = 'summary', fun.data = 'mean_se',
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = who), stat = 'summary', fun.data = 'mean_se',
+                  position = position_dodge(width = 0.2)) +
+  scale_y_continuous() +
+  scale_color_viridis_d(option = "E")
+```
+
+<details><summary>A different look at the same data</summary>
+
+```{r fig.width=8, fig.cap="Okay, so I have a problem with letting go of redundant plots. So what?"}
+sex_long_moved %>% 
+  gather(who, value, sexual_initiation_partner, sexual_initiation_self) %>% 
+  drop_na(value) %>% 
+  arrange(desc(value)) %>% 
+ggplot(aes(weekday, fill = fct_inorder(factor(value)))) + 
+  geom_bar(stat = 'count', position = 'fill') +
+  scale_y_continuous() +
+  scale_fill_viridis_d(option = "E", direction = -1) + 
+  facet_wrap(~ who)
+```
+
+</details>
+
+
+What about time of day? In the last post we saw that women reported slightly lower enjoyment for morning sex on average. Here, we see a corresponding gap in initiation. However, we also see a gap for daytime sex and we saw no enjoyment gap there. I'm very interested in your theories (or literature) why these gaps turn out differently.
+
+```{r fig.width=8, fig.cap="Interesting difference! It may seem odd that average initiation goes down in the evening, even though people have more sex in the evening, but remember that I can only plot sex according to time conditional on having sex. I don't know exactly what everyone is doing at night, but maybe sex 'just happens' more often? Or the kind of people who only have sex in the evenings are less likely to strongly endorse the initiation items. Complicated, huh? I'm lucky this is just a blog post.", preview = TRUE}
+sex_long_moved %>% 
+  filter(sex_active_partnered == 1) %>% 
+  gather(who, value, sexual_initiation_partner, sexual_initiation_self) %>% 
+  mutate(time = recode(time, 
+                       "t3_after_waking_up" = "t1_morning",
+                       "t4_morning" = "t1_morning",
+                      "t5_during_day" = "t2_daytime",
+                      "t6_evening" = "t3_evening",
+                      "t7_before_falling_asleep" = "t3_evening",
+                      "t8_night_time" = "t4_night_time")) %>% 
+  ggplot(aes(time, value, color = who)) + 
+  geom_pointrange(stat = 'summary', fun.data = 'mean_se',
+                  position = position_dodge(width = 0.2)) +
+  geom_line(aes(group = who), stat = 'summary', fun.data = 'mean_se',
+                  position = position_dodge(width = 0.2)) +
+  scale_y_continuous("Initiation") +
+  scale_color_viridis_d(option = "E")
+```
+
+
+<details><summary>A different look at the same data</summary>
+
+```{r layout="l-body-outset",fig.width=10, fig.cap="Okay, so I have a problem with letting go of redundant plots. So what?"}
+sex_long_moved %>% 
+  filter(sex_active_partnered == 1) %>% 
+  gather(who, value, sexual_initiation_partner, sexual_initiation_self) %>% 
+  drop_na(value) %>% 
+  arrange(desc(value)) %>% 
+  mutate(time = recode(time, 
+                       "t3_after_waking_up" = "t1_morning",
+                       "t4_morning" = "t1_morning",
+                      "t5_during_day" = "t2_daytime",
+                      "t6_evening" = "t3_evening",
+                      "t7_before_falling_asleep" = "t3_evening",
+                      "t8_night_time" = "t4_night_time")) %>% 
+ggplot(aes(time, fill = fct_inorder(factor(value)))) + 
+  geom_bar(stat = 'count', position = 'fill') +
+  scale_y_continuous() +
+  scale_fill_viridis_d(option = "E", direction = -1) + 
+  facet_wrap(~ who)
+```
+
+</details>
+
+## Who initiates which acts?
+
+Now, we did not ask for each sexual act who initiated it. That kind of play-by-play just did not seem like a reasonable thing to ask. Still, it might be fun to look at the initiation on each day by the kind of sex people had on that day.
+
+```{r layout="l-body-outset",fig.width=10, fig.cap="First, we can look at raw means."}
+# summary(mod <- lme4::lmer(value ~ who * (weekday + time +  
+#                             sex_activity_anal_sex + sex_activity_bdsm_sub + sex_activity_cuddling +
+#                             sex_activity_cunnilingus + sex_activity_fellatio + sex_activity_kissing +
+#                             sex_activity_masturbated_by_partner + sex_activity_masturbated_partner +
+#                             sex_activity_masturbation + sex_activity_toys + 
+#                             sex_with_other_female + sex_with_other_male + sex_nr) + (1 | person) + (1 | person:created_diary), data = sex_long_moved %>% 
+#           gather(who, value, sexual_initiation_self, sexual_initiation_partner) %>% 
+#             rename(person = short)))
+
+sex_long_by_who <- sex_long_moved %>% 
+  gather(act, value, starts_with("sex_activity")) %>% 
+  drop_na(sexual_initiation_self) %>% 
+  filter(value == 1, sex_active_partnered == 1) %>% 
+  mutate(act = cut_common_stem(act)) %>% 
+  group_by(act) %>% 
+  filter(n() > 30) %>% 
+  mutate(mean_sexual_initiation_self = mean(sexual_initiation_self, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  arrange(desc(mean_sexual_initiation_self)) %>% 
+  mutate(act = forcats::fct_inorder(forcats::fct_drop(act))) %>%
+  gather(who, value, sexual_initiation_self, sexual_initiation_partner) %>% 
+  mutate(who = forcats::fct_infreq(who),
+         time = forcats::fct_infreq(time),
+         sex_nr = forcats::fct_infreq(sex_nr)
+         )
+sex_long_by_who %>% 
+  rename(`Sex act` = act) %>% 
+ggplot(aes(`Sex act`, value, color = who)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_se', position = position_dodge(width = 0.2)) +
+  coord_flip() +
+  scale_color_viridis_d(end = 0.5) +
+  scale_y_continuous("Value", limits = c(0,4), breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much"))
+```
+
+Now, looking at raw means ignores that certain sex acts are more likely to be performed in the evenings or on weekends and that they co-occur. We already saw these factors have something to do with initiation as well. I'm not sure what the best model is to take all this into account. I'm happy for better suggestions!
+
+Some activities trade ranks, but fellatio and BDSM (submissive) stay at the top. Fellatio is the only act where we see almost no gap in initiation.
+
+```{r layout="l-body-outset",fig.width=10,fig.cap="What do we get when we adjust for these other factors and between-individual differences in an ad-hoc model?"}
+mod <- lme4::lmer(value ~ who * (weekday + time +  act + sex_nr) + (1 | short), data = sex_long_by_who)
+library(effects)
+x <- effect( "who:act", mod)
+x %>% 
+as_tibble() %>% 
+  group_by(act) %>% 
+  mutate(mean = mean(fit[who == "sexual_initiation_self"], na.rm = TRUE)) %>% 
+  arrange(desc(mean)) %>%
+  ungroup() %>%
+  mutate(`Sex act` = forcats::fct_inorder(forcats::fct_drop(act))) %>%
+  ggplot(aes(`Sex act`, fit, color = who, ymin = lower, ymax = upper)) + 
+  coord_flip() +
+  geom_pointrange(position = position_dodge(width = 0.2)) +
+  scale_color_viridis_d(end = 0.5) +
+  scale_y_continuous("Value", limits = c(0,4), breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much"))
+```
+
+So, this is a first look at the question who initiates (what kind of) sex. I had a busy week, so this is
+just quick and dirty.^[But let me know if you want to see a graph I could add.] I plan to analyse sexual initiation across the menstrual cycle at some point, so it was good to do some sanity checks with this data.
+
+## Self-reported initiation—not total nonsense, maybe? {.appendix} 
+
+Part of the reason for doing this blog post was seeing whether the items we used give reasonable results. I did not want to bore you with these sanity checks, but I'm also not good at deleting graphs either. 
+
+```{r fig.cap="How would have thought? Initiating sex predicts more sex acts on that day."}
+diary %>% 
+ group_by(sexual_initiation_self, sexual_initiation_partner) %>% 
+  summarise_at("sex_acts", funs(mean(., na.rm = TRUE))) %>% 
+  ggplot(aes(sexual_initiation_self, sexual_initiation_partner, fill = sex_acts)) +
+  geom_tile() +
+  scale_fill_viridis_c(option = "A")
+```
+
+```{r fig.cap="And sexual initiation in the absence of partner initiation is associated with masturbation"}
+diary %>% 
+ group_by(sexual_initiation_self, sexual_initiation_partner) %>% 
+  summarise_at("sex_active_solo", funs(mean(., na.rm = TRUE))) %>% 
+  ggplot(aes(sexual_initiation_self, sexual_initiation_partner, fill = sex_active_solo)) +
+  geom_tile() +
+  scale_fill_viridis_c(option = "A")
+```
+
+```{r fig.cap="Initiating sex has a stronger relationship with own libido than partner initiation"}
+diary %>% 
+ group_by(sexual_initiation_self, sexual_initiation_partner) %>% 
+  summarise_at("high_libido", funs(mean(., na.rm = TRUE))) %>% 
+  ggplot(aes(sexual_initiation_self, sexual_initiation_partner, fill = high_libido)) +
+  geom_tile() +
+  scale_fill_viridis_c(option = "A")
+
+diary %>% 
+  select(person, created_diary, high_libido, sexual_initiation_self, sexual_initiation_partner) %>% 
+  gather(who, value, sexual_initiation_self, sexual_initiation_partner) %>% group_by(who) %>%
+  drop_na(value) %>% 
+  summarise(cor(value, high_libido))
+```
+
+
+```{r fig.cap="Initiating sex has a stronger relationship with with wanting to satisfy own sexual needs than partner initiation"}
+diary %>% 
+  select(person, created_diary, sexual_desire_fulfill_sex_needs, sexual_initiation_self, sexual_initiation_partner) %>% 
+  gather(who, value, sexual_initiation_self, sexual_initiation_partner) %>% 
+  ggplot(aes(value, sexual_desire_fulfill_sex_needs, color = who, group = who)) +
+  geom_pointrange(stat = 'summary', fun.data = "mean_se") +
+  geom_smooth(method = 'lm') +
+  scale_color_viridis_d() +
+  scale_x_continuous("Endorsement", breaks = 0:4, labels = c("0\nnot true", "1", "2", "3", "4\nvery true"))
+```
+
+
+```{r fig.cap="Initiating sex has a stronger relationship with with wanting to be desired than partner initiation"}
+diary %>% 
+  select(person, created_diary, sexual_desire_wants_desire, sexual_initiation_self, sexual_initiation_partner) %>% 
+  gather(who, value, sexual_initiation_self, sexual_initiation_partner) %>% 
+  ggplot(aes(value, sexual_desire_wants_desire, color = who, group = who)) +
+  geom_pointrange(stat = 'summary', fun.data = "mean_se") +
+  geom_smooth(method = 'lm') +
+  scale_color_viridis_d() +
+  scale_x_continuous("Endorsement", breaks = 0:4, labels = c("0\nnot true", "1", "2", "3", "4\nvery true"))
+```
+
+
+```{r fig.cap="Self- and partner initiation are similarly associated with wanting to satisfy partner's sexual needs."}
+diary %>% 
+  select(person, created_diary, sexual_desire_fulfill_partner, sexual_initiation_self, sexual_initiation_partner) %>% 
+  gather(who, value, sexual_initiation_self, sexual_initiation_partner) %>% 
+  ggplot(aes(value, sexual_desire_fulfill_partner, color = who, group = who)) +
+  geom_pointrange(stat = 'summary', fun.data = "mean_se") +
+  geom_smooth(method = 'lm') +
+  scale_color_viridis_d() +
+  scale_x_continuous("Endorsement", breaks = 0:4, labels = c("0\nnot true", "1", "2", "3", "4\nvery true"))
+```
+
+
+
+
+```{r fig.cap="Guess who enjoys partner-initiated sex? Partners."}
+diary %>% 
+  mutate(sexual_initiation_self = if_else(sexual_initiation_self > 0, 1, 0),
+         sexual_initiation_partner = if_else(sexual_initiation_partner > 0, 1, 0)) %>% 
+ group_by(sexual_initiation_self, sexual_initiation_partner) %>% 
+  summarise_at("sex_partner_enjoyed", funs(mean(., na.rm = TRUE))) %>% 
+  ggplot(aes(sexual_initiation_self, sexual_initiation_partner, fill = sex_partner_enjoyed)) +
+  geom_tile() +
+  scale_fill_viridis_c()
+```
+
+```{r fig.cap="However, own enjoyment is not higher when having initiated sex."}
+diary %>% 
+  mutate(sexual_initiation_self = if_else(sexual_initiation_self > 0, 1, 0),
+         sexual_initiation_partner = if_else(sexual_initiation_partner > 0, 1, 0)) %>% 
+ group_by(sexual_initiation_self, sexual_initiation_partner) %>% 
+  summarise_at("sex_enjoyed", funs(mean(., na.rm = TRUE))) %>% 
+  ggplot(aes(sexual_initiation_self, sexual_initiation_partner, fill = sex_enjoyed)) +
+  geom_tile() +
+  scale_fill_viridis_c()
+```
+
+```{r fig.cap="Neither is happiness."}
+diary %>% 
+  mutate(sexual_initiation_self = if_else(sexual_initiation_self > 0, 1, 0),
+         sexual_initiation_partner = if_else(sexual_initiation_partner > 0, 1, 0)) %>% 
+ group_by(sexual_initiation_self, sexual_initiation_partner) %>% 
+  summarise_at("sex_happy", funs(mean(., na.rm = TRUE))) %>% 
+  ggplot(aes(sexual_initiation_self, sexual_initiation_partner, fill = sex_happy)) +
+  geom_tile() +
+  scale_fill_viridis_c()
+```
+
