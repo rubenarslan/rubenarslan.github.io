@@ -30,6 +30,12 @@ to who wants (certain) sex (acts) more. And of course, none of this gets any
 easier given that in our dataset women reported their perceptions of both their
 partner and themselves—we did not hear from the partners.
 
+<aside>
+```{r fig.cap="Figure from \"Mrs. Basley's poultry book; tells you what to do and how to do it; the chicken business from first to last including 1001 questions and answers, relative to up-to-date poultry culture\" in the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14759946036", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/3840/14759946036_00514ba7d0_o_d.jpg")
+```
+</aside>
+
 But this is just a blog post, so I'll ask you to kindly keep these caveats in mind.^[Lest I sell the data short, the initiation questions do show reasonable associations with a bunch of other questions we asked, see Appendix. However, I have tagged this post a "quick job", so it is excluded from by Bug Bounty program. I still appreciate hearing about errors of course.]
 
 ```{r}
@@ -66,7 +72,7 @@ diary <- diary %>%
   filter(contact_partner < 5)
 ```
 
-To do look at who initiates sex more often, I'll restrict the diary dataset to the `r n_distinct(diary$person)` women who filled out the diary on more than 30 days and who were in a heterosexual relationship. I'll also restrict it to days, on which women had seen their partners at least briefly. We asked women in heterosexual relationships to endorse the following specific, awkwardly pointed statements. Because we were trying not to bore our participants out of their minds we only asked these questions on 30% of days.
+To look at who initiates sex more often, I'll restrict the diary dataset to the `r n_distinct(diary$person)` women who filled out the diary on more than 30 days and who were in a heterosexual relationship. I'll also restrict it to days on which women had seen their partners at least briefly. We asked women in heterosexual relationships to endorse the following specific, awkwardly pointed statements. Because we were trying not to bore our participants out of their minds we only asked these questions on 30% of days.
 This still lets me examine `r sum(!is.na(diary$sexual_initiation_self))` days, with sexual activity on `r sum(diary$sex_active == 1 & !is.na(diary$sexual_initiation_self))` of those days.
 
 - My partner initiated sexual acts with me.
@@ -98,7 +104,7 @@ diary %>%
   scale_y_continuous("Partner initiative", breaks = 0:4, labels = c("0\nnot true", "1", "2", "3", "4\nvery true"))
 ```
 
-```{r fig.cap="Let's simplify it down to yes or no."}
+```{r fig.cap="Let's simplify it down to yes or no. I counted everything higher than zero as a yes. That's probably not the best approach to ordinal data and definitely not a good approach to consent."}
 diary %>% 
   select(person, created_diary, sexual_initiation_self, sexual_initiation_partner) %>% 
   ggplot(aes(if_else(sexual_initiation_self > 0, 1, 0), if_else(sexual_initiation_partner > 0, 1, 0))) +
@@ -120,7 +126,7 @@ tapestry <- diary %>%
   select(person, created_diary, sexual_initiation_self, sexual_initiation_partner) %>% 
   ggplot(aes(if_else(sexual_initiation_self > 0, 1, 0), if_else(sexual_initiation_partner > 0, 1, 0))) +
     geom_bin2d(bins = 2, drop = FALSE) +
-  scale_fill_gradient(breaks = c(0, 100, 200, 500, 1000, 2000, 4000)) +
+  scale_fill_gradient(breaks = c(0, 10, 20)) +
   scale_x_continuous("Showed initiative", breaks = NULL) +
   scale_y_continuous("Partner showed initiative", breaks = NULL) +
   facet_wrap(~ person)
@@ -129,7 +135,7 @@ tapestry +
   theme(strip.text = element_blank(), panel.spacing = unit(0, "mm"))
 ```
 
-```{r fig.cap="We can also look at the number of days on which both. Each color is one woman/couple."}
+```{r fig.cap="We can also look at the number of days on which both, either, or neither initiated sex in a table. Each color is one woman/couple."}
 diffs <- diary %>% 
   ungroup() %>% 
   mutate(
@@ -200,7 +206,7 @@ ggplot(aes(weekday, value, color = who)) +
 
 <details><summary>A different look at the same data</summary>
 
-```{r fig.width=8, fig.cap="Okay, so I have a problem with letting go of redundant plots. So what?"}
+```{r layout='l-body-outset',fig.width=10, fig.cap="Okay, so I have a problem with letting go of redundant plots. So what?"}
 sex_long_moved %>% 
   gather(who, value, sexual_initiation_partner, sexual_initiation_self) %>% 
   drop_na(value) %>% 
@@ -208,7 +214,7 @@ sex_long_moved %>%
 ggplot(aes(weekday, fill = fct_inorder(factor(value)))) + 
   geom_bar(stat = 'count', position = 'fill') +
   scale_y_continuous() +
-  scale_fill_viridis_d(option = "E", direction = -1) + 
+  scale_fill_viridis_d("Value", option = "E", direction = -1) + 
   facet_wrap(~ who)
 ```
 
@@ -240,7 +246,7 @@ sex_long_moved %>%
 
 <details><summary>A different look at the same data</summary>
 
-```{r layout="l-body-outset",fig.width=10, fig.cap="Okay, so I have a problem with letting go of redundant plots. So what?"}
+```{r layout="l-body-outset",fig.width=10, fig.cap="Another redundant plot, but IT LOOKS NICE."}
 sex_long_moved %>% 
   filter(sex_active_partnered == 1) %>% 
   gather(who, value, sexual_initiation_partner, sexual_initiation_self) %>% 
@@ -256,7 +262,7 @@ sex_long_moved %>%
 ggplot(aes(time, fill = fct_inorder(factor(value)))) + 
   geom_bar(stat = 'count', position = 'fill') +
   scale_y_continuous() +
-  scale_fill_viridis_d(option = "E", direction = -1) + 
+  scale_fill_viridis_d("Value", option = "E", direction = -1) + 
   facet_wrap(~ who)
 ```
 
@@ -322,6 +328,20 @@ as_tibble() %>%
   scale_color_viridis_d(end = 0.5) +
   scale_y_continuous("Value", limits = c(0,4), breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much"))
 ```
+
+```{r layout="l-body-outset",fig.width=10,fig.cap="We can also limit the data to only days on which no sexual acts were combined."}
+sex_long_by_who %>% 
+  group_by(short, created_diary, who) %>% 
+  filter(2 == n()) %>% 
+  ungroup() %>% 
+  rename(`Sex act` = act) %>% 
+ggplot(aes(`Sex act`, value, color = who)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_se', position = position_dodge(width = 0.2)) +
+  coord_flip() +
+  scale_color_viridis_d(end = 0.5) +
+  scale_y_continuous("Value", limits = c(0,4), breaks = 0:4, labels = c("0\nnot at all",1:3, "4\nvery much"))
+```
+
 
 So, this is a first look at the question who initiates (what kind of) sex. I had a busy week, so this is
 just quick and dirty.^[But let me know if you want to see a graph I could add.] I plan to analyse sexual initiation across the menstrual cycle at some point, so it was good to do some sanity checks with this data.
