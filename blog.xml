@@ -7,14 +7,23 @@
     <description>Personal blog
 </description>
     <generator>Radix</generator>
-    <lastBuildDate>Thu, 11 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Who initiates sex?</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2019-04-21-who-initiates</link>
+      <description>A chicken-and-egg-question?</description>
+      <guid>https://rubenarslan.github.io/posts/2019-04-21-who-initiates</guid>
+      <pubDate>Thu, 25 Apr 2019 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-11-1.png" medium="image" type="image/png" width="1536" height="768"/>
+    </item>
     <item>
       <title>Sexual activity by time of day</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</link>
       <description>Examining when women in our diary study were sexually active.</description>
       <guid>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</guid>
-      <pubDate>Thu, 11 Apr 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1536" height="768"/>
     </item>
     <item>
