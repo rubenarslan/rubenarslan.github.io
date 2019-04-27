@@ -31,7 +31,7 @@ easier given that in our dataset women reported their perceptions of both their
 partner and themselves—we did not hear from the partners.
 
 <aside>
-```{r fig.cap="Figure from \"Mrs. Basley's poultry book; tells you what to do and how to do it; the chicken business from first to last including 1001 questions and answers, relative to up-to-date poultry culture\" in the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14759946036", out.extra="class=external"}
+```{r fig.cap="Figure from \"Mrs. Basley's poultry book; tells you what to do and how to do it; the chicken business from first to last including 1001 questions and answers, relative to up-to-date poultry culture\" in the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14759946036)", out.extra="class=external"}
 knitr::include_graphics("https://live.staticflickr.com/3840/14759946036_00514ba7d0_o_d.jpg")
 ```
 </aside>
