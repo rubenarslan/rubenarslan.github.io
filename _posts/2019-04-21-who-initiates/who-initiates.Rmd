@@ -309,7 +309,7 @@ ggplot(aes(`Sex act`, value, color = who)) +
 
 Now, looking at raw means ignores that certain sex acts are more likely to be performed in the evenings or on weekends and that they co-occur. We already saw these factors have something to do with initiation as well. I'm not sure what the best model is to take all this into account. I'm happy for better suggestions!
 
-Some activities trade ranks, but fellatio and BDSM (submissive) stay at the top. Fellatio is the only act where we see almost no gap in initiation.
+Some activities trade ranks, but fellatio and BDSM (submissive)^[This response meant engaging in some BDSM play in a submissive role. It was also possible to specify BDSM play in a dominant role, but that fell below my arbitrary cutoff of at least 30 observed acts] stay at the top. Fellatio is the only act where we see almost no gap in initiation.
 
 ```{r layout="l-body-outset",fig.width=10,fig.cap="What do we get when we adjust for these other factors and between-individual differences in an ad-hoc model?"}
 mod <- lme4::lmer(value ~ who * (weekday + time +  act + sex_nr) + (1 | short), data = sex_long_by_who)
