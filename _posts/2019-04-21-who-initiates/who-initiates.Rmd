@@ -119,7 +119,7 @@ diary %>%
 I don't want to neglect individual differences, but visualising them well is hard! Therefore,
 I hid these attempts here.
 
-```{r fig.cap="Simplifying it gives us a chance to make a tapestry of the individual differences in these patterns I'm restricting it to women with a lot of data here, so we can still see. Each four-coloured square is one couple/woman."}
+```{r fig.cap="Simplifying it gives us a chance to make a tapestry of the individual differences in these patterns I'm restricting it to women with a lot of data here, so we can still see. Each four-coloured square is one couple/woman. White squares should really be dark blue (zero counts), but I couldn't quickly make ggplot2 do my bidding."}
 tapestry <- diary %>% 
   group_by(person) %>% 
   filter(sum(!is.na(sexual_initiation_self)) > 20, !is.na(sexual_initiation_self)) %>% 
