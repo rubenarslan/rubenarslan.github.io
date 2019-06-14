@@ -52,9 +52,9 @@ Empirical evidence that given consistent publication pressure, researchers urged
 ## Major points
 
 ### Omitted variables
-1. The authors mention a number of coded variables analysed that they say are not relevant for the questions addressed here. I disagree with this assessment. The broader question is whether low-effort methods of data collection such as self-report and online research have replaced high-effort methods. However, the differences in effort for running an effective online study (especially when first learning about online research) and running a study on undergraduates are smaller and more arguable than the differences in effort to running a study on a population-representative or community sample. The same holds true for self-report and reaction time measures (both not very high-effort) versus e.g. genetic, or endocrinological data, intelligence testing, or observer coding. So, as a reader I would like to know whether self-report and online research replaced other low-effort or high-effort modes of data collection. As the researchers note that they also coded study design, exclusion of participants, student vs. nonstudent sample, mediation analysis, behavioral measures, response times, memory measures, performance measures, coding of written materials, and physiological measures. Given that the authors give no strong rationale for excluding this data from analyses and given the absence of a preregistration, the omission of these data seems unjustifiable and should be rectified to give readers a fuller picture.
+1. The authors mention a number of coded variables analysed that they say are not relevant for the questions addressed here. I disagree with this assessment. The broader question is whether low-effort methods of data collection such as self-report and online research have replaced high-effort methods. However, the differences in effort for running an effective online study (especially when first learning about online research) versus running a lab study on undergraduates are smaller and more arguable than the differences in effort for running a study online vs. on a population-representative sample or a community sample. The same holds true for self-report and reaction time measures (both not very high-effort) versus e.g. genetic, or endocrinological data, intelligence testing, or observer coding. So, as a reader I would like to know whether self-report and online research replaced other low-effort or high-effort modes of data collection. The researchers disclose that they also coded study design, exclusion of participants, student vs. nonstudent sample, mediation analysis, behavioral measures, response times, memory measures, performance measures, coding of written materials, and physiological measures. Given that the authors give no strong rationale for excluding this data from analyses and given the absence of a preregistration, the omission of these data seems unjustifiable and should be rectified to give readers a fuller picture.
 
-### Lossy sample size transformation
+### Wasteful sample size transformation
 2. The authors winsorize sample size. I do not think this is an appropriate treatment of this continuous variable. Yes, there are outlying values, but these are presumably not the result of miscoding, but the result of massive heterogeneity. A study of 10000 people really is a hundred times as big as a study of 100 people. There are better ways to deal with non-normally distributed statistics without discarding information. As an example, I chose to plot the logarithmised sample sizes below.
 
 ### Figures
@@ -102,7 +102,7 @@ ggplot(methods_time_per_article, aes(as_factor(Jahr), Sample)) +
   facet_wrap(~ as_factor(Journal), nrow = 1)
 ```
 
-```{r layout='l-body-outset', fig.cap="Change in number of studies over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
+```{r layout='l-body-outset', fig.cap="Change in number of studies per article over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
 ggplot(methods_time_per_article, aes(as_factor(Jahr), Studynum)) +
   geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
   theme_bw(base_size = 20) + 
@@ -111,7 +111,7 @@ ggplot(methods_time_per_article, aes(as_factor(Jahr), Studynum)) +
   facet_wrap(~ as_factor(Journal), nrow = 1)
 ```
 
-### Did submitters or editors and reviewer change their behaviour?
+### Did submitters or editors and reviewers change their behaviour?
 4. The authors frame their results as evidence of changes in the behaviour of research teams. Arguably, science reform is mediated in many places by editors and reviewers. Maybe just as many small-sample studies are being done, but they do not get published in these journals. To begin to answer this question, it is interesting to see (emphasis on see, below) how the different outcome measures associate. The authors should discuss this question more explicitly and discuss the correlations. Can they be used to make the case that researchers in the same team trade off sample size for self-report? Or are we seeing an increase in self-report measures only among online (Mturk?) researchers, while other researchers independently increase their sample sizes without changing their methods?
 
 
@@ -137,16 +137,16 @@ ggplot(methods_time, aes(factor(online), Sample)) +
 5. The published data does not contain bibliographic information on the papers. This makes it impossible to check the accuracy of codings, to re-use and extend the data (by, for example, looking up DOIs and fetching citation counts in a few years). If the authors did this to preserve researcher anonymity, I want to strongly argue that this is misguided when it comes to published literature.
 
 ### Causal inference
-6. The researcher give the standard disclaimer that they have examined only correlations. This would become more vivid, if they discussed other known time trends that could confound their results, such as the rise of Mturk. They could also discuss ways in which a stronger causal inference would be possible. Are there subdisciplines akin to social psychology in their use of small samples that were not hit by the reform calls as early (developmental, evolutionary?) which we might examine additionally? Is the question important enough that we should advocate for large-scale experimentation with journal policies?
+6. The researchers give the standard disclaimer that they have examined only correlations. This would become more vivid if they discussed other known time trends that could confound their results, such as the rise of Mturk. They could also discuss ways in which a stronger causal inference would be possible. Are there subdisciplines akin to social psychology in their use of small samples that were not hit by the reform calls as early (developmental, evolutionary?) which we might examine additionally? Is the question important enough that we should advocate for large-scale experimentation with journal policies?
 
 ## Minor points
 
-1. The authors say that their analyses explains 31% of the variance in the online variable. This is a dichotomous variable, so you cannot report an R2. Same for self-report. Please run logistic regressions and report pseudo R2s (if you must).
+1. The authors say that their analysis explains 31% of the variance in the online variable. This is a dichotomous variable, so you cannot report an R2. Same for self-report. Please run logistic regressions and report pseudo R2s (if you must).
 2. I took the liberty of generating a human- and machine-readable codebook for the data, see below.
 
 ## Summary
 
-Given the presented data, I am not convinced that the researchers have shown that calls for increased rigour in terms of sample size have led to decreased rigour in measurement. To get a fuller sense of valid information, it would also have been interesting to look at other measures of rigour, such as the number of items, reliability, and whether the measure was ad-hoc. This cannot be done with the existing data. What the authors can do, is to fully present the data they have collected, including data on other measurement methods. As a final note, I am not aware that many in the reform movement called for more studies per article, yet we see this trend. This might serve as a vivid example that there are always many things going on simultaneously when just examining trends over time.
+Given the presented data, I am not convinced that the researchers have shown that calls for increased rigour in terms of sample size have led to decreased rigour in measurement. To get a fuller sense of valid information, it would also have been interesting to look at other measures of rigour, such as the number of items, reliability, and whether the measure was ad-hoc. This cannot be done with the existing data. What the authors can do, is to fully present the data they have collected, including data on other measurement methods. As a final note, I am not aware that many voices in the reform movement called for more studies per article, yet we see this trend. This might serve as a vivid example that there are always many things going on simultaneously when just examining trends over time.
 
 
 ## Codebook
