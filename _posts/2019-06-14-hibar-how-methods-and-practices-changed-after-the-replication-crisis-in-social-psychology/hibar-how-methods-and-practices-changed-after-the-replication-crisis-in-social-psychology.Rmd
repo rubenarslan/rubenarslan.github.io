@@ -21,12 +21,32 @@ library(codebook)
 theme_set(theme_bw(base_size = 12))
 ```
 
-Sassenberg and Ditrich published [a paper in Advances in Methods and Practices in Psychological Science](https://journals.sagepub.com/doi/full/10.1177/2515245919838781) in May. It's on a topic I care about deeply, namely the impact of changes in academic culture on research quality. Specifically, the authors were interested whether social psychologists have responded to the replication crisis in their subdiscipline by fulfilling cries for higher methodological rigour (especially higher statistical power) by switching to less effortful methods of data collection. 
+```{r}
+methods_time <- rio::import("~/Downloads/SPSS_data_and_script/data.sav")
+methods_time_per_article <- methods_time %>% 
+  mutate(Jahr = as_factor(Jahr),
+         Journal = as_factor(Journal))
+methods_time_per_article <- methods_time_per_article %>% group_by(Journal, Jahr, paperID) %>% 
+  summarise_all(funs(mean(., na.rm = T)))
+```
 
-I was not a reviewer of the paper, but given that I've already re-analyzed the [N-pact paper](https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more/), it felt only appropriate to do the same with this paper. Especially because the authors, regrettably, did not
-make any figures for their data. Their findings, which are easily summarised graphically, may therefore become less widely known.
+```{r layout='l-screen-inset', preview = TRUE, fig.cap="Change in proportion of studies that are online over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=18}
+ggplot(methods_time_per_article, aes(Jahr, online)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_y_continuous("Proportion online", breaks = c(0,0.25, 0.5, 0.75, 1), limits = 0:1) +
+  scale_x_discrete("Year") + 
+  theme_bw(15) +
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```  
 
-I decided to do this post in the format of HIBAR (Had I been a Reviewer). I think it's an important topic and I frequently hear arguments of this form (calls for rigour in some practices will just lead to less rigour in other areas, labour-intensive research will go extinct if higher sample sizes are required) from senior researchers. These arguments are often use to urge caution in response to suggestions for changes in practices, but often they end up implicitly advocating the status quo. Empirical evidence that given consistent publication pressure, researchers urged to increase their sample sizes will do less rigorous research in other ways is thus worrying.
+Sassenberg and Ditrich published [a paper in Advances in Methods and Practices in Psychological Science](https://journals.sagepub.com/doi/full/10.1177/2515245919838781) in May. It's on a topic I care about deeply, namely the impact of changes in academic culture on research quality. Specifically, the authors were interested whether __social psychologists have responded to the replication crisis in their subdiscipline and subsequent cries for higher methodological rigour (especially higher statistical power) by switching to less effortful methods of data collection (self-report)__. 
+
+I was not a reviewer of the paper, but given that I've already re-analyzed the [N-pact paper](https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more/), it felt only appropriate to do the same with this paper. I decided to do this post in the format of __HIBAR__.^[ ([Had I been a Reviewer](http://blog.dansimons.com/2013/09/hi-bar-had-i-been-reviewer.html))] I think it's an important topic and the authors collected valuable data, which surely took a lot of coding effort. The authors, regrettably, did not share any figures for their data. Their findings, which are easily summarised graphically, may therefore become less widely known. 
+
+I frequently hear arguments of the form "calls for rigour in some practices will just lead to less rigour in other areas", "labour-intensive research will go extinct if higher sample sizes are required" from senior researchers. These arguments are often used to urge caution in response to calls for reform. Often, they end up implicitly advocating the status quo. 
+
+Empirical evidence that given consistent publication pressure, researchers urged to increase their sample sizes will do less rigorous research in other ways is thus worrying.^[It seems easier to change standards at journals than to decrease publication pressure and competititon throughout academia.]
 
 
 ## Major points
@@ -41,23 +61,6 @@ I decided to do this post in the format of HIBAR (Had I been a Reviewer). I thin
 3. Figures are essential for communicating data and effect sizes effectively. I took the liberty of generating a few figures below. What I would like to see in addition is figures on the omitted variables. Further inferential testing is, in my opinion, not necessary. We are interested in some measure of overall rigour, but there will be no agreeable way to aggregate the different variables into one measure of rigour, so the best we can do is present the data and discuss it.
 
 
-```{r}
-methods_time <- rio::import("~/Downloads/SPSS_data_and_script/data.sav")
-methods_time_per_article <- methods_time %>% 
-  mutate(Jahr = as_factor(Jahr),
-         Journal = as_factor(Journal))
-methods_time_per_article <- methods_time_per_article %>% group_by(Journal, Jahr, paperID) %>% 
-  summarise_all(funs(mean(., na.rm = T)))
-```
-
-```{r layout='l-body-outset', preview = TRUE, fig.cap="Change in proportion of studies that are online over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
-ggplot(methods_time_per_article, aes(Jahr, online)) +
-  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
-  theme_bw(base_size = 20) + 
-  scale_y_continuous("Proportion online", breaks = c(0,0.25, 0.5, 0.75, 1), limits = 0:1) +
-  scale_x_discrete("Year") + 
-  facet_wrap(~ as_factor(Journal), nrow = 1)
-```  
 
 ```{r layout='l-body-outset', fig.cap="Change in proportion of studies that use only self-report over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
 ggplot(methods_time_per_article, aes(as_factor(Jahr), selfreport)) +
@@ -67,6 +70,20 @@ ggplot(methods_time_per_article, aes(as_factor(Jahr), selfreport)) +
   scale_x_discrete("Year") + 
   facet_wrap(~ as_factor(Journal), nrow = 1)
 ```
+
+<!-- ```{r layout='l-body-outset', fig.cap="Change in proportion of studies that use only self-report over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11} -->
+<!-- library(waffle) -->
+<!-- library(hrbrthemes) -->
+<!-- ggplot(methods_time, aes(as_factor(Jahr), selfreport)) + -->
+<!--   geom_waffle(color = "white", size = 1.125, n_rows = 6) + -->
+<!--   facet_grid(as_factor(Jahr)~as_factor(Journal)) + -->
+<!--   scale_x_discrete(expand=c(0,0)) + -->
+<!--   scale_y_discrete(expand=c(0,0)) + -->
+<!--   ggthemes::scale_fill_tableau(name=NULL) + -->
+<!--   coord_equal() + -->
+<!--   theme_ipsum_rc(grid="") + -->
+<!--   theme_enhance_waffle() -->
+<!-- ``` -->
 
 ```{r layout='l-body-outset', fig.cap="Change in median sample size over time by journal", fig.height = 4, fig.width=11}
 ggplot(methods_time_per_article, aes(as_factor(Jahr), Sample)) +
