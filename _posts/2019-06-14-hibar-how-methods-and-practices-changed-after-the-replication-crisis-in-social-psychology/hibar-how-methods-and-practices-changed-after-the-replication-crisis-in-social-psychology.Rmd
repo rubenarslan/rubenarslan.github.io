@@ -1,0 +1,153 @@
+---
+title: "HIBAR: How methods and practices changed after the replication crisis in social psychology"
+description: |
+  Had I Been a Reviewer. A post-publication peer review with some added figures.
+author:
+  - name: "Ruben C. Arslan"
+    url: https://rubenarslan.github.io
+    affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"
+date: 06-14-2019
+output:
+  radix::radix_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(tidyverse)
+library(codebook)
+theme_set(theme_bw(base_size = 12))
+```
+
+Sassenberg and Ditrich published [a paper in Advances in Methods and Practices in Psychological Science](https://journals.sagepub.com/doi/full/10.1177/2515245919838781) in May. It's on a topic I care about deeply, namely the impact of changes in academic culture on research quality. Specifically, the authors were interested whether social psychologists have responded to the replication crisis in their subdiscipline by fulfilling cries for higher methodological rigour (especially higher statistical power) by switching to less effortful methods of data collection. 
+
+I was not a reviewer of the paper, but given that I've already re-analyzed the [N-pact paper](https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more/), it felt only appropriate to do the same with this paper. Especially because the authors, regrettably, did not
+make any figures for their data. Their findings, which are easily summarised graphically, may therefore become less widely known.
+
+I decided to do this post in the format of HIBAR (Had I been a Reviewer). I think it's an important topic and I frequently hear arguments of this form (calls for rigour in some practices will just lead to less rigour in other areas, labour-intensive research will go extinct if higher sample sizes are required) from senior researchers. These arguments are often use to urge caution in response to suggestions for changes in practices, but often they end up implicitly advocating the status quo. Empirical evidence that given consistent publication pressure, researchers urged to increase their sample sizes will do less rigorous research in other ways is thus worrying.
+
+
+## Major points
+
+### Omitted variables
+1. The authors mention a number of coded variables analysed that they say are not relevant for the questions addressed here. I disagree with this assessment. The broader question is whether low-effort methods of data collection such as self-report and online research have replaced high-effort methods. However, the differences in effort for running an effective online study (especially when first learning about online research) and running a study on undergraduates are smaller and more arguable than the differences in effort to running a study on a population-representative or community sample. The same holds true for self-report and reaction time measures (both not very high-effort) versus e.g. genetic, or endocrinological data, intelligence testing, or observer coding. So, as a reader I would like to know whether self-report and online research replaced other low-effort or high-effort modes of data collection. As the researchers note that they also coded study design, exclusion of participants, student vs. nonstudent sample, mediation analysis, behavioral measures, response times, memory measures, performance measures, coding of written materials, and physiological measures. Given that the authors give no strong rationale for excluding this data from analyses and given the absence of a preregistration, the omission of these data seems unjustifiable and should be rectified to give readers a fuller picture.
+
+### Lossy sample size transformation
+2. The authors winsorize sample size. I do not think this is an appropriate treatment of this continuous variable. Yes, there are outlying values, but these are presumably not the result of miscoding, but the result of massive heterogeneity. A study of 10000 people really is a hundred times as big as a study of 100 people. There are better ways to deal with non-normally distributed statistics without discarding information. As an example, I chose to plot the logarithmised sample sizes below.
+
+### Figures
+3. Figures are essential for communicating data and effect sizes effectively. I took the liberty of generating a few figures below. What I would like to see in addition is figures on the omitted variables. Further inferential testing is, in my opinion, not necessary. We are interested in some measure of overall rigour, but there will be no agreeable way to aggregate the different variables into one measure of rigour, so the best we can do is present the data and discuss it.
+
+
+```{r}
+methods_time <- rio::import("~/Downloads/SPSS_data_and_script/data.sav")
+methods_time_per_article <- methods_time %>% 
+  mutate(Jahr = as_factor(Jahr),
+         Journal = as_factor(Journal))
+methods_time_per_article <- methods_time_per_article %>% group_by(Journal, Jahr, paperID) %>% 
+  summarise_all(funs(mean(., na.rm = T)))
+```
+
+```{r layout='l-body-outset', preview = TRUE, fig.cap="Change in proportion of studies that are online over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
+ggplot(methods_time_per_article, aes(Jahr, online)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_y_continuous("Proportion online", breaks = c(0,0.25, 0.5, 0.75, 1), limits = 0:1) +
+  scale_x_discrete("Year") + 
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```  
+
+```{r layout='l-body-outset', fig.cap="Change in proportion of studies that use only self-report over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
+ggplot(methods_time_per_article, aes(as_factor(Jahr), selfreport)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_y_continuous("Self-report proportion", breaks = c(0,0.25, 0.5, 0.75, 1), limits = 0:1) +
+  scale_x_discrete("Year") + 
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```
+
+```{r layout='l-body-outset', fig.cap="Change in median sample size over time by journal", fig.height = 4, fig.width=11}
+ggplot(methods_time_per_article, aes(as_factor(Jahr), Sample)) +
+  geom_point(stat = 'summary', fun.y = 'median', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_x_discrete("Year") + 
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```
+
+```{r layout='l-body-outset', fig.cap="Change in sample size over time by journal. Sample sizes were logarithmised with base 10. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
+ggplot(methods_time_per_article, aes(as_factor(Jahr), Sample)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_x_discrete("Year") + 
+  scale_y_log10("Sample size", breaks = c(80, 100, 150, 200, 300)) +
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```
+
+```{r layout='l-body-outset', fig.cap="Change in number of studies over time by journal. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
+ggplot(methods_time_per_article, aes(as_factor(Jahr), Studynum)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_x_discrete("Year") + 
+  scale_y_continuous("Study number") +
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```
+
+### Did submitters or editors and reviewer change their behaviour?
+4. The authors frame their results as evidence of changes in the behaviour of research teams. Arguably, science reform is mediated in many places by editors and reviewers. Maybe just as many small-sample studies are being done, but they do not get published in these journals. To begin to answer this question, it is interesting to see (emphasis on see, below) how the different outcome measures associate. The authors should discuss this question more explicitly and discuss the correlations. Can they be used to make the case that researchers in the same team trade off sample size for self-report? Or are we seeing an increase in self-report measures only among online (Mturk?) researchers, while other researchers independently increase their sample sizes without changing their methods?
+
+
+```{r layout='l-body-outset', fig.cap="Sample size by self-report. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
+ggplot(methods_time, aes(factor(selfreport), Sample)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_x_discrete("Self-report") + 
+  scale_y_log10("Sample size", breaks = c(80, 100, 150, 200, 300)) +
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```
+
+```{r layout='l-body-outset', fig.cap="Sample size by online. Bootstrapped means and 95% CIs.", fig.height = 4, fig.width=11}
+ggplot(methods_time, aes(factor(online), Sample)) +
+  geom_pointrange(stat = 'summary', fun.data = 'mean_cl_boot', alpha = 0.8) + 
+  theme_bw(base_size = 20) + 
+  scale_x_discrete("Online") + 
+  scale_y_log10("Sample size", breaks = c(80, 100, 150, 200, 300)) +
+  facet_wrap(~ as_factor(Journal), nrow = 1)
+```
+
+### Bibliographic data
+5. The published data does not contain bibliographic information on the papers. This makes it impossible to check the accuracy of codings, to re-use and extend the data (by, for example, looking up DOIs and fetching citation counts in a few years). If the authors did this to preserve researcher anonymity, I want to strongly argue that this is misguided when it comes to published literature.
+
+### Causal inference
+6. The researcher give the standard disclaimer that they have examined only correlations. This would become more vivid, if they discussed other known time trends that could confound their results, such as the rise of Mturk.
+
+## Minor points
+
+1. The authors say that their analyses explains 31% of the variance in the online variable. This is a dichotomous variable, so you cannot report an R2. Same for self-report. Please run logistic regressions and report pseudo R2s (if you must).
+2. I took the liberty of generating a human- and machine-readable codebook for the data, see below.
+
+## Summary
+
+Given the presented data, I am not convinced that the researchers have shown that calls for increased rigour in terms of sample size have led to decreased rigour in measurement. To get a fuller sense of valid information, it would also have been interesting to look at other measures of rigour, such as the number of items, reliability, and whether the measure was ad-hoc. This cannot be done with the existing data. What the authors can do, is to fully present the data they have collected, including data on other measurement methods. As a final note, I am not aware that many in the reform movement called for more studies per article, yet we see this trend. This might serve as a vivid example that there are always many things going on simultaneously when just examining trends over time.
+
+
+## Codebook
+
+```{r layout="l-screen-inset"}
+methods_time <- methods_time %>% select(paperID:online)
+metadata(methods_time)$name <- "Research in social psychology changed"
+metadata(bfi)$identifier <- "doi:10.23668/psycharchives.2367"
+metadata(bfi)$datePublished <- "2016-06-01"
+metadata(bfi)$creator <- list(
+      "@type" = "Person",
+      givenName = "Kai", familyName = "Sassenberg",
+      affiliation = list("@type" = "Organization",
+        name = "Leibniz-Institut für Wissensmedien (Knowledge Media Research Center) Tübingen, Germany, School of Science, University of Tübingen"))
+metadata(bfi)$citation <- "Sassenberg, K., & Ditrich, L. (2019). Research in Social Psychology Changed Between 2011 and 2016: Larger Sample Sizes, More Self-Report Measures, and More Online Studies. Advances in Methods and Practices in Psychological Science, 2(2), 107–114. doi: 10.1177/2515245919838781"
+metadata(bfi)$url <- "https://hdl.handle.net/20.500.12034/1999"
+metadata(bfi)$temporalCoverage <- "2016" 
+
+compact_codebook(methods_time)
+```
+

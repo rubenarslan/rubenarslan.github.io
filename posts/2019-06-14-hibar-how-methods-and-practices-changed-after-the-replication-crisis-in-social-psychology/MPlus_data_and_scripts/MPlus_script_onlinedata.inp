@@ -1,0 +1,36 @@
+  Title:
+      Path analysis changes in code of conduct
+   Data:
+      File is "[ADD PATH HERE]\mplusdata.dat";
+
+      Variable:
+        Names are
+        paperID journal jahr online selfrep sample j1 j2 j3 y1	y2	y3	jy1	jy2	jy3	jy4	jy5;
+        Usevariables are
+         paperID  online j1 j2 j3  y1 y2 y3 jy1	jy2	jy3 jy4	jy5;
+         Cluster = paperID;
+         categorical = online;
+          MISSING ALL (-99);
+
+
+    ANALYSIS:
+               Type = Complex;
+               ESTIMATOR = MLR;     	
+      Model:
+           online  ON
+           j1 (b1)
+           j2 (b2)
+           j3 (b3)
+           y1 (b4)
+           y2 (b5)
+           y3 (b6)
+           jy1 (b7)
+           jy2 (b8)
+           jy3 (b9)
+           jy4 (b10)
+           jy5 (b11);
+       	
+  Output:
+      standardized
+      cinterval;
+
