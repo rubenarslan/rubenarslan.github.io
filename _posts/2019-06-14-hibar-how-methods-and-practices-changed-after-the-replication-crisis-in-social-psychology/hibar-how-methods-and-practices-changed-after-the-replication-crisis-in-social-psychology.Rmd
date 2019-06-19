@@ -7,6 +7,11 @@ author:
     url: https://rubenarslan.github.io
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"
+categories: 
+  - re-analysis
+  - post-publication review
+  - meta science
+  - bibliometrics
 date: 06-14-2019
 output:
   radix::radix_article:
