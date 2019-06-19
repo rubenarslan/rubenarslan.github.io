@@ -13,6 +13,13 @@ output:
     self_contained: false
 ---
 
+
+## Edit: Authors' response
+
+The authors of the study have responded to the points raised here. You can
+read their [response here](https://onedrive.live.com/?authkey=%21AE-PuC8VeRgw5Mg&cid=54EB885EFDDEE6D7&id=54EB885EFDDEE6D7%2137468&parId=54EB885EFDDEE6D7%2137467&o=OneUp). We had
+a little bit of [follow-up discussion on Twitter](https://twitter.com/KaiSassenberg/status/1140567577997053952). In all, I found this was a productive exchange and I'm happy the authors took the time to respond in such detail.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
