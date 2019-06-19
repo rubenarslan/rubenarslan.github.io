@@ -7,14 +7,23 @@
     <description>Personal blog
 </description>
     <generator>Radix</generator>
-    <lastBuildDate>Thu, 13 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Tympanic temperature and social connectedness</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness</link>
+      <description>Re-examining a reported association between physical temperature and social connectedness.</description>
+      <guid>https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness</guid>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>HIBAR: How methods and practices changed after the replication crisis in social psychology</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology</link>
       <description>Had I Been a Reviewer. A post-publication peer review with some added figures.</description>
       <guid>https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology</guid>
-      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 14 Jun 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="3456" height="768"/>
     </item>
     <item>

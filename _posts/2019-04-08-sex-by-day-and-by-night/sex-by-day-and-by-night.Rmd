@@ -90,6 +90,7 @@ This looks good. Women rarely report more than two acts a day, so we are not mis
 Of course, there are individual differences in these frequencies. In yellow, you see women in relationships, in blue single women.^[I restricted the dataset to the 878 women who had participated for at least 40 days to make sure we could estimate the frequency with some accuracy.]
 
 ```{r fig.height=5, fig.width=2, fig.cap="Sexual act frequency differences"}
+
 ggplot(ind_diffs, aes(freq, fill = factor(hetero_relationship))) + geom_density(alpha = 0.4) +
   facet_grid(act ~ . , scales = "free_y") +
   scale_fill_viridis_d(option = "E", guide = FALSE)

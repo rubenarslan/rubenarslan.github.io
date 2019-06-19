@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/",
+    "title": "Tympanic temperature and social connectedness",
+    "description": "Re-examining a reported association between physical temperature and social connectedness.",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      }
+    ],
+    "date": "2019-06-19",
+    "categories": [],
+    "preview": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png",
+    "last_modified": "2019-06-19T15:18:04+02:00",
+    "preview_width": 1248,
+    "preview_height": 768
+  },
+  {
     "path": "posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/",
     "title": "HIBAR: How methods and practices changed after the replication crisis in social psychology",
     "description": "Had I Been a Reviewer. A post-publication peer review with some added figures.",

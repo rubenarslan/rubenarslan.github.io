@@ -1,0 +1,127 @@
+---
+title: "Tympanic temperature and social connectedness"
+description: |
+  Re-examining a reported association between physical temperature and social connectedness.
+author:
+  - name: "Ruben C. Arslan"
+    url: https://rubenarslan.github.io
+    affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
+    affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"
+date: 06-19-2019
+output:
+  radix::radix_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+There was recently a bit of a tussle in the literature about the question whether physical warmth prime social social warmth.
+A [nonreplication](https://econtent.hogrefe.com/doi/abs/10.1027/1864-9335/a000361) of Williams & Bargh (2008) by Chabris, Heck, Mandart, Benjamin, & Simons (2018) did not support that holding a hot coffee cup would make people judge others as warmer, among other things. 
+[Bargh & Melnikoff (2018)](https://econtent.hogrefe.com/doi/abs/10.1027/1864-9335/a000387) responded and pointed out that the larger question about the connection between social and physical warmth no longer rested on their initial small study. 
+
+Among other studies, they cited the Human Penguin Project and a study by [Inagaki & Human (2019)](https://psycnet.apa.org/fulltext/2019-31329-001.html) in which daily tympanic (in the ear) temperature readings where correlated with feelings of social connectedness in an experience sampling design.
+
+```{r layout="l-body-outset",fig.cap="Human penguins? From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14579050789/)", out.extra="class=external", preview=TRUE}
+knitr::include_graphics("https://live.staticflickr.com/2899/14579050789_7a1623171a_o_d.jpg")
+```
+
+I decided to look the experience sampling study up, because I wanted to know how the authors had dealt with the well-known diurnal changes in body temperature and the circamensal rhythm, in which naturally cycling^[not using hormonal contraceptives, premenopausal, not pregnant or breastfeeding] women experience increases in body temperature after ovulation. 
+
+The authors seemed to be aware of these issues (e.g., they excluded pregnant women and women who used hormonal birth control), but took a fairly strictly correlational approach to the data. The literature discussed was all about high temperatures increasing social warmth though. However, their design was used to remove between-person confounds (such as age and pregnancy), so they do seem to want to lay the groundwork for causal claims.
+
+<aside>
+```{r layout="l-body-outset",fig.cap="Diurnal variation in temperature. From the [Wikipedia](https://en.wikipedia.org/wiki/Human_body_temperature)", out.extra="class=external"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/0/05/Body_Temp_Variation.png")
+```
+</aside>
+
+The authors analyses left me wishing for more though. I thought I could potentially exclude a confound of post-ovulatory change in temperatures by looking at within-day variation and that I could maybe adjust for time of day to rule out a common cause confounder of both temperature and feelings of connectedness. The authors simply wrote "there are no hypothesized effects related to time of day in the current study."
+
+To my great pleasure, I found the authors had uploaded a processed subset of their data to the [Open Science Framework](https://osf.io/at6d8/).
+
+As far as I can tell from the also provided R source code, this is the final dataset used for analysis (I can reproduce their Table 1).
+
+
+```{r}
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+theme_set(theme_bw())
+temp <- rio::import("https://osf.io/5u7f4/download", "csv")
+# head(temp)
+rows <- nrow(temp)
+```
+
+There are `r nrow(temp)` observations in the dataset from `r n_distinct(temp$ID)` people.
+
+The authors had participants measure their temperature twice 3 minutes apart, but did not respond the correlation between the two measures. I graphed it.
+
+```{r fig.cap="Two temperature readings from the right ear 3 minutes apart."}
+ggplot(temp, aes(temp1, temp2)) + geom_jitter(alpha = 0.01) + geom_smooth()
+```
+
+There were three surprising things about this graph for me. 
+
+1. It's quite noisy (r=`r sprintf("%.2f", cor(temp$temp1, temp$temp2, use = "pairwise.complete.obs"))`)—as a psychologist myself I always kind of expect physiological measures to have better reliability (even though I know that need not be the case). 
+2. It is bunchy. Either the thermometers reported readings only to a tenth of a degree or people only reported tenths or the authors rounded the data. This seems like a low standard for accuracy for a scientific study (for comparison, women who measure basal body temperatures for contraception usually track hundredths of a degree).
+3. Some people had temperatures which should have made them too comatose to enter them in a survey. The minimum value recorded for the average was `r min(temp$tempavg, na.rm = T)`, the maximum was  `r max(temp$tempavg, na.rm = T)`. The authors reported only excluding "Two participants with tympanic readings that were consistently outside the normotensive range and were therefore suspected to be ill were excluded from final analyses, leaving a final sample of 211 participants.". However, their abstract says "in the nonfebrile range". But 38.8 °C is in the febrile range. And 30 °C is not febrile, but should be excluded as an outlier because of likely measurement error/participant being a zombie.
+
+## Exclusions
+
+I restricted the range of the data to what Wikipedia calls normal range (36.5–37.5 °C) plus/minus 0.2 for a rough standard error in measurement for each measurement.
+
+```{r}
+temp <- temp %>% 
+  filter(between(temp1, 36.3, 37.7), between(temp2, 36.3, 37.7))
+```
+
+`r rows-nrow(temp)` measurements were excluded. The correlation changed a little (r=`r sprintf("%.2f", cor(temp$temp1, temp$temp2, use = "pairwise.complete.obs"))`).
+
+```{r fig.cap="Restricted data. Two temperature readings from the right ear 3 minutes apart."}
+ggplot(temp, aes(temp1, temp2)) + geom_jitter(alpha = 0.01) + geom_smooth()
+```
+
+I also wondered about the diurnal variation. The authors did not share time of day or time since waking, but they shared the number of the within-day assessment.
+
+```{r fig.cap="Diurnal variation. Means + SEs."}
+ggplot(temp, aes(factor(WithinDayAssessment), tempavg)) + geom_pointrange(stat = 'summary')
+```
+
+## Re-analysis results
+<details><summary>Multilevel regression results</summary>
+```{r}
+temp <- temp %>% 
+  group_by(ID) %>% 
+  mutate(temp_b = mean(tempavg, na.rm = T),
+         temp_w = tempavg - temp_b) %>% 
+    group_by(ID, Day) %>% 
+  mutate(temp_b_day = mean(tempavg, na.rm = T),
+         temp_w_day = tempavg - temp_b_day)
+ggplot(temp, aes(tempavg, connected)) + geom_jitter(alpha = 0.01) + geom_smooth()
+
+
+summary(lmer(tempavg ~  (1 | ID) + (1 | ID:Day), temp))
+summary(lmer(connected ~  temp_b + temp_w  + (1 | ID) + (1 | ID:Day), temp))
+summary(lmer(connected ~  temp_b + temp_b_day + temp_w_day + (1 | ID) + (1 | ID:Day), temp))
+summary(lmer(connected ~  temp_b + temp_b_day + temp_w_day + factor(WithinDayAssessment) + (1 | ID) + (1 | ID:Day), temp))
+```
+
+</details>
+
+Interestingly, the effects actually get much stronger when excluding these measurements. Their within-person change score for temperature has an effect size of .13, after these exclusions, it's .24. I also tried centering the temperature by day (to get a within-day change measure that should be independent of ovulatory change and other daily change), and the estimate was .27. I also adjusted for within-day assessment, this did not change the within-day temperature effect much.
+
+Still, a plot showed that the effect may still be driven by values which are more than 0.5 degrees away from the person mean. This stuff makes me worry about correlated measurement error.
+
+```{r fig.cap="Values that are more than .5 degrees away from the person mean, drive the association."}
+ggplot(temp, aes(temp_w, connected)) + geom_jitter(alpha = 0.1) + geom_smooth() + geom_smooth(method = "lm")
+```
+
+## Replication
+I tried replicating the association with another, larger dataset that I have access to with daily basal body temperature. Results descriptively went in the opposite direction for outcomes like feeling sociable or supportive (non-sig. neg. effects of within-person temperature), or withdrawn (positive effects). 
+
+## Summary
+
+Outlying values in the data should have been excluded. The article should probably be corrected. I can replicate the effects based on their own data, associations get even stronger. I cannot shake the feeling that the authors did not do a good enough job to rule out "boring" common cause confounders like time of day or physical activity. The authors stuck to presenting the data as correlations, but people only care about the data because of the implied causal path temperature -> connectedness. If it was people exercising in team sports -> connectedness and exercise -> temperature, few readers would care.
+
