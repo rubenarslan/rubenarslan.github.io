@@ -1,26 +1,5 @@
 [
   {
-    "path": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/",
-    "title": "Tympanic temperature and social connectedness",
-    "description": "Re-examining a reported association between physical temperature and social connectedness.",
-    "author": [
-      {
-        "name": "Ruben C. Arslan",
-        "url": "https://rubenarslan.github.io"
-      }
-    ],
-    "date": "2019-06-19",
-    "categories": [
-      "re-analysis",
-      "temperature",
-      "experience sampling"
-    ],
-    "preview": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png",
-    "last_modified": "2019-06-19T18:35:58+02:00",
-    "preview_width": 1248,
-    "preview_height": 768
-  },
-  {
     "path": "posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior/",
     "title": "Correction to Arslan et al. (2019).",
     "description": "Some additional information on the correction notice for _Using 26,000 diary entries to show ovulatory changes in sexual desire and behavior_ that appeared today.",
@@ -37,6 +16,27 @@
     ],
     "preview": "https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg",
     "last_modified": "2019-06-20T23:31:16+02:00"
+  },
+  {
+    "path": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/",
+    "title": "Tympanic temperature and social connectedness",
+    "description": "Re-examining a reported association between physical temperature and social connectedness.",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      }
+    ],
+    "date": "2019-06-19",
+    "categories": [
+      "re-analysis",
+      "temperature",
+      "experience sampling"
+    ],
+    "preview": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png",
+    "last_modified": "2019-06-19T18:35:59+02:00",
+    "preview_width": 1248,
+    "preview_height": 768
   },
   {
     "path": "posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/",
@@ -56,7 +56,7 @@
       "bibliometrics"
     ],
     "preview": "posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png",
-    "last_modified": "2019-06-19T18:35:43+02:00",
+    "last_modified": "2019-06-19T18:35:44+02:00",
     "preview_width": 3456,
     "preview_height": 768
   },
@@ -79,7 +79,7 @@
       "quick job"
     ],
     "preview": "posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-11-1.png",
-    "last_modified": "2019-04-30T16:02:55+02:00",
+    "last_modified": "2019-04-30T16:02:56+02:00",
     "preview_width": 1536,
     "preview_height": 768
   },
