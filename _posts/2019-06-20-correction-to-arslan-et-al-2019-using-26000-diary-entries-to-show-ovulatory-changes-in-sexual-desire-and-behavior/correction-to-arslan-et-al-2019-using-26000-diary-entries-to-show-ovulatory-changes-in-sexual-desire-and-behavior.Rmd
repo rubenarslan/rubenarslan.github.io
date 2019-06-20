@@ -1,17 +1,17 @@
 ---
-title: "Correction to Arslan et al. (2019). Using 26,000 diary entries to show ovulatory changes in sexual desire and behavior"
-description: |
-  Some additional information on the correction notice due to appear today.
+title: "Correction to Arslan et al. (2019)."
+description:
+  Some additional information on the correction notice for _Using 26,000 diary entries to show ovulatory changes in sexual desire and behavior_ that appeared today.
 author:
   - name: "Ruben C. Arslan"
     url: https://rubenarslan.github.io
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 date: 06-20-2019
-draft: true
 categories: 
   - correction
   - ovulation
+preview: https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg
 output:
   radix::radix_article:
     self_contained: false
@@ -21,74 +21,109 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-We (me, Katharina Schilling, Tanja M. Gerlach, & Lars Penke) recently published [a diary study on ovulatory changes
-in the Journal of Personality and Social Psychology](https://psycnet.apa.org/record/2018-41799-001).
+We (me, Katharina Schilling, Tanja M. Gerlach, & Lars Penke) recently published [a diary study on ovulatory changes in the Journal of Personality and Social Psychology](https://psycnet.apa.org/record/2018-41799-001).
 
-Unfortunately, we made a few mistakes in reporting the study. The correction is due to appear today in JPSP. In our opinion,
-the mistakes, although annoying and preventable, changed nothing substantive.
+Unfortunately, we made a few mistakes in reporting the study. The [correction appeared today in JPSP](https://psycnet.apa.org/record/2019-34417-001). Because corrections have to be quite short, we will use this blog post to give a little more detail. 
 
-Because corrections have to be quite short, we will use this blog post to give a little more detail. We will also respond
-to some allegations of deception that have been made via email and at the HBES 2019 conference. The journal did not want this 
-to be part of the correction. They may yet publish a commentary paper by some of the critics, but we do not know what is in it.
+__According to our assessment, the mistakes, although annoying and preventable, changed nothing substantive.__ I have taken to adding automated testing to my data cleaning code and instituted a [bug bounty policy](../bug_bounty.html) to reduce the odds of such errors in my future work.^[I also stopped using `data.table` in favour of `dplyr` which has a more explicit syntax.]
+
+After expanding on the correction, we will also respond to some criticisms that we do not think are errors in our work, but differences in interpretation.
 
 
-## Figure 1 and the case numbers
 
-We regret the following errors and inconsistencies in our published paper. Between our initial submission and our revision, we had made a small adjustment to the code for our exclusion criteria and neglected to update Figure 1 (because we did not notice that we had a few more participants). This led us to report an incorrect, lower number of total participants (1043 instead of 1054) for the robustness checks. The number of days were also off by a few hundred, as well as various sample means. 
+
+```{r layout="l-body-outset",fig.cap="Several bugs in our code. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14760162636)", out.extra="class=external", preview=TRUE}
+knitr::include_graphics("https://live.staticflickr.com/5552/14760162636_3e37448cfd_o_d.jpg")
+```
+
+
+## Correction
+
+### Figure 1 and case numbers
+
+We regret the following errors and inconsistencies in our published paper. Between our initial submission and our revision, we had made a small adjustment to the code for our exclusion criteria and neglected to update Figure 1 and Table 3 (because we did not notice that we had a few more participants and days). This led us to report an incorrect, lower number of total participants (1043 instead of 1054) for the robustness checks. The number of days were also off by a few hundred, as well as various sample means. 
 The substantive results (model coefficients etc.) were reported correctly and with correct case numbers (in the online supplement). 
 
 The preregistered work is unaffected by this error. A corrected Figure 1 also shows two exclusion criteria (hypothesis guessing and long interruptions of the diary) that were mentioned on the supplementary website, but missing from Figure 1.
-A corrected figure can be found at http://rubenarslan.github.io/ovulatory_shifts/2_descriptives.html 
+A corrected figure can be found [here](http://rubenarslan.github.io/ovulatory_shifts/2_descriptives.html) and in the updated article.
 
-## `effsize` package bug
+### `effsize` package bug
 
-An error in the effsize R package led to the reporting of inflated effect sizes for the differences between hormonal contraceptive users and non-users in Table 1. After re-analysing data for the correction, we suddenly got different effect sizes. Turned out there was a [bug in the `effsize` package for Hedges' g computation](https://github.com/mtorchiano/effsize/issues/32) that had been fixed in a newer version.
+We reported inflated effect sizes for the Hedges' g differences between hormonal contraceptive users and non-users in Table 1. After re-analysing data for the correction, we suddenly got different effect sizes. It turned out there was a [bug in the `effsize` package for Hedges' g computation](https://github.com/mtorchiano/effsize/issues/32) that had been fixed in a newer version. 
 
-## Programming error for a moderator variable
+__In all, we reported larger effect size differences between our naturally cycling group and our hormonal contraception quasi-control group; they were more comparable than Table 1 made them seem.__
 
-We made a programming error when aggregating the variable "partner's attractiveness relative to self". Specifically, values were accidentally sorted before aggregation, leading to nonsense ranks. Fixing this error led to the following changes:
+### Programming error for a moderator variable
 
-- In the preregistered analyses, the moderation of fertile window effects on extra-pair desire and behaviour was no longer non-significant in the opposite direction of the prediction, but non-significant in the predicted direction (p = 0.23). 
-- In the robustness analyses, the predicted interaction was significant for extra-pair desire and behaviour (p = 0.00565) and partner mate retention (p = 0.0014). 
+I made a programming error when aggregating the variable "partner's attractiveness relative to self". Specifically, I accidentally sorted values because of a typo in the data.table syntax. This led to nonsense values (women's values were jumbled). A reader who re-analysed our data found it, for which are grateful. Fixing this error led to the following changes:\
 
-In our preregistered test, following the literature at the time, we had not permitted slopes for menstruation and the fertile window to vary by woman, even though fitting a cross-level moderation essentially stipulates that varying slopes must exist. Additionally, models with varying slopes indeed fit better. We had not corrected this omission in our robustness checks for our moderators (unlike for our main effects), because it would have only made the test more conservative and we had already found no support for the moderator effect. Allowing for slopes to vary rendered the predicted interaction non-significant for extra-pair desire (p = 0.085). The predicted interaction for partner mate retention in the robustness check would have been significant (p = 0.0072) according to our threshold of .01 for the preregistered tests, but still potentially consistent with sampling error given that 24 predicted interactions effect (four moderators, three outcomes, two subsamples) were tested for essentially one hypothesis.
+<aside>
+```{r layout="l-body-outset",fig.cap="We needed some help to get this one. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14751616975)", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg")
+```
+</aside>
+
+- In the [preregistered analyses](https://rubenarslan.github.io/ovulatory_shifts/3_fertility_as_prereg.html), the moderation of fertile window effects on extra-pair desire and behaviour was no longer non-significant in the opposite direction of the prediction, but non-significant in the predicted direction (p = 0.23). 
+- In the [robustness analyses](https://rubenarslan.github.io/ovulatory_shifts/3_fertility_robustness.html), the predicted interaction was significant for extra-pair desire and behaviour (p = 0.00565) and partner mate retention (p = 0.0014). 
+
+Our preregistered tests, following the literature at the time, had not permitted slopes for menstruation and the fertile window to vary by woman, even though fitting a cross-level moderation essentially stipulates that varying slopes must exist (an internal conceptual inconsistency). 
+
+Models with varying slopes indeed fit better for all outcomes. We reported robustness checks with varying slopes for all main effects, but we had not done so for our moderators tests, because we found no evidence of moderation and the check would have only made the test more conservative. Given that correcting the error led to a nominally significant result, we also tested a model, allowing for slopes to vary. In this model, the predicted interaction was non-significant for extra-pair desire (p = 0.085). The predicted interaction for partner mate retention in the robustness check would have been significant (p = 0.0072) according to our threshold of .01 for the preregistered tests, but still potentially consistent with sampling error given that 24 moderator effects had been tested (four moderators, three outcomes, two subsamples) were tested for essentially one hypothesis.
+
+__This programming error, though severe, did not affect the preregistered results. In our robustness checks, the error led to some changes in nominal significance, but the overall pattern still cannot be seen as evidence for the predicted moderation pattern.__ 
 
 ## Other post-publication feedback (not part of the correction)
 
 ### Figure 5
 
-Dan Engber helpfully pointed out that the caption for Figure 5 was not sufficiently clear. The figure was intended to show differences in patterns across the cycle. To this end, we standardised differences within variable and hormonal contraceptive status ("within-subject change" in the figure caption). This focuses the eye on the differences in changes for HC users and non-users. In Figure 3, we also showed the mean differences. An alternative version of Figure 5 can be found online: http://rubenarslan.github.io/ovulatory_shifts/3_stan_brms_long2.html 
+Dan Engber helpfully pointed out that the caption for Figure 5 could have been clearer. The figure was intended to show differences in patterns across the cycle. To this end, we standardised differences within variables and hormonal contraceptive status ("within-subject change" in the figure caption). This focuses the eye on the differences in changes for HC users and non-users. In Figure 3, we also showed the mean differences. An alternative version of Figure 5, including mean differences between HC users and non-users, can be found [online](http://rubenarslan.github.io/ovulatory_shifts/3_stan_brms_long2.html).
+
+<aside>
+```{r layout="l-body-outset",fig.cap="These aren't true bugs, but still good to discuss. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/21319498521)", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/595/21319498521_4012063d93_o_d.jpg")
+```
+</aside>
+
 
 ### Following the preregistration
 
-A reader accused us of deception for not following our preregistration to the letter. It was our intention to be faithful to the preregistration as much as possible and transparent about any deviations. We think we succeeded in doing so and that problems raised by the reader are mainly problems of explicitness and interpretation. It was our first preregistration (in 2014), we had no models to go on how to preregister correlational work with many simultaenous (but not all related) hypothesis tests. It was also our first menstrual cycle study. For this reason, we relied on expert opinion (including the aforementioned reader) to design, for example, our exclusion criteria.
+We were criticised for not following our preregistration to the letter. It was our intention to be faithful to the preregistration as much as possible and transparent about the deviations that we considered reasonable and necessary. We think we succeeded in doing so and that problems raised by the critic are mainly problems of explicitness and interpretation. 
 
-This process led to a few suboptimalities (an incomplete list, I am sure):
+It was our first preregistration (in 2014), we had no models for how to preregister correlational work with many simultaenous (but not all related) hypothesis tests. It was also our first menstrual cycle study and my first repeated measures study. For this reason, we relied on expert opinion to design, for example, our exclusion criteria.
 
-- Our exclusion criteria were overly strict and would have led to excluding most of the women for no reason (according to effect size estimates, excluded women were not more likely to be anovulatory).
-- We preregistered the use of windowed fertility predictors, which throw away most of the variation and days.
+This process led to a few suboptimalities (still an incomplete list, I am sure):
+
+- Our exclusion criteria were overly strict and would have led to excluding most of the women for no good reason (according to our effect size estimates, excluded women were not more likely to be anovulatory).
+- We preregistered the use of windowed fertility predictors, which throw away most of the informative variation in fertility and reduce the number of usable days.
 - We preregistered no strategy to deal with multiple testing, although we had multiple outcomes (some of which were highly correlated).
 - We preregistered several moderators that were all designed to test the same hypothesis, instead of the strongest possible specification.
 - We did not preregister how we would aggregate some of the more complex items in the data.
+- We preregistered a scale optimisation algorithm based on Cronbach's alpha, which is not the best way to estimate reliability for multilevel data like ours
 
-We think we were transparent about how we chose to deal with these problems. We definitely did not make any decisions to arrive at foregone conclusions, instead, we think we had good reasons for non-arbitrary decisions.
+__We think we transparently reported how we chose to deal with these problems. We did not make any decisions to arrive at foregone conclusions; instead, we think we had good reasons for non-arbitrary decisions.__
 
 #### Operationalisation of hypothesis 2.2
 
-The reader alerted us that our hypothesis ___H.2.2.__ Moderation or shift hypotheses: The ovulatory increase in women’s extra-pair desires and reported male mate retention behavior is strongest (and the in-pair desire increase is weakest) for women who perceive their partners as low in sexual attractiveness relative to long-term partner attractiveness._ could also be interpreted to mean a different statistical model than the one we fitted. 
+The reader alerted us that our hypothesis ___H.2.2. Moderation or shift hypotheses: The ovulatory increase in women’s extra-pair desires and reported male mate retention behavior is strongest (and the in-pair desire increase is weakest) for women who perceive their partners as low in sexual attractiveness relative to long-term partner attractiveness.__ could also be interpreted to mean a different statistical model than the one we fitted.
 
-We interpreted it as meaning that women who have a partner who is high in long-term attractiveness but low in short-term attractiveness would show ovulatory increases in extra-pair desire, whereas other women would not. Basically, women who have a provider without good genes.
+We interpreted it as meaning that women who have a partner who is high in long-term attractiveness but low in short-term attractiveness would show ovulatory increases in extra-pair desire, whereas all other women would not. Basically, women who have a partner who is a "provider" but does not have "good genes" would be interested in extra-pair men; other women would not be.
 
 We saw this in contrast to the simpler model, which we also fit, with only short-term attractiveness as the moderator. The reader interpreted it as meaning that we should adjust for long-term attractiveness to remove a "positivity bias" and test only the interaction between the fertile window and short-term attractiveness. Previous work had sometimes tested such a model and sometimes a difference score. 
 
-Although we reported them, we recommend not interpreting difference scores such as this (or the relative attractiveness variable above) in isolation, because they assume that women with partners who are attractive for both long- and short-term relationships behave the same way as women with partners who are not attractive for either long- or short-term relationships. We think this is not what the verbally specified theory predicts, but of course verbal specifications can be unclear.
+Although we reported them, we recommend not interpreting difference scores such as this (or the relative attractiveness variable above) in isolation, because they assume that women with partners who are attractive for both long- and short-term relationships behave the same way as women with partners who are not attractive for either long- or short-term relationships. We think this is not what the verbally specified theory predicts, but of course verbal specifications can be debated because they often leave some room for ambiguity.
 
 In our preregistered analyses, none of these alternative specifications would have yielded a significant effect, except one significant result in the opposite direction for in-pair desire. However, in our robustness checks, the interaction for this alternative specification would have been significant (p = 0.006). Again, allowing for slopes to vary rendered this interaction nonsignificant at .01 (p = 0.045).
 
-Overall, as we had already stressed in our discussion, it would be premature to conclude an absence of moderation: confidence intervals were too wide to rule out potentially relevant effect sizes and patterns were often in the predicted form. But neither should these models, which were suggested after seeing the results for other models, be seen as evidence for moderation, given the number of tests performed. If a prediction from the literature is supported in preregistered tests, checks like ours can show robustness to relaxing or making additional assumptions. The evidence for the predicted moderators is clearly not robust in our data. More data is needed to reach adequate power for more informative tests of moderation patterns, and is indeed forthcoming.
+__Overall, as we had already stressed in our discussion, it would be premature to conclude an absence of moderation: confidence intervals were too wide to rule out potentially relevant effect sizes and patterns were often in the predicted form for extra-pair desire (but not for in-pair desire). But neither should these models, which were suggested after seeing the results for other models, be seen as evidence _for_ moderation, given the number of tests performed. If a prediction from the literature is supported in preregistered tests, checks like ours can show robustness to relaxing or tightening assumptions. The evidence for the predicted moderators is clearly not robust in our data. More data is needed to reach adequate power for more informative tests of moderation patterns, and is indeed forthcoming. Maybe more importantly, theories need to be clearer, so that they can specify severe tests. We found this difficult to do at the time of planning the study.__
 
 #### Operationalisation of preregistration regarding hormonal contraceptive users
-Lastly, we did not pre-register that we would use hormonal contraception (HC) users as a quasi-control group for the naturally cycling group. Consistent with this, our preregistered tests compared fertile window changes with zero, not with the baseline change for HC users. However, we reported the latter comparison as well, in the preregistered analysis section, because we considered our omission of a strategy against multiple testing problems a flaw in our preregistration. We thought reporting the quasi-control group was one way to show that our ad-hoc strategy was effective.
+Lastly, we did not preregister that we would use hormonal contraception (HC) users as a quasi-control group for the naturally cycling group. Consistent with this, our preregistered tests compared fertile window changes with zero, not with the baseline change for HC users. However, we reported the latter comparison as well, in the preregistered analysis section. We mainly did this to show that despite the fact that we only had an ad-hoc strategy to deal with multiple testing, we never found an ovulatory change among hormonal contraceptive users (for whom ovulation is suppressed). We thought reporting the quasi-control group was one way to show that our ad-hoc strategy was effective.
 
 We hope these additional tests, which were in fact always consistent with our preregistered tests, did not lead to confusion regarding our preregistration. The choice of additionally presenting these analyses did not affect our conclusions and was not made conditional on the results.
+
+## Conclusion
+
+We are glad the paper led to animated post-publication discussion and are grateful to all who pointed out errors or ways the paper could be improved. We will implement the suggestions and lessons when publishing the results from the second, larger cycle study we conducted after this one.
+
+In all, the conclusions of our paper remain the same, although quite a few numbers changed a little. The replicability of the ovulatory change literature still seems decidedly mixed. Our work was not (and was never meant to be) the last word on moderators of cycle changes.
 
