@@ -58,7 +58,7 @@
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","categories","preview","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Correction to Arslan et al. (2019)."]},{"type":"character","attributes":{},"value":["Some additional information on the correction notice for _Using 26,000 diary entries to show ovulatory changes in sexual desire and behavior_ that appeared today."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]}]},{"type":"character","attributes":{},"value":["06-20-2019"]},{"type":"character","attributes":{},"value":["correction","ovulation"]},{"type":"character","attributes":{},"value":["https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior/"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","categories","preview","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Correction to Arslan et al. (2019)."]},{"type":"character","attributes":{},"value":["Some additional information on the correction notice for _Using 26,000 diary entries to show ovulatory changes in sexual desire and behavior_ that appeared today."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]}]},{"type":"character","attributes":{},"value":["06-20-2019"]},{"type":"character","attributes":{},"value":["correction","ovulation"]},{"type":"character","attributes":{},"value":["https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior/"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1364,6 +1364,22 @@ gtag('config', 'UA-2102103-6');
 </div>
 
 <div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#correction">Correction</a><ul>
+<li><a href="#figure-1-and-case-numbers">Figure 1 and case numbers</a></li>
+<li><a href="#effsize-package-bug"><code>effsize</code> package bug</a></li>
+<li><a href="#programming-error-for-a-moderator-variable">Programming error for a moderator variable</a></li>
+</ul></li>
+<li><a href="#other-post-publication-feedback-not-part-of-the-correction">Other post-publication feedback (not part of the correction)</a><ul>
+<li><a href="#figure-5">Figure 5</a></li>
+<li><a href="#following-the-preregistration">Following the preregistration</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
 <p>We (me, Katharina Schilling, Tanja M. Gerlach, &amp; Lars Penke) recently published <a href="https://psycnet.apa.org/record/2018-41799-001">a diary study on ovulatory changes in the Journal of Personality and Social Psychology</a>.</p>
 <p>Unfortunately, we made a few mistakes in reporting the study. The <a href="https://psycnet.apa.org/record/2019-34417-001">correction appeared today in JPSP</a>. Because corrections have to be quite short, we will use this blog post to give a little more detail.</p>
 <p><strong>According to our assessment, the mistakes, although annoying and preventable, changed nothing substantive.</strong> I have taken to adding automated testing to my data cleaning code and instituted a <a href="../bug_bounty.html">bug bounty policy</a> to reduce the odds of such errors in my future work.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
