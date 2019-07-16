@@ -33,7 +33,7 @@ knitr::include_graphics("https://farm6.staticflickr.com/5562/14597595828_44d41a5
 
 [Here](http://psycnet.apa.org/buy/2015-37761-001), we accidentally reported a lower cutoff than we actually used owing to some miscommunication to my co-authors on my part.
 
-And recently, my co-authors and I replied to a critical commentary of one my dissertation papers. I actually love this kind of stuff, as I personally feel that I learn the most when seeing a nice debate between two parties of opposite viewpoints.^[I still need to read [The Enigma of Reason](http://www.hup.harvard.edu/catalog.php?isbn=9780674368309) which makes the point that arguing is how we reason best.]
+And recently, my co-authors and I replied to a critical commentary of one my dissertation papers. I actually love this kind of stuff, as I personally feel that I learn the most when seeing a nice debate between two parties of opposite viewpoints.^[I still need to read [The Enigma of Reason](http://www.hup.harvard.edu/catalog.php?isbn=9780674237827) which makes the point that arguing is how we reason best.]
 However, this was a fundamentally dissatisfying experience because I spent more time battling journal submission forms than counter-arguments, because the journal caused a version problem and then hardly owned up to the mistake (see Appendix).
 
 I only noticed the version problem because an anonymous submission via my [Tell me I'm wrong](https://tellmeimwrong.formr.org/) form alerted me to the fact that I was misquoting the authors. Thank you, anonymous commenter.
