@@ -23,8 +23,11 @@ I'm a evolutionary personality psychologist by training, who dabbles in genetic 
 <img src="https://formr.org/assets/build/img/ruben.jpg?v1489582723" class="img-circle" alt="Ruben Arslan">
 </aside>
 
-You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/rubenarslan). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org).^[Some more information about this form can be found [here](http://www.the100.ci/2018/02/22/tell-me-im-wrong).]
+You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/rubenarslan). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org).^[Some more information about this form can be found [here](http://www.the100.ci/2018/02/22/tell-me-im-wrong).] I also have a standing [bug bounty policy](bug_bounty.html) for errors in my published work.
 
+
+## Blogs
+Together with [three wonderful people](http://www.the100.ci/about/), I founded [The 100% CI](http://www.the100.ci/), a blog focused on open science and meta science. Posts that I wrote primarily, can be found [here](http://www.the100.ci/author/ruben/), although we all edit and review each other. I have a [personal blog](blog.html) too, for posts that did not clear our high bar for punniness.
 
 ## Publications
 For now, you can find my traditional publications on my [Google Scholar profile](https://scholar.google.com/citations?user=X6fXzMcAAAAJ&hl=en). Here are the two main graphs from the two main papers of my dissertation.
@@ -93,26 +96,18 @@ In this workshop, we will try to tackle questions about privacy in the age of bi
 </details>
 
 
-## Bug Bounty Policy
-If you find errors in my published work, [I'd love to find out](bug_bounty.html).
-
-## Blog
-Together with [three wonderful people](http://www.the100.ci/about/), I founded [The 100% CI](http://www.the100.ci/), a blog focused on open science and meta science. Posts that I wrote primarily, can be found [here](http://www.the100.ci/author/ruben/), although we all edit and review each other. I have a [personal blog](blog.html) too, for posts that did not clear our high bar for punniness.
-
 ## Software
-I have published a few tools, mostly written in PHP, Javascript, or R, all of which are free to use, and two of which are open source. Missing from this list is one website that I had to take offline because a German dictionary didn't get the joke and threatened to sue me. Don't ask. You can find the open source software and some of my reproducible
-statistical analyses on [Github](https://github.com/rubenarslan).
+I have published a few tools, mostly written in PHP, Javascript, or R, all of which are free to use, and two of which are open source. Missing from this list is one website that I had to take offline because a German dictionary didn't get the joke and threatened to sue me. Don't ask. You can find the open source software and some of my reproducible statistical analyses on [Github](https://github.com/rubenarslan) and [OSF](http://osf.io/dryyc).
 
 ### [formr.org](https://formr.org)
-_formr.org_ is a study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata and Matthias Walther are helping me develop and maintain the software since 2015 and 2018, respectively. I also wrote
-an R package simply called [formr](https://github.com/rubenarslan/formr) to help users make the most of the data and metadata.
+_formr.org_ is a study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata and Matthias Walther are helping me develop and maintain the software since 2015 and 2018, respectively. I also wrote an R package simply called [formr](https://github.com/rubenarslan/formr) to help users make the most of the data and metadata.
 
-In addition to extensive documentation supplied by us and supplemented by our users in a Wiki, there is also a [preprint](https://psyarxiv.com/pjasu) describing the software.
+In addition to extensive documentation supplied by us and supplemented by our users in a Wiki, there is also a [paper](https://link.springer.com/article/10.3758/s13428-019-01236-y) describing the software.
  
 ### [codebook](https://cran.r-project.org/web/packages/codebook/)
 codebook is an R package that allows users to document datasets in nice websites that can be read and understood both by co-authors, forgetful future yous, and machines. It was based on a set of convenience functions available in formr. It can make good use of existing metadata, such as item data contained in Qualtrics or formr.org surveys, but also variable and value labels, in Stata, SPSS, and SAS files.
 
-A tutorial is available as a [preprint](https://psyarxiv.com/5qc6h/), but the easiest way to get going is to simply upload a dataset to this [webapp](http://codebook.formr.org/). Iro Eleftheriadou created a [gallery](https://rubenarslan.github.io/codebook_gallery/) for codebooks made from datasets uploaded to the Open Science Framework.
+I wrote a [tutorial](https://journals.sagepub.com/doi/full/10.1177/2515245919838783), but the easiest way to get going is to simply upload a dataset to this [webapp](http://codebook.formr.org/). Iro Eleftheriadou created a [gallery](https://rubenarslan.github.io/codebook_gallery/) for codebooks made from datasets uploaded to the Open Science Framework.
 
 ### [Alphabattle.xyz](https://alphabattle.xyz)
 A small collaboration with a friend led to this player-vs-player online word game written with [Meteor](https://www.meteor.com). 
