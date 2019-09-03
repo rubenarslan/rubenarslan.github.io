@@ -96,7 +96,7 @@ Given the small effect size, the word "dwindles" is misleading.
 ## Reproducibility
 Given that the last two papers I did HIBARs on provided open data and one provided open analysis scripts, I have to point out that I really felt the lack of reproducibility for this paper. The data is not open and there is no syntax for the quite complex models. To my mind, this makes issues with things like missing data handling much more pressing, because I and others cannot easily re-analyse the data.
 
-There is still at least one inconsistent p value in here (as identified by Statcheck.io), even after I recommende Statcheck in my review. I could not reproduce the authors measure of within-subject variability (presumably because I could not figure out how they went about it), although I could reproduce the directional result using my own approach.
+There is still at least one inconsistent p value in here (as identified by [Statcheck.io](https://Statcheck.io)), even after I recommended Statcheck in my review. I could not reproduce the authors measure of within-subject variability (presumably because I could not figure out how they went about it), although I could reproduce the directional result using my own approach.
 
 There is no codebook for the two studies, so I have to rely on various descriptions of the data strewn across multiple papers to find out what they did and did not measure. 
 
@@ -120,5 +120,5 @@ knitr::include_graphics("book_cover.png")
 ```
 </aside>
 
-While I found the paper interesting in general, the limitations discussed above make me doubt that the authors showed anything I did not already understand better from the existing literature on hormones and sexual desire.
+While I found the paper interesting in general, I took less away from this than I could have. Of course, not everyone has a focus on hormones in their work, but given the limitations discussed above I cannot integrate their findings with what we already know about sexual desire and hormones. I hope future work revisits these issues.
 
