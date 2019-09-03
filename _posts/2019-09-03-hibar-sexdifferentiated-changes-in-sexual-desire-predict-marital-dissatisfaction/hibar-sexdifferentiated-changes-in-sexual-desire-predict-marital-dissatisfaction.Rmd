@@ -107,7 +107,7 @@ Figure 1 just shows simple means with standard errors. A spaghetti plot (showing
 
 > Further, given the birth of children is consistently linked to marital satisfaction, a potential confound, we controlled marital satisfaction in these analyses as a time-varying covariate.
 
-Marital satisfaction is not just a potential confound, it's also a potential outcome of lower sexual desire. Adjusting for it is hence not straightforward. Please at least show results without this adjustment and quantify the effect of having children on marital satisfaction.
+Marital satisfaction is not just a potential confound, it's also a potential outcome of lower sexual desire. Adjusting for it is hence not straightforward in a timeseries with long lags  like this. I would like to see the results without this adjustment.
 
 The authors use the infamous terms "marginally significant" and "trended toward significance". As [many others](https://mchankins.wordpress.com/2013/04/21/still-not-significant-2/) have pointed out, p values aren't Geiger counters that tell you when you're approaching the truth.
 
