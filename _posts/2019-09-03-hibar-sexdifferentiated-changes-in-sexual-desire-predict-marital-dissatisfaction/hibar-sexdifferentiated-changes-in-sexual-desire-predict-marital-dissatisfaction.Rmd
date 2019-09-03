@@ -1,0 +1,124 @@
+---
+title: "HIBAR: Sex‑Differentiated Changes in Sexual Desire Predict Marital Dissatisfaction"
+description: |
+  Had I Been a Reviewer. Actually, I was a reviewer. Huh! So, how did this turn out?
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+date: 09-03-2019
+categories: 
+  - hibar
+  - post-publication review
+  - sexual desire
+  - marriage
+  - relationships
+output:
+  radix::radix_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+[McNulty, Maxwell, Meltzer, & Baumeister](https://link.springer.com/article/10.1007/s10508-019-01471-6) make use of two cohorts of newlyweds to find out whether discrepancies in sexual desire contribute to reducing marital satisfaction.
+The study is based on the same data as [McNulty et al. 2016](https://link.springer.com/article/10.1007/s10508-014-0444-6) and tries to answer a very similar question. The only difference is that here we are looking at sexual desire (which was measured less often) rather than sexual satisfaction and frequency as the predictor, and there's an added consideration of childbirth and stress as mediating factors. I reviewed a previous version of this manuscript at another journal, so this blog post is an edited version of that review minus the points the authors addressed^[for example, they pulled in the sexual frequency and satisfaction data here to link the two papers a bit more]. 
+
+In all, I think the results are plausible and the data are rich, but I wanted to think through some important limitations of their data (some of them discussed at length, some less so) to figure out how I think about the results.
+
+<details><summary>The Authors' Abstract</summary>
+Sex is critical to marriage. Yet, there are several reasons to expect spouses to experience declines in the desire for sex over time, and the rates of any declines in sexual desire may differ for men and women. We used two multi-wave, longitudinal studies to test whether male and female members of newlywed couples experienced different rates of change in sexual desire, whether any such changes were accentuated by childbirth, and whether any such changes had implications for marital satisfaction. In both studies, spouses provided multiple reports of sexual desire, marital satisfaction, and childbirth. Results demonstrated that women’s sexual desire declined more steeply over time than did men’s sexual desire, which did not decline on average. Further, childbirth accentuated this sex difference by partially, though not completely, accounting for declines in women’s sexual desire but not men’s. Finally, declines in women’s but not men’s sexual desire predicted declines in both partners’ marital satisfaction. These effects held controlling depressive symptoms and stress, including stress from parenthood. The current findings offer novel longitudinal evidence for sex-differentiated changes in sexual desire and therefore suggest an important source of marital discord.
+</details>
+
+## The three key limitations:
+
+```{r layout="l-body-outset",fig.cap="A closer look. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/19800352374)", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/452/19800352374_f2abfb3f84_b_d.jpg")
+```
+
+1. Data start at marriage. At this point most relationship will have been going on for a (variable) while.
+2. No data on hormones (age trends, menstrual cycle change), hormonal contraception, pregnancy, and breast feeding.
+3. Systematic attrition. Given that the goal of the study is to predict marital dissatisfaction, and that it followed newlyweds for 4.5 years, it baffles me that the authors do not discuss what happened to marriages that ended in divorce and how that relates to dropout (which was substantial).
+
+### Relationships don't start with marriage anymore
+One key limitation is not addressed by design. Many couples never marry, and most couples don't marry right after meeting. We may be looking at a very heterogeneous group here with respect to relationship duration. Why is that important? For example, couples who marry after having been together for longer may be more likely to have children. We would then spuriously conclude effects of childbirth that are in reality driven by pre-existing differences in relationship duration. The authors did not share data on relationship duration preceding marriage. 
+Their data on newlyweds are obviously valuable, but for answering the specific research question posed, I'd hazard starting with unmarried couples would give us clearer answers.
+
+### Hormones
+
+
+<aside>
+```{r layout="",fig.cap="Mother and Baby. From the book _Woman in Girlhood, Wifehood, Motherhood_ in the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14771402404)", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/3924/14771402404_e37c3a8697_o_d.jpg")
+```
+</aside>
+
+At the end, the authors say that hormonal fluctuations may be proximal mechanisms by which desire changes. 
+
+Yet, they do not discuss menstrual cycles, hormonal contraception, pregnancy and breastfeeding. All of these entail hormonal changes. Let's think this through:
+If newlywed women are more likely to be already pregnant at the first timepoint, changes in sexual desire after birth might rather reflect a shift from pregnancy back to breastfeeding and/or regularly ovulating or hormonal contraception.^[The authors never discuss collecting information on whether women were pregnant when measured, although I assume they could back-calculate that from children's birth dates (if those were collected) or approximately infer it depending on whether any children were born between waves (they definitely collected that).]
+
+Hormonal contraception causes [small decreases in sexual desire on average](https://www.ncbi.nlm.nih.gov/pubmed/27525531). If newlywed women are more likely to have gone off the pill, they may temporarily have higher sexual desire in the first wave, and then decrease again after a return to hormonal contraception after birth. 
+
+
+More mechanistically, given that [we found](http://psycnet.apa.org/journals/rev/87/2/133/) that women experiences peaks in sexual desire before ovulation, it may have been more likely that women were asssessed around ovulation during the first wave and less likely after childbirth (given that both breastfeeding and combined hormonal contraceptives can suppress ovulation).
+
+<aside>
+```{r layout="",fig.cap="What comes before childbirth? From the book _Woman in Girlhood, Wifehood, Motherhood_ in the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14773761305)", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/3855/14773761305_9a9357fa21_o_d.jpg")
+```
+</aside>
+
+Finally, with the age range of their sample, I don't think anyone entered menopause during the study period, but I still would have liked to see their analyses adjusted for age.
+
+Are the effects reported by the authors small enough to be fully explained by these slightly roundabout explanations? In standard deviations, the effect is approximately a decrease of 0.18 across both studies, if I understood their table correctly. I don't know how many women change their contraceptive method after marriage in their sample, nor do they report when and how many couples had children, so there are a lot of unknowns here. 
+
+
+Combined with the problem that relationships don't start at marriage, I do wonder if we were really shown evidence of a linear decline in sexual desire or whether we just started following couples right after a small uptick in sexual desire after the honeymoon (for hormonal and many other plausible reasons). I think getting this right makes a real difference to the counseling of couples.
+
+### Systematic attrition
+
+I don't really know what the right approach would be here, but certainly the authors should have mentioned how they dealt with missing data (FIML? Listwise deletion?) and I don't think adjusting for the number of waves does much good. Presumably, dissatisfied couples are more likely to drop out, because they divorce or separate, so a censored model could be appropriate for the marital dissatisfaction analyses. In all, I think these problems could lead to an underestimation of effects, but I could be wrong about this because I don't know the details of the model the authors fit.
+
+## Overinterpretation
+In all, the conclusions were tempered a lot between the version I saw and this one; in fact, I feel like I can see the signature of certain well-known reviewers in the limitations section. But these two slipped through:
+
+> quality close relationships are a significant source of mental and physical health
+
+This is an unsupported causal claim. The correlation may well be due to reverse causation or unobserved third variables. It would have be supported by something stronger than meta-analyses of correlations (e.g., propensity score matching). I'd add that divorce does not imply that people will necessarily end up lonely; they may end up happier. There's still friends, new partners, or remarriage. To make the claim you're trying to make, it would be more apt to cite negative consequences of divorce for well-being and mortality, rather than show positive correlates of marriage and assume that those whose marriages end will be alone.
+
+> desire for sex dwindles among newly married women but not men
+
+Given the small effect size, the word "dwindles" is misleading.
+
+
+## Reproducibility
+Given that the last two papers I did HIBARs on provided open data and one provided open analysis scripts, I have to point out that I really felt the lack of reproducibility for this paper. The data is not open and there is no syntax for the quite complex models. To my mind, this makes issues with things like missing data handling much more pressing, because I and others cannot easily re-analyse the data.
+
+There is still at least one inconsistent p value in here (as identified by Statcheck.io), even after I recommende Statcheck in my review. I could not reproduce the authors measure of within-subject variability (presumably because I could not figure out how they went about it), although I could reproduce the directional result using my own approach.
+
+There is no codebook for the two studies, so I have to rely on various descriptions of the data strewn across multiple papers to find out what they did and did not measure. 
+
+They report Cronbach's α, but no retest reliabilities, nor reliabilities of change^[Cronbach's alpha is not a sufficient measure of reliability to report for longitudinal measures such as these. I recommend reporting multilevel generalizability (Shrout and Lane 2012), as implemented e.g. in the psych package by Revelle. Especially the coefficient reliability of change is interesting for the analyses reported. Also, simply reporting that coefficients were "more than .90" is too imprecise.]; both of which of would be relevant to the question of whether they had adequate power.
+My admonition that they needed to provide more detail for their power analysis (e.g., predicted effect sizes) for it to make sense was apparently dealt with by omitting the power analysis entirely.
+
+Figure 1 just shows simple means with standard errors. A spaghetti plot (showing trajectories for all couples) or a smoothed spline over time superimposed on raw data would have done justice to the data.
+
+> Further, given the birth of children is consistently linked to marital satisfaction, a potential confound, we controlled marital satisfaction in these analyses as a time-varying covariate.
+
+Marital satisfaction is not just a potential confound, it's also a potential outcome of lower sexual desire. Adjusting for it is hence not straightforward. Please at least show results without this adjustment and quantify the effect of having children on marital satisfaction.
+
+The authors use the infamous terms "marginally significant" and "trended toward significance". As [many others](https://mchankins.wordpress.com/2013/04/21/still-not-significant-2/) have pointed out, p values aren't Geiger counters that tell you when you're approaching the truth.
+
+
+## Conclusion
+
+<aside>
+```{r layout="",fig.cap="This [book on Girlhood, Wifehood, Motherhood](https://archive.org/stream/womaningirlhoodw00soli/womaningirlhoodw00soli#page/n10/mode/1up) seems a tad outdated, but at least it has sections on courtship before marriage, menstruation, ovulation, and menopause (and the benefits of bathing).", out.extra="class=external"}
+knitr::include_graphics("book_cover.png")
+```
+</aside>
+
+While I found the paper interesting in general, the limitations discussed above make me doubt that the authors showed anything I did not already understand better from the existing literature on hormones and sexual desire.
+
