@@ -14,7 +14,7 @@ categories:
   - bibliometrics
 date: 06-14-2019
 output:
-  radix::radix_article:
+  distill::distill_article:
     self_contained: false
 ---
 

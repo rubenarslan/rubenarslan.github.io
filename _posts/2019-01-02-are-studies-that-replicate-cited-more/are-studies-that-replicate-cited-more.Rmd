@@ -17,7 +17,7 @@ categories:
   - reproducibility
   - quick job
 output:
-  radix::radix_article:
+  distill::distill_article:
     toc: no
     self_contained: false
 ---

@@ -14,7 +14,7 @@ categories:
   - feedback
   - visualization
 output:
-  radix::radix_article:
+  distill::distill_article:
     self_contained: false
 ---
 

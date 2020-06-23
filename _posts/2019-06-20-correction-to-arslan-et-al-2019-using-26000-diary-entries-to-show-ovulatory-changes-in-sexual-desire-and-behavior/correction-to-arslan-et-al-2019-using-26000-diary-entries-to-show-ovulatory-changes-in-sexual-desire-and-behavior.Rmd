@@ -13,7 +13,7 @@ categories:
   - ovulation
 preview: https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg
 output:
-  radix::radix_article:
+  distill::distill_article:
     self_contained: false
     toc: true
 ---

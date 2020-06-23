@@ -20,7 +20,7 @@ navbar:
     - icon: fa fa-rss
       href: index.xml
 output:
-  radix::radix_article:
+  distill::distill_article:
      css: styles.css
 creative_commons: CC BY
 twitter:

@@ -2,7 +2,7 @@
 title: "Personal blog"
 description: |
   A collection of links to software, scientific work, and my blog.
-site: radix::radix_website
+site: distill::distill_website
 exclude:
 - '*.rda'
 - '*.pdf'

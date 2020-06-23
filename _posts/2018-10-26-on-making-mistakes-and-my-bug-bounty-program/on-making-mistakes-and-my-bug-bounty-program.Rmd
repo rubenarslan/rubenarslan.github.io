@@ -13,7 +13,7 @@ categories:
   - bug bounty
 preview: https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg
 output:
-  radix::radix_article:
+  distill::distill_article:
     self_contained: false
 ---
 

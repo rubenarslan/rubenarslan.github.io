@@ -15,7 +15,7 @@ categories:
   - sex
   - quick job
 output:
-  radix::radix_article:
+  distill::distill_article:
     self_contained: false
 ---
 ```{r setup, include=FALSE}

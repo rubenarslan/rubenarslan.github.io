@@ -6,7 +6,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-  <meta name="generator" content="radix" />
+  <meta name="generator" content="distill" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -41,16 +41,17 @@
   
   <!--/radix_placeholder_meta_tags-->
   
-  <meta name="citation_reference" content="citation_title=R: A language and environment for statistical computing;citation_publication_date=2018;citation_publisher=R Foundation for Statistical Computing;citation_author=R: A language and environment for statistical computing"/>
-  <meta name="citation_reference" content="citation_title=&lt;span class=&quot;nocase&quot;&gt;rmarkdown&lt;/span&gt;: Dynamic documents for R;citation_publication_date=2018;citation_author=JJ Allaire;citation_author=Yihui Xie;citation_author=Jonathan McPherson;citation_author=Javier Luraschi;citation_author=Kevin Ushey;citation_author=Aron Atkins;citation_author=Hadley Wickham;citation_author=Joe Cheng;citation_author=Winston Chang"/>
-  <meta name="citation_reference" content="citation_title=&lt;span class=&quot;nocase&quot;&gt;knitr&lt;/span&gt;: A general-purpose package for dynamic report generation in R;citation_publication_date=2018;citation_author=Yihui Xie"/>
+  <meta name="citation_reference" content="citation_title=R: A language and environment for statistical computing;citation_publication_date=2020;citation_publisher=R Foundation for Statistical Computing;citation_author=R: A language and environment for statistical computing"/>
+  <meta name="citation_reference" content="citation_title=&lt;span class=&quot;nocase&quot;&gt;rmarkdown&lt;/span&gt;: Dynamic documents for R;citation_publication_date=2020;citation_author=JJ Allaire;citation_author=Yihui Xie;citation_author=Jonathan McPherson;citation_author=Javier Luraschi;citation_author=Kevin Ushey;citation_author=Aron Atkins;citation_author=Hadley Wickham;citation_author=Joe Cheng;citation_author=Winston Chang;citation_author=Richard Iannone"/>
+  <meta name="citation_reference" content="citation_title=R markdown: The definitive guide;citation_publication_date=2018;citation_publisher=Chapman and Hall/CRC;citation_author=Yihui Xie;citation_author=J. J. Allaire;citation_author=Garrett Grolemund"/>
+  <meta name="citation_reference" content="citation_title=&lt;span class=&quot;nocase&quot;&gt;distill&lt;/span&gt;: ’R markdown’ format for scientific and technical writing;citation_publication_date=2020;citation_author=JJ Allaire;citation_author=Rich Iannone;citation_author=Yihui Xie"/>
+  <meta name="citation_reference" content="citation_title=&lt;span class=&quot;nocase&quot;&gt;knitr&lt;/span&gt;: A general-purpose package for dynamic report generation in R;citation_publication_date=2020;citation_author=Yihui Xie"/>
   <meta name="citation_reference" content="citation_title=Dynamic documents with R and knitr;citation_publication_date=2015;citation_publisher=Chapman and Hall/CRC;citation_author=Yihui Xie"/>
   <meta name="citation_reference" content="citation_title=Knitr: A comprehensive tool for reproducible research in R;citation_publication_date=2014;citation_publisher=Chapman and Hall/CRC;citation_author=Yihui Xie"/>
-  <meta name="citation_reference" content="citation_title=&lt;span class=&quot;nocase&quot;&gt;radix&lt;/span&gt;: ’R markdown’ format for scientific and technical writing;citation_publication_date=2018;citation_author=JJ Allaire;citation_author=Rich Iannone;citation_author=Yihui Xie"/>
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","bibliography","description"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["packrat_bibliography.bibtex"]},{"type":"character","attributes":{},"value":["About this page."]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","bibliography","nocite","description"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["bibliography.bibtex"]},{"type":"character","attributes":{},"value":["@R @rmarkdown @distill @knitr @devtools @lme4 @rAltmetric @rcrossref @RISmed @rscopus @tidyverse @rio @cowplot @broom @rbokeh @DT @dplyr @ggbeeswarm @ggplot2 @Hmisc @httr @lubridate @formr @stringdist @brms @car @reshape2 @stringr @zoo @highcharter @ggvis @codebook @haven @UpSetR @forcats @coefplot @effects @lmerTest\n"]},{"type":"character","attributes":{},"value":["About this page."]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -84,7 +85,7 @@
       });
   
       // responsive menu
-      $('.radix-site-header').each(function(i, val) {
+      $('.distill-site-header').each(function(i, val) {
         var topnav = $(this);
         var toggle = topnav.find('.nav-toggle');
         toggle.on('click', function() {
@@ -111,85 +112,85 @@
   
   /* Theme (user-documented overrideables for nav appearance) */
   
-  .radix-site-nav {
+  .distill-site-nav {
     color: rgba(255, 255, 255, 0.8);
     background-color: #455a64;
     font-size: 15px;
     font-weight: 300;
   }
   
-  .radix-site-nav a {
+  .distill-site-nav a {
     color: inherit;
     text-decoration: none;
   }
   
-  .radix-site-nav a:hover {
+  .distill-site-nav a:hover {
     color: white;
   }
   
   @media print {
-    .radix-site-nav {
+    .distill-site-nav {
       display: none;
     }
   }
   
-  .radix-site-header {
+  .distill-site-header {
   
   }
   
-  .radix-site-footer {
+  .distill-site-footer {
   
   }
   
   
   /* Site Header */
   
-  .radix-site-header {
+  .distill-site-header {
     width: 100%;
     box-sizing: border-box;
     z-index: 3;
   }
   
-  .radix-site-header .nav-left {
+  .distill-site-header .nav-left {
     display: inline-block;
     margin-left: 8px;
   }
   
   @media screen and (max-width: 768px) {
-    .radix-site-header .nav-left {
+    .distill-site-header .nav-left {
       margin-left: 0;
     }
   }
   
   
-  .radix-site-header .nav-right {
+  .distill-site-header .nav-right {
     float: right;
     margin-right: 8px;
   }
   
-  .radix-site-header a,
-  .radix-site-header .title {
+  .distill-site-header a,
+  .distill-site-header .title {
     display: inline-block;
     text-align: center;
     padding: 14px 10px 14px 10px;
   }
   
-  .radix-site-header .title {
+  .distill-site-header .title {
     font-size: 18px;
   }
   
-  .radix-site-header .logo {
+  .distill-site-header .logo {
     padding: 0;
   }
   
-  .radix-site-header .logo img {
+  .distill-site-header .logo img {
     display: none;
     max-height: 20px;
     width: auto;
     margin-bottom: -4px;
   }
   
-  .radix-site-header .nav-image img {
+  .distill-site-header .nav-image img {
     max-height: 18px;
     width: auto;
     display: inline-block;
@@ -199,22 +200,22 @@
   
   
   @media screen and (min-width: 1000px) {
-    .radix-site-header .logo img {
+    .distill-site-header .logo img {
       display: inline-block;
     }
-    .radix-site-header .nav-left {
+    .distill-site-header .nav-left {
       margin-left: 20px;
     }
-    .radix-site-header .nav-right {
+    .distill-site-header .nav-right {
       margin-right: 20px;
     }
-    .radix-site-header .title {
+    .distill-site-header .title {
       padding-left: 12px;
     }
   }
   
   
-  .radix-site-header .nav-toggle {
+  .distill-site-header .nav-toggle {
     display: none;
   }
   
@@ -296,18 +297,18 @@
   }
   
   @media screen and (max-width: 768px) {
-    .radix-site-header a, .radix-site-header .nav-dropdown  {display: none;}
-    .radix-site-header a.nav-toggle {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
       float: right;
       display: block;
     }
-    .radix-site-header .title {
+    .distill-site-header .title {
       margin-left: 0;
     }
-    .radix-site-header .nav-right {
+    .distill-site-header .nav-right {
       margin-right: 0;
     }
-    .radix-site-header {
+    .distill-site-header {
       overflow: hidden;
     }
     .nav-right .nav-dropdown-content {
@@ -317,24 +318,24 @@
   
   
   @media screen and (max-width: 768px) {
-    .radix-site-header.responsive {position: relative;}
-    .radix-site-header.responsive a.nav-toggle {
+    .distill-site-header.responsive {position: relative;}
+    .distill-site-header.responsive a.nav-toggle {
       position: absolute;
       right: 0;
       top: 0;
     }
-    .radix-site-header.responsive a,
-    .radix-site-header.responsive .nav-dropdown {
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
       display: block;
       text-align: left;
     }
-    .radix-site-header.responsive .nav-left,
-    .radix-site-header.responsive .nav-right {
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
       width: 100%;
     }
-    .radix-site-header.responsive .nav-dropdown {float: none;}
-    .radix-site-header.responsive .nav-dropdown-content {position: relative;}
-    .radix-site-header.responsive .nav-dropdown .nav-dropbtn {
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
       display: block;
       width: 100%;
       text-align: left;
@@ -343,7 +344,7 @@
   
   /* Site Footer */
   
-  .radix-site-footer {
+  .distill-site-footer {
     width: 100%;
     overflow: hidden;
     box-sizing: border-box;
@@ -738,6 +739,16 @@
   .article-footer .subscribe {
     font-size: 15px;
     margin-top: 45px;
+  }
+  
+  
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+  
+  .custom p {
+    margin-bottom: 0.5em;
   }
   
   
@@ -1226,7 +1237,7 @@
   
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
-      $('.radix-site-header a[href]').each(function(i,val) {
+      $('.distill-site-header a[href]').each(function(i,val) {
         $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
       });
     }
@@ -1321,7 +1332,7 @@
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
 <header class="header header--fixed" role="banner">
-<nav class="radix-site-nav radix-site-header">
+<nav class="distill-site-nav distill-site-header">
 <div class="nav-left">
 <a href="index.html" class="title">One lives only to make blunders</a>
 </div>
@@ -1332,7 +1343,7 @@
 <a href="bug_bounty.html">Bug Bounty</a>
 <a href="about.html">About</a>
 <a href="index.xml">
-<i class="fa fa-rss"></i>
+<i class="fa fa-rss" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
@@ -1344,13 +1355,13 @@
 
 <div class="d-title">
 <h1>Ruben C. Arslan</h1>
-<p>About this page.</p>
+<p><p>About this page.</p></p>
 </div>
 
 
 <div class="d-article">
 <p>This page is intended to help me organize and document some of my (side) projects, especially my nontraditional publications, like preprints, blog posts, supplementary websites, software, tutorials, workshops and outreach slides, and small simulations. You can find my traditional publications on my <a href="https://scholar.google.com/citations?user=X6fXzMcAAAAJ&amp;hl=en">Google Scholar profile</a> for now. The blog’s name (One lives only to make blunders) is taken from this famous letter from <a href="https://www.darwinproject.ac.uk/letter/DCP-LETT-3272.xml">Darwin to Lyell</a>.</p>
-<p>This website was generated using these great tools <span class="citation" data-cites="R">R Core Team (<a href="#ref-R">2018</a>)</span> <span class="citation" data-cites="rmarkdown">Allaire et al. (<a href="#ref-rmarkdown">2018</a>)</span> <span class="citation" data-cites="knitr">Xie (<a href="#ref-knitr">2018</a>)</span> <span class="citation" data-cites="radix">Allaire, Iannone, and Xie (<a href="#ref-radix">2018</a>)</span>.</p>
+<p>This website was generated using these great tools <span class="citation" data-cites="R">R Core Team (<a href="#ref-R" role="doc-biblioref">2020</a>)</span> <span class="citation" data-cites="rmarkdown">Allaire et al. (<a href="#ref-rmarkdown" role="doc-biblioref">2020</a>)</span> <span class="citation" data-cites="knitr">Xie (<a href="#ref-knitr" role="doc-biblioref">2020</a>)</span> <span class="citation" data-cites="distill">Allaire, Iannone, and Xie (<a href="#ref-distill" role="doc-biblioref">2020</a>)</span></p>
 <h2 id="privacy-policy">Privacy Policy</h2>
 <p>Effective date: September 23, 2018</p>
 <h3 id="embedded-content">Embedded Content</h3>
@@ -1371,18 +1382,120 @@
 <h3 id="changes-to-this-privacy-policy">Changes To This Privacy Policy</h3>
 <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
 <p>If you have any questions about this Privacy Policy, please contact me by email <a href="mailto:ruben.arslan@gmail.com" class="email">ruben.arslan@gmail.com</a></p>
-<div id="refs" class="references">
-<div id="ref-radix">
-<p>Allaire, JJ, Rich Iannone, and Yihui Xie. 2018. <em>radix: ’R Markdown’ Format for Scientific and Technical Writing</em>. <a href="https://CRAN.R-project.org/package=radix">https://CRAN.R-project.org/package=radix</a>.</p>
+<div id="refs" class="references" role="doc-bibliography">
+<div id="ref-distill">
+<p>Allaire, JJ, Rich Iannone, and Yihui Xie. 2020. <em>distill: ’R Markdown’ Format for Scientific and Technical Writing</em>. <a href="https://CRAN.R-project.org/package=distill">https://CRAN.R-project.org/package=distill</a>.</p>
 </div>
 <div id="ref-rmarkdown">
-<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
+<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2020. <em>rmarkdown: Dynamic Documents for R</em>. <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.</p>
+</div>
+<div id="ref-formr">
+<p>Arslan, Ruben. 2014. <em>formr: Formr Survey Framework</em>.</p>
+</div>
+<div id="ref-codebook">
+<p>Arslan, Ruben C. 2019. “How to Automatically Document Data with the Codebook Package to Facilitate Data Re-Use.” <em>Advances in Methods and Practices in Psychological Science</em> 2 (2). <a href="https://doi.org/10.1177/2515245919838783">https://doi.org/10.1177/2515245919838783</a>.</p>
+</div>
+<div id="ref-lme4">
+<p>Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. “Fitting Linear Mixed-Effects Models Using lme4.” <em>Journal of Statistical Software</em> 67 (1): 1–48. <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>.</p>
+</div>
+<div id="ref-brms">
+<p>Bürkner, Paul-Christian. 2017. “brms: An R Package for Bayesian Multilevel Models Using Stan.” <em>Journal of Statistical Software</em> 80 (1): 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>.</p>
+</div>
+<div id="ref-rcrossref">
+<p>Chamberlain, Scott, Hao Zhu, Najko Jahn, Carl Boettiger, and Karthik Ram. 2020. <em>rcrossref: Client for Various ’Crossref’ ’Apis’</em>. <a href="https://CRAN.R-project.org/package=rcrossref">https://CRAN.R-project.org/package=rcrossref</a>.</p>
+</div>
+<div id="ref-rio">
+<p>Chan, Chung-hong, Geoffrey CH Chan, Thomas J. Leeper, and Jason Becker. 2018. <em>rio: A Swiss-Army Knife for Data File I/O</em>.</p>
+</div>
+<div id="ref-ggvis">
+<p>Chang, Winston, and Hadley Wickham. 2019. <em>ggvis: Interactive Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggvis">https://CRAN.R-project.org/package=ggvis</a>.</p>
+</div>
+<div id="ref-ggbeeswarm">
+<p>Clarke, Erik, and Scott Sherrill-Mix. 2017. <em>ggbeeswarm: Categorical Scatter (Violin Point) Plots</em>. <a href="https://CRAN.R-project.org/package=ggbeeswarm">https://CRAN.R-project.org/package=ggbeeswarm</a>.</p>
+</div>
+<div id="ref-car">
+<p>Fox, John, and Sanford Weisberg. 2019a. <em>An R Companion to Applied Regression</em>. Third. Thousand Oaks CA: Sage. <a href="https://socialsciences.mcmaster.ca/jfox/Books/Companion/">https://socialsciences.mcmaster.ca/jfox/Books/Companion/</a>.</p>
+</div>
+<div id="ref-effects">
+<p>———. 2019b. <em>An R Companion to Applied Regression</em>. 3rd ed. Thousand Oaks CA: Sage. <a href="http://tinyurl.com/carbook">http://tinyurl.com/carbook</a>.</p>
+</div>
+<div id="ref-UpSetR">
+<p>Gehlenborg, Nils. 2019. <em>UpSetR: A More Scalable Alternative to Venn and Euler Diagrams for Visualizing Intersecting Sets</em>. <a href="https://CRAN.R-project.org/package=UpSetR">https://CRAN.R-project.org/package=UpSetR</a>.</p>
+</div>
+<div id="ref-lubridate">
+<p>Grolemund, Garrett, and Hadley Wickham. 2011. “Dates and Times Made Easy with lubridate.” <em>Journal of Statistical Software</em> 40 (3): 1–25. <a href="http://www.jstatsoft.org/v40/i03/">http://www.jstatsoft.org/v40/i03/</a>.</p>
+</div>
+<div id="ref-rbokeh">
+<p>Hafen, Ryan, and Continuum Analytics, Inc. 2020. <em>rbokeh: R Interface for Bokeh</em>. <a href="https://CRAN.R-project.org/package=rbokeh">https://CRAN.R-project.org/package=rbokeh</a>.</p>
+</div>
+<div id="ref-Hmisc">
+<p>Harrell Jr, Frank E, with contributions from Charles Dupont, and many others. 2020. <em>Hmisc: Harrell Miscellaneous</em>. <a href="https://CRAN.R-project.org/package=Hmisc">https://CRAN.R-project.org/package=Hmisc</a>.</p>
+</div>
+<div id="ref-RISmed">
+<p>Kovalchik, Stephanie. 2017. <em>RISmed: Download Content from Ncbi Databases</em>. <a href="https://CRAN.R-project.org/package=RISmed">https://CRAN.R-project.org/package=RISmed</a>.</p>
+</div>
+<div id="ref-highcharter">
+<p>Kunst, Joshua. 2019. <em>highcharter: A Wrapper for the ’Highcharts’ Library</em>. <a href="https://CRAN.R-project.org/package=highcharter">https://CRAN.R-project.org/package=highcharter</a>.</p>
+</div>
+<div id="ref-lmerTest">
+<p>Kuznetsova, Alexandra, Per B. Brockhoff, and Rune H. B. Christensen. 2017. “lmerTest Package: Tests in Linear Mixed Effects Models.” <em>Journal of Statistical Software</em> 82 (13): 1–26. <a href="https://doi.org/10.18637/jss.v082.i13">https://doi.org/10.18637/jss.v082.i13</a>.</p>
+</div>
+<div id="ref-coefplot">
+<p>Lander, Jared P. 2018. <em>coefplot: Plots Coefficients from Fitted Models</em>. <a href="https://CRAN.R-project.org/package=coefplot">https://CRAN.R-project.org/package=coefplot</a>.</p>
+</div>
+<div id="ref-rscopus">
+<p>Muschelli, John. 2019. <em>rscopus: Scopus Database ’Api’ Interface</em>. <a href="https://CRAN.R-project.org/package=rscopus">https://CRAN.R-project.org/package=rscopus</a>.</p>
+</div>
+<div id="ref-rAltmetric">
+<p>Ram, Karthik. 2017. <em>rAltmetric: Retrieves Altmerics Data for Any Published Paper from ’Altmetric.com’</em>. <a href="https://CRAN.R-project.org/package=rAltmetric">https://CRAN.R-project.org/package=rAltmetric</a>.</p>
 </div>
 <div id="ref-R">
-<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
+<p>R Core Team. 2020. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
+</div>
+<div id="ref-broom">
+<p>Robinson, David, and Alex Hayes. 2020. <em>broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>
+</div>
+<div id="ref-stringdist">
+<p>van der Loo, M. P. J. 2014. “The Stringdist Package for Approximate String Matching.” <em>The R Journal</em> 6 (1): 111–22. <a href="https://CRAN.R-project.org/package=stringdist">https://CRAN.R-project.org/package=stringdist</a>.</p>
+</div>
+<div id="ref-reshape2">
+<p>Wickham, Hadley. 2007. “Reshaping Data with the reshape Package.” <em>Journal of Statistical Software</em> 21 (12): 1–20. <a href="http://www.jstatsoft.org/v21/i12/">http://www.jstatsoft.org/v21/i12/</a>.</p>
+</div>
+<div id="ref-ggplot2">
+<p>———. 2016. <em>ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.</p>
+</div>
+<div id="ref-httr">
+<p>———. 2019a. <em>httr: Tools for Working with Urls and Http</em>. <a href="https://CRAN.R-project.org/package=httr">https://CRAN.R-project.org/package=httr</a>.</p>
+</div>
+<div id="ref-stringr">
+<p>———. 2019b. <em>stringr: Simple, Consistent Wrappers for Common String Operations</em>. <a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr</a>.</p>
+</div>
+<div id="ref-forcats">
+<p>———. 2020. <em>forcats: Tools for Working with Categorical Variables (Factors)</em>. <a href="https://CRAN.R-project.org/package=forcats">https://CRAN.R-project.org/package=forcats</a>.</p>
+</div>
+<div id="ref-tidyverse">
+<p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.</p>
+</div>
+<div id="ref-dplyr">
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.</p>
+</div>
+<div id="ref-devtools">
+<p>Wickham, Hadley, Jim Hester, and Winston Chang. 2020. <em>devtools: Tools to Make Developing R Packages Easier</em>. <a href="https://CRAN.R-project.org/package=devtools">https://CRAN.R-project.org/package=devtools</a>.</p>
+</div>
+<div id="ref-haven">
+<p>Wickham, Hadley, and Evan Miller. 2020. <em>haven: Import and Export ’Spss’, ’Stata’ and ’Sas’ Files</em>. <a href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>.</p>
+</div>
+<div id="ref-cowplot">
+<p>Wilke, Claus O. 2019. <em>cowplot: Streamlined Plot Theme and Plot Annotations for ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=cowplot">https://CRAN.R-project.org/package=cowplot</a>.</p>
 </div>
 <div id="ref-knitr">
-<p>Xie, Yihui. 2018. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://yihui.name/knitr/">https://yihui.name/knitr/</a>.</p>
+<p>Xie, Yihui. 2020. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</p>
+</div>
+<div id="ref-DT">
+<p>Xie, Yihui, Joe Cheng, and Xianying Tan. 2020. <em>DT: A Wrapper of the Javascript Library ’Datatables’</em>. <a href="https://CRAN.R-project.org/package=DT">https://CRAN.R-project.org/package=DT</a>.</p>
+</div>
+<div id="ref-zoo">
+<p>Zeileis, Achim, and Gabor Grothendieck. 2005. “zoo: S3 Infrastructure for Regular and Irregular Time Series.” <em>Journal of Statistical Software</em> 14 (6): 1–27. <a href="https://doi.org/10.18637/jss.v014.i06">https://doi.org/10.18637/jss.v014.i06</a>.</p>
 </div>
 </div>
 <!--radix_placeholder_article_footer-->
@@ -1408,27 +1521,47 @@
   author = {{R Core Team}},
   organization = {R Foundation for Statistical Computing},
   address = {Vienna, Austria},
-  year = {2018},
+  year = {2020},
   url = {https://www.R-project.org/},
-  note = {version 3.5.1},
+  note = {version 4.0.1},
 }
 
 @Manual{rmarkdown,
   title = {{rmarkdown}: Dynamic Documents for {R}},
-  author = {JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang},
+  author = {JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone},
+  year = {2020},
+  note = {R package version 2.2 version 2.2},
+  note = {ISBN 9781138359338 version 2.2},
+  url = {https://github.com/rstudio/rmarkdown},
+}
+
+@Book{rmarkdown,
+  title = {R Markdown: The Definitive Guide},
+  author = {Yihui Xie and J.J. Allaire and Garrett Grolemund},
+  publisher = {Chapman and Hall/CRC},
+  address = {Boca Raton, Florida},
   year = {2018},
-  note = {R package version 1.10 version 1.10},
-  url = {https://CRAN.R-project.org/package=rmarkdown},
+  note = {R package version 2.2 version 2.2},
+  note = {ISBN 9781138359338 version 2.2},
+  url = {https://bookdown.org/yihui/rmarkdown},
+}
+
+@Manual{distill,
+  title = {{distill}: '{R} Markdown' Format for Scientific and Technical Writing},
+  author = {JJ Allaire and Rich Iannone and Yihui Xie},
+  year = {2020},
+  note = {R package version 0.8 version 0.8},
+  url = {https://CRAN.R-project.org/package=distill},
 }
 
 @Manual{knitr,
   title = {{knitr}: A General-Purpose Package for Dynamic Report Generation in {R}},
   author = {Yihui Xie},
-  year = {2018},
-  note = {R package version 1.20 version 1.20},
-  note = {ISBN 978-1498716963 version 1.20},
-  note = {ISBN 978-1466561595 version 1.20},
-  url = {https://yihui.name/knitr/},
+  year = {2020},
+  note = {R package version 1.28 version 1.28},
+  note = {ISBN 978-1498716963 version 1.28},
+  note = {ISBN 978-1466561595 version 1.28},
+  url = {https://yihui.org/knitr/},
 }
 
 @Book{knitr,
@@ -1438,10 +1571,10 @@
   address = {Boca Raton, Florida},
   year = {2015},
   edition = {2nd},
-  note = {R package version 1.20 version 1.20},
-  note = {ISBN 978-1498716963 version 1.20},
-  note = {ISBN 978-1466561595 version 1.20},
-  url = {https://yihui.name/knitr/},
+  note = {R package version 1.28 version 1.28},
+  note = {ISBN 978-1498716963 version 1.28},
+  note = {ISBN 978-1466561595 version 1.28},
+  url = {https://yihui.org/knitr/},
 }
 
 @InCollection{knitr,
@@ -1451,23 +1584,396 @@
   author = {Yihui Xie},
   publisher = {Chapman and Hall/CRC},
   year = {2014},
-  note = {R package version 1.20 version 1.20},
-  note = {ISBN 978-1498716963 version 1.20},
-  note = {ISBN 978-1466561595 version 1.20},
+  note = {R package version 1.28 version 1.28},
+  note = {ISBN 978-1498716963 version 1.28},
+  note = {ISBN 978-1466561595 version 1.28},
   url = {http://www.crcpress.com/product/isbn/9781466561595},
 }
 
-@Manual{radix,
-  title = {{radix}: '{R} Markdown' Format for Scientific and Technical Writing},
-  author = {JJ Allaire and Rich Iannone and Yihui Xie},
+@Manual{devtools,
+  title = {{devtools}: Tools to Make Developing {R} Packages Easier},
+  author = {Hadley Wickham and Jim Hester and Winston Chang},
+  year = {2020},
+  note = {R package version 2.3.0 version 2.3.0},
+  url = {https://CRAN.R-project.org/package=devtools},
+}
+
+@Article{lme4,
+  title = {Fitting Linear Mixed-Effects Models Using {lme4}},
+  author = {Douglas Bates and Martin M{\"a}chler and Ben Bolker and Steve Walker},
+  journal = {Journal of Statistical Software},
+  year = {2015},
+  volume = {67},
+  number = {1},
+  pages = {1--48},
+  doi = {10.18637/jss.v067.i01},
+  note = { version 1.1.23},
+}
+
+@Manual{rAltmetric,
+  title = {{rAltmetric}: Retrieves Altmerics Data for Any Published Paper from
+'Altmetric.com'},
+  author = {Karthik Ram},
+  year = {2017},
+  note = {R package version 0.7.0 version 0.7.0},
+  url = {https://CRAN.R-project.org/package=rAltmetric},
+}
+
+@Manual{rcrossref,
+  title = {{rcrossref}: Client for Various 'CrossRef' 'APIs'},
+  author = {Scott Chamberlain and Hao Zhu and Najko Jahn and Carl Boettiger and Karthik Ram},
+  year = {2020},
+  note = {R package version 1.0.0 version 1.0.0},
+  url = {https://CRAN.R-project.org/package=rcrossref},
+}
+
+@Manual{RISmed,
+  title = {{RISmed}: Download Content from NCBI Databases},
+  author = {Stephanie Kovalchik},
+  year = {2017},
+  note = {R package version 2.1.7 version 2.1.7},
+  url = {https://CRAN.R-project.org/package=RISmed},
+}
+
+@Manual{rscopus,
+  title = {{rscopus}: Scopus Database 'API' Interface},
+  author = {John Muschelli},
+  year = {2019},
+  note = {R package version 0.6.6 version 0.6.6},
+  url = {https://CRAN.R-project.org/package=rscopus},
+}
+
+@Article{tidyverse,
+  title = {Welcome to the {tidyverse}},
+  author = {Hadley Wickham and Mara Averick and Jennifer Bryan and Winston Chang and Lucy D'Agostino McGowan and Romain François and Garrett Grolemund and Alex Hayes and Lionel Henry and Jim Hester and Max Kuhn and Thomas Lin Pedersen and Evan Miller and Stephan Milton Bache and Kirill Müller and Jeroen Ooms and David Robinson and Dana Paige Seidel and Vitalie Spinu and Kohske Takahashi and Davis Vaughan and Claus Wilke and Kara Woo and Hiroaki Yutani},
+  year = {2019},
+  journal = {Journal of Open Source Software},
+  volume = {4},
+  number = {43},
+  pages = {1686},
+  doi = {10.21105/joss.01686},
+  note = { version 1.3.0},
+}
+
+@Manual{rio,
+  title = {{rio}: A Swiss-army knife for data file I/O},
+  author = {Chung-hong Chan and Geoffrey CH Chan and Thomas J. Leeper and Jason Becker},
   year = {2018},
-  note = {R package version 0.5 version 0.5},
-  url = {https://CRAN.R-project.org/package=radix},
+  note = {R package version 0.5.16 version 0.5.16},
+}
+
+@Manual{cowplot,
+  title = {{cowplot}: Streamlined Plot Theme and Plot Annotations for 'ggplot2'},
+  author = {Claus O. Wilke},
+  year = {2019},
+  note = {R package version 1.0.0 version 1.0.0},
+  url = {https://CRAN.R-project.org/package=cowplot},
+}
+
+@Manual{broom,
+  title = {{broom}: Convert Statistical Analysis Objects into Tidy Tibbles},
+  author = {David Robinson and Alex Hayes},
+  year = {2020},
+  note = {R package version 0.5.6 version 0.5.6},
+  url = {https://CRAN.R-project.org/package=broom},
+}
+
+@Manual{rbokeh,
+  title = {{rbokeh}: {R} Interface for Bokeh},
+  author = {Ryan Hafen and {Continuum Analytics, Inc.}},
+  year = {2020},
+  note = {R package version 0.5.1 version 0.5.1},
+  url = {https://CRAN.R-project.org/package=rbokeh},
+}
+
+@Manual{DT,
+  title = {{DT}: A Wrapper of the JavaScript Library 'DataTables'},
+  author = {Yihui Xie and Joe Cheng and Xianying Tan},
+  year = {2020},
+  note = {R package version 0.13 version 0.13},
+  url = {https://CRAN.R-project.org/package=DT},
+}
+
+@Manual{dplyr,
+  title = {{dplyr}: A Grammar of Data Manipulation},
+  author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},
+  year = {2020},
+  note = {R package version 1.0.0 version 1.0.0},
+  url = {https://CRAN.R-project.org/package=dplyr},
+}
+
+@Manual{ggbeeswarm,
+  title = {{ggbeeswarm}: Categorical Scatter (Violin Point) Plots},
+  author = {Erik Clarke and Scott Sherrill-Mix},
+  year = {2017},
+  note = {R package version 0.6.0 version 0.6.0},
+  url = {https://CRAN.R-project.org/package=ggbeeswarm},
+}
+
+@Book{ggplot2,
+  author = {Hadley Wickham},
+  title = {{ggplot2}: Elegant Graphics for Data Analysis},
+  publisher = {Springer-Verlag New York},
+  year = {2016},
+  isbn = {978-3-319-24277-4},
+  url = {https://ggplot2.tidyverse.org},
+  note = { version 3.3.1},
+}
+
+@Manual{Hmisc,
+  title = {{Hmisc}: Harrell Miscellaneous},
+  author = {Frank E {Harrell Jr} and with contributions from Charles Dupont and many others.},
+  year = {2020},
+  note = {R package version 4.4-0 version 4.4.0},
+  url = {https://CRAN.R-project.org/package=Hmisc},
+}
+
+@Manual{httr,
+  title = {{httr}: Tools for Working with URLs and HTTP},
+  author = {Hadley Wickham},
+  year = {2019},
+  note = {R package version 1.4.1 version 1.4.1},
+  url = {https://CRAN.R-project.org/package=httr},
+}
+
+@Article{lubridate,
+  title = {Dates and Times Made Easy with {lubridate}},
+  author = {Garrett Grolemund and Hadley Wickham},
+  journal = {Journal of Statistical Software},
+  year = {2011},
+  volume = {40},
+  number = {3},
+  pages = {1--25},
+  url = {http://www.jstatsoft.org/v40/i03/},
+  note = { version 1.7.8},
+}
+
+@Manual{formr,
+  title = {{formr}: formr survey framework},
+  author = {Ruben Arslan},
+  year = {2014},
+  note = {R package version 0.8.5 version 0.8.5},
+}
+
+@Article{stringdist,
+  title = {The stringdist package for approximate string matching},
+  author = {M.P.J. {van der Loo}},
+  year = {2014},
+  journal = {The {R} {J}ournal},
+  volume = {6},
+  issue = {1},
+  url = {https://CRAN.R-project.org/package=stringdist},
+  pages = {111-122},
+  note = { version 0.9.5.5},
+}
+
+@Article{brms,
+  title = {{brms}: An {{R}} Package for {Bayesian} Multilevel Models Using {Stan}},
+  author = {Paul-Christian Bürkner},
+  journal = {Journal of Statistical Software},
+  year = {2017},
+  volume = {80},
+  number = {1},
+  pages = {1--28},
+  doi = {10.18637/jss.v080.i01},
+  encoding = {UTF-8},
+  note = {NULL version 2.13.0},
+  note = {NULL version 2.13.0},
+}
+
+@Article{brms,
+  title = {Advanced {Bayesian} Multilevel Modeling with the {R} Package {brms}},
+  author = {Paul-Christian Bürkner},
+  journal = {The R Journal},
+  year = {2018},
+  volume = {10},
+  number = {1},
+  pages = {395--411},
+  doi = {10.32614/RJ-2018-017},
+  encoding = {UTF-8},
+  note = {NULL version 2.13.0},
+  note = {NULL version 2.13.0},
+}
+
+@Book{car,
+  title = {An {{R}} Companion to Applied Regression},
+  edition = {Third},
+  author = {John Fox and Sanford Weisberg},
+  year = {2019},
+  publisher = {Sage},
+  address = {Thousand Oaks {CA}},
+  url = {https://socialsciences.mcmaster.ca/jfox/Books/Companion/},
+  note = { version 3.0.8},
+}
+
+@Article{reshape2,
+  title = {Reshaping Data with the {reshape} Package},
+  author = {Hadley Wickham},
+  journal = {Journal of Statistical Software},
+  year = {2007},
+  volume = {21},
+  number = {12},
+  pages = {1--20},
+  url = {http://www.jstatsoft.org/v21/i12/},
+  note = { version 1.4.4},
+}
+
+@Manual{stringr,
+  title = {{stringr}: Simple, Consistent Wrappers for Common String Operations},
+  author = {Hadley Wickham},
+  year = {2019},
+  note = {R package version 1.4.0 version 1.4.0},
+  url = {https://CRAN.R-project.org/package=stringr},
+}
+
+@Article{zoo,
+  title = {{zoo}: S3 Infrastructure for Regular and Irregular Time Series},
+  author = {Achim Zeileis and Gabor Grothendieck},
+  journal = {Journal of Statistical Software},
+  year = {2005},
+  volume = {14},
+  number = {6},
+  pages = {1--27},
+  doi = {10.18637/jss.v014.i06},
+  note = { version 1.8.8},
+}
+
+@Manual{highcharter,
+  title = {{highcharter}: A Wrapper for the 'Highcharts' Library},
+  author = {Joshua Kunst},
+  year = {2019},
+  note = {R package version 0.7.0 version 0.7.0},
+  url = {https://CRAN.R-project.org/package=highcharter},
+}
+
+@Manual{ggvis,
+  title = {{ggvis}: Interactive Grammar of Graphics},
+  author = {Winston Chang and Hadley Wickham},
+  year = {2019},
+  note = {R package version 0.4.5 version 0.4.5},
+  url = {https://CRAN.R-project.org/package=ggvis},
+}
+
+@Article{codebook,
+  title = {How to automatically document data with the codebook package to facilitate data re-use.},
+  author = {Ruben C. Arslan},
+  year = {2019},
+  doi = {10.1177/2515245919838783},
+  journal = {Advances in Methods and Practices in Psychological Science},
+  url = {https://doi.org/10.1177/2515245919838783},
+  volume = {2},
+  number = {2},
+  note = { version 0.9.1},
+}
+
+@Manual{haven,
+  title = {{haven}: Import and Export 'SPSS', 'Stata' and 'SAS' Files},
+  author = {Hadley Wickham and Evan Miller},
+  year = {2020},
+  note = {R package version 2.3.1 version 2.3.1},
+  url = {https://CRAN.R-project.org/package=haven},
+}
+
+@Manual{UpSetR,
+  title = {{UpSetR}: A More Scalable Alternative to Venn and Euler Diagrams for
+Visualizing Intersecting Sets},
+  author = {Nils Gehlenborg},
+  year = {2019},
+  note = {R package version 1.4.0 version 1.4.0},
+  url = {https://CRAN.R-project.org/package=UpSetR},
+}
+
+@Manual{forcats,
+  title = {{forcats}: Tools for Working with Categorical Variables (Factors)},
+  author = {Hadley Wickham},
+  year = {2020},
+  note = {R package version 0.5.0 version 0.5.0},
+  url = {https://CRAN.R-project.org/package=forcats},
+}
+
+@Manual{coefplot,
+  title = {{coefplot}: Plots Coefficients from Fitted Models},
+  author = {Jared P. Lander},
+  year = {2018},
+  note = {R package version 1.2.6 version 1.2.6},
+  url = {https://CRAN.R-project.org/package=coefplot},
+}
+
+@Book{effects,
+  title = {An {R} Companion to Applied Regression},
+  edition = {3rd},
+  author = {John Fox and Sanford Weisberg},
+  year = {2019},
+  publisher = {Sage},
+  address = {Thousand Oaks CA},
+  url = {http://tinyurl.com/carbook},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+}
+
+@Article{effects,
+  title = {Visualizing Fit and Lack of Fit in Complex Regression Models with Predictor Effect Plots and Partial Residuals},
+  author = {John Fox and Sanford Weisberg},
+  journal = {Journal of Statistical Software},
+  year = {2018},
+  volume = {87},
+  number = {9},
+  pages = {1--27},
+  doi = {10.18637/jss.v087.i09},
+  url = {https://www.jstatsoft.org/v087/i09},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+}
+
+@Article{effects,
+  title = {Effect Displays in {R} for Generalised Linear Models},
+  author = {John Fox},
+  journal = {Journal of Statistical Software},
+  year = {2003},
+  volume = {8},
+  number = {15},
+  pages = {1--27},
+  url = {http://www.jstatsoft.org/v08/i15/},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+}
+
+@Article{effects,
+  title = {Effect Displays in {R} for Multinomial and Proportional-Odds Logit Models: Extensions to the {effects} Package},
+  author = {John Fox and Jangman Hong},
+  journal = {Journal of Statistical Software},
+  year = {2009},
+  volume = {32},
+  number = {1},
+  pages = {1--24},
+  url = {http://www.jstatsoft.org/v32/i01/},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+  note = {NULL version 4.1.4},
+}
+
+@Article{lmerTest,
+  title = {{lmerTest} Package: Tests in Linear Mixed Effects Models},
+  author = {Alexandra Kuznetsova and Per B. Brockhoff and Rune H. B. Christensen},
+  journal = {Journal of Statistical Software},
+  year = {2017},
+  volume = {82},
+  number = {13},
+  pages = {1--26},
+  doi = {10.18637/jss.v082.i13},
+  note = { version 3.1.2},
 }
 </script>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
-<div class="radix-site-nav radix-site-footer">
+<div class="distill-site-nav distill-site-footer">
 <p>© Copyright 2018-2019 Ruben Arslan.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->

@@ -18,7 +18,7 @@ categories:
   - open science
   - contraception
 output:
-  radix::radix_article:
+  distill::distill_article:
     self_contained: false
 draft: false
 ---
@@ -108,10 +108,8 @@ for (i in seq_along(questions$name)) {
 
 We began by asking whether women used contraception at all. This time, we only asked
 women who were not pregnant. Next time, we plan to ask all women about contraception
-because even pregnant women could e.g. use condoms to prevent sexually transmitted infections,
-urinary tract infections. However, so that it does not like a lack of forethought, 
-we should probably optionally display some explanation to this effect for e.g. menopausal and pregnant women, because some women found it odd to be asked these questions. In this study, we gave
-women a free text field to write in if they wanted to specify other reasons why they 
+because even pregnant women could e.g. use condoms to prevent sexually transmitted infections, or urinary tract infections. However, so that it does not look like a lack of forethought, 
+we should probably optionally display some explanation to this effect for e.g. menopausal and pregnant women, because some women found it odd to be asked these questions. In this study, we gave women a free text field to write in if they wanted to specify other reasons why they 
 didn't use contraception. 
 
 ```{r fig.cap="Pregnant women were excluded from the contraception questionnaire."}
@@ -175,7 +173,7 @@ all_surveys %>% select(session, contraception_method) %>%
 ```
 
 
-As you can see, the non-pill hormonal methods were mainly NuvaRing (a estrogen/progestogen vaginal ring) and Mirena (a progestogen-only intra-uterine contraceptive).
+As you can see, the non-pill hormonal methods were mainly NuvaRing (an estrogen/progestogen vaginal ring) and Mirena (a progestogen-only intra-uterine contraceptive).
 
 ```{r fig.cap="Other hormonal contraceptives"}
 plot_labelled(na.omit(all_surveys$contraception_hormonal_other)) + 
@@ -226,8 +224,7 @@ in the future:^[Taken from the written responses to the other reasons prompt.]
 
 A special case of combining contraceptive methods are the fertility awareness methods.
 How many of our participants are sexually abstinent during the fertile phase, how many switch
-to other methods? As you can see, most switch to other methods. Total sexual abstinence is rare, although
-quite a few report having penetrative sex less often, or not at all.
+to other methods? As you can see, most switch to other methods. Total sexual abstinence is rare, although quite a few report having penetrative sex less often, or not at all.
 
 ```{r fig.width=10, fig.height=8, layout = "l-body-outset", fig.cap = "What do fertility awareness method users do during their fertile phase?"}
 all_surveys %>% select(session, contraception_calendar_abstinence) %>% 

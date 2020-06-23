@@ -14,7 +14,7 @@ categories:
 creative_commons: CC BY
 preview: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg/981px-Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg
 output:
-  radix::radix_article:
+  distill::distill_article:
     self_contained: false
 ---
 
