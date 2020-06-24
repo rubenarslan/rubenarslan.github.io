@@ -1,0 +1,201 @@
+---
+title: "Mis-allocated scrutiny in science: a quick simulation"
+description:  "Below I document my simulation code underlying an upcoming blog post at The 100% CI."
+slug: misallocated_scrutiny
+date: 06-23-2020
+categories: 
+  - meta science
+  - reproducibility
+  - mistakes
+  - quick job
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, echo = T)
+```
+
+```{r}
+# load packages
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+
+## Parameters
+```{r}
+n_papers <- 10000
+n_journals <- 15
+n_revisions <- 3
+submission_limit <- 10
+```
+
+## Spawn papers and journals
+```{r}
+set.seed(1610)
+journals <- tibble(
+  journal = 1:n_journals,
+  threshold = rnorm(n_journals, sd = 1.8),
+  fame = threshold + 0.3 * rnorm(n_journals),
+  submitted = 0,
+  accepted = 0,
+  reviewer_count = case_when(
+    fame > 2 ~ 5,
+    fame > 1 ~ 4,
+    fame > 0 ~ 3,
+    fame > -1 ~ 2,
+    TRUE ~ 1
+  )
+) %>% arrange(desc(fame)) %>%
+  mutate(journal = 1:n_journals) %>% 
+  as.data.frame()
+
+papers <- tibble(
+  paper = 1:n_papers,
+  fitness = rnorm(n_papers, sd = 1.5),
+  reviews = 0,
+  revisions = 0,
+  submissions = 0,
+  submission_sequence = "",
+  published = FALSE,
+  journal = NA_real_,
+  first_choice = NA_real_,
+  authors_own_assessment = NA_real_,
+  editors_assessment = NA_real_,
+  most_recent_assessment = NA_real_
+) %>% 
+  as.data.frame()
+
+kable(table(journals$reviewer_count), 
+      caption = "How many journals recruit how many reviewers on average?")
+
+
+decisions <- tibble(
+  did_not_submit = 0,
+  desk_rejection = 0,
+  reject_after_reviews = 0,
+  revise_and_resubmit = 0,
+  accepted = 0
+) %>% 
+  as.data.frame()
+
+
+get_reviews <- function(fitness, n = 1) {
+  error <- 1/(sqrt(1+n))
+  sqrt((1 - error)) * fitness + (sqrt(error)) * rnorm(length(fitness))
+}
+```
+
+## Main simulation loop
+```{r}
+# library(profvis)
+# profvis({
+for(p in 1:n_papers) {
+  papers[p, "authors_own_assessment"] <- 1 + get_reviews(papers[p, "fitness"], 1)
+  # submission loop
+  for(j in 1:n_journals) {
+    if(papers[p, "authors_own_assessment"] <
+       (journals[j, "fame"] - 1.8)) {
+      decisions$did_not_submit = decisions$did_not_submit + 1
+      # WOULD NOT EVEN SUBMIT
+    } else {
+      # SUBMIT
+      papers[p, "submissions"] <- papers[p, "submissions"] + 1
+      papers[p, "submission_sequence"] <- paste0(
+        papers[p, "submission_sequence"], j, ", ")
+      journals[j, "submitted"] = journals[j, "submitted"] + 1
+      if(is.na(papers[p, "first_choice"])) {
+        papers[p, "first_choice"] <- j
+      }
+
+      # EDITOR REVIEWS
+      papers[p, "editors_assessment"] <- get_reviews(papers[p, "fitness"], 1)
+      papers[p, "reviews"] <- papers[p, "reviews"] + 1
+
+      if(papers[p, "editors_assessment"] <
+         (journals[j, "threshold"] - 1.5)) {
+        # DECISION: DESK REJECTION
+        decisions$desk_rejection = decisions$desk_rejection + 1
+        papers[p, "fitness"] <- papers[p, "fitness"] + 
+          0.05/papers[p, "submissions"]
+        papers[p, "revisions"] <- papers[p, "revisions"] + 1
+      } else {
+        # SENT FOR REVIEW
+        # revision loop
+        for(r in 1:n_revisions) {
+          papers[p, "most_recent_assessment"] <-
+            get_reviews(papers[p, "fitness"], journals[j, "reviewer_count"])
+
+          if(papers[p, "most_recent_assessment"] <
+                    (journals[j, "threshold"] - 0.5)) {
+            # DECISION: REJECT AFTER REVIEWS
+            decisions$reject_after_reviews = decisions$reject_after_reviews + 1
+            papers[p, "reviews"] <- papers[p, "reviews"] + journals[j, "reviewer_count"]
+            papers[p, "revisions"] <- papers[p, "revisions"] + 1
+            # diminishing returns
+            papers[p, "fitness"] <- papers[p, "fitness"] + 
+              0.1/papers[p, "submissions"]
+            break
+          } else if(papers[p, "most_recent_assessment"] <
+                    (journals[j, "threshold"])) {
+            # DECISION: MAJOR REVISION/R&R
+            decisions$revise_and_resubmit = decisions$revise_and_resubmit + 1
+            papers[p, "reviews"] <- papers[p, "reviews"] + journals[j, "reviewer_count"]
+            papers[p, "revisions"] <- papers[p, "revisions"] + 1
+            papers[p, "fitness"] <- papers[p, "fitness"] + 
+              0.3/papers[p, "submissions"]
+          } else if(papers[p, "most_recent_assessment"] >=
+             journals[j, "threshold"]) {
+            # DECISION: ACCEPTED/MINOR REVISION
+            decisions$accepted = decisions$accepted + 1
+            papers[p, "reviews"] <- papers[p, "reviews"] + journals[j, "reviewer_count"]
+            papers[p, "published"] <- TRUE
+            journals[j, "accepted"] = journals[j, "accepted"] + 1
+            papers[p, "journal"] <- journals[j, "journal"]
+            break # acceptance
+          }
+        } # end revision loop
+      }
+    }
+    if (papers[p, "published"]) {
+      break # done
+    } else if (papers[p, "submissions"] >= submission_limit) {
+      break # give up
+    }
+  } # end journal loop
+} # end paper loop
+# })
+```
+
+## Inspect results
+```{r}
+theme_set(theme_minimal())
+options(digits = 2)
+kable(decisions, 
+      caption = "How common are certain editorial decisions?")
+
+kable(table(papers$submissions), 
+      caption = "How often do papers get submitted?")
+kable(table(papers$published, exclude=NULL), 
+      caption = "How many do not end up published, i.e. authors give up after 8 tries?")
+
+papers_in_journals <- papers %>% left_join(journals)
+papers_in_journals %>% select(fitness, fame, submissions, reviews) %>% 
+  cor(use = 'pairwise') %>% round(2) %>% 
+  kable(caption = "How do paper fitness, journal fame, paper's number of submissions and paper's accumulated number of reviews intercorrelate?")
+
+ggplot(papers_in_journals, aes(journal, reviews)) +
+  geom_jitter(alpha = 0.2) +
+  geom_pointrange(stat = 'summary', color = "blue") +
+  ggtitle("Mis-allocated scrutiny", subtitle = "Simulated data") +
+  xlab("Journal rank") +
+  ylab("Accumulated reviews")
+
+journals %>% mutate(acceptance_rate = round(accepted/submitted,2)) %>% 
+  kable(caption = "How many papers are submitted to each journal and how many are accepted?",
+        digits = 1)
+```
+

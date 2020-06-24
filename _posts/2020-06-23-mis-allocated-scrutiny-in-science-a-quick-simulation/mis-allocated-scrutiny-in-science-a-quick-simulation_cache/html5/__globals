@@ -1,0 +1,5 @@
+unnamed-chunk-1	library
+unnamed-chunk-2	
+unnamed-chunk-3	%>%	~	$	arrange	as.data.frame	case_when	desc	fame	kable	length	mutate	n_journals	n_papers	rnorm	set.seed	sqrt	table	threshold	tibble
+unnamed-chunk-4	[<-	<	>=	$	$<-	break	for	get_reviews	if	is.na	n_journals	n_papers	n_revisions	paste0	submission_limit
+unnamed-chunk-5	%>%	$	accepted	aes	cor	decisions	fame	fitness	geom_jitter	geom_pointrange	ggplot	ggtitle	journal	journals	kable	left_join	mutate	options	papers	reviews	round	select	submissions	submitted	table	theme_minimal	theme_set	xlab	ylab

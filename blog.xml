@@ -6,15 +6,32 @@
     <atom:link href="https://rubenarslan.github.io/blog.xml" rel="self" type="application/rss+xml"/>
     <description>Personal blog
 </description>
-    <generator>Radix</generator>
-    <lastBuildDate>Mon, 02 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Distill</generator>
+    <lastBuildDate>Mon, 22 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Mis-allocated scrutiny in science: a quick simulation</title>
+      <link>https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation</link>
+      <description>Below I document my simulation code underlying an upcoming blog post at The 100% CI.</description>
+      <category>meta science</category>
+      <category>reproducibility</category>
+      <category>mistakes</category>
+      <category>quick job</category>
+      <guid>https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation</guid>
+      <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation/mis-allocated-scrutiny-in-science-a-quick-simulation_files/figure-html5/unnamed-chunk-5-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>HIBAR: Sex‑Differentiated Changes in Sexual Desire Predict Marital Dissatisfaction</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-09-03-hibar-sexdifferentiated-changes-in-sexual-desire-predict-marital-dissatisfaction</link>
       <description>Had I Been a Reviewer. Actually, I was a reviewer. Huh! So, how did this turn out?</description>
+      <category>hibar</category>
+      <category>post-publication review</category>
+      <category>sexual desire</category>
+      <category>marriage</category>
+      <category>relationships</category>
       <guid>https://rubenarslan.github.io/posts/2019-09-03-hibar-sexdifferentiated-changes-in-sexual-desire-predict-marital-dissatisfaction</guid>
-      <pubDate>Mon, 02 Sep 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 03 Sep 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-09-03-hibar-sexdifferentiated-changes-in-sexual-desire-predict-marital-dissatisfaction/book_cover.png" medium="image" type="image/png" width="673" height="1019"/>
     </item>
     <item>
@@ -22,6 +39,8 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior</link>
       <description>Some additional information on the correction notice for _Using 26,000 diary entries to show ovulatory changes in sexual desire and behavior_ that appeared today.</description>
+      <category>correction</category>
+      <category>ovulation</category>
       <guid>https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior</guid>
       <pubDate>Thu, 20 Jun 2019 00:00:00 +0000</pubDate>
       <media:content url="https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg" medium="image" type="image/jpeg"/>
@@ -31,6 +50,9 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness</link>
       <description>Re-examining a reported association between physical temperature and social connectedness.</description>
+      <category>re-analysis</category>
+      <category>temperature</category>
+      <category>experience sampling</category>
       <guid>https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness</guid>
       <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1248" height="768"/>
@@ -40,6 +62,10 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology</link>
       <description>Had I Been a Reviewer. A post-publication peer review with some added figures.</description>
+      <category>re-analysis</category>
+      <category>post-publication review</category>
+      <category>meta science</category>
+      <category>bibliometrics</category>
       <guid>https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology</guid>
       <pubDate>Fri, 14 Jun 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="3456" height="768"/>
@@ -49,6 +75,11 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-04-21-who-initiates</link>
       <description>A chicken-and-egg-question?</description>
+      <category>sex diary</category>
+      <category>open science</category>
+      <category>sexual activity</category>
+      <category>sex</category>
+      <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-21-who-initiates</guid>
       <pubDate>Fri, 26 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-11-1.png" medium="image" type="image/png" width="1536" height="768"/>
@@ -58,6 +89,10 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</link>
       <description>Examining when women in our diary study were sexually active.</description>
+      <category>sex diary</category>
+      <category>open science</category>
+      <category>sexual activity</category>
+      <category>sex</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</guid>
       <pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1536" height="768"/>
@@ -67,6 +102,9 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception</link>
       <description>How we measured methods of contraception, reasons for using different contraceptives, and fertility awareness.</description>
+      <category>sex diary</category>
+      <category>open science</category>
+      <category>contraception</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception</guid>
       <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1920" height="1728"/>
@@ -94,6 +132,8 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-03-08-the-golden-age-of-never-finishing-anything</link>
       <description>Serialising the results from our sex diary study.</description>
+      <category>sex diary</category>
+      <category>open science</category>
       <guid>https://rubenarslan.github.io/posts/2019-03-08-the-golden-age-of-never-finishing-anything</guid>
       <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
       <media:content url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg/981px-Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg" medium="image" type="image/jpeg"/>
@@ -114,6 +154,10 @@
       <dc:creator>Ioanna Iro Eleftheriadou</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-01-02-are-studies-that-replicate-cited-more</link>
       <description>Looking at the RPP to bring data to a discussion</description>
+      <category>meta science</category>
+      <category>open science</category>
+      <category>reproducibility</category>
+      <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2019-01-02-are-studies-that-replicate-cited-more</guid>
       <pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-01-02-are-studies-that-replicate-cited-more/are-studies-that-replicate-cited-more_files/figure-html5/unnamed-chunk-5-1.png" medium="image" type="image/png" width="1152" height="768"/>
@@ -123,6 +167,8 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program</link>
       <description>Accounting for mistakes in my scientific work and announcing a bug bounty program.</description>
+      <category>mistakes</category>
+      <category>bug bounty</category>
       <guid>https://rubenarslan.github.io/posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program</guid>
       <pubDate>Fri, 26 Oct 2018 00:00:00 +0000</pubDate>
       <media:content url="https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg" medium="image" type="image/jpeg"/>
@@ -133,6 +179,10 @@
       <dc:creator>Ioanna Iro Eleftheriadou</dc:creator>
       <link>https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more</link>
       <description>Does sample size predict number of citations?</description>
+      <category>meta science</category>
+      <category>open science</category>
+      <category>reproducibility</category>
+      <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more</guid>
       <pubDate>Mon, 22 Oct 2018 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more/are-big-studies-cited-more_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1920" height="768"/>

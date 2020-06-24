@@ -1,0 +1,5 @@
+unnamed-chunk-1	
+unnamed-chunk-2	n_journals	n_papers	n_revisions	submission_limit
+unnamed-chunk-3	decisions	get_reviews	journals	papers	.Random.seed
+unnamed-chunk-4	decisions	j	journals	p	papers	r
+unnamed-chunk-5	papers_in_journals
