@@ -1,5 +1,5 @@
 ---
-title: "Mis-allocated scrutiny in science: a quick simulation"
+title: "Mis-allocated scrutiny: a quick simulation"
 description:  "Below I document my simulation code underlying an upcoming blog post at The 100% CI."
 slug: misallocated_scrutiny
 date: 06-23-2020
@@ -16,6 +16,10 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, echo = T)
 ```
+
+
+You can read the blog post about [mis-allocated scrutiny](http://www.the100.ci/2020/06/24/mis-allocated-scrutiny) at the 100% CI.
+This is just where I document the R code for my stupid little simulation.
 
 ```{r}
 # load packages
