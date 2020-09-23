@@ -18,14 +18,15 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 A journalist is calling me later today to talk about [this recently published
-paper](https://academic.oup.com/scan/advance-article/doi/10.1093/scan/nsaa108/5897711#207180755).
+paper](https://academic.oup.com/scan/advance-article/doi/10.1093/scan/nsaa108/5897711#207180755), so I read it.
 
 Although I have a research interest in [risk taking](https://twitter.com/rubenarslan/status/1308034146275667969), I had not read the recent flurry of papers that link acetaminophen (paracetamol/Tylenol) to various psychological outcomes.
 
 Here's the abstract of the paper:
+
 > Acetaminophen, an analgesic and antipyretic available over-the-counter and used in over 600 medicines, is one of the most consumed drugs in the USA. Recent research has suggested that acetaminophen’s effects extend to the blunting of negative as well as positive affect. Because affect is a determinant of risk perception and risk taking, we tested the hypothesis that acute acetaminophen consumption (1000 mg) could influence these important judgments and decisions. In three double-blind, placebo-controlled studies, healthy young adults completed a laboratory measure of risk taking (Balloon Analog Risk Task) and in Studies 1 and 2 completed self-report measures of risk perception. Across all studies (total n = 545), acetaminophen increased risk-taking behavior. On the more affectively stimulating risk perception measure used in Study 2, acetaminophen reduced self-reported perceived risk and this reduction statistically mediated increased risk-taking behavior. These results indicate that acetaminophen can increase risk taking, which may be due to reductions in risk perceptions, particularly those that are highly affect laden.
 
-Well, because of my own research and studies like [Frey et al. 2017](https://advances.sciencemag.org/content/3/10/e1701381.short), I have my doubts that changes on the BART will generalize to changes in real world risk taking. I think it's a somewhat silly task, where the optimal behaviour is to inflate several balloons 64/128 times (unlike real balloons, it has a 1/128 chance of bursting at each press). In the study, they played this task for "imaginary money", so high scores mainly mean people pressed a button a lot of times. Unsurprisingly, people rarely "pump" (press a button) the optimal number of times, perhaps because it is boring to do so. Ironically, the BART is in wide use, because it is supposed to measure the affectively-laden side of risk taking (rather than supposedly even more boring lotteries). To be honest, I would not bet money that the BART even predicts how much air people put in a real balloon, let alone bigger life choices.
+Well, because of my own research and studies like [Frey et al. 2017](https://advances.sciencemag.org/content/3/10/e1701381.short), I have my doubts that changes on the BART will generalize to changes in real world risk taking. I think it's a somewhat silly task, where the optimal behaviour is to inflate several balloons 64/128 times (unlike real balloons, the balloon has a 1/128 chance of bursting at the first press, which goes to 100% chance of bursting at the 128th press). In the study, they played this task for "imaginary money", which they "lost" when the balloon burst, so high scores mainly mean people pressed a button a lot of times. Unsurprisingly, people rarely "pump" (press a button) the optimal number of times, perhaps because it is boring to do so. Ironically, the BART is in wide use, because it is supposed to measure the affectively-laden side of risk taking (rather than supposedly even more boring lotteries). To be honest, I would not bet money that the BART even predicts how much air people put in a real balloon, let alone bigger life choices.
 
 They also look at self-reported perceptions of risk on the DOSPERT and in a inventory by Finucane, finding mixed results.
 
@@ -33,11 +34,11 @@ But before asking whether the results will generalize to real world behavior, I 
 
 An initial overview doesn't inspire confidence: 
 
-- The two significant p values for the BART are on the [uncanny mountain](http://www.the100.ci/2018/02/15/the-uncanny-mountain-p-values-between-01-and-10-are-still-a-problem/) (BART S1: 0.023, S2: 0.033, S3: 0.84, Combined: 0.024)
+- The two significant p values for the BART are on the [uncanny mountain](http://www.the100.ci/2018/02/15/the-uncanny-mountain-p-values-between-01-and-10-are-still-a-problem/) (BART S1: 0.023, S2: 0.033, S3: 0.84, Combined: 0.024). Such p values should be rare, but they are common in this study.
 - Only one study, Study 1, was preregistered. Studies 2 and 3 were not, even though they were highly similar.
 - The preregistration link on OSF for Study 1 is not accessible.
 - Several other outcomes (Columbia Card Sorting, Iowa Gambling, etc.) are mentioned in the text, but "will be reported separately".
-- The data are not public, even though they are not sensitive and can easily be anonymized (the authors did not obtain the necessary consent)
+- The data are not public, even though they are not sensitive and can easily be anonymized (the authors did not obtain the necessary consent).
 - There are multiple outcomes and multiple hypotheses relating to these outcomes (pertaining to mean differences and correlations), but no accounting for multiple testing.
 - The DOSPERT outcome is present and significantly different in S2 (P = 0.002). Study 3 "replicates and extends" Study 2, but the DOSPERT is not reported.
 - Several apparent mediators (emotional experience during the BART) that did not show significant differences were relegated to the supplement.
@@ -45,11 +46,13 @@ An initial overview doesn't inspire confidence:
 I emailed the last author, Baldwin Way, to get access to the preregistration, which he granted (the link still isn't public).
 
 As it turns out:
-- The preregistration wasn't formally registered with OSF (i.e. the version was not frozen). This is not an uncommon error, but we can look at file timestamps.
-- The date the preregistration was uploaded (2015-01-26) was after the study's start date (according to BW: Study 1 was run between Jan 15th and April 17th 2015)
-- The preregistered sample size, 120, is lower than the actual sample size (140, after exclusions). Of course, that raises the spectre of optional stopping, i.e. that the authors consciously or unconsciously made the data collection's end contingent on the significance of the results. The authors write that they aimed for 200 participants in both S2 and S3 (based on S1's results). In this context, it is interesting that the sample size for S3 (the nonsignificant result) exceeded 200 (214 after exclusions) and the sample size for S2 (barely significant) fell short of it (188 after exclusions).
 
-I emailed the author some questions to ask for explanations of some of these deviations.
+- The preregistration wasn't formally registered with OSF (i.e. the version was not frozen). This is not an uncommon error, but we can look at file timestamps.
+- The date the preregistration was uploaded (2015-01-26) was after the study's start date (according to BW: Study 1 was run between Jan 15th and April 17th 2015). Normally, when we say a study was *pre*registered, we mean *pre* data collection, not during. 
+- The preregistered sample size, 120, is lower than the final S1 sample size (140, after exclusions). Of course, that raises the spectre of optional stopping, i.e., that the authors consciously or unconsciously made the data collection's end contingent on the significance of the results. The authors write that they aimed for 200 participants in both S2 and S3 based on S1's results. In this context, it is interesting that the sample size for S3 (the nonsignificant result) exceeded 200 (214 after exclusions) and the sample size for S2 (barely significant) fell short of it (188 after exclusions).
+- They preregistered that they would examine whether the correlation between risk and benefit perception in their inventories would change as a function of acetaminophen usage. To test this, they tested for moderator effect in a linear regression. This is not the same thing as testing for a difference in correlations, see this [explainer](https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression/).
+
+I emailed the last author some questions to ask for explanations of some of these deviations.
 
 Doing some further digging, I found that the [first author's master's thesis](https://etd.ohiolink.edu/pg_10?0::NO:10:P10_ACCESSION_NUM:osu1477054183340724) reports a third study that tested whether these effects extended to ibuprofen (but not the study 2 reported here).
 
