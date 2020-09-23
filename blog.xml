@@ -7,7 +7,15 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 22 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>HIBAR: Effects of acetaminophen on risk taking</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking</link>
+      <description>Had I Been A Reviewer.</description>
+      <guid>https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking</guid>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Mis-allocated scrutiny: a quick simulation</title>
       <link>https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation</link>
@@ -17,7 +25,7 @@
       <category>mistakes</category>
       <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation</guid>
-      <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation/mis-allocated-scrutiny-in-science-a-quick-simulation_files/figure-html5/unnamed-chunk-5-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>

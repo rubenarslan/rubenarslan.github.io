@@ -1,5 +1,21 @@
 [
   {
+    "path": "posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking/",
+    "title": "HIBAR: Effects of acetaminophen on risk taking",
+    "description": "Had I Been A Reviewer.",
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      }
+    ],
+    "date": "2020-09-23",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-09-23T13:30:29+02:00",
+    "input_file": "hibar-effects-of-acetaminophen-on-risk-taking.utf8.md"
+  },
+  {
     "path": "posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation/",
     "title": "Mis-allocated scrutiny: a quick simulation",
     "description": "Below I document my simulation code underlying an upcoming blog post at The 100% CI.",
