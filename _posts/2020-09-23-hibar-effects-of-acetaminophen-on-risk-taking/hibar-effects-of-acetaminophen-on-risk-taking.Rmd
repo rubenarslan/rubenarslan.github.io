@@ -1,5 +1,5 @@
 ---
-title: "HIBAR: Effects of acetaminophen on risk taking"
+title: "HIBAR: Effects of acetaminophen on risk taking (with virtual balloons)"
 description: |
   Had I Been A Reviewer.
 author:
@@ -17,10 +17,20 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+```{r layout="l-body-outset",fig.cap="An analogue of the Balloon Analogue Risk Task (BART). From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14760892026/)", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/3840/14760892026_a1c3d99899_o_d.jpg")
+```
+
 A journalist is calling me later today to talk about [this recently published
 paper](https://academic.oup.com/scan/advance-article/doi/10.1093/scan/nsaa108/5897711#207180755), so I read it.
 
 Although I have a research interest in [risk taking](https://twitter.com/rubenarslan/status/1308034146275667969), I had not read the recent flurry of papers that link acetaminophen (paracetamol/Tylenol) to various psychological outcomes.
+
+<aside>
+```{r layout="",fig.cap="The many risks of balloonery. [From Punch in the Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14774404705/)", out.extra="class=external"}
+knitr::include_graphics("https://live.staticflickr.com/3893/14774404705_89a3436e9f_o_d.jpg")
+```
+</aside>
 
 Here's the abstract of the paper:
 
@@ -31,6 +41,12 @@ Well, because of my own research and studies like [Frey et al. 2017](https://adv
 They also look at self-reported perceptions of risk on the DOSPERT and in a inventory by Finucane, finding mixed results.
 
 But before asking whether the results will generalize to real world behavior, I should first try to judge whether the results are even likely to replicate.
+
+<aside>
+```{r layout="",fig.cap="The many risks of balloonery, part 2. [From the Internet Archive](https://archive.org/stream/sciencegossip03lond/sciencegossip03lond#page/108/mode/1up)", out.extra="class=external"}
+knitr::include_graphics("pole_balloon.png")
+```
+</aside>
 
 An initial overview doesn't inspire confidence: 
 
@@ -61,5 +77,10 @@ To my mind, the empirical evidence isn't very strong and it's unfortunate that t
 I don't know if this study is characteristic of the broader literature (see [here](https://neurocritic.blogspot.com/2019/04/the-paracetamol-papers.html) for a critical take), but I think if I avoid paracetamol in the future, the liver damage will weigh heavier on my mind than the supposed psychological effects.
 
 If someone wants to do further research on this, especially with undergraduates, I'd recommend asking them whether they drank the night before or are in other pain. We would not want to claim that paracetamol affects real world risk taking, when it really just affects whether we're willing to hear a loud bang while hungover.
+
+### Further reading:
+
+- Here's a critical commentary on another acetaminophen study by Jonathon McPhetres: https://www.frontiersin.org/articles/10.3389/fpsyg.2019.00705/full
+- The authors rebut some, but not the most damning criticisms, namely that the sample was small, the evidence weak and the study not preregistered: https://www.frontiersin.org/articles/10.3389/fpsyg.2020.02099/full
 
 

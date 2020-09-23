@@ -1,7 +1,7 @@
 [
   {
     "path": "posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking/",
-    "title": "HIBAR: Effects of acetaminophen on risk taking",
+    "title": "HIBAR: Effects of acetaminophen on risk taking (with virtual balloons)",
     "description": "Had I Been A Reviewer.",
     "author": [
       {
@@ -11,9 +11,11 @@
     ],
     "date": "2020-09-23",
     "categories": [],
-    "preview": {},
-    "last_modified": "2020-09-23T13:44:57+02:00",
-    "input_file": "hibar-effects-of-acetaminophen-on-risk-taking.utf8.md"
+    "preview": "posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking/pole_balloon.png",
+    "last_modified": "2020-09-23T15:03:42+02:00",
+    "input_file": {},
+    "preview_width": 525,
+    "preview_height": 391
   },
   {
     "path": "posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation/",
@@ -28,8 +30,8 @@
       "quick job"
     ],
     "preview": "posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation/mis-allocated-scrutiny-in-science-a-quick-simulation_files/figure-html5/unnamed-chunk-5-1.png",
-    "last_modified": "2020-06-24T16:37:57+02:00",
-    "input_file": "mis-allocated-scrutiny-in-science-a-quick-simulation.utf8.md",
+    "last_modified": "2020-06-24T16:37:58+02:00",
+    "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
   },
@@ -52,7 +54,8 @@
       "relationships"
     ],
     "preview": "posts/2019-09-03-hibar-sexdifferentiated-changes-in-sexual-desire-predict-marital-dissatisfaction/book_cover.png",
-    "last_modified": "2019-09-03T17:03:33+02:00",
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {},
     "preview_width": 673,
     "preview_height": 1019
   },
@@ -72,7 +75,8 @@
       "ovulation"
     ],
     "preview": "https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg",
-    "last_modified": "2019-06-20T23:34:40+02:00"
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {}
   },
   {
     "path": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/",
@@ -91,7 +95,8 @@
       "experience sampling"
     ],
     "preview": "posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png",
-    "last_modified": "2019-06-19T18:35:59+02:00",
+    "last_modified": "2020-06-06T06:58:56+02:00",
+    "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
   },
@@ -113,7 +118,8 @@
       "bibliometrics"
     ],
     "preview": "posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png",
-    "last_modified": "2019-06-19T18:35:44+02:00",
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {},
     "preview_width": 3456,
     "preview_height": 768
   },
@@ -135,9 +141,10 @@
       "sex",
       "quick job"
     ],
-    "preview": "posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-11-1.png",
-    "last_modified": "2019-04-30T16:02:56+02:00",
-    "preview_width": 1536,
+    "preview": "posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-3-1.png",
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {},
+    "preview_width": 1248,
     "preview_height": 768
   },
   {
@@ -157,9 +164,10 @@
       "sexual activity",
       "sex"
     ],
-    "preview": "posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-7-1.png",
-    "last_modified": "2019-05-02T17:10:18+02:00",
-    "preview_width": 1536,
+    "preview": "posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-2-1.png",
+    "last_modified": "2020-06-06T06:58:55+02:00",
+    "input_file": {},
+    "preview_width": 1248,
     "preview_height": 768
   },
   {
@@ -178,10 +186,11 @@
       "open science",
       "contraception"
     ],
-    "preview": "posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-4-1.png",
-    "last_modified": "2019-04-10T09:25:01+02:00",
-    "preview_width": 1920,
-    "preview_height": 1728
+    "preview": "posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-2-1.png",
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {},
+    "preview_width": 1248,
+    "preview_height": 768
   },
   {
     "path": "posts/2019-03-13-intra-individual-feedback/",
@@ -195,8 +204,9 @@
     ],
     "date": "2019-03-19",
     "categories": [],
-    "preview": "posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png",
-    "last_modified": "2019-03-19T12:57:40+01:00",
+    "preview": "posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-2-1.png",
+    "last_modified": "2020-06-06T06:58:55+02:00",
+    "input_file": {},
     "preview_width": 1920,
     "preview_height": 1344
   },
@@ -213,7 +223,8 @@
     "date": "2019-03-13",
     "categories": [],
     "preview": "posts/2019-03-12-moderation-vs-distributional-regression/moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png",
-    "last_modified": "2019-03-14T13:02:52+01:00",
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
   },
@@ -233,7 +244,8 @@
       "open science"
     ],
     "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg/981px-Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg",
-    "last_modified": "2019-03-11T09:45:12+01:00"
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {}
   },
   {
     "path": "posts/2019-01-21-genetic-analyses-and-solidarity/",
@@ -256,7 +268,8 @@
     "date": "2019-01-21",
     "categories": [],
     "preview": {},
-    "last_modified": "2019-01-24T09:45:53+01:00"
+    "last_modified": "2020-06-06T06:58:53+02:00",
+    "input_file": {}
   },
   {
     "path": "posts/2019-01-02-are-studies-that-replicate-cited-more/",
@@ -280,7 +293,8 @@
       "quick job"
     ],
     "preview": "posts/2019-01-02-are-studies-that-replicate-cited-more/are-studies-that-replicate-cited-more_files/figure-html5/unnamed-chunk-5-1.png",
-    "last_modified": "2019-01-02T18:10:59+01:00",
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {},
     "preview_width": 1152,
     "preview_height": 768
   },
@@ -300,7 +314,8 @@
       "bug bounty"
     ],
     "preview": "https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg",
-    "last_modified": "2019-07-16T10:52:07+02:00"
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {}
   },
   {
     "path": "posts/2018-10-15-are-big-studies-cited-more/",
@@ -324,7 +339,8 @@
       "quick job"
     ],
     "preview": "posts/2018-10-15-are-big-studies-cited-more/are-big-studies-cited-more_files/figure-html5/unnamed-chunk-3-1.png",
-    "last_modified": "2018-10-24T18:08:16+02:00",
+    "last_modified": "2020-06-06T06:58:54+02:00",
+    "input_file": {},
     "preview_width": 1920,
     "preview_height": 768
   }

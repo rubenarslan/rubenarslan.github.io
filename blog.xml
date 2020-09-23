@@ -7,14 +7,15 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2020 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>HIBAR: Effects of acetaminophen on risk taking</title>
+      <title>HIBAR: Effects of acetaminophen on risk taking (with virtual balloons)</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking</link>
       <description>Had I Been A Reviewer.</description>
       <guid>https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking</guid>
-      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking/pole_balloon.png" medium="image" type="image/png" width="525" height="391"/>
     </item>
     <item>
       <title>Mis-allocated scrutiny: a quick simulation</title>
@@ -90,7 +91,7 @@
       <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-21-who-initiates</guid>
       <pubDate>Fri, 26 Apr 2019 00:00:00 +0000</pubDate>
-      <media:content url="https://rubenarslan.github.io/posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-11-1.png" medium="image" type="image/png" width="1536" height="768"/>
+      <media:content url="https://rubenarslan.github.io/posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Sexual activity by time of day</title>
@@ -103,7 +104,7 @@
       <category>sex</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</guid>
       <pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
-      <media:content url="https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1536" height="768"/>
+      <media:content url="https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Measuring contraception</title>
@@ -115,7 +116,7 @@
       <category>contraception</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception</guid>
       <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
-      <media:content url="https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1920" height="1728"/>
+      <media:content url="https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Intra-individual feedback</title>
@@ -124,7 +125,7 @@
       <description>Thinking through an intra-individual menstrual cycle feedback.</description>
       <guid>https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback</guid>
       <pubDate>Tue, 19 Mar 2019 00:00:00 +0000</pubDate>
-      <media:content url="https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1920" height="1344"/>
+      <media:content url="https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1920" height="1344"/>
     </item>
     <item>
       <title>Do single mothers have a stronger influence on their kids?</title>
