@@ -8,6 +8,7 @@ author:
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"
 categories: 
+  - HIBAR
   - re-analysis
   - post-publication review
   - meta science

@@ -1,5 +1,5 @@
 ---
-title: "Tympanic temperature and social connectedness"
+title: "HIBAR: Tympanic temperature and social connectedness"
 description: |
   Re-examining a reported association between physical temperature and social connectedness.
 author:
@@ -9,6 +9,7 @@ author:
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"
 date: 06-19-2019
 categories: 
+  - HIBAR
   - re-analysis
   - temperature
   - experience sampling

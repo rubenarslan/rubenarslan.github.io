@@ -13,6 +13,9 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking</link>
       <description>Had I Been A Reviewer.</description>
+      <category>HIBAR</category>
+      <category>re-analysis</category>
+      <category>risk taking</category>
       <guid>https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking</guid>
       <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking/pole_balloon.png" medium="image" type="image/png" width="525" height="391"/>
@@ -55,10 +58,11 @@
       <media:content url="https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
-      <title>Tympanic temperature and social connectedness</title>
+      <title>HIBAR: Tympanic temperature and social connectedness</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness</link>
       <description>Re-examining a reported association between physical temperature and social connectedness.</description>
+      <category>HIBAR</category>
       <category>re-analysis</category>
       <category>temperature</category>
       <category>experience sampling</category>
@@ -71,6 +75,7 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology</link>
       <description>Had I Been a Reviewer. A post-publication peer review with some added figures.</description>
+      <category>HIBAR</category>
       <category>re-analysis</category>
       <category>post-publication review</category>
       <category>meta science</category>
@@ -123,9 +128,13 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback</link>
       <description>Thinking through an intra-individual menstrual cycle feedback.</description>
+      <category>sex diary</category>
+      <category>open science</category>
+      <category>feedback</category>
+      <category>visualization</category>
       <guid>https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback</guid>
       <pubDate>Tue, 19 Mar 2019 00:00:00 +0000</pubDate>
-      <media:content url="https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1920" height="1344"/>
+      <media:content url="https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1920" height="1344"/>
     </item>
     <item>
       <title>Do single mothers have a stronger influence on their kids?</title>

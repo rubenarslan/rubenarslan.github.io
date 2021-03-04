@@ -6,7 +6,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-  <meta name="generator" content="radix" />
+  <meta name="generator" content="distill" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -15,456 +15,1599 @@
   }
   </style>
 
- <!--distill_placeholder_import_source-->
- <!--/distill_placeholder_import_source-->
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
 
-  <!--distill_placeholder_meta_tags-->
-  <title>HIBAR: How methods and practices changed after the replication crisis in social psychology</title>
-  
-  <meta property="description" itemprop="description" content="Had I Been a Reviewer. A post-publication peer review with some added figures."/>
-  
-  
-  <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2019-06-14"/>
-  <meta property="article:created" itemprop="dateCreated" content="2019-06-14"/>
-  <meta name="article:author" content="Ruben C. Arslan"/>
-  
-  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="HIBAR: How methods and practices changed after the replication crisis in social psychology"/>
-  <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Had I Been a Reviewer. A post-publication peer review with some added figures."/>
-  <meta property="og:locale" content="en_US"/>
-  
-  <!--  https://dev.twitter.com/cards/types/summary -->
-  <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="HIBAR: How methods and practices changed after the replication crisis in social psychology"/>
-  <meta property="twitter:description" content="Had I Been a Reviewer. A post-publication peer review with some added figures."/>
-  
-  <!--/distill_placeholder_meta_tags-->
-  <!--distill_placeholder_rmarkdown_metadata-->
-  
-  <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","categories","date","output"]}},"value":[{"type":"character","attributes":{},"value":["HIBAR: How methods and practices changed after the replication crisis in social psychology"]},{"type":"character","attributes":{},"value":["Had I Been a Reviewer. A post-publication peer review with some added figures.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]}]},{"type":"character","attributes":{},"value":["re-analysis","post-publication review","meta science","bibliometrics"]},{"type":"character","attributes":{},"value":["06-14-2019"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
-  </script>
-  <!--/distill_placeholder_rmarkdown_metadata-->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+<title>One lives only to make blunders: HIBAR: How methods and practices changed after the replication crisis in social psychology</title>
+
+<meta property="description" itemprop="description" content="Had I Been a Reviewer. A post-publication peer review with some added figures."/>
+
+<link rel="canonical" href="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/"/>
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2019-06-14"/>
+<meta property="article:created" itemprop="dateCreated" content="2019-06-14"/>
+<meta name="article:author" content="Ruben C. Arslan"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="One lives only to make blunders: HIBAR: How methods and practices changed after the replication crisis in social psychology"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="Had I Been a Reviewer. A post-publication peer review with some added figures."/>
+<meta property="og:url" content="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/"/>
+<meta property="og:image" content="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png"/>
+<meta property="og:image:width" content="3456"/>
+<meta property="og:image:height" content="768"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="One lives only to make blunders"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="One lives only to make blunders: HIBAR: How methods and practices changed after the replication crisis in social psychology"/>
+<meta property="twitter:description" content="Had I Been a Reviewer. A post-publication peer review with some added figures."/>
+<meta property="twitter:url" content="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/"/>
+<meta property="twitter:image" content="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png"/>
+<meta property="twitter:image:width" content="3456"/>
+<meta property="twitter:image:height" content="768"/>
+<meta property="twitter:site" content="@rubenarslan"/>
+
+<!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+<meta name="citation_title" content="One lives only to make blunders: HIBAR: How methods and practices changed after the replication crisis in social psychology"/>
+<meta name="citation_fulltext_html_url" content="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/"/>
+<meta name="citation_fulltext_world_readable" content=""/>
+<meta name="citation_online_date" content="2019/06/14"/>
+<meta name="citation_publication_date" content="2019/06/14"/>
+<meta name="citation_author" content="Ruben C. Arslan"/>
+<meta name="citation_author_institution" content="Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"/>
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","categories","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["HIBAR: How methods and practices changed after the replication crisis in social psychology"]},{"type":"character","attributes":{},"value":["Had I Been a Reviewer. A post-publication peer review with some added figures."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation_url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"]},{"type":"character","attributes":{},"value":["Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin"]}]}]},{"type":"character","attributes":{},"value":["HIBAR","re-analysis","post-publication review","meta science","bibliometrics"]},{"type":"character","attributes":{},"value":["06-14-2019"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/"]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
   {"type":"character","attributes":{},"value":["hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/bowser-1.9.3/bowser.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/crosstalk-1.0.0/css/crosstalk.css","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/crosstalk-1.0.0/js/crosstalk.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/crosstalk-1.0.0/js/crosstalk.js.map","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/crosstalk-1.0.0/js/crosstalk.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/crosstalk-1.0.0/js/crosstalk.min.js.map","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/datatables-binding-0.5/datatables.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/datatables-css-0.0.0/datatables-crosstalk.css","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/distill-2.2.21/template.v2.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-core-1.10.16/css/jquery.dataTables.extra.css","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-core-1.10.16/css/jquery.dataTables.min.css","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-core-1.10.16/js/jquery.dataTables.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-ext-buttons-1.10.16/css/buttons.dataTables.min.css","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-ext-buttons-1.10.16/js/buttons.colVis.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-ext-buttons-1.10.16/js/buttons.flash.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-ext-buttons-1.10.16/js/buttons.html5.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-ext-buttons-1.10.16/js/buttons.print.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/dt-ext-buttons-1.10.16/js/dataTables.buttons.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-3-1.png","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-4-1.png","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-5-1.png","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-6-1.png","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-7-1.png","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-8-1.png","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/htmlwidgets-1.3/htmlwidgets.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/jquery-1.12.4/jquery.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/jquery-1.12.4/LICENSE.txt","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/jszip-1.10.16/jszip.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/nouislider-7.0.10/jquery.nouislider.min.css","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/nouislider-7.0.10/jquery.nouislider.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/pdfmake-1.10.16/pdfmake.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/pdfmake-1.10.16/vfs_fonts.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/selectize-0.12.0/selectize.bootstrap3.css","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/selectize-0.12.0/selectize.min.js","hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/webcomponents-2.0.0/webcomponents.js","MPlus_data_and_scripts/MPlus_script_onlinedata.inp","MPlus_data_and_scripts/MPlus_script_samplesize.inp","MPlus_data_and_scripts/MPlus_script_selfreports.inp","MPlus_data_and_scripts/mplusdata.dat","SPSS_data_and_script/data.sav","SPSS_data_and_script/script.sps"]}
   </script>
-  <!--distill_placeholder_navigation_in_header-->
-  <!--/distill_placeholder_navigation_in_header-->
-  <!--distill_placeholder_distill-->
-  
-  <style type="text/css">
-  
-  body {
-    background-color: white;
+  <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
   }
-  
-  .pandoc-table {
-    width: 100%;
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
   }
-  
-  .pandoc-table>caption {
-    margin-bottom: 10px;
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
   }
-  
-  .pandoc-table th:not([align]) {
-    text-align: left;
+  .distill-site-header .nav-left {
+    margin-left: 20px;
   }
-  
-  .pagedtable-footer {
-    font-size: 15px;
+  .distill-site-header .nav-right {
+    margin-right: 20px;
   }
-  
-  .html-widget {
-    margin-bottom: 2.0em;
+  .distill-site-header .title {
+    padding-left: 12px;
   }
-  
-  .l-screen-inset {
-    padding-right: 16px;
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
   }
-  
-  .l-screen .caption {
-    margin-left: 10px;
+  .distill-site-header .title {
+    margin-left: 0;
   }
-  
-  .shaded {
-    background: rgb(247, 247, 247);
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  .distill-site-header .nav-right {
+    margin-right: 0;
   }
-  
-  .shaded .html-widget {
-    margin-bottom: 0;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .shaded .shaded-content {
-    background: white;
-  }
-  
-  .text-output {
-    margin-top: 0;
-    line-height: 1.5em;
-  }
-  
-  .hidden {
-    display: none !important;
-  }
-  
-  d-article {
-    padding-bottom: 30px;
-  }
-  
-  d-appendix {
-    padding-top: 30px;
-  }
-  
-  d-article>p>img {
-    width: 100%;
-  }
-  
-  d-article iframe {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    margin-bottom: 2.0em;
-    width: 100%;
-  }
-  
-  figure img.external {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    padding: 18px;
-    box-sizing: border-box;
-  }
-  
-  /* CSS for table of contents */
-  
-  .d-toc {
-    color: rgba(0,0,0,0.8);
-    font-size: 0.8em;
-    line-height: 1em;
-  }
-  
-  .d-toc-header {
-    font-size: 0.6rem;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    margin-top: 0;
-    margin-bottom: 1.3em;
-  }
-  
-  .d-toc a {
-    border-bottom: none;
-  }
-  
-  .d-toc ul {
-    padding-left: 0;
-  }
-  
-  .d-toc li>ul {
-    padding-top: 0.8em;
-    padding-left: 16px;
-    margin-bottom: 0.6em;
-  }
-  
-  .d-toc ul,
-  .d-toc li {
-    list-style-type: none;
-  }
-  
-  .d-toc li {
-    margin-bottom: 0.9em;
-  }
-  
-  .d-toc-separator {
-    margin-top: 20px;
-    margin-bottom: 2em;
-  }
-  
-  .d-article-with-toc {
-    border-top: none;
-    padding-top: 0;
-  }
-  
-  
-  
-  /* Tweak code blocks (note that this CSS is repeated above in an injection
-     into the d-code shadow dom) */
-  
-  d-code {
-    overflow-x: auto !important;
-  }
-  
-  pre.d-code code.d-code {
-    padding-left: 10px;
-    font-size: 12px;
-    border-left: 2px solid rgba(0,0,0,0.1);
-  }
-  
-  pre.text-output {
-  
-    font-size: 12px;
-    color: black;
-    background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5;
-  
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-  
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-  }
-  
-  @media(min-width: 768px) {
-  
-  d-code {
-    overflow-x: visible !important;
-  }
-  
-  pre.d-code code.d-code  {
-      padding-left: 18px;
-      font-size: 14px;
-  }
-  pre.text-output {
-    font-size: 14px;
-  }
-  }
-  
-  /* Figure */
-  
-  .figure {
-    position: relative;
-    margin-bottom: 2.5em;
-    margin-top: 1.5em;
-  }
-  
-  .figure img {
-    width: 100%;
-  }
-  
-  .figure .caption {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 12px;
-    line-height: 1.5em;
-  }
-  
-  .figure img.external {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    padding: 18px;
-    box-sizing: border-box;
-  }
-  
-  .figure .caption a {
-    color: rgba(0, 0, 0, 0.6);
-  }
-  
-  .figure .caption b,
-  .figure .caption strong, {
-    font-weight: 600;
-    color: rgba(0, 0, 0, 1.0);
-  }
-  
-  
-  
-  /* Tweak 1000px media break to show more text */
-  
-  @media(min-width: 1000px) {
-    .base-grid,
-    distill-header,
-    d-title,
-    d-abstract,
-    d-article,
-    d-appendix,
-    distill-appendix,
-    d-byline,
-    d-footnote-list,
-    d-citation-list,
-    distill-footer {
-      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
-      grid-column-gap: 16px;
-    }
-  
-    .grid {
-      grid-column-gap: 16px;
-    }
-  
-    d-article {
-      font-size: 1.06rem;
-      line-height: 1.7em;
-    }
-    figure .caption, .figure .caption, figure figcaption {
-      font-size: 13px;
-    }
-  }
-  
-  @media(min-width: 1180px) {
-    .base-grid,
-    distill-header,
-    d-title,
-    d-abstract,
-    d-article,
-    d-appendix,
-    distill-appendix,
-    d-byline,
-    d-footnote-list,
-    d-citation-list,
-    distill-footer {
-      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
-      grid-column-gap: 32px;
-    }
-  
-    .grid {
-      grid-column-gap: 32px;
-    }
-  }
-  
-  
-  /* Get the citation styles for the appendix (not auto-injected on render since
-     we do our own rendering of the citation appendix) */
-  
-  d-appendix .citation-appendix,
-  .d-appendix .citation-appendix {
-    font-size: 11px;
-    line-height: 15px;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    padding-left: 18px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background: rgba(0, 0, 0, 0.02);
-    padding: 10px 18px;
-    border-radius: 3px;
-    color: rgba(150, 150, 150, 1);
+  .distill-site-header {
     overflow: hidden;
-    margin-top: -12px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
   }
-  
-  
-  /* Social footer */
-  
-  .social_footer {
-    margin-top: 30px;
-    margin-bottom: 0;
-    color: rgba(0,0,0,0.67);
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
   }
-  
-  .disqus-comments {
-    margin-right: 30px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
   }
-  
-  .disqus-comment-count {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-    cursor: pointer;
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
   }
-  
-  #disqus_thread {
-    margin-top: 30px;
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
   }
-  
-  .article-sharing a {
-    border-bottom: none;
-    margin-right: 8px;
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
   }
-  
-  .article-sharing a:hover {
-    border-bottom: none;
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
   }
-  
-  .sidebar-section.subscribe {
-    font-size: 12px;
-    line-height: 1.6em;
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
   }
-  
-  .subscribe p {
-    margin-bottom: 0.5em;
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
   }
-  
-  
-  .article-footer .subscribe {
-    font-size: 15px;
-    margin-top: 45px;
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
   }
-  
-  
-  /* Improve display for browsers without grid (IE/Edge <= 15) */
-  
-  .downlevel {
-    line-height: 1.6em;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-    margin: 0;
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
   }
-  
-  .downlevel .d-title {
-    padding-top: 6rem;
-    padding-bottom: 1.5rem;
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-top: 2.5rem;
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: auto;
+}
+
+d-article div.sourceCode {
+  background-color: white;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+d-article pre {
+  font-size: 12px;
+  color: black;
+  background: none;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+d-article details {
+  grid-column: text;
+  margin-bottom: 0.8em;
+}
+
+@media(min-width: 768px) {
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+d-article pre {
+  font-size: 14px;
+}
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
   }
-  
-  .downlevel .d-title h1 {
-    font-size: 50px;
-    font-weight: 700;
-    line-height: 1.1em;
-    margin: 0 0 0.5rem;
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
+
+/* Citation hover box */
+
+.tippy-box[data-theme~=light-border] {
+  background-color: rgba(250, 250, 250, 0.95);
+}
+
+.tippy-content > p {
+  margin-bottom: 0;
+  padding: 2px;
+}
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
   }
-  
-  .downlevel .d-title p {
-    font-weight: 300;
-    font-size: 1.2rem;
-    line-height: 1.55em;
-    margin-top: 0;
+
+  .grid {
+    grid-column-gap: 16px;
   }
-  
-  .downlevel .d-byline {
-    padding-top: 0.8em;
-    padding-bottom: 0.8em;
-    font-size: 0.8rem;
-    line-height: 1.8em;
-  }
-  
-  .downlevel .section-separator {
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .downlevel .d-article {
+
+  d-article {
     font-size: 1.06rem;
     line-height: 1.7em;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
   }
-  
-  
-  .downlevel .d-appendix {
-    padding-left: 0;
-    padding-right: 0;
-    max-width: none;
-    font-size: 0.8em;
-    line-height: 1.7em;
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
     margin-bottom: 0;
-    color: rgba(0,0,0,0.5);
-    padding-top: 40px;
-    padding-bottom: 48px;
   }
-  
-  .downlevel .footnotes ol {
-    padding-left: 13px;
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
   }
-  
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
   .downlevel .base-grid,
   .downlevel .distill-header,
   .downlevel .d-title,
@@ -478,503 +1621,560 @@
   .downlevel .distill-footer,
   .downlevel .appendix-bottom,
   .downlevel .posts-container {
-    padding-left: 40px;
-    padding-right: 40px;
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
   }
-  
-  @media(min-width: 768px) {
-    .downlevel .base-grid,
-    .downlevel .distill-header,
-    .downlevel .d-title,
-    .downlevel .d-abstract,
-    .downlevel .d-article,
-    .downlevel .d-appendix,
-    .downlevel .distill-appendix,
-    .downlevel .d-byline,
-    .downlevel .d-footnote-list,
-    .downlevel .d-citation-list,
-    .downlevel .distill-footer,
-    .downlevel .appendix-bottom,
-    .downlevel .posts-container {
-    padding-left: 150px;
-    padding-right: 150px;
-    max-width: 900px;
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
   }
-  }
-  
-  .downlevel pre code {
-    display: block;
-    border-left: 2px solid rgba(0, 0, 0, .1);
-    padding: 0 0 0 20px;
-    font-size: 14px;
-  }
-  
-  .downlevel code, .downlevel pre {
-    color: black;
-    background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5;
-  
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-  
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-  }
-  
-  </style>
-  
-  <script type="application/javascript">
-  
-  function is_downlevel_browser() {
-    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
-                                   window.navigator.userAgent)) {
-      return true;
-    } else {
-      return window.load_distill_framework === undefined;
-    }
-  }
-  
-  // show body when load is complete
-  function on_load_complete() {
-  
-    // set body to visible
-    document.body.style.visibility = 'visible';
-  
-    // force redraw for leaflet widgets
-    if (window.HTMLWidgets) {
-      var maps = window.HTMLWidgets.findAll(".leaflet");
-      $.each(maps, function(i, el) {
-        var map = this.getMap();
-        map.invalidateSize();
-        map.eachLayer(function(layer) {
-          if (layer instanceof L.TileLayer)
-            layer.redraw();
-        });
+
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
       });
-    }
-  
-    // trigger 'shown' so htmlwidgets resize
-    $('d-article').trigger('shown');
+    });
   }
-  
-  function init_distill() {
-  
-    init_common();
-  
-    // create front matter
-    var front_matter = $('<d-front-matter></d-front-matter>');
-    $('#distill-front-matter').wrap(front_matter);
-  
-    // create d-title
-    $('.d-title').changeElementType('d-title');
-  
-    // create d-byline
-    var byline = $('<d-byline></d-byline>');
-    $('.d-byline').replaceWith(byline);
-  
-    // create d-article
-    var article = $('<d-article></d-article>');
-    $('.d-article').wrap(article).children().unwrap();
-  
-    // move posts container into article
-    $('.posts-container').appendTo($('d-article'));
-  
-    // create d-appendix
-    $('.d-appendix').changeElementType('d-appendix');
-  
-    // create d-bibliography
-    var bibliography = $('<d-bibliography></d-bibliography>');
-    $('#distill-bibliography').wrap(bibliography);
-  
-    // flag indicating that we have appendix items
-    var appendix = $('.appendix-bottom').children('h3').length > 0;
-  
-    // replace citations with <d-cite>
-    $('.citation').each(function(i, val) {
-      appendix = true;
-      var cites = $(this).attr('data-cites').split(" ");
-      var dt_cite = $('<d-cite></d-cite>');
-      dt_cite.attr('key', cites.join());
-      $(this).replaceWith(dt_cite);
-    });
-    // remove refs
-    $('#refs').remove();
-  
-    // replace footnotes with <d-footnote>
-    $('.footnote-ref').each(function(i, val) {
-      appendix = true;
-      var href = $(this).attr('href');
-      var id = href.replace('#', '');
-      var fn = $('#' + id);
-      var fn_p = $('#' + id + '>p');
-      fn_p.find('.footnote-back').remove();
-      var text = fn_p.html();
-      var dtfn = $('<d-footnote></d-footnote>');
-      dtfn.html(text);
-      $(this).replaceWith(dtfn);
-    });
-    // remove footnotes
-    $('.footnotes').remove();
-  
-    $('h1.appendix, h2.appendix').each(function(i, val) {
-      $(this).changeElementType('h3');
-    });
-    $('h3.appendix').each(function(i, val) {
-      var id = $(this).attr('id');
-      $('.d-toc a[href="#' + id + '"]').parent().remove();
-      appendix = true;
-      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
-    });
-  
-    // show d-appendix if we have appendix content
-    $("d-appendix").css('display', appendix ? 'grid' : 'none');
-  
-    // replace code blocks with d-code
-    $('pre>code').each(function(i, val) {
-      var code = $(this);
-      var pre = code.parent();
-      var clz = "";
-      var language = pre.attr('class');
-      if (language) {
-        // map unknown languages to "clike" (without this they just dissapear)
-        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
-                                 "javascript", "js", "julia", "lua", "markdown",
-                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
-          language = "clike";
-        language = ' language="' + language + '"';
-        var dt_code = $('<d-code block' + language + clz + '></d-code>');
-        dt_code.text(code.text());
-        pre.replaceWith(dt_code);
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
       } else {
-        code.addClass('text-output').unwrap().changeElementType('pre');
+        $(this).wrap(layout_div);
       }
     });
-  
-    // localize layout chunks to just output
-    $('.layout-chunk').each(function(i, val) {
-  
-      // capture layout
-      var layout = $(this).attr('data-layout');
-  
-      // apply layout to markdown level block elements
-      var elements = $(this).children().not('d-code, pre.text-output, script');
-      elements.each(function(i, el) {
-        var layout_div = $('<div class="' + layout + '"></div>');
-        if (layout_div.hasClass('shaded')) {
-          var shaded_content = $('<div class="shaded-content"></div>');
-          $(this).wrap(shaded_content);
-          $(this).parent().wrap(layout_div);
-        } else {
-          $(this).wrap(layout_div);
-        }
-      });
-  
-  
-      // unwrap the layout-chunk div
-      $(this).children().unwrap();
-    });
-  
-    // load distill framework
-    load_distill_framework();
-  
-    // wait for window.distillRunlevel == 4 to do post processing
-    function distill_post_process() {
-  
-      if (!window.distillRunlevel || window.distillRunlevel < 4)
-        return;
-  
-      // hide author/affiliations entirely if we have no authors
-      var front_matter = JSON.parse($("#distill-front-matter").html());
-      var have_authors = front_matter.authors && front_matter.authors.length > 0;
-      if (!have_authors)
-        $('d-byline').addClass('hidden');
-  
-      // table of contents
-      if (have_authors) // adjust border if we are in authors
-        $('.d-toc').parent().addClass('d-article-with-toc');
-  
-      // strip links that point to #
-      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
-  
-      // hide elements of author/affiliations grid that have no value
-      function hide_byline_column(caption) {
-        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
-      }
-  
-      // affiliations
-      var have_affiliations = false;
-      for (var i = 0; i<front_matter.authors.length; ++i) {
-        var author = front_matter.authors[i];
-        if (author.affiliation !== "&nbsp;") {
-          have_affiliations = true;
-          break;
-        }
-      }
-      if (!have_affiliations)
-        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
-  
-      // published date
-      if (!front_matter.publishedDate)
-        hide_byline_column("Published");
-  
-      // document object identifier
-      var doi = $('d-byline').find('h3:contains("DOI")');
-      var doi_p = doi.next().empty();
-      if (!front_matter.doi) {
-        // if we have a citation and valid citationText then link to that
-        if ($('#citation').length > 0 && front_matter.citationText) {
-          doi.html('Citation');
-          $('<a href="#citation"></a>')
-            .text(front_matter.citationText)
-            .appendTo(doi_p);
-        } else {
-          hide_byline_column("DOI");
-        }
-      } else {
-        $('<a></a>')
-           .attr('href', "https://doi.org/" + front_matter.doi)
-           .html(front_matter.doi)
-           .appendTo(doi_p);
-      }
-  
-       // change plural form of authors/affiliations
-      if (front_matter.authors.length === 1) {
-        var grid = $('.authors-affiliations');
-        grid.children('h3:contains("Authors")').text('Author');
-        grid.children('h3:contains("Affiliations")').text('Affiliation');
-      }
-  
-      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
-      $('d-code').each(function(i, val) {
-        var style = document.createElement('style');
-        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
-                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
-        if (this.shadowRoot)
-          this.shadowRoot.appendChild(style);
-      });
-  
-      // move appendix-bottom entries to the bottom
-      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
-      $('.appendix-bottom').remove();
-  
-      // clear polling timer
-      clearInterval(tid);
-  
-      // show body now that everything is ready
-      on_load_complete();
-    }
-  
-    var tid = setInterval(distill_post_process, 50);
-    distill_post_process();
-  
-  }
-  
-  function init_downlevel() {
-  
-    init_common();
-  
-     // insert hr after d-title
-    $('.d-title').after($('<hr class="section-separator"/>'));
-  
-    // check if we have authors
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme
+  $('code.sourceCode a:empty').remove();
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
     var front_matter = JSON.parse($("#distill-front-matter").html());
     var have_authors = front_matter.authors && front_matter.authors.length > 0;
-  
-    // manage byline/border
     if (!have_authors)
-      $('.d-byline').remove();
-    $('.d-byline').after($('<hr class="section-separator"/>'));
-    $('.d-byline a').remove();
-  
-    // remove toc
-    $('.d-toc-header').remove();
-    $('.d-toc').remove();
-    $('.d-toc-separator').remove();
-  
-    // move appendix elements
-    $('h1.appendix, h2.appendix').each(function(i, val) {
-      $(this).changeElementType('h3');
+      $('d-byline').addClass('hidden');
+
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
     });
-    $('h3.appendix').each(function(i, val) {
-      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
-    });
-  
-  
-    // inject headers into references and footnotes
-    var refs_header = $('<h3></h3>');
-    refs_header.text('References');
-    $('#refs').prepend(refs_header);
-  
-    var footnotes_header = $('<h3></h3');
-    footnotes_header.text('Footnotes');
-    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
-  
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
+
     // move appendix-bottom entries to the bottom
-    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
     $('.appendix-bottom').remove();
-  
-    // remove appendix if it's empty
-    if ($('.d-appendix').children().length === 0)
-      $('.d-appendix').remove();
-  
-    // prepend separator above appendix
-    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
-  
-    // trim code
-    $('pre>code').each(function(i, val) {
-      $(this).html($.trim($(this).html()));
+
+    // hoverable references
+    $('span.citation[data-cites]').each(function() {
+      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+      window.tippy(this, {
+        allowHTML: true,
+        content: refHtml,
+        maxWidth: 500,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start'
+      });
     });
-  
-    // move posts-container right before article
-    $('.posts-container').insertBefore($('.d-article'));
-  
-    $('body').addClass('downlevel');
-  
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
     on_load_complete();
   }
-  
-  
-  function init_common() {
-  
-    // jquery plugin to change element types
-    (function($) {
-      $.fn.changeElementType = function(newType) {
-        var attrs = {};
-  
-        $.each(this[0].attributes, function(idx, attr) {
-          attrs[attr.nodeName] = attr.nodeValue;
-        });
-  
-        this.replaceWith(function() {
-          return $("<" + newType + "/>", attrs).append($(this).contents());
-        });
-      };
-    })(jQuery);
-  
-    // prevent underline for linked images
-    $('a > img').parent().css({'border-bottom' : 'none'});
-  
-    // mark non-body figures created by knitr chunks as 100% width
-    $('.layout-chunk').each(function(i, val) {
-      var figures = $(this).find('img, .html-widget');
-      if ($(this).attr('data-layout') !== "l-body") {
-        figures.css('width', '100%');
-      } else {
-        figures.css('max-width', '100%');
-        figures.filter("[width]").each(function(i, val) {
-          var fig = $(this);
-          fig.css('width', fig.attr('width') + 'px');
-        });
-  
-      }
-    });
-  
-    // auto-append index.html to post-preview links in file: protocol
-    // and in rstudio ide preview
-    $('.post-preview').each(function(i, val) {
-      if (window.location.protocol === "file:")
-        $(this).attr('href', $(this).attr('href') + "index.html");
-    });
-  
-    // get rid of index.html references in header
-    if (window.location.protocol !== "file:") {
-      $('.radix-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-contents').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
       });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
     }
-  
-    // add class to pandoc style tables
-    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
-    $('.kable-table').children('table').addClass('pandoc-table');
-  
-    // add figcaption style to table captions
-    $('caption').parent('table').addClass("figcaption");
-  
-    // initialize posts list
-    if (window.init_posts_list)
-      window.init_posts_list();
-  
-    // implmement disqus comment link
-    $('.disqus-comment-count').click(function() {
-      window.headroom_prevent_pin = true;
-      $('#disqus_thread').toggleClass('hidden');
-      if (!$('#disqus_thread').hasClass('hidden')) {
-        var offset = $(this).offset();
-        $(window).resize();
-        $('html, body').animate({
-          scrollTop: offset.top - 35
-        });
-      }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
     });
   }
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    if (is_downlevel_browser())
-      init_downlevel();
-    else
-      window.addEventListener('WebComponentsReady', init_distill);
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
   });
-  
-  </script>
-  
-  <!--/distill_placeholder_distill-->
-  <script src="../../site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-  <script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script>
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <script src="../../site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+  <script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
   <link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-  <script src="../../site_libs/datatables-binding-0.5/datatables.js"></script>
-  <link href="../../site_libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-  <link href="../../site_libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
-  <script src="../../site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
-  <script src="../../site_libs/jszip-1.10.16/jszip.min.js"></script>
-  <script src="../../site_libs/pdfmake-1.10.16/pdfmake.min.js"></script>
-  <script src="../../site_libs/pdfmake-1.10.16/vfs_fonts.js"></script>
-  <link href="../../site_libs/dt-ext-buttons-1.10.16/css/buttons.dataTables.min.css" rel="stylesheet" />
-  <script src="../../site_libs/dt-ext-buttons-1.10.16/js/dataTables.buttons.min.js"></script>
-  <script src="../../site_libs/dt-ext-buttons-1.10.16/js/buttons.flash.min.js"></script>
-  <script src="../../site_libs/dt-ext-buttons-1.10.16/js/buttons.html5.min.js"></script>
-  <script src="../../site_libs/dt-ext-buttons-1.10.16/js/buttons.colVis.min.js"></script>
-  <script src="../../site_libs/dt-ext-buttons-1.10.16/js/buttons.print.min.js"></script>
+  <script src="../../site_libs/datatables-binding-0.17/datatables.js"></script>
+  <link href="../../site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link href="../../site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+  <script src="../../site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="../../site_libs/jszip-1.10.20/jszip.min.js"></script>
+  <script src="../../site_libs/pdfmake-1.10.20/pdfmake.js"></script>
+  <script src="../../site_libs/pdfmake-1.10.20/vfs_fonts.js"></script>
+  <link href="../../site_libs/dt-ext-buttons-1.10.20/css/buttons.dataTables.min.css" rel="stylesheet" />
+  <script src="../../site_libs/dt-ext-buttons-1.10.20/js/dataTables.buttons.min.js"></script>
+  <script src="../../site_libs/dt-ext-buttons-1.10.20/js/buttons.flash.min.js"></script>
+  <script src="../../site_libs/dt-ext-buttons-1.10.20/js/buttons.html5.min.js"></script>
+  <script src="../../site_libs/dt-ext-buttons-1.10.20/js/buttons.colVis.min.js"></script>
+  <script src="../../site_libs/dt-ext-buttons-1.10.20/js/buttons.print.min.js"></script>
   <link href="../../site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
   <script src="../../site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
   <link href="../../site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
   <script src="../../site_libs/selectize-0.12.0/selectize.min.js"></script>
-  <link href="../../site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-  <script src="../../site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+  <link href="../../site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+  <script src="../../site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
-  <!--distill_placeholder_site_in_header-->
-  <!--/distill_placeholder_site_in_header-->
+  <!--radix_placeholder_site_in_header-->
+<script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=UA-2102103-6"></script>
+<script type="text/javascript" cookie-consent="tracking">
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-2102103-6');
+</script>
+<style type="text/css">
+.distill-site-nav {
+  color: #E4F2F7;
+  background-color: #4F94B0;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+.img-circle {
+  width:100px;
+  border-radius: 50%;
+}
+@media(min-width:768px) {
+    aside {
+        margin-bottom: -500px;
+    }
+}
+.figure img.external {
+  padding: 6px;
+}
+
+</style>
+<!--/radix_placeholder_site_in_header-->
 
 
 </head>
 
 <body>
 
-<!--distill_placeholder_front_matter-->
+<!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"HIBAR: How methods and practices changed after the replication crisis in social psychology","description":"Had I Been a Reviewer. A post-publication peer review with some added figures.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin","affiliationURL":"https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan"}],"publishedDate":"2019-06-14T00:00:00.000+02:00","citationText":"Arslan, 2019"}
+{"title":"HIBAR: How methods and practices changed after the replication crisis in social psychology","description":"Had I Been a Reviewer. A post-publication peer review with some added figures.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin","affiliationURL":"https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan","orcidID":""}],"publishedDate":"2019-06-14T00:00:00.000+00:00","citationText":"Arslan, 2019"}
 </script>
 
-<!--/distill_placeholder_front_matter-->
-<!--distill_placeholder_navigation_before_body-->
-<!--/distill_placeholder_navigation_before_body-->
-<!--distill_placeholder_site_before_body-->
-<!--/distill_placeholder_site_before_body-->
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">One lives only to make blunders</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../blog.html">Blog</a>
+<a href="http://www.the100.ci/author/ruben/">Group Blog</a>
+<a href="../../bug_bounty.html">Bug Bounty</a>
+<a href="../../mistakes.html">Mistakes</a>
+<a href="../../index.xml">
+<i class="fa fa-rss" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
 <h1>HIBAR: How methods and practices changed after the replication crisis in social psychology</h1>
-<p>Had I Been a Reviewer. A post-publication peer review with some added figures.</p>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../blog.html#category:HIBAR" class="dt-tag">HIBAR</a>
+  <a href="../../blog.html#category:re-analysis" class="dt-tag">re-analysis</a>
+  <a href="../../blog.html#category:post-publication_review" class="dt-tag">post-publication review</a>
+  <a href="../../blog.html#category:meta_science" class="dt-tag">meta science</a>
+  <a href="../../blog.html#category:bibliometrics" class="dt-tag">bibliometrics</a>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>Had I Been a Reviewer. A post-publication peer review with some added figures.</p></p>
 </div>
 
 <div class="d-byline">
@@ -991,16 +2191,16 @@
 </div>
 <div class="layout-chunk" data-layout="l-screen-inset">
 <div class="figure"><span id="fig:unnamed-chunk-2"></span>
-<img src="hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png" alt="Change in proportion of studies that are online over time by journal. Bootstrapped means and 95% CIs." width="1728" data-radix-preview=1 />
+<img src="hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png" alt="Change in proportion of studies that are online over time by journal. Bootstrapped means and 95% CIs." width="1728" data-distill-preview=1 />
 <p class="caption">
 Figure 1: Change in proportion of studies that are online over time by journal. Bootstrapped means and 95% CIs.
 </p>
 </div>
 </div>
 <p>Sassenberg and Ditrich published <a href="https://journals.sagepub.com/doi/full/10.1177/2515245919838781">a paper in Advances in Methods and Practices in Psychological Science</a> in May. It’s on a topic I care about deeply, namely the impact of changes in academic culture on research quality. Specifically, the authors were interested whether <strong>social psychologists have responded to the replication crisis in their subdiscipline and subsequent cries for higher methodological rigour (especially higher statistical power) by switching to less effortful methods of data collection (self-report)</strong>.</p>
-<p>I was not a reviewer of the paper, but given that I’ve already re-analyzed the <a href="https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more/">N-pact paper</a>, it felt only appropriate to do the same with this paper. I decided to do this post in the format of <strong>HIBAR</strong>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I think it’s an important topic and the authors collected valuable data, which surely took a lot of coding effort. The authors, regrettably, did not share any figures for their data. Their findings, which are easily summarised graphically, may therefore become less widely known. So, I made some figures from the open data (above and below).</p>
+<p>I was not a reviewer of the paper, but given that I’ve already re-analyzed the <a href="https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more/">N-pact paper</a>, it felt only appropriate to do the same with this paper. I decided to do this post in the format of <strong>HIBAR</strong>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I think it’s an important topic and the authors collected valuable data, which surely took a lot of coding effort. The authors, regrettably, did not share any figures for their data. Their findings, which are easily summarised graphically, may therefore become less widely known. So, I made some figures from the open data (above and below).</p>
 <p>I frequently hear arguments of the form “calls for rigour in some practices will just lead to less rigour in other areas”, “labour-intensive research will go extinct if higher sample sizes are required” from senior researchers. These arguments are often used to urge caution in response to calls for reform. They may end up being interpreted as advocacy for the status quo.</p>
-<p>Empirical evidence that given consistent publication pressure, researchers urged to increase their sample sizes will do less rigorous research in other ways is thus worrying.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Empirical evidence that given consistent publication pressure, researchers urged to increase their sample sizes will do less rigorous research in other ways is thus worrying.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <h2 id="major-points">Major points</h2>
 <h3 id="omitted-variables">Omitted variables</h3>
 <ol type="1">
@@ -1112,7 +2312,9 @@ Figure 7: Sample size by online. Bootstrapped means and 95% CIs.
 <p>The dataset has N=1300 rows and 6 columns. 458 rows have no missing values on any column.</p>
 </div>
 <details>
-<p><summary title="Expand this section to see some additional metadata in a structured format that is useful for search engines">Metadata for search engines</summary></p>
+<summary title="Expand this section to see some additional metadata in a structured format that is useful for search engines">
+Metadata for search engines
+</summary>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1130,24 +2332,55 @@ Figure 7: Sample size by online. Bootstrapped means and 95% CIs.
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <ul>
-<li><strong>Date published</strong>: 2019-06-19</li>
+<li><strong>Date published</strong>: 2021-03-04</li>
 </ul>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<ul>
-<li><strong>keywords</strong>: <em>paperID</em>, <em>Journal</em>, <em>Jahr</em>, <em>Studynum</em>, <em>Sample</em> and <em>online</em></li>
-</ul>
-<!-- end of list -->
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">paperID</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Journal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jahr</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Studynum</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sample</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">online</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </details>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<h2 id="variables">Variables</h2>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1160,9 +2393,10 @@ Figure 7: Sample size by online. Bootstrapped means and 95% CIs.
 </div>
 <h2 id="codebook-table">Codebook table</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div id="htmlwidget-fa70287ecf1286fcdcc2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fa70287ecf1286fcdcc2">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["<a href=\"#paperID\">paperID<\/a>","<a href=\"#Journal\">Journal<\/a>","<a href=\"#Jahr\">Jahr<\/a>","<a href=\"#Studynum\">Studynum<\/a>","<a href=\"#Sample\">Sample<\/a>","<a href=\"#online\">online<\/a>"],["unique paper identifier","journal in which article was published","year of publication","number of studies per paper","sample size","online data connection"],["numeric","numeric","numeric","numeric","numeric","numeric"],[null,"1. JESP,<br>2. JPSP,<br>3. PSPB,<br>4. SPPS","0. 2009,<br>1. 2011,<br>2. 2016,<br>3. 2018",null,null,"0. no,<br>1. yes"],["0","0","0","842","0","0"],["1300","1300","1300","458","1300","1300"],["1300","1300","1300","1300","1300","1300"],[" 233.52","   2.31","   1.57","   2.81","2608.83","   0.29"],["  129.29","    1.08","    0.92","    1.57","53025.47","    0.45"],["1","1","0","1","7","0"],["131.75","  1   ","  1   ","  2   "," 71   ","  0   "],["245","2","2","3","110","0"],["337","3","2","4","195","1"],["476","4","3","10","1353075","1"],["▆▃▆▆▇▆▅▅","▇▁▃▁▁▇▁▃","▃▁▇▁▁▇▁▃","▇▅▂▁▁▁▁▁","▇▁▁▁▁▁▁▁","▇▁▁▁▁▁▁▃"],["F8.0","F8.0","F8.0","F8.0","F11.0","F8.0"],[null,null,null,"12","12","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>label<\/th>\n      <th>data_type<\/th>\n      <th>value_labels<\/th>\n      <th>missing<\/th>\n      <th>complete<\/th>\n      <th>n<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n      <th>p0<\/th>\n      <th>p25<\/th>\n      <th>p50<\/th>\n      <th>p75<\/th>\n      <th>p100<\/th>\n      <th>hist<\/th>\n      <th>format.spss<\/th>\n      <th>display_width<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["copy","csv","excel","pdf","print"],"pageLength":200,"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,25,50,100,200]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-338eeacbef8f2f02bf3f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-338eeacbef8f2f02bf3f">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"842\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.352307692307692\" data-max=\"1\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.288461538461538\" data-max=\"2608.82923076923\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.453221233601555\" data-max=\"53025.4650019778\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["<a href=\"#paperID\">paperID<\/a>","<a href=\"#Journal\">Journal<\/a>","<a href=\"#Jahr\">Jahr<\/a>","<a href=\"#Studynum\">Studynum<\/a>","<a href=\"#Sample\">Sample<\/a>","<a href=\"#online\">online<\/a>"],["unique paper identifier","journal in which article was published","year of publication","number of studies per paper","sample size","online data connection"],["numeric","numeric","numeric","numeric","numeric","numeric"],[null,"1. JESP,<br>2. JPSP,<br>3. PSPB,<br>4. SPPS","0. 2009,<br>1. 2011,<br>2. 2016,<br>3. 2018",null,null,"0. no,<br>1. yes"],[0,0,0,842,0,0],[1,1,1,0.352307692307692,1,1],["1","1","0","1","7","0"],["245","  2","  2","  3","110","  0"],["    476","      4","      3","     10","1353075","      1"],[233.516153846154,2.31153846153846,1.57153846153846,2.81441048034934,2608.82923076923,0.288461538461538],[129.287074160014,1.07845687203871,0.921201362363694,1.57331751044931,53025.4650019778,0.453221233601555],["▆▆▇▆▅","▇▃▁▇▃","▃▇▁▇▃","▇▆▂▁▁","▇▁▁▁▁","▇▁▁▁▃"],["F8.0","F8.0","F8.0","F8.0","F11.0","F8.0"],[null,null,null,"12","12","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>label<\/th>\n      <th>data_type<\/th>\n      <th>value_labels<\/th>\n      <th>n_missing<\/th>\n      <th>complete_rate<\/th>\n      <th>min<\/th>\n      <th>median<\/th>\n      <th>max<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n      <th>hist<\/th>\n      <th>format.spss<\/th>\n      <th>display_width<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["copy","csv","excel","pdf","print"],"pageLength":200,"columnDefs":[{"className":"dt-right","targets":[4,5,9,10]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,25,50,100,200]}},"evals":[],"jsHooks":[]}</script>
 </div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="layout-chunk" data-layout="l-body">
@@ -1171,8 +2405,8 @@ Figure 7: Sample size by online. Bootstrapped means and 95% CIs.
 <script type="application/ld+json">
 {
   "name": "Research in social psychology changed",
-  "datePublished": "2019-06-19",
-  "description": "The dataset has N=1300 rows and 6 columns.\n458 rows have no missing values on any column.\n\n\n## Table of variables\nThis table contains variable names, labels, their central tendencies and other attributes.\n\n|name     |label                                  |data_type |value_labels                       |missing |complete |n    |mean    |sd       |p0 |p25    |p50 |p75 |p100    |hist     |format.spss |display_width |\n|:--------|:--------------------------------------|:---------|:----------------------------------|:-------|:--------|:----|:-------|:--------|:--|:------|:---|:---|:-------|:--------|:-----------|:-------------|\n|paperID  |unique paper identifier                |numeric   |NA                                 |0       |1300     |1300 |233.52  |129.29   |1  |131.75 |245 |337 |476     |▆▃▆▆▇▆▅▅ |F8.0        |NA            |\n|Journal  |journal in which article was published |numeric   |1. JESP, - 2. JPSP, - 3. PSPB, - 4. SPPS |0       |1300     |1300 |2.31    |1.08     |1  |1      |2   |3   |4       |▇▁▃▁▁▇▁▃ |F8.0        |NA            |\n|Jahr     |year of publication                    |numeric   |0. 2009, - 1. 2011, - 2. 2016, - 3. 2018 |0       |1300     |1300 |1.57    |0.92     |0  |1      |2   |2   |3       |▃▁▇▁▁▇▁▃ |F8.0        |NA            |\n|Studynum |number of studies per paper            |numeric   |NA                                 |842     |458      |1300 |2.81    |1.57     |1  |2      |3   |4   |10      |▇▅▂▁▁▁▁▁ |F8.0        |12            |\n|Sample   |sample size                            |numeric   |NA                                 |0       |1300     |1300 |2608.83 |53025.47 |7  |71     |110 |195 |1353075 |▇▁▁▁▁▁▁▁ |F11.0       |12            |\n|online   |online data connection                 |numeric   |0. no, - 1. yes                      |0       |1300     |1300 |0.29    |0.45     |0  |0      |0   |1   |1       |▇▁▁▁▁▁▁▃ |F8.0        |10            |\n\n### Note\nThis dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.8.0).",
+  "datePublished": "2021-03-04",
+  "description": "The dataset has N=1300 rows and 6 columns.\n458 rows have no missing values on any column.\n\n\n## Table of variables\nThis table contains variable names, labels, and number of missing values.\nSee the complete codebook for more.\n\n|name     |label                                  | n_missing|\n|:--------|:--------------------------------------|---------:|\n|paperID  |unique paper identifier                |         0|\n|Journal  |journal in which article was published |         0|\n|Jahr     |year of publication                    |         0|\n|Studynum |number of studies per paper            |       842|\n|Sample   |sample size                            |         0|\n|online   |online data connection                 |         0|\n\n### Note\nThis dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.9.2).",
   "keywords": ["paperID", "Journal", "Jahr", "Studynum", "Sample", "online"],
   "@context": "http://schema.org/",
   "@type": "Dataset",
@@ -1220,82 +2454,155 @@ Figure 7: Sample size by online. Bootstrapped means and 95% CIs.
 }
 </script>
 <details>
-<p><summary>JSON-LD metadata</summary> The following JSON-LD can be found by search engines, if you share this codebook publicly on the web.</p>
-<pre class="json"><code>
-{
-  &quot;name&quot;: &quot;Research in social psychology changed&quot;,
-  &quot;datePublished&quot;: &quot;2019-06-19&quot;,
-  &quot;description&quot;: &quot;The dataset has N=1300 rows and 6 columns.\n458 rows have no missing values on any column.\n\n\n## Table of variables\nThis table contains variable names, labels, their central tendencies and other attributes.\n\n|name     |label                                  |data_type |value_labels                       |missing |complete |n    |mean    |sd       |p0 |p25    |p50 |p75 |p100    |hist     |format.spss |display_width |\n|:--------|:--------------------------------------|:---------|:----------------------------------|:-------|:--------|:----|:-------|:--------|:--|:------|:---|:---|:-------|:--------|:-----------|:-------------|\n|paperID  |unique paper identifier                |numeric   |NA                                 |0       |1300     |1300 |233.52  |129.29   |1  |131.75 |245 |337 |476     |▆▃▆▆▇▆▅▅ |F8.0        |NA            |\n|Journal  |journal in which article was published |numeric   |1. JESP, - 2. JPSP, - 3. PSPB, - 4. SPPS |0       |1300     |1300 |2.31    |1.08     |1  |1      |2   |3   |4       |▇▁▃▁▁▇▁▃ |F8.0        |NA            |\n|Jahr     |year of publication                    |numeric   |0. 2009, - 1. 2011, - 2. 2016, - 3. 2018 |0       |1300     |1300 |1.57    |0.92     |0  |1      |2   |2   |3       |▃▁▇▁▁▇▁▃ |F8.0        |NA            |\n|Studynum |number of studies per paper            |numeric   |NA                                 |842     |458      |1300 |2.81    |1.57     |1  |2      |3   |4   |10      |▇▅▂▁▁▁▁▁ |F8.0        |12            |\n|Sample   |sample size                            |numeric   |NA                                 |0       |1300     |1300 |2608.83 |53025.47 |7  |71     |110 |195 |1353075 |▇▁▁▁▁▁▁▁ |F11.0       |12            |\n|online   |online data connection                 |numeric   |0. no, - 1. yes                      |0       |1300     |1300 |0.29    |0.45     |0  |0      |0   |1   |1       |▇▁▁▁▁▁▁▃ |F8.0        |10            |\n\n### Note\nThis dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.8.0).&quot;,
-  &quot;keywords&quot;: [&quot;paperID&quot;, &quot;Journal&quot;, &quot;Jahr&quot;, &quot;Studynum&quot;, &quot;Sample&quot;, &quot;online&quot;],
-  &quot;@context&quot;: &quot;http://schema.org/&quot;,
-  &quot;@type&quot;: &quot;Dataset&quot;,
-  &quot;variableMeasured&quot;: [
-    {
-      &quot;name&quot;: &quot;paperID&quot;,
-      &quot;description&quot;: &quot;unique paper identifier&quot;,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;Journal&quot;,
-      &quot;description&quot;: &quot;journal in which article was published&quot;,
-      &quot;value&quot;: &quot;1. JESP,\n2. JPSP,\n3. PSPB,\n4. SPPS&quot;,
-      &quot;maxValue&quot;: 4,
-      &quot;minValue&quot;: 1,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;Jahr&quot;,
-      &quot;description&quot;: &quot;year of publication&quot;,
-      &quot;value&quot;: &quot;0. 2009,\n1. 2011,\n2. 2016,\n3. 2018&quot;,
-      &quot;maxValue&quot;: 3,
-      &quot;minValue&quot;: 0,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;Studynum&quot;,
-      &quot;description&quot;: &quot;number of studies per paper&quot;,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;Sample&quot;,
-      &quot;description&quot;: &quot;sample size&quot;,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;online&quot;,
-      &quot;description&quot;: &quot;online data connection&quot;,
-      &quot;value&quot;: &quot;0. no,\n1. yes&quot;,
-      &quot;maxValue&quot;: 1,
-      &quot;minValue&quot;: 0,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    }
-  ]
-}`</code></pre>
+<summary>
+JSON-LD metadata
+</summary>
+<p>The following JSON-LD can be found by search engines, if you share this codebook publicly on the web.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Research in social psychology changed&quot;</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;datePublished&quot;</span><span class="fu">:</span> <span class="st">&quot;2021-03-04&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;The dataset has N=1300 rows and 6 columns.</span><span class="ch">\n</span><span class="st">458 rows have no missing values on any column.</span><span class="ch">\n\n\n</span><span class="st">## Table of variables</span><span class="ch">\n</span><span class="st">This table contains variable names, labels, and number of missing values.</span><span class="ch">\n</span><span class="st">See the complete codebook for more.</span><span class="ch">\n\n</span><span class="st">|name     |label                                  | n_missing|</span><span class="ch">\n</span><span class="st">|:--------|:--------------------------------------|---------:|</span><span class="ch">\n</span><span class="st">|paperID  |unique paper identifier                |         0|</span><span class="ch">\n</span><span class="st">|Journal  |journal in which article was published |         0|</span><span class="ch">\n</span><span class="st">|Jahr     |year of publication                    |         0|</span><span class="ch">\n</span><span class="st">|Studynum |number of studies per paper            |       842|</span><span class="ch">\n</span><span class="st">|Sample   |sample size                            |         0|</span><span class="ch">\n</span><span class="st">|online   |online data connection                 |         0|</span><span class="ch">\n\n</span><span class="st">### Note</span><span class="ch">\n</span><span class="st">This dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.9.2).&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;keywords&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;paperID&quot;</span><span class="ot">,</span> <span class="st">&quot;Journal&quot;</span><span class="ot">,</span> <span class="st">&quot;Jahr&quot;</span><span class="ot">,</span> <span class="st">&quot;Studynum&quot;</span><span class="ot">,</span> <span class="st">&quot;Sample&quot;</span><span class="ot">,</span> <span class="st">&quot;online&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@context&quot;</span><span class="fu">:</span> <span class="st">&quot;http://schema.org/&quot;</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Dataset&quot;</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;variableMeasured&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;paperID&quot;</span><span class="fu">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;unique paper identifier&quot;</span><span class="fu">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;propertyValue&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Journal&quot;</span><span class="fu">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;journal in which article was published&quot;</span><span class="fu">,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="st">&quot;1. JESP,</span><span class="ch">\n</span><span class="st">2. JPSP,</span><span class="ch">\n</span><span class="st">3. PSPB,</span><span class="ch">\n</span><span class="st">4. SPPS&quot;</span><span class="fu">,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;maxValue&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;minValue&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;propertyValue&quot;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jahr&quot;</span><span class="fu">,</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;year of publication&quot;</span><span class="fu">,</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="st">&quot;0. 2009,</span><span class="ch">\n</span><span class="st">1. 2011,</span><span class="ch">\n</span><span class="st">2. 2016,</span><span class="ch">\n</span><span class="st">3. 2018&quot;</span><span class="fu">,</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;maxValue&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;minValue&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;propertyValue&quot;</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Studynum&quot;</span><span class="fu">,</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;number of studies per paper&quot;</span><span class="fu">,</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;propertyValue&quot;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Sample&quot;</span><span class="fu">,</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;sample size&quot;</span><span class="fu">,</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;propertyValue&quot;</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;online&quot;</span><span class="fu">,</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;online data connection&quot;</span><span class="fu">,</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="st">&quot;0. no,</span><span class="ch">\n</span><span class="st">1. yes&quot;</span><span class="fu">,</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;maxValue&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;minValue&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;propertyValue&quot;</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="er">`</span></span></code></pre></div>
 </details>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 </div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 </div>
-<section class="footnotes">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p> (<a href="http://blog.dansimons.com/2013/09/hi-bar-had-i-been-reviewer.html">Had I been a Reviewer</a>)<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>It seems easier to change standards at journals than to decrease publication pressure and competititon throughout academia.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1" role="doc-endnote"><p> (<a href="http://blog.dansimons.com/2013/09/hi-bar-had-i-been-reviewer.html">Had I been a Reviewer</a>)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>It seems easier to change standards at journals than to decrease publication pressure and competititon throughout academia.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-<!--distill_placeholder_article_footer-->
-<!--/distill_placeholder_article_footer-->
+<!--radix_placeholder_article_footer-->
+<div class="article-footer">
+  <p class="social_footer">
+    <span class="disqus-comments">
+      <i class="fas fa-comments"></i>
+      &nbsp;
+      <span class="disqus-comment-count" data-disqus-identifier="posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/">Comment on this article</span>
+    </span>
+    <span class="article-sharing">
+      Share: &nbsp;
+      <a href="https://twitter.com/share?text=HIBAR%3A%20How%20methods%20and%20practices%20changed%20after%20the%20replication%20crisis%20in%20social%20psychology&amp;url=https%3A%2F%2Frubenarslan.github.io%2Fposts%2F2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology%2F">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frubenarslan.github.io%2Fposts%2F2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology%2F">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://plus.google.com/share?url=https%3A%2F%2Frubenarslan.github.io%2Fposts%2F2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology%2F">
+        <i class="fab fa-google-plus"></i>
+      </a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frubenarslan.github.io%2Fposts%2F2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology%2F&amp;title=HIBAR%3A%20How%20methods%20and%20practices%20changed%20after%20the%20replication%20crisis%20in%20social%20psychology">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </span>
+  </p>
+  <script id="dsq-count-scr" src="https://livetoblunder.disqus.com/count.js" async></script>
+  <div id="disqus_thread" class="hidden"></div>
+  <script type="text/javascript" cookie-consent="functionality">
+var disqus_config = function () {
+  this.page.url = 'https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/';
+  this.page.identifier = 'posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/';
+};
+(function() {
+  var d = document, s = d.createElement('script');
+  s.src = 'https://livetoblunder.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();
+</script>
+  <p>
+    <div class="subscribe"><form method='post' action='https://blogtrottr.com'>
+  <p>Get notified of new posts via email:</p>
+  <input type='text' name='btr_email' />
+  <input type='hidden' name='btr_url'
+         value='https://rubenarslan.github.io/blog.xml'/>
+  <input type='hidden' name='schedule_type' value='0' />
+  <input type='submit' value='Subscribe' />
+</form>
+</div>
+  </p>
+</div>
+<!--/radix_placeholder_article_footer-->
 </div>
 
 <div class="d-appendix">
 </div>
 
 
-<!--distill_placeholder_site_after_body-->
-<!--/distill_placeholder_site_after_body-->
-<!--distill_placeholder_appendices-->
-<div class="appendix-bottom"></div>
-<!--/distill_placeholder_appendices-->
-<!--distill_placeholder_navigation_after_body-->
-<!--/distill_placeholder_navigation_after_body-->
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+  <h3 id="updates-and-corrections">Corrections</h3>
+  <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rubenarslan/rubenarslan.github.io/issues/new">create an issue</a> on the source repository.</p>
+  <h3 id="reuse">Reuse</h3>
+  <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rubenarslan/rubenarslan.github.io">https://github.com/rubenarslan/rubenarslan.github.io</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+  <h3 id="citation">Citation</h3>
+  <p>For attribution, please cite this work as</p>
+  <pre class="citation-appendix short">Arslan (2019, June 14). One lives only to make blunders: HIBAR: How methods and practices changed after the replication crisis in social psychology. Retrieved from https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/</pre>
+  <p>BibTeX citation</p>
+  <pre class="citation-appendix long">@misc{arslan2019hibar:,
+  author = {Arslan, Ruben C.},
+  title = {One lives only to make blunders: HIBAR: How methods and practices changed after the replication crisis in social psychology},
+  url = {https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/},
+  year = {2019}
+}</pre>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+  <p>© Copyright 2018-2021 Ruben Arslan. <a href="../../about.html">Privacy Policy</a>.</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
 
 </body>
 

@@ -8,6 +8,10 @@ author:
     affiliation_url: https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan
     affiliation: "Center for Adaptive Rationality, Max Planck Institute for Human Development, Berlin" 
 date: 09-23-2020
+categories: 
+  - HIBAR
+  - re-analysis
+  - risk taking
 output:
   distill::distill_article:
     self_contained: false
