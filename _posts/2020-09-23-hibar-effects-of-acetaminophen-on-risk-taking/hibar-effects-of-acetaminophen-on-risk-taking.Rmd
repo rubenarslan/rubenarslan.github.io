@@ -21,6 +21,18 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::include_graphics("https://live.staticflickr.com/3840/14760892026_a1c3d99899_o_d.jpg")
 ```
 
+## Update March 4, 2021
+I exchanged a few emails with Baldwin Way. After two responses, he stopped replying. 
+
+- He did not make the "preregistration" public, after I repeatedly explained the problem (and why adding me as a contributor was not a real solution). 
+- He gave an explanation why the sample sizes deviated from plans (logistic reasons with subject recruitment) and explicitly denied optional stopping. 
+- He said that they have updated their IRB to be able to share data in the future.
+- He said that this study was a result of emptying their file drawer on acetaminophen and risk preference (apparently, they consider the study on ibuprofen and risk preference to belong in a different file drawer). 
+
+Several of my concerns below are not allayed by his responses, and I'm further concerned that Way does not seem motivated to fix unambiguous errors (non-public preregistration that was not frozen, deviation from preregistered analysis) or respond to a critic. His final sentence to me was that I should try running acetaminophen studies myself, but given the presented evidence, I currently feel like this would be a waste of time. 
+
+## Original post
+
 A journalist is calling me later today to talk about [this recently published
 paper](https://academic.oup.com/scan/advance-article/doi/10.1093/scan/nsaa108/5897711#207180755), so I read it.
 

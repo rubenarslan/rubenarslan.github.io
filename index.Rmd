@@ -27,7 +27,7 @@ You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/r
 
 
 ## Blogs
-Together with [three wonderful people](http://www.the100.ci/about/), I founded [The 100% CI](http://www.the100.ci/), a blog focused on open science and meta science. Posts that I wrote primarily, can be found [here](http://www.the100.ci/author/ruben/), although we all edit and review each other. I have a [personal blog](blog.html) too, for posts that did not clear our high bar for punniness.
+Together with [three wonderful people](http://www.the100.ci/about/), I founded [The 100% CI](http://www.the100.ci/), a blog focused on open science and meta science. Posts that I wrote primarily, can be found [here](http://www.the100.ci/author/ruben/), although we all edit and review each other. My [personal blog](blog.html) features some small analyses, simulations, post-publication criticism, and accounting for errors in my work. The blog's name (One lives only to make blunders) is taken from this famous letter from [Darwin to Lyell](https://www.darwinproject.ac.uk/letter/DCP-LETT-3272.xml).
 
 ## Publications
 For now, you can find my traditional publications on my [Google Scholar profile](https://scholar.google.com/citations?user=X6fXzMcAAAAJ&hl=en). Here are the two main graphs from the two main papers of my dissertation.

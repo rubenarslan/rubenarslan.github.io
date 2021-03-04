@@ -132,6 +132,9 @@
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression</link>
       <description>And how would you test that?</description>
+      <category>simulation</category>
+      <category>data-generating model</category>
+      <category>brms</category>
       <guid>https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression</guid>
       <pubDate>Wed, 13 Mar 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression/moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png" medium="image" type="image/png" width="1248" height="768"/>
