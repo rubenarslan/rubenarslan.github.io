@@ -7,7 +7,7 @@ author:
     url: https://rubenarslan.github.io
 date: 09-03-2019
 categories: 
-  - hibar
+  - HIBAR
   - post-publication review
   - sexual desire
   - marriage
