@@ -1,7 +1,7 @@
 ---
-title: "Personal blog"
+title: "Ruben C. Arslan"
 description: |
-  A collection of links to software, scientific work, and my blog.
+  Personal home page, links to scientific work, blogs, and software.
 site: distill::distill_website
 exclude:
 - '*.rda'
@@ -17,10 +17,10 @@ exclude:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-I'm a evolutionary personality psychologist by training, who dabbles in genetic research, software development, and open science activism. I live and [work](https://www.mpib-berlin.mpg.de/en/staff/ruben-arslan) in Berlin. 
+I study genetic and hormonal causes why people differ and change, especially their personality, intelligence, and sexuality. Open, reproducible science is important to me, so I focus on methods, measures, and transparency and dabble in research software development. I live in Berlin and work at the [University of Leipzig](https://www.lw.uni-leipzig.de/institut-fuer-psychologie-wilhelm-wundt/arbeitsgruppen/persoenlichkeitspsychologie-und-psychologische-diagnostik/team/dr-ruben-arslan-lennartz/). 
 
 <aside>
-<img src="https://formr.org/assets/build/img/ruben.jpg?v1489582723" class="img-circle" alt="Ruben Arslan">
+<img src="figures/ruben.jpg" class="img-circle" alt="Ruben Arslan">
 </aside>
 
 You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/rubenarslan). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org).^[Some more information about this form can be found [here](http://www.the100.ci/2018/02/22/tell-me-im-wrong).] I also have a standing [bug bounty policy](bug_bounty.html) for errors in my published work.
