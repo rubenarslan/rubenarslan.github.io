@@ -17,6 +17,8 @@ navbar:
       href: bug_bounty.html
     - text: "Mistakes"
       href: mistakes.html
+    - text: "CV"
+      href: cv_ruben_arslan.pdf
     - icon: fa fa-rss
       href: index.xml
 output:

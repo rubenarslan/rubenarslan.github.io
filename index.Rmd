@@ -26,16 +26,19 @@ I study genetic and hormonal causes of why people differ and change, especially 
 You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/rubenarslan). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org).^[Some more information about this form can be found [here](http://www.the100.ci/2018/02/22/tell-me-im-wrong).] I also have a standing [bug bounty policy](bug_bounty.html) for errors in my published work.
 
 
+## Publications
+Here's a [PDF of my curriculum vitae](cv_ruben_arslan.pdf). All my work is at least green open access and you can find direct links to each publication in this PDF (click on the green/orange lock icons).
+You can also find my publications on my [Google Scholar profile](https://scholar.google.com/citations?user=X6fXzMcAAAAJ&hl=en). Below are the two main graphs from the two main papers of my dissertation. You can click on them to view the websites I usually create to document my analyses and results.
+
+<div class="l-body-outset"><p>
+<a href="https://rubenarslan.github.io/ovulatory_shifts/"><img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width: 45%" alt="Ovulatory changes"></a>
+<a href="https://rubenarslan.github.io/paternal_age_fitness/"><img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width: 54%;" alt="Paternal age effects on reproductive fitness"></a>
+
+</p></div>
+
 ## Blogs
 Together with [three wonderful people](http://www.the100.ci/about/), I founded [The 100% CI](http://www.the100.ci/), a blog focused on open science and meta science. Posts that I wrote primarily, can be found [here](http://www.the100.ci/author/ruben/), although we all edit and review each other. My [personal blog](blog.html) features some small analyses, simulations, post-publication criticism, and accounting for errors in my work. The blog's name (One lives only to make blunders) is taken from this famous letter from [Darwin to Lyell](https://www.darwinproject.ac.uk/letter/DCP-LETT-3272.xml).
 
-## Publications
-For now, you can find my traditional publications on my [Google Scholar profile](https://scholar.google.com/citations?user=X6fXzMcAAAAJ&hl=en). Here are the two main graphs from the two main papers of my dissertation.
-
-<div class="l-body-outset"><p>
-<img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width: 45%" alt="Ovulatory changes">
-<img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width: 54%;" alt="Paternal age effects on reproductive fitness">
-</p></div>
 
 ## Open Science
 I'm a child of the reproducibility crisis in psychology - I had to unlearn much of what I was taught. To me, the open science movement is our best hope to fight the corruption of science. I occasionally give talks and workshops to advertise and teach tools and methods to do better work, including some of the software listed below. 
