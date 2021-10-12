@@ -1,5 +1,5 @@
 ---
-title: "Ruben C. Arslan"
+title: "One lives only to make blunders"
 listing: posts
 description: |
   New blog posts
