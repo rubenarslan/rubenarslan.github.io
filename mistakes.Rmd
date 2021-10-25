@@ -38,9 +38,9 @@ __Reporters:__ Steve Gangestad, Dan Engber, Mike Wood
 
 __Type of mistake:__ Several.
 
-__Description:__ See [correction at the journal JPSP](https://psycnet.apa.org/record/2019-34417-001), [extended blog post](https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior/), follow-up criticism by [Gangestad & Dinh](https://www.researchgate.net/publication/341072189_Robust_Evidence_for_Moderation_of_Ovulatory_Shifts_by_Partner_Attractiveness_in_Arslan_et_al's_2020_Data), which reports an uncorrected error. We are also writing a response to the follow-up critique. Please note that the publicly visible portion of the correction on PsycNet is truncated for some reason. I'm working on fixing this.
+__Description:__ See [correction at the journal JPSP](https://psycnet.apa.org/record/2019-34417-001), [extended blog post](https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior/), follow-up criticism by [Gangestad & Dinh](https://www.researchgate.net/publication/341072189_Robust_Evidence_for_Moderation_of_Ovulatory_Shifts_by_Partner_Attractiveness_in_Arslan_et_al's_2020_Data), which reports an uncorrected error. We wrote [a response](https://psyarxiv.com/kjnvz/) to the follow-up critique. Please note that the publicly visible portion of the correction on PsycNet is truncated, so you actually have to download the PDF.
 
-__Delay:__ Some immediate fixes were released via Twitter, the correction was published in June, 2019. The correction did not correct one further error, which the critical reanalysis, published online in May 2020, reported. Our response to it still is not published.
+__Delay:__ Some immediate fixes were released via Twitter, the correction was published in June, 2019. The correction did not correct one further error, which the critical reanalysis, published online in May 2020, reported. [Our response](https://psyarxiv.com/kjnvz/) to it was published only in October 2021.
 
 __Solution:__ See links.
 
@@ -50,7 +50,7 @@ __Bounty:__ Before BB policy.
 
 ## Arslan et al., 2017
 
-__Project:__ [Arslan et al., 2018](https://psycnet.apa.org/record/2018-41799-001). Using 26,000 diary entries to show ovulatory changes in sexual desire and behavior.
+__Project:__ [Arslan et al., 2018](http://rspb.royalsocietypublishing.org/content/285/1873/20180092.long). Relaxed selection and mutation accumulation are best studied empirically: reply to Woodley of Menie et al
 
 __Timing:__ After publication.
 
