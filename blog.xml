@@ -7,7 +7,17 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 23 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Opportunity, equality, and genes, a seminar on The Genetic Lottery</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2022-10-19-opportunity-equality-and-genes-a-seminar</link>
+      <description>Notes on my seminar (German title "Chancen, Gleichheit und Genetik") oriented around K. Paige Harden's book "The Genetic Lottery" (2021).</description>
+      <category>teaching</category>
+      <category>opportunity-equality-genetics</category>
+      <guid>https://rubenarslan.github.io/posts/2022-10-19-opportunity-equality-and-genes-a-seminar</guid>
+      <pubDate>Tue, 18 Oct 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>HIBAR: Effects of acetaminophen on risk taking (with virtual balloons)</title>
       <dc:creator>Ruben C. Arslan</dc:creator>

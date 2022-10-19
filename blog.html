@@ -2129,7 +2129,7 @@ function init_posts_list() {
     var src = $(img).attr('data-src');
     if (src) {
       $(img).attr('src', src);
-      $(img).load(function() {
+      $(img).on("load", function() {
         img.removeAttribute('data-src');
       });
     }
@@ -2175,6 +2175,7 @@ function init_posts_list() {
 
       // mark posts that match the category visible
       var page_category = window.location.hash.replace(/^#category:/, "");
+      page_category = decodeURIComponent(page_category)
       var posts = $('.post-metadata').map(function(idx, script) {
         var metadata = $.parseJSON($(script).html());
         var post = null;
@@ -2190,7 +2191,7 @@ function init_posts_list() {
       set_posts_visible(posts, true);
 
       // mark the hash active
-      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
+      $('.categories li>a[href="' + decodeURIComponent(window.location.hash) + '"]').addClass('active');
 
       // update the list_caption
       var list_caption = $('.posts-list-caption');
@@ -2253,6 +2254,24 @@ function init_posts_list() {
 <div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
 <h1 class="posts-list-caption" data-caption="One lives only to make blunders">One lives only to make blunders</h1>
+<a href="posts/2022-10-19-opportunity-equality-and-genes-a-seminar/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["teaching","opportunity-equality-genetics"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 18, 2022</div>
+<div class="dt-authors">
+<div class="dt-author">Ruben C. Arslan</div>
+</div>
+</div>
+<div class="thumbnail"></div>
+<div class="description">
+<h2>Opportunity, equality, and genes, a seminar on The Genetic Lottery</h2>
+<div class="dt-tags">
+<div class="dt-tag">teaching</div>
+<div class="dt-tag">opportunity-equality-genetics</div>
+</div>
+<p>Notes on my seminar (German title "Chancen, Gleichheit und Genetik") oriented around K. Paige Harden's book "The Genetic Lottery" (2021).</p>
+</div>
+</a>
 <a href="posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["HIBAR","re-analysis","risk taking"]}</script>
 <div class="metadata">
@@ -2346,7 +2365,7 @@ function init_posts_list() {
 </div>
 </div>
 <div class="thumbnail">
-<img src="posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png"/>
+<img data-src="posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png"/>
 </div>
 <div class="description">
 <h2>HIBAR: Tympanic temperature and social connectedness</h2>
@@ -2615,7 +2634,7 @@ function init_posts_list() {
 <ul>
 <li>
 <a href="#category:Articles">Articles</a>
-<span class="category-count">(16)</span>
+<span class="category-count">(17)</span>
 </li>
 <li>
 <a href="#category:bibliometrics">bibliometrics</a>
@@ -2670,6 +2689,10 @@ function init_posts_list() {
 <span class="category-count">(7)</span>
 </li>
 <li>
+<a href="#category:opportunity-equality-genetics">opportunity-equality-genetics</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
 <a href="#category:ovulation">ovulation</a>
 <span class="category-count">(1)</span>
 </li>
@@ -2715,6 +2738,10 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:simulation">simulation</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:teaching">teaching</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
