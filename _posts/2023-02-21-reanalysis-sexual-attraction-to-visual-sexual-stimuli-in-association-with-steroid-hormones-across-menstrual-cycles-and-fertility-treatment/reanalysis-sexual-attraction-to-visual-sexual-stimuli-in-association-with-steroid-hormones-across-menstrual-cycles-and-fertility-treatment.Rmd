@@ -1,0 +1,446 @@
+---
+title: "Reanalysis: Sexual attraction to visual sexual stimuli and hormones"
+description: |
+  Analyzing the public data shared along with a recent publication by Schön et al. (2023): Sexual attraction to visual sexual stimuli in association with steroid hormones across menstrual cycles and fertility treatment
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+date: 2023-02-22
+categories: 
+  - hormones
+  - hibar
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: true
+    toc: true
+    toc_float: true
+preview: https://ars.els-cdn.com/content/image/1-s2.0-S0306453023000380-gr1.jpg
+---
+
+
+```{r}
+# importing the data downloaded from the supplementary here https://www.sciencedirect.com/science/article/pii/S0306453023000380#sec0115
+library(tidyverse)
+
+theme_set(theme_bw())
+cycles <- rio::import("ScienceDirect_files_21Feb2023_09-06-38.857/mmc3/SPSS_Dataset_Cycle_1_2.sav")
+# cycles %>% names()
+
+# cycles %>% select(starts_with("Z"))
+cycles_long <- cycles %>% pivot_longer(starts_with("Z")) %>% 
+  separate(name, c("cycle", "time", "name"), extra = "merge") %>% 
+  pivot_wider()
+
+# unique(cycles_long$cycle)
+# unique(cycles_long$time)
+cycles_long <- cycles_long %>% 
+  mutate(fc_day = as.numeric(recode(time, "T1" = "4", 
+                         "T2" = "13",
+                         "T3" = "21",
+                         "T4" = "28")) - 1)
+cycles_long$fc_day %>% table(exclude=NULL)
+
+cycles_long <- cycles_long %>% 
+  mutate(logOESTR = log(OESTR), logPROG = log(PROG))
+
+lead2 <- cycles_long %>% select(ID, cycle, fc_day, logOESTR_lag2 = logOESTR, logPROG_lag2 = logPROG) %>% 
+  mutate(fc_day = fc_day + 2)
+
+cycles_long <- cycles_long %>% 
+  mutate_at(vars(starts_with("SR_")), ~ (. - 50)/20 )
+
+cycles_longer <- cycles_long %>% 
+  group_by(ID, cycle) %>% 
+  tidyr::expand(fc_day = c(3, 5, 12, 14, 20, 22, 27, 29)) %>% 
+  full_join(cycles_long, by = c("ID", "cycle", "fc_day")) %>% 
+  left_join(lead2, by = c("ID", "cycle", "fc_day")) %>% 
+  mutate(fc_day_lag2 = fc_day - 2)
+
+# table(cycles_longer$fc_day)
+# table(cycles_longer$fc_day_lag2)
+
+fc_days <- rio::import("https://files.osf.io/v1/resources/u9xad/providers/github/merge_files/fc_days.sav")
+cycles_longer <- cycles_longer %>% 
+  left_join(fc_days, by = c("fc_day" = "fc_day")) %>% 
+  ungroup()
+
+cycles_longer <- cycles_longer %>% 
+  left_join(fc_days %>% rename_with(~ str_c(., "_lag2")), by = c("fc_day_lag2" = "fc_day_lag2")) %>% 
+  ungroup()
+
+
+# ggplot(cycles_long, aes(fc_day, log(OESTR))) + geom_point() + geom_smooth()
+# ggplot(cycles_longer, aes(fc_day, logOESTR_lag2)) + geom_point() + geom_smooth()
+# ggplot(cycles_long, aes(fc_day, log(PROG))) + geom_point() + geom_smooth()
+# ggplot(cycles_longer, aes(log(OESTR), est_estradiol_fc)) + geom_point()
+
+# lm(log(OESTR) ~ est_estradiol_fc, cycles_longer)
+# lm(log(PROG) ~ est_progesterone_fc, cycles_longer)
+```
+
+
+The following paper was recently published by Schön et al. in Psychoneuroendocrinology: [Sexual attraction to visual sexual stimuli in association with steroid hormones across menstrual cycles and fertility treatment, doi:10.1016/j.psyneuen.2023.106060](https://www.sciencedirect.com/science/article/pii/S0306453023000380#bib20)
+
+<details><summary>Abstract</summary>
+
+Background
+Steroid hormones (i.e., estradiol, progesterone, and testosterone) are considered to play a crucial role in the regulation of women’s sexual desire and sexual attraction to sexual stimuli throughout the menstrual cycle. However, the literature is inconsistent, and methodologically sound studies on the relationship between steroid hormones and women’s sexual attraction are rare.
+
+Methods:
+This prospective longitudinal multisite study examined estradiol, progesterone, and testosterone serum levels in association with sexual attraction to visual sexual stimuli in naturally cycling women and in women undergoing fertility treatment (in vitro fertilization, IVF). Across ovarian stimulation of fertility treatment, estradiol reaches supraphysiological levels, while other ovarian hormones remain nearly stable. Ovarian stimulation hence offers a unique quasi-experimental model to study concentration-dependent effects of estradiol. Hormonal parameters and sexual attraction to visual sexual stimuli assessed with computerized visual analogue scales were collected at four time points per cycle, i.e., during the menstrual, preovulatory, mid-luteal, and premenstrual phases, across two consecutive menstrual cycles (n = 88 and n = 68 for the first and second cycle, respectively). Women undergoing fertility treatment (n = 44) were assessed twice, at the beginning and at the end of ovarian stimulation. Sexually explicit photographs served as visual sexual stimuli.
+
+Results
+In naturally cycling women, sexual attraction to visual sexual stimuli did not vary consistently across two consecutive menstrual cycles. While in the first menstrual cycle sexual attraction to male bodies, couples kissing, and at intercourse varied significantly with a peak in the preovulatory phase, (all p ≤ 0.001), there was no significant variability across the second cycle. Univariable and multivariable models evaluating repeated cross-sectional relationships and intraindividual change scores revealed no consistent associations between estradiol, progesterone, and testosterone and sexual attraction to visual sexual stimuli throughout both menstrual cycles. Also, no significant association with any hormone was found when the data from both menstrual cycles were combined. In women undergoing ovarian stimulation of IVF, sexual attraction to visual sexual stimuli did not vary over time and was not associated with estradiol levels despite intraindividual changes in estradiol levels from 122.0 to 11,746.0 pmol/l with a mean (SD) of 3,553.9 (2,472.4) pmol/l.
+
+Conclusions
+These results imply that neither physiological levels of estradiol, progesterone, and testosterone in naturally cycling women nor supraphysiological levels of estradiol due to ovarian stimulation exert any relevant effect on women’s sexual attraction to visual sexual stimuli.
+
+</details>
+
+The paper caught my attention for two reasons:
+
+1. it's well-done, interesting work, including serum hormones and both a naturally cycling sample as well as a sample of women undergoing ovarian hyperstimulation in preparation for in vitro fertilisation 
+2. they openly shared their data, which I love to see^[their previous publications on different outcomes in the same study unfortunately didn't do so].
+
+So, naturally, I delved right in.
+
+## Accuracy of our estradiol and progesterone imputations
+Almost the first thing I wanted to do was to check the accuracy of our imputations for estradiol and progesterone. In our [recent paper](https://psyarxiv.com/5r8mg/), we had computed the accuracy of imputing log estradiol and progesterone from menstrual cycle phase. However, because we only had raw data for one serum dataset, we used a statistical approach (approximative LOO) to reduce overfitting. One reviewer was skeptical that we would find such good performance in independent data.
+
+
+```{r}
+o_ests <- broom::tidy(cor.test(cycles_longer$est_estradiol_fc, log(cycles_longer$OESTR)))
+p_ests <- broom::tidy(cor.test(cycles_longer$est_progesterone_fc, log(cycles_longer$PROG)))
+```
+
+So, I merged my imputed estradiol and progesterone values on their "time" variable, which, I thought, can be understood as a cycle day counted forward from the last menstrual onset. 
+
+![their sampling schedule](https://ars.els-cdn.com/content/image/1-s2.0-S0306453023000380-gr1.jpg)
+
+In the BioCycle study data, I had found the accuracy to be 0.57 [0.55;0.59]. Here, it was `r sprintf("%.2f [%.2f;%.2f]", o_ests["estimate"], o_ests["conf.low"], o_ests["conf.high"])`. For progesterone, we had reported 0.72 [0.70;0.74] and here I got	`r sprintf("%.2f [%.2f;%.2f]", p_ests["estimate"], p_ests["conf.low"], p_ests["conf.high"])`. 
+
+The values here are actually better! They are more in line with our accuracy estimates for backward-counting (.68 & .83). This might be because they do not have strictly days since last menstrual onset here, but rather I back-translated that from their graph of time points. In actual fact, they used some smart scheduling techniques based on LH and sonography. Another difference might be the variance in cycle phase, which they maximized with two measurement occasions close to menstruation, one around ovulation, and one mid-luteal occasion. I could adjust for that, but for now, I mainly take the message that our imputations seem to work pretty well on independent data.
+
+
+## Slightly different analyses
+Reading the paper, I couldn't help wonder whether slightly different analysis choices would have led to different results. They used generalized estimating equations and it all seemed well-done if slightly different than what I normally do. But from my own experience with this kind of data (mostly unpublished), I've come to the conclusion that:
+
+- logging steroid hormone concentrations is slightly better than not doing so because
+  - not logging you have to make arbitrary decisions how to deal with influential 'outliers' which are, however, still bioplausible
+  - there is some evidence that associations are linear after logging
+  - explained variance by cycle phase was slightly bigger in my [recent paper](https://psyarxiv.com/5r8mg/)
+  - interactions between E and P, or their ratio E/P naturally turn into additive (or rather subtractive) terms after logging, reducing model complexity
+- that the relationship between steroid hormones and sexual desire is best predicted by log(estradiol/progesterone)
+- there is [some evidence](https://www.sciencedirect.com/science/article/pii/S0018506X13000482) that the effect of serum log(estradiol/progesterone) is strongest at a lag of around two days on psychological outcomes, but much of that is based on salivary immunoassays, which I don't put much stock in
+- that it might be better to leave log(testosterone) out of the equation at first, because it's plausibly a mediator
+- I figured I could probably aggregate across their four outcomes (ratings of stimuli of male faces, bodies, kissing, intercourse).
+- I figured their might be substantial heterogeneity in residual variances, as that's been my experience with visual analogue rating scales
+
+
+### Multilevel generalizability
+
+To determine whether I could aggregate across their four outcomes, I ran a multilevel generalizability analysis. I brought their visual analogue scales from 0 to 100 to approximate unit variance by subtracting 50 and dividing by 20. 
+
+```{r}
+cycles_long <- cycles_long %>% mutate(cycle_time = str_c(cycle, time))
+df <- cycles_long %>% select(ID, cycle_time, starts_with("SR_")) %>% drop_na() %>% as.data.frame
+psych::mlr(df, grp = "ID", Time = "cycle_time")
+```
+
+
+```{r layout="l-body-outset", fig.height = 8, fig.width = 8, fig.cap = "Distributions of the outcome visual analogue scale ratings over time. (Z=cycle, T=time point)"}
+cycles_long %>% select(ID, cycle_time, starts_with("SR_")) %>% pivot_longer(-c(ID, cycle_time)) %>% 
+  ggplot(aes(value)) + geom_histogram() +
+  facet_grid(cycle_time ~ name)
+```
+
+
+Hmm, the _generalizability of within person variations averaged over items_ is zero, so maybe aggregating is not a good idea. However, a multivariate model would allow me to do some partial pooling across outcomes, so went with that. 
+
+### A multivariate model
+So, in the below model, I:
+
+- logged estradiol and progesterone, this way I did not have to include the estradiol-progesterone ratio in the model
+- omitted testosterone, at least as a first step
+- allowed slopes to vary by person and cycle
+- allowed correlations across outcomes, both for the residuals and the varying slopes and intercepts
+
+```{r}
+library(brms)
+library(cmdstanr)
+library(tidybayes)
+knitr::opts_chunk$set(tidy = FALSE)
+options(brms.backend = "cmdstanr",  # I use the cmdstanr backend
+        mc.cores = 8, 
+        brms.threads = 2,           # which allows me to multithread
+        brms.file_refit = "on_change", # this is useful when doing iterative model building, though it can misfire, be careful
+        width = 8000) 
+
+m1mv0 <- brm(mvbind(SR_Faces, SR_Bodies, SR_Kissing, SR_Intercourse) ~  cycle + (1 |i|ID) + (1 |c|ID:cycle), cycles_long %>% drop_na(logOESTR, logPROG),
+            iter = 6000, file = "m1mv0",
+            control = list(adapt_delta = 0.99))
+
+m1mv <- brm(mvbind(SR_Faces, SR_Bodies, SR_Kissing, SR_Intercourse) ~ log(OESTR) + log(PROG) + cycle + (1 + log(OESTR) + log(PROG)|i|ID) + (1 + log(OESTR) + log(PROG)|c|ID:cycle), cycles_long, 
+            iter = 6000, file = "m1mv",
+            control = list(adapt_delta = 0.99))
+```
+
+<details> <summary>Model output and comparison to null model</summary>
+
+```{r}
+options(width = 8000)
+m1mv
+
+LOO(m1mv0, m1mv)
+```
+
+</details>
+
+As you can see if you expand the detail above, this doesn't lead to very different conclusions.
+
+### A location-scale model
+So, on analogue rating scales, you often see substantially heterogeneous variances, this is the case here too. Will accounting for it in a simple location-scale model make a difference? From here on out, I'm going to simplify and only look at one outcome (`SR_Intercourse`) for now. I'll also drop the varying slopes by cycle for simplicity.
+
+
+```{r layout="l-body", fig.height = 5, fig.width = 5, fig.cap = "Heterogenity in standard deviations by person."}
+sds <- cycles_long %>% select(ID, cycle_time, starts_with("SR_")) %>% pivot_longer(-c(ID, cycle_time)) %>% 
+  group_by(ID, name) %>% 
+  summarise(sd = sd(value)) %>% 
+  group_by(name)
+
+
+sds %>% 
+  arrange(sd) %>% 
+  ggplot(aes(sd)) + 
+  geom_histogram() + 
+  facet_wrap(~ name, scales = "free")
+```
+
+<details> <summary>Model output </summary>
+
+```{r}
+m1intercourse <- brm(SR_Intercourse ~ logOESTR + logPROG + cycle + (1 + logOESTR + logPROG|i|ID), cycles_long, 
+            iter = 4000, file = "m1intercourse")
+
+m1intercourse_sigma <- brm(bf(SR_Intercourse ~ logOESTR + logPROG + cycle + (1 + logOESTR + logPROG|i|ID),
+                        sigma ~ (1|i|ID)), cycles_long, 
+            iter = 6000, file = "m1intercourse_sigma", 
+            # file_refit = "always",
+            control = list(adapt_delta = .99))
+m1intercourse_sigma
+```
+
+</details>
+
+Not so!
+
+### Group mean centering
+So, actually we expect the effects of estradiol and progesterone to happen on the within-person level. Differences in average levels of E and P could actually confound the relationship we're interested in. Adjusting for this is possible using various methods (this [video](https://www.youtube.com/watch?v=iwVqiiXYeC4&t=3285s) gives a great introduction.
+
+We can simply subtract the group mean from logOESTR and logPROG.
+
+
+<details> <summary>Model output </summary>
+
+```{r}
+cycles_long <- cycles_long %>% group_by(ID) %>% 
+              mutate(logOESTRm = mean(logOESTR, na.rm = T),
+                     logPROGm = mean(logPROG, na.rm = T)) %>% 
+              mutate(logOESTR_gmc = logOESTR - mean(logOESTR, na.rm = T),
+                     logPROG_gmc = logPROG - mean(logPROG, na.rm = T)) %>% 
+              ungroup()
+cycles_long %>% select(starts_with("log")) %>% cor(use = "pairwise") %>% round(2)
+
+m1intercoursegmc <- brm(SR_Intercourse ~ logOESTR + logPROG + cycle + (1 + logOESTR + logPROG|i|ID), cycles_long %>% group_by(ID) %>% 
+              mutate(logOESTR = logOESTR - mean(logOESTR, na.rm = T),
+                     logPROG = logPROG - mean(logPROG, na.rm = T)) %>% 
+              ungroup(), 
+            iter = 4000, file = "m1intercoursegmc")
+m1intercoursegmc
+```
+
+</details>
+
+Well, this makes little if any difference, which makes sense considering that there isn't much between-subject variance in estradiol and progesterone to begin with.
+
+### Latent group mean centering
+
+Being a brms lover, I've been looking for an excuse to try Matti Vuorre's implementation of latent group mean centering in brms. So, here goes.
+
+<details> <summary>Model output </summary>
+
+```{r}
+latent_formula <- bf(
+  SR_Intercourse ~ intercept + 
+    blogOESTR*(logOESTR - logOESTRlm) # lm = latent mean
+  +  blogPROG*(logPROG - logPROGlm),
+  intercept ~ 1 + (1 | ID),
+  blogOESTR ~ 1 + (1 | ID),
+  blogPROG ~ 1 + (1 | ID),
+  nlf(logOESTRlm ~ logOESTRm), # latent mean estimated from observed mean
+  logOESTRm ~ 1 + (1 | ID), # observed mean estimated as a function of (1|ID)
+  nlf(logPROGlm ~ logPROGm),
+  logPROGm ~ 1 + (1 | ID),
+  nl = TRUE
+) +
+  gaussian()
+
+p <- get_prior(latent_formula, data = cycles_long) %>%
+  mutate(
+    prior = case_when(
+      class == "b" & coef == "Intercept" ~ "normal(0, 1)",
+      class == "sd" & coef == "Intercept" ~ "student_t(7, 0, 1)",
+      TRUE ~ prior
+    )
+  )
+
+fit_latent <- brm(
+  latent_formula,
+  data = cycles_long,
+  prior = p,
+  iter = 4000,
+  cores = 8, chains = 4, threads = 2,
+  backend = "cmdstanr",
+  control = list(adapt_delta = 0.99),
+  file = "brm-fit-latent-mean-centered"
+)
+
+fit_latent
+```
+
+</details>
+
+### Imputations and lag
+To get at the question, whether estradiol and progesterone have time-delayed effects on sexual desire, we would ideally like to have measured serum steroids a few days ahead. Unfortunately, this wasn't done here (they did measure serum steroids on some other days, but did not share those data). 
+A simple solution would be to substitute in my imputed hormones for the days two days prior to the rating task.
+
+<details> <summary>Model output </summary>
+
+```{r}
+m1_lagi <- brm(SR_Intercourse ~ est_estradiol_fc_lag2 + est_progesterone_fc_lag2 + cycle + (1 + est_estradiol_fc_lag2 + est_progesterone_fc_lag2|i|ID), cycles_longer, 
+            iter = 6000, file = "m1mv_lagi",
+            control = list(adapt_delta = 0.99))
+m1_lagi
+
+
+m1_i <- brm(SR_Intercourse ~ est_estradiol_fc + est_progesterone_fc + cycle + (1 + est_estradiol_fc + est_progesterone_fc|i|ID), cycles_longer, 
+            iter = 6000, file = "m1_i",
+            control = list(adapt_delta = 0.9))
+m1_i
+```
+
+</details>
+
+Directionally, the same-day imputed hormones has a slightly stronger relationship with SR_Intercourse for oestradiol, and the two-day lag imputation has a slightly stronger relationship with progesterone. Not much that can be concluded at this sample size though.
+
+### Latent lag
+Just using the imputations leaves money on the table though. Next, I thought I would use the strong relationship between imputed hormones and measured hormones to impute the missing values two days prior (and thereby carry forward the inherent uncertainty in imputation plus the individual differences, what little there are). 
+
+I thought I needed only to use the syntactic sugar for missing variables in brms (`mi()`). After some reshaping magic, I thought I had it, but, nope, it took forever to fit^[which, according to the first folk theorem of statistical computing, means there's something wrong with my model]. And I've never seen that many warnings from a Stan model before. I did not succeed in fixing them with the usual tricks (more informative priors, inits, playing with control parameters).
+
+```{r,eval=FALSE}
+m1lag <- brm(
+  bf(SR_Intercourse ~ mi(logOESTR_lag2) + mi(logPROG_lag2) + cycle + (1|ID)) +
+  bf(logOESTR_lag2 | mi() ~ est_estradiol_fc + (1|ID)) +
+  bf(logPROG_lag2 | mi() ~ est_progesterone_fc + (1|ID)) +
+    set_rescor(FALSE),
+  cycles_longer, 
+  iter = 8000, 
+  inits = 0,
+  control = list(adapt_delta = 0.99, max_treedepth = 15),
+  prior = c(set_prior("normal(0,1)", class = "b", resp = "SR_Intercourse"),
+            set_prior("normal(0,1)", class = "b", resp = "logOESTRlag2"),
+            set_prior("normal(0,1)", class = "b", resp = "logPROGlag2"),
+            set_prior("normal(0,1)", class = "sd", resp = "SR_Intercourse"),
+            set_prior("normal(0,1)", class = "sd", resp = "logOESTRlag2"),
+            set_prior("normal(0,1)", class = "sd", resp = "logPROGlag2"))
+  )
+```
+
+
+Instead, I took a leaf out of Matti Vuorre's book and tried my hand at the nonlinear formula syntax. I find this much less convenient to specify and harder to think about^[If I wanted to be mean, I'd say it feels a little like MPlus with those very strict rules about how variables and parameters can be named.].
+
+<details> <summary>Model output </summary>
+
+```{r}
+imputation_formula <- bf(
+  SRIntercourse ~ intercept + 
+    blogOESTR*(logOESTRlag2) # logOESTRlag2 = the measured hormone two days in the future
+  +  blogPROG*(logPROGlag2) + 
+    bcycle* cycle,
+  intercept ~ 1 + (1 | ID), # varying intercepts
+  bcycle ~ 1,
+  blogOESTR ~ 1 + (1 | ID), # varying slopes
+  blogPROG ~ 1 + (1 | ID),  # varying slopes
+  nlf(logOESTRlag2 ~ estestradiolfc), # estimate measured steroid from imputed steroid
+  nlf(logPROGlag2 ~ estprogesteronefc),
+  nl = TRUE
+) +
+  gaussian()
+
+cycles_long_nou <- cycles_longer %>% rename_with(~str_replace_all(., "_", ""))
+p <- get_prior(imputation_formula, data = cycles_long_nou) %>%
+  mutate(
+    prior = case_when(
+      class == "b" & coef == "Intercept" ~ "normal(0, 1)",
+      class == "sd" & coef == "Intercept" ~ "student_t(7, 0, 1)",
+      TRUE ~ prior
+    )
+  )
+
+m1_i_latent <- brm(
+  imputation_formula,
+  data = cycles_long_nou,
+  prior = p,
+  iter = 4000,
+  control = list(adapt_delta = 0.99),
+  file = "brm-fit-latent-impute"
+)
+
+m1_i_latent
+```
+
+</details>
+
+It worries me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag. So maybe I didn't specify the nonlinear model correctly. But I don't see the mistake yet.
+
+### Bringing it all together
+```{r layout="l-body-outset", fig.height = 5, fig.width = 6, fig.cap = "Non-varying slopes for log estradiol and log progesterone"}
+draws <- bind_rows(
+  latent_impute_lag2 = m1_i_latent %>% gather_draws(`b_blog.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "b_b", "b_"), "_Intercept", "")),
+  imputed_lag2 = m1_lagi %>% gather_draws(`b_est.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "est_estradiol_fc_lag2", "logOESTR"), "est_progesterone_fc_lag2", "logPROG")),
+  imputed = m1_i %>% gather_draws(`b_est.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "est_estradiol_fc", "logOESTR"), "est_progesterone_fc", "logPROG")),
+  latent_group_mean_centered = fit_latent %>% gather_draws(`b_blog.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "b_b", "b_"), "_Intercept", "")),
+  group_mean_centered = m1intercoursegmc %>% gather_draws(`b_log.+`, regex = T),
+  location_scale = m1intercourse_sigma %>% gather_draws(`b_log.+`, regex = T),
+  multivariate = m1mv %>% gather_draws(`b_SRIntercourse_log.+`, regex = T) %>% mutate(.variable = str_replace(.variable, "b_SRIntercourse_", "b_")),
+  raw = m1intercourse %>% gather_draws(`b_log.+`, regex = T), .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper,
+                  color = model)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(xintercept = 0, linetype = 'dashed') +
+  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+
+## "Conclusion"
+In summary, I would say my different analyses did not yield very different conclusions at this sample size. If the authors had shared even more data, maybe slightly cooler reanalyses would be possible. Who knows maybe that twofold change in the effect size for estradiol when bringing in imputations and lags is real.
+
+I ended up not bothering to bring it all together in one model, but would be interested to see what happens if you, dear reader, give it a go. Given the rest of the literature, I still put stock in a peri-ovulatory sexual desire peak, but I think this is more evidence that we all should design studies to detect small effects (here and most elsewhere in psychology) and effect heterogeneity (especially here).
+
+Cycle researchers have recently started sharing data more widely. It's cool to see this catch on even in medicine and I hope it continues.^[It would be extra cool if preregistration catches on there outside the narrow remit of clinical trials too.] I think there are interesting substantive and statistical questions both remaining to be answered in this research.
+
+
+### Things I didn't do or that still confuse me
+- I didn't do any model comparisons here.
+- I never brought it all together in one multivariate location-scale model with imputations and lags
+- I didn't do any group mean centering at the level of the cycle.
+- It confuses me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag.
