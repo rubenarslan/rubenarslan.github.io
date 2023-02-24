@@ -339,76 +339,51 @@ Just using the imputations leaves money on the table though. Next, I thought I w
 
 I thought I needed only to use the syntactic sugar for missing variables in brms (`mi()`). After some reshaping magic, I thought I had it, but, nope, it took forever to fit^[which, according to the first folk theorem of statistical computing, means there's something wrong with my model]. And I've never seen that many warnings from a Stan model before. I did not succeed in fixing them with the usual tricks (more informative priors, inits, playing with control parameters).
 
-```{r,eval=FALSE}
-m1lag <- brm(
-  bf(SR_Intercourse ~ mi(logOESTR_lag2) + mi(logPROG_lag2) + cycle + (1|ID)) +
-  bf(logOESTR_lag2 | mi() ~ est_estradiol_fc + (1|ID)) +
-  bf(logPROG_lag2 | mi() ~ est_progesterone_fc + (1|ID)) +
-    set_rescor(FALSE),
-  cycles_longer, 
-  iter = 8000, 
-  inits = 0,
-  control = list(adapt_delta = 0.99, max_treedepth = 15),
-  prior = c(set_prior("normal(0,1)", class = "b", resp = "SR_Intercourse"),
-            set_prior("normal(0,1)", class = "b", resp = "logOESTRlag2"),
-            set_prior("normal(0,1)", class = "b", resp = "logPROGlag2"),
-            set_prior("normal(0,1)", class = "sd", resp = "SR_Intercourse"),
-            set_prior("normal(0,1)", class = "sd", resp = "logOESTRlag2"),
-            set_prior("normal(0,1)", class = "sd", resp = "logPROGlag2"))
-  )
-```
-
-
-Instead, I took a leaf out of Matti Vuorre's book and tried my hand at the nonlinear formula syntax. I find this much less convenient to specify and harder to think about^[If I wanted to be mean, I'd say it feels a little like MPlus with those very strict rules about how variables and parameters can be named.].
+__Edit:__ Sleeping on it, the solution came to me in a dream.^[I had confused which imputations to use as predictors and should have used the lagged ones.]. That solution did not completely fix the model either though. What did it was rereading the brms vignette on missing values and noticing that Paul adds the `| mi()` also for the main response. This is necessary so brms won't drop the rows in which the response is missing. I think you can get away with not doing so, if there is overlap, but in my case there was zero overlap (all values that had an outcome did not have lagged steroid measures). So, I added `| mi()` to by response `SR_Intercourse`.
 
 <details> <summary>Model output </summary>
 
 ```{r}
-imputation_formula <- bf(
-  SRIntercourse ~ intercept + 
-    blogOESTR*(logOESTRlag2) # logOESTRlag2 = the measured hormone two days in the future
-  +  blogPROG*(logPROGlag2) + 
-    bcycle* cycle,
-  intercept ~ 1 + (1 | ID), # varying intercepts
-  bcycle ~ 1,
-  blogOESTR ~ 1 + (1 | ID), # varying slopes
-  blogPROG ~ 1 + (1 | ID),  # varying slopes
-  nlf(logOESTRlag2 ~ estestradiolfc), # estimate measured steroid from imputed steroid
-  nlf(logPROGlag2 ~ estprogesteronefc),
-  nl = TRUE
-) +
-  gaussian()
+mis_imp_formula = bf(SR_Intercourse | mi() ~ mi(logOESTR_lag2) + mi(logPROG_lag2) + cycle + (1|ID)) +
+  bf(logOESTR_lag2 | mi() ~ est_estradiol_fc_lag2 + (1|ID)) +
+  bf(logPROG_lag2 | mi() ~ est_progesterone_fc_lag2 + (1|ID)) +
+    set_rescor(FALSE)
 
-cycles_long_nou <- cycles_longer %>% rename_with(~str_replace_all(., "_", ""))
-p <- get_prior(imputation_formula, data = cycles_long_nou) %>%
+p <- get_prior(mis_imp_formula, data = cycles_longer) %>%
   mutate(
     prior = case_when(
-      class == "b" & coef == "Intercept" ~ "normal(0, 1)",
-      class == "sd" & coef == "Intercept" ~ "student_t(7, 0, 1)",
+      class == "b" & coef == "Intercept" ~ "normal(0, 2)",
+      class == "b"  ~ "normal(0, 1)",
+      class == "sd" & coef == "Intercept" ~ "student_t(3, 0, 0.5)",
       TRUE ~ prior
     )
   )
 
-m1_i_latent <- brm(
-  imputation_formula,
-  data = cycles_long_nou,
-  prior = p,
-  iter = 4000,
-  control = list(adapt_delta = 0.99),
-  file = "brm-fit-latent-impute"
-)
 
-m1_i_latent
+m1lag <- brm(
+  mis_imp_formula,
+  cycles_longer, 
+  iter = 4000, 
+  init = 0,
+  file = "m1_impute_latent",
+  control = list(adapt_delta = 0.99, max_treedepth = 15),
+  prior = p
+  )
 ```
 
 </details>
 
-It worries me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag. So maybe I didn't specify the nonlinear model correctly. But I don't see the mistake yet.
+Instead, I took a leaf out of Matti Vuorre's book and tried my hand at the nonlinear formula syntax. I find this much less convenient to specify and harder to think about^[If I wanted to be mean, I'd say it feels a little like MPlus with those very strict rules about how variables and parameters can be named.].
+
+It worries me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag. So maybe I didn't specify the nonlinear model correctly. 
+
+__Edit:__ I slept on it and I did not, so I've cut it here. You can see it on [Github](https://github.com/rubenarslan/rubenarslan.github.io/commit/ac093940892e1bbaa90eeb8bb34512104d8a55a4#diff-f8e17c1a292f30e8f979969d00945c9de5745bdc73be152a919e63dd49389ac6) if you wish.
 
 ### Bringing it all together
+
 ```{r layout="l-body-outset", fig.height = 5, fig.width = 6, fig.cap = "Non-varying slopes for log estradiol and log progesterone"}
 draws <- bind_rows(
-  latent_impute_lag2 = m1_i_latent %>% gather_draws(`b_blog.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "b_b", "b_"), "_Intercept", "")),
+  latent_impute_lag2 = m1lag %>% gather_draws(`bsp_SRIntercourse_milog.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "bsp_SRIntercourse_mi", "b_"), "_lag2", "")),
   imputed_lag2 = m1_lagi %>% gather_draws(`b_est.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "est_estradiol_fc_lag2", "logOESTR"), "est_progesterone_fc_lag2", "logPROG")),
   imputed = m1_i %>% gather_draws(`b_est.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "est_estradiol_fc", "logOESTR"), "est_progesterone_fc", "logPROG")),
   latent_group_mean_centered = fit_latent %>% gather_draws(`b_blog.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "b_b", "b_"), "_Intercept", "")),

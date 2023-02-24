@@ -2506,32 +2506,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h3 id="latent-lag">Latent lag</h3>
 <p>Just using the imputations leaves money on the table though. Next, I thought I would use the strong relationship between imputed hormones and measured hormones to impute the missing values two days prior (and thereby carry forward the inherent uncertainty in imputation plus the individual differences, what little there are).</p>
 <p>I thought I needed only to use the syntactic sugar for missing variables in brms (<code>mi()</code>). After some reshaping magic, I thought I had it, but, nope, it took forever to fit<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. And I’ve never seen that many warnings from a Stan model before. I did not succeed in fixing them with the usual tricks (more informative priors, inits, playing with control parameters).</p>
-<div class="layout-chunk" data-layout="l-body">
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>m1lag</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>SR_Intercourse</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>logOESTR_lag2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>logPROG_lag2</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>cycle</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>logOESTR_lag2</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>est_estradiol_fc</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>logPROG_lag2</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>est_progesterone_fc</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>set_rescor</a></span><span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span>,</span>
-<span>  <span class='va'>cycles_longer</span>, </span>
-<span>  iter <span class='op'>=</span> <span class='fl'>8000</span>, </span>
-<span>  inits <span class='op'>=</span> <span class='fl'>0</span>,</span>
-<span>  control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>adapt_delta <span class='op'>=</span> <span class='fl'>0.99</span>, max_treedepth <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>,</span>
-<span>  prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span><span class='op'>(</span><span class='st'>"normal(0,1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, resp <span class='op'>=</span> <span class='st'>"SR_Intercourse"</span><span class='op'>)</span>,</span>
-<span>            <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span><span class='op'>(</span><span class='st'>"normal(0,1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, resp <span class='op'>=</span> <span class='st'>"logOESTRlag2"</span><span class='op'>)</span>,</span>
-<span>            <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span><span class='op'>(</span><span class='st'>"normal(0,1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, resp <span class='op'>=</span> <span class='st'>"logPROGlag2"</span><span class='op'>)</span>,</span>
-<span>            <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span><span class='op'>(</span><span class='st'>"normal(0,1)"</span>, class <span class='op'>=</span> <span class='st'>"sd"</span>, resp <span class='op'>=</span> <span class='st'>"SR_Intercourse"</span><span class='op'>)</span>,</span>
-<span>            <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span><span class='op'>(</span><span class='st'>"normal(0,1)"</span>, class <span class='op'>=</span> <span class='st'>"sd"</span>, resp <span class='op'>=</span> <span class='st'>"logOESTRlag2"</span><span class='op'>)</span>,</span>
-<span>            <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span><span class='op'>(</span><span class='st'>"normal(0,1)"</span>, class <span class='op'>=</span> <span class='st'>"sd"</span>, resp <span class='op'>=</span> <span class='st'>"logPROGlag2"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span>  <span class='op'>)</span></span></code></pre>
-</div>
-</details>
-</div>
-<p>Instead, I took a leaf out of Matti Vuorre’s book and tried my hand at the nonlinear formula syntax. I find this much less convenient to specify and harder to think about<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p><strong>Edit:</strong> Sleeping on it, the solution came to me in a dream.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. That solution did not completely fix the model either though. What did it was rereading the brms vignette on missing values and noticing that Paul adds the <code>| mi()</code> also for the main response. This is necessary so brms won’t drop the rows in which the response is missing. I think you can get away with not doing so, if there is overlap, but in my case there was zero overlap (all values that had an outcome did not have lagged steroid measures). So, I added <code>| mi()</code> to by response <code>SR_Intercourse</code>.</p>
 <details>
 <summary>
 Model output
@@ -2542,89 +2517,38 @@ Model output
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>imputation_formula</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span></span>
-<span>  <span class='va'>SRIntercourse</span> <span class='op'>~</span> <span class='va'>intercept</span> <span class='op'>+</span> </span>
-<span>    <span class='va'>blogOESTR</span><span class='op'>*</span><span class='op'>(</span><span class='va'>logOESTRlag2</span><span class='op'>)</span> <span class='co'># logOESTRlag2 = the measured hormone two days in the future</span></span>
-<span>  <span class='op'>+</span>  <span class='va'>blogPROG</span><span class='op'>*</span><span class='op'>(</span><span class='va'>logPROGlag2</span><span class='op'>)</span> <span class='op'>+</span> </span>
-<span>    <span class='va'>bcycle</span><span class='op'>*</span> <span class='va'>cycle</span>,</span>
-<span>  <span class='va'>intercept</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>, <span class='co'># varying intercepts</span></span>
-<span>  <span class='va'>bcycle</span> <span class='op'>~</span> <span class='fl'>1</span>,</span>
-<span>  <span class='va'>blogOESTR</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>, <span class='co'># varying slopes</span></span>
-<span>  <span class='va'>blogPROG</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>,  <span class='co'># varying slopes</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>nlf</a></span><span class='op'>(</span><span class='va'>logOESTRlag2</span> <span class='op'>~</span> <span class='va'>estestradiolfc</span><span class='op'>)</span>, <span class='co'># estimate measured steroid from imputed steroid</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>nlf</a></span><span class='op'>(</span><span class='va'>logPROGlag2</span> <span class='op'>~</span> <span class='va'>estprogesteronefc</span><span class='op'>)</span>,</span>
-<span>  nl <span class='op'>=</span> <span class='cn'>TRUE</span></span>
-<span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mis_imp_formula</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>SR_Intercourse</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>logOESTR_lag2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>logPROG_lag2</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>cycle</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>logOESTR_lag2</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>est_estradiol_fc_lag2</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>logPROG_lag2</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>est_progesterone_fc_lag2</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>set_rescor</a></span><span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>cycles_long_nou</span> <span class='op'>&lt;-</span> <span class='va'>cycles_longer</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename_with</a></span><span class='op'>(</span><span class='op'>~</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='st'>"_"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/get_prior.html'>get_prior</a></span><span class='op'>(</span><span class='va'>imputation_formula</span>, data <span class='op'>=</span> <span class='va'>cycles_long_nou</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/get_prior.html'>get_prior</a></span><span class='op'>(</span><span class='va'>mis_imp_formula</span>, data <span class='op'>=</span> <span class='va'>cycles_longer</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
 <span>    prior <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>      <span class='va'>class</span> <span class='op'>==</span> <span class='st'>"b"</span> <span class='op'>&amp;</span> <span class='va'>coef</span> <span class='op'>==</span> <span class='st'>"Intercept"</span> <span class='op'>~</span> <span class='st'>"normal(0, 1)"</span>,</span>
-<span>      <span class='va'>class</span> <span class='op'>==</span> <span class='st'>"sd"</span> <span class='op'>&amp;</span> <span class='va'>coef</span> <span class='op'>==</span> <span class='st'>"Intercept"</span> <span class='op'>~</span> <span class='st'>"student_t(7, 0, 1)"</span>,</span>
+<span>      <span class='va'>class</span> <span class='op'>==</span> <span class='st'>"b"</span> <span class='op'>&amp;</span> <span class='va'>coef</span> <span class='op'>==</span> <span class='st'>"Intercept"</span> <span class='op'>~</span> <span class='st'>"normal(0, 2)"</span>,</span>
+<span>      <span class='va'>class</span> <span class='op'>==</span> <span class='st'>"b"</span>  <span class='op'>~</span> <span class='st'>"normal(0, 1)"</span>,</span>
+<span>      <span class='va'>class</span> <span class='op'>==</span> <span class='st'>"sd"</span> <span class='op'>&amp;</span> <span class='va'>coef</span> <span class='op'>==</span> <span class='st'>"Intercept"</span> <span class='op'>~</span> <span class='st'>"student_t(3, 0, 0.5)"</span>,</span>
 <span>      <span class='cn'>TRUE</span> <span class='op'>~</span> <span class='va'>prior</span></span>
 <span>    <span class='op'>)</span></span>
 <span>  <span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>m1_i_latent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span></span>
-<span>  <span class='va'>imputation_formula</span>,</span>
-<span>  data <span class='op'>=</span> <span class='va'>cycles_long_nou</span>,</span>
-<span>  prior <span class='op'>=</span> <span class='va'>p</span>,</span>
-<span>  iter <span class='op'>=</span> <span class='fl'>4000</span>,</span>
-<span>  control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>adapt_delta <span class='op'>=</span> <span class='fl'>0.99</span><span class='op'>)</span>,</span>
-<span>  file <span class='op'>=</span> <span class='st'>"brm-fit-latent-impute"</span></span>
-<span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>m1_i_latent</span></span></code></pre>
+<span><span class='va'>m1lag</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span></span>
+<span>  <span class='va'>mis_imp_formula</span>,</span>
+<span>  <span class='va'>cycles_longer</span>, </span>
+<span>  iter <span class='op'>=</span> <span class='fl'>4000</span>, </span>
+<span>  init <span class='op'>=</span> <span class='fl'>0</span>,</span>
+<span>  file <span class='op'>=</span> <span class='st'>"m1_impute_latent"</span>,</span>
+<span>  control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>adapt_delta <span class='op'>=</span> <span class='fl'>0.99</span>, max_treedepth <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>,</span>
+<span>  prior <span class='op'>=</span> <span class='va'>p</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
 </div>
 </details>
-<pre><code> Family: gaussian 
-  Links: mu = identity; sigma = identity 
-Formula: SRIntercourse ~ intercept + blogOESTR * (logOESTRlag2) + blogPROG * (logPROGlag2) + bcycle * cycle 
-         intercept ~ 1 + (1 | ID)
-         bcycle ~ 1
-         blogOESTR ~ 1 + (1 | ID)
-         blogPROG ~ 1 + (1 | ID)
-         logOESTRlag2 ~ estestradiolfc
-         logPROGlag2 ~ estprogesteronefc
-   Data: cycles_long_nou (Number of observations: 570) 
-  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
-         total post-warmup draws = 8000
-
-Group-Level Effects: 
-~ID (Number of levels: 88) 
-                        Estimate Est.Error l-95% CI u-95% CI Rhat
-sd(intercept_Intercept)     0.47      0.18     0.05     0.78 1.01
-sd(blogOESTR_Intercept)     0.11      0.05     0.01     0.19 1.01
-sd(blogPROG_Intercept)      0.04      0.02     0.00     0.08 1.00
-                        Bulk_ESS Tail_ESS
-sd(intercept_Intercept)      510      596
-sd(blogOESTR_Intercept)      482      779
-sd(blogPROG_Intercept)       698     2059
-
-Population-Level Effects: 
-                    Estimate Est.Error l-95% CI u-95% CI Rhat
-intercept_Intercept     0.14      0.22    -0.28     0.56 1.00
-bcycle_Intercept       -0.03      0.05    -0.12     0.07 1.00
-blogOESTR_Intercept     0.20      0.06     0.08     0.31 1.00
-blogPROG_Intercept     -0.04      0.02    -0.08     0.01 1.00
-                    Bulk_ESS Tail_ESS
-intercept_Intercept     9803     6412
-bcycle_Intercept       15174     5607
-blogOESTR_Intercept     7954     5617
-blogPROG_Intercept      9912     5740
-
-Family Specific Parameters: 
-      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     0.51      0.02     0.48     0.55 1.00     8494     6126
-
-Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
-and Tail_ESS are effective sample size measures, and Rhat is the potential
-scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </details>
-<p>It worries me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag. So maybe I didn’t specify the nonlinear model correctly. But I don’t see the mistake yet.</p>
+<p>Instead, I took a leaf out of Matti Vuorre’s book and tried my hand at the nonlinear formula syntax. I find this much less convenient to specify and harder to think about<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>It worries me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag. So maybe I didn’t specify the nonlinear model correctly.</p>
+<p><strong>Edit:</strong> I slept on it and I did not, so I’ve cut it here. You can see it on <a href="https://github.com/rubenarslan/rubenarslan.github.io/commit/ac093940892e1bbaa90eeb8bb34512104d8a55a4#diff-f8e17c1a292f30e8f979969d00945c9de5745bdc73be152a919e63dd49389ac6">Github</a> if you wish.</p>
 <h3 id="bringing-it-all-together">Bringing it all together</h3>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2633,7 +2557,7 @@ Show code
 </summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>draws</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span></span>
-<span>  latent_impute_lag2 <span class='op'>=</span> <span class='va'>m1_i_latent</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_blog.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"b_b"</span>, <span class='st'>"b_"</span><span class='op'>)</span>, <span class='st'>"_Intercept"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  latent_impute_lag2 <span class='op'>=</span> <span class='va'>m1lag</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`bsp_SRIntercourse_milog.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"bsp_SRIntercourse_mi"</span>, <span class='st'>"b_"</span><span class='op'>)</span>, <span class='st'>"_lag2"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span>  imputed_lag2 <span class='op'>=</span> <span class='va'>m1_lagi</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_est.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"est_estradiol_fc_lag2"</span>, <span class='st'>"logOESTR"</span><span class='op'>)</span>, <span class='st'>"est_progesterone_fc_lag2"</span>, <span class='st'>"logPROG"</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span>  imputed <span class='op'>=</span> <span class='va'>m1_i</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_est.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"est_estradiol_fc"</span>, <span class='st'>"logOESTR"</span><span class='op'>)</span>, <span class='st'>"est_progesterone_fc"</span>, <span class='st'>"logPROG"</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span>  latent_group_mean_centered <span class='op'>=</span> <span class='va'>fit_latent</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_blog.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"b_b"</span>, <span class='st'>"b_"</span><span class='op'>)</span>, <span class='st'>"_Intercept"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>,</span>
@@ -2655,8 +2579,8 @@ Show code
 <span>        legend.justification <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </details>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-14"></span>
-<img src="reanalysis-sexual-attraction-to-visual-sexual-stimuli-in-association-with-steroid-hormones-across-menstrual-cycles-and-fertility-treatment_files/figure-html5/unnamed-chunk-14-1.png" alt="Non-varying slopes for log estradiol and log progesterone" width="576" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-13"></span>
+<img src="reanalysis-sexual-attraction-to-visual-sexual-stimuli-in-association-with-steroid-hormones-across-menstrual-cycles-and-fertility-treatment_files/figure-html5/unnamed-chunk-13-1.png" alt="Non-varying slopes for log estradiol and log progesterone" width="576" />
 <p class="caption">
 Figure 3: Non-varying slopes for log estradiol and log progesterone
 </p>
@@ -2665,7 +2589,7 @@ Figure 3: Non-varying slopes for log estradiol and log progesterone
 <h2 id="conclusion">“Conclusion”</h2>
 <p>In summary, I would say my different analyses did not yield very different conclusions at this sample size. If the authors had shared even more data, maybe slightly cooler reanalyses would be possible. Who knows maybe that twofold change in the effect size for estradiol when bringing in imputations and lags is real.</p>
 <p>I ended up not bothering to bring it all together in one model, but would be interested to see what happens if you, dear reader, give it a go. Given the rest of the literature, I still put stock in a peri-ovulatory sexual desire peak, but I think this is more evidence that we all should design studies to detect small effects (here and most elsewhere in psychology) and effect heterogeneity (especially here).</p>
-<p>Cycle researchers have recently started sharing data more widely. It’s cool to see this catch on even in medicine and I hope it continues.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> I think there are interesting substantive and statistical questions both remaining to be answered in this research.</p>
+<p>Cycle researchers have recently started sharing data more widely. It’s cool to see this catch on even in medicine and I hope it continues.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> I think there are interesting substantive and statistical questions both remaining to be answered in this research.</p>
 <h3 id="things-i-didnt-do-or-that-still-confuse-me">Things I didn’t do or that still confuse me</h3>
 <ul>
 <li>I didn’t do any model comparisons here.</li>
@@ -2673,14 +2597,15 @@ Figure 3: Non-varying slopes for log estradiol and log progesterone
 <li>I didn’t do any group mean centering at the level of the cycle.</li>
 <li>It confuses me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag.</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>their previous publications on different outcomes in the same study unfortunately didn’t do so<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>which, according to the first folk theorem of statistical computing, means there’s something wrong with my model<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>If I wanted to be mean, I’d say it feels a little like MPlus with those very strict rules about how variables and parameters can be named.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>It would be extra cool if preregistration catches on there outside the narrow remit of clinical trials too.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I had confused which imputations to use as predictors and should have used the lagged ones.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>If I wanted to be mean, I’d say it feels a little like MPlus with those very strict rules about how variables and parameters can be named.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>It would be extra cool if preregistration catches on there outside the narrow remit of clinical trials too.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
