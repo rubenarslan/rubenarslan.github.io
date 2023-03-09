@@ -1,16 +1,11 @@
 
 ```{r}
-N <- 150
+N <- 250
 n_days = 51
 set.seed(20191005)
 people <- tibble(
   id = 1:N,
-  x = rnorm(N)) 
-people <- people %>% 
-mutate(
-  mean_y = rnorm(N) + x,
-  log_sd_y = -.5 + 0.8 * x
-)
+  x = rnorm(N))
 n_days_per_person = rpois(N, n_days)
 ```
 
@@ -18,7 +13,7 @@ n_days_per_person = rpois(N, n_days)
 ```{r}
 people <- people %>% 
   mutate(
-    mean_log_sd_y = -0.5 + b_sd_bs * x,
+    mean_log_sd_y = -1 + b_sd_bs * x,
     log_sd_y = 0 + b_sd_ws * x,
     mean_y = rnorm(N, sd = exp(mean_log_sd_y)) + b_mean * x,
     xQ = ntile(x, 4)
@@ -32,7 +27,7 @@ days <- people %>%
                         mean = mean_y,
                         sd = exp(log_sd_y)),
               y = case_when(
-                latent_y >= y_ceiling ~ 1.5,
+                latent_y >= y_ceiling ~ y_ceiling,
                 # latent_y <= -1.5 ~ -1.5,
                 TRUE ~ latent_y
               ),
@@ -73,7 +68,7 @@ p1 <- days %>%
             mean_y = mean(y, na.rm = T)) %>% 
   ggplot(., aes(x, mean_y)) +
   geom_smooth(method = 'lm', color = "gray", se = F) + 
-  geom_point()
+  geom_point(alpha = 0.4)
 
 p2 <- days %>% 
   group_by(id) %>% 
@@ -81,14 +76,19 @@ p2 <- days %>%
             sd_y = sd(y, na.rm = T)) %>% 
   ggplot(., aes(x, sd_y)) +
   geom_smooth(method = 'lm', color = "gray", se = F) + 
-  geom_point() + 
+  geom_point(alpha = 0.4) + 
   scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
 
-plot_grid(p1,p2)
+p3 <- people %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point(alpha = 0.4) + 
+  ylab("latent mean y")
+plot_grid(p1,p2,p3,ncol = 2)
 ```
 
 
-### Bias?
+#### Bias?
 ```{r message=F, results = F}
 m_mixed <- brm(bf(y | cens(ycens) ~ x + (1|id),
              sigma ~ x), data = days, silent = 2, refresh = 0)
@@ -97,7 +97,6 @@ m_between <- brm(bf(y | cens(ycens) ~ x,
                summarise(y = mean(y)) %>% 
                mutate(ycens = case_when(
                 y >= y_ceiling ~ "right",
-                # latent_y <= -1.5 ~ -1.5,
                 TRUE ~ "none"
               )), silent = 2, refresh = 0)
 m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
@@ -119,7 +118,7 @@ draws <- draws %>% group_by(model, .variable) %>%
 ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
   geom_pointinterval(position = position_dodge(width = .4)) +
   geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
-             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(1, 1, 1, 0.8, 0.8, 0.8))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(b_mean, b_mean, b_mean, b_sd_bs, b_sd_ws, b_sd_ws))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
   facet_grid(model ~ .variable) +
   theme_bw() +
   theme(legend.position = c(0.99,0.99),
@@ -127,7 +126,7 @@ ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
 ```
 
 
-```{r}
+```{r fig.cap="Relationship between x and sd(id) in the two-part model"}
 draws <- m_mixed_2part %>% gather_draws(`sd_.*x.*`, regex = T)
 hdis <- draws %>% mean_hdci(.width = .95) %>% 
   mutate(xQ = as.numeric(str_match(.variable, "xQ(\\d)")[,2])) %>% 
@@ -136,6 +135,15 @@ ggplot(hdis, aes(x, .value,
                  ymin = .lower, ymax = .upper)) +
   geom_pointrange() + 
   geom_line() + 
-  ylab("sd(id)")
-lm(.value ~ x, hdis, weights = 1/(.upper-.lower))
+  ylab("sd(id)") +
+  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
+
 ```
+
+
+Does a regression of `x` on `log(sd(id))` recover the true value `r b_sd_bs`?
+
+```{r}
+brm(log(.value) | se(se, sigma = FALSE) ~ x, data = hdis %>% mutate(se = (log(.value)-log(.lower))/2))
+```
+
