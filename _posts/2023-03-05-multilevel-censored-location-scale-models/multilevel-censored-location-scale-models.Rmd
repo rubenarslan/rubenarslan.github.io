@@ -1,0 +1,835 @@
+---
+title: "Multilevel censored location-scale models"
+description: |
+  Simulating several models and their ability to recover within-subject and between-subject effects on scale
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+date: 2023-03-05
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: true
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(brms)
+library(tidybayes)
+options(mc.cores = parallel::detectCores(),
+        brms.backend = "cmdstanr",
+        brms.file_refit = "on_change")
+```
+
+
+In a recent paper, Killingsworth, Kahneman, and Meller (2023) re-analyze Killingsworth's experience sampling data to determine the relationship between income and experienced well-being, happiness.
+
+More than 30,000 subjects rated their happiness 50 times on average. 
+
+KKM aggregated daily happiness to derive the subject's observed mean. Then they used a form of distributional regression, quantile regression, to predict not only the mean of happiness but also its variance by `log(income)`. Specifically, they investigated whether the relationship to the mean flattened above a yearly household income of $100,000. This was not the case, the relationship between income and mean happiness is loglinear above and below this threshold. It's also a quite small relationship, `log(income)` explains less than 1% of the variance in happiness.
+
+In addition, they investigated several quantiles. They find that the relationship between `log(income)` and the 15% quantile does indeed flatten after $100,000. In my view, they inappropriately interpret this as evidence that there is an unhappy group of people for which money cannot alleviate suffering (above 100k).
+
+A better way to put it would have been: at higher log(income) the variability in average happiness is higher. That is, some people have a lot of money and spend it on holidays, household help, and time with their loved ones. Others buy a social media platform and make themselves miserable.
+
+Now, I'm not particularly acquainted with quantile regression. However, I've worked with multilevel location scale models a good deal in the past. I've learned primarily not to trust my intuition, or at least to calibrate with fake data simulation.
+
+I've done so below. My conclusion is that KKM make two assumptions that I think are unlikely to hold:
+
+1. that the variance of happiness within-subjects is homogeneous
+2. that their aggregated means of happiness are free of sampling error
+
+I was fairly sure that #1 is false, beause, you know, I've seen happiness data. Not their happiness data, mind you, which they did not publicly share except in aggregated and rounded form.
+
+I was less sure whether #2 has much impact with 50 days per subject on average. 
+
+I am trying to find out how between-subject variance biases my estimate of the effect of a predictor on within-subject variance in certain brms models.
+
+I'll slowly add complexity to my simulations.
+Simulations start with a sample of people who responded on a variable number of days. There is just one predictor, x on the between-subject level, and an outcome, y, at the within-subject level.
+
+## Location-scale within-subject
+Here, mu(y) is a function of x, as is sigma(y) (only at the within-subject level).
+
+```{r}
+N <- 500
+n_days = 51
+set.seed(20191005)
+people <- tibble(
+  id = 1:N,
+  x = rnorm(N)) 
+people <- people %>% 
+mutate(
+  mean_y = rnorm(N) + x,
+  log_sd_y = -.5 + 0.8 * x
+)
+n_days_per_person = rpois(N, n_days)
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              y = rnorm(n(), 
+                        mean = mean_y,
+                        sd = exp(log_sd_y))
+            )
+```
+
+
+```{r, fig.cap="Raw data"}
+ggplot(days, aes(x, y)) +
+  geom_point(alpha = 0.3)
+```
+
+
+```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
+
+ggplot(days, aes(x, y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_pointrange(stat = "summary", 
+                  fun = mean, 
+                  fun.min = function(x) { mean(x)-sd(x) },
+                  fun.max = function(x) { mean(x)+sd(x) }, data = days %>% filter(id %in% sel_ids) ) +
+  geom_point(alpha = 0.3, data = days %>% filter(id %in% sel_ids) )
+```
+
+
+```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+library(cowplot)
+p1 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            mean_y = mean(y, na.rm = T)) %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+p2 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            sd_y = sd(y, na.rm = T)) %>% 
+  ggplot(., aes(x, sd_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point() + 
+  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
+
+plot_grid(p1,p2)
+```
+
+### Bias?
+```{r message=F}
+m_mixed <- brm(bf(y ~ x + (1|id),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+m_between <- brm(bf(y ~ x,
+             sigma ~ x), data = days %>% group_by(x, id) %>% 
+               summarise(y = mean(y)), silent = 2, refresh = 0)
+days <- days %>% left_join(people %>% select(id, x)  %>% mutate(xQ = ntile(x, 4)), by = "id")
+(m_mixed_2part <- brm(bf(y ~ x + (1|gr(id, by = xQ)),
+             sigma ~ x), data = days, silent = 2, refresh = 0))
+```
+
+
+```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+draws <- bind_rows(
+  m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
+ .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(1, 1, 1, 0, 0.8, 0.8))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+
+## Location-scale between-subject
+Here, mu(y) is a function of x, as is sigma(y) (only at the between-subject level, i.e. the participant means scatter more at high x, but the intraindividual SDs are equal throughout the whole range of x).
+
+```{r}
+people <- people %>% 
+  mutate(
+    log_sd_y = -0.5 + 0.8 * x,
+    mean_y = rnorm(N, sd = exp(log_sd_y)) + x
+  )
+n_days_per_person = rpois(N, n_days)
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              y = rnorm(n(), 
+                        mean = mean_y,
+                        sd = 1)
+            )
+```
+
+```{r, fig.cap="Raw data"}
+ggplot(days, aes(x, y)) +
+  geom_point(alpha = 0.3)
+```
+
+
+```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
+
+ggplot(days, aes(x, y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_pointrange(stat = "summary", 
+                  fun = mean, 
+                  fun.min = function(x) { mean(x)-sd(x) },
+                  fun.max = function(x) { mean(x)+sd(x) }, data = days %>% filter(id %in% sel_ids) ) +
+  geom_point(alpha = 0.3, data = days %>% filter(id %in% sel_ids) )
+```
+
+
+
+```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+library(cowplot)
+p1 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            mean_y = mean(y, na.rm = T)) %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+p2 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            sd_y = sd(y, na.rm = T)) %>% 
+  ggplot(., aes(x, sd_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point() + 
+  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
+
+plot_grid(p1,p2)
+```
+
+### Bias?
+```{r message=F}
+m_mixed <- brm(bf(y ~ x + (1|id),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+m_between <- brm(bf(y ~ x,
+             sigma ~ x), data = days %>% group_by(x, id) %>% 
+               summarise(y = mean(y)), silent = 2, refresh = 0)
+# btw <- days %>% group_by(x, id) %>% 
+#                summarise(y = mean(y))
+# m_between2 <- brm(bf(mean_y ~ x,
+#              sigma ~ x), data = people, silent = 2, refresh = 0)
+# plot_grid(
+#   ggplot(people, aes(x, mean_y)) + geom_point(alpha = 0.2) + ylab("latent means of y") + ylim(-5, 15), 
+#   ggplot(btw, aes(x, y)) + geom_point(alpha = 0.2) + ylab("observed means of y") + ylim(-5, 15))
+days <- days %>% left_join(people %>% select(id, x)  %>% mutate(xQ = ntile(x, 4)), by = "id")
+(m_mixed_2part <- brm(bf(y ~ x + (1|gr(id, by = xQ)),
+             sigma ~ x), data = days, silent = 2, refresh = 0))
+```
+
+
+```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+draws <- bind_rows(
+  m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
+ .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(1, 1, 1, 0.8, 0, 0))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+
+
+## Location-scale between-subject and within-subject
+Here, mu(y) is a function of x, as is sigma(y) (both at the between-subject and within-subject level).
+
+```{r}
+people <- people %>% 
+  mutate(
+    mean_log_sd_y = -0.5 + 0.8 * x,
+    log_sd_y = 0 + 0.8 * x,
+    mean_y = rnorm(N, sd = exp(mean_log_sd_y)) + x
+  )
+n_days_per_person = rpois(N, n_days)
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              y = rnorm(n(), 
+                        mean = mean_y,
+                        sd = exp(log_sd_y))
+            )
+```
+
+
+
+```{r, fig.cap="Raw data"}
+ggplot(days, aes(x, y)) +
+  geom_point(alpha = 0.3)
+```
+
+
+```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
+
+ggplot(days, aes(x, y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_pointrange(stat = "summary", 
+                  fun = mean, 
+                  fun.min = function(x) { mean(x)-sd(x) },
+                  fun.max = function(x) { mean(x)+sd(x) }, data = days %>% filter(id %in% sel_ids) ) +
+  geom_point(alpha = 0.3, data = days %>% filter(id %in% sel_ids) )
+```
+
+
+
+```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+library(cowplot)
+p1 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            mean_y = mean(y, na.rm = T)) %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+p2 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            sd_y = sd(y, na.rm = T)) %>% 
+  ggplot(., aes(x, sd_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point() + 
+  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
+
+plot_grid(p1,p2)
+```
+
+
+
+### Bias?
+```{r message=F}
+m_mixed <- brm(bf(y ~ x + (1|id),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+m_between <- brm(bf(y ~ x,
+             sigma ~ x), data = days %>% group_by(x, id) %>% 
+               summarise(y = mean(y)), silent = 2, refresh = 0)
+days <- days %>% left_join(people %>% select(id, x)  %>% mutate(xQ = ntile(x, 4)), by = "id")
+(m_mixed_2part <- brm(bf(y ~ x + (1|gr(id, by = xQ)),
+             sigma ~ x), data = days, silent = 2, refresh = 0))
+```
+
+
+```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+draws <- bind_rows(
+  m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
+ .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(1, 1, 1, 0.8, 0.8, 0.8))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+
+```{r}
+knitr::opts_chunk$set(eval = T) 
+```
+
+## Censored location-scale within-subject
+```{r}
+people <- people %>% 
+  mutate(
+    mean_log_sd_y = 1,
+    log_sd_y = 0 + 0.8 * x,
+    mean_y = rnorm(N, sd = exp(mean_log_sd_y)) + x
+  )
+n_days_per_person = rpois(N, n_days)
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              latent_y = rnorm(n(), 
+                        mean = mean_y,
+                        sd = exp(log_sd_y)),
+              y = case_when(
+                latent_y >= 1.5 ~ 1.5,
+                # latent_y <= -1.5 ~ -1.5,
+                TRUE ~ latent_y
+              ),
+              ycens = case_when(
+                latent_y >= 1.5 ~ "right",
+                # latent_y <= -1.5 ~ "left",
+                TRUE ~ "none"
+              )
+            )
+```
+
+
+```{r, fig.cap="Raw data"}
+ggplot(days, aes(x, y)) +
+  geom_point(alpha = 0.3)
+```
+
+
+```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
+
+ggplot(days, aes(x, y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_pointrange(stat = "summary", 
+                  fun = mean, 
+                  fun.min = function(x) { mean(x)-sd(x) },
+                  fun.max = function(x) { mean(x)+sd(x) }, data = days %>% filter(id %in% sel_ids) ) +
+  geom_point(alpha = 0.3, data = days %>% filter(id %in% sel_ids) )
+```
+
+
+```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+library(cowplot)
+p1 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            mean_y = mean(y, na.rm = T)) %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+p2 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            sd_y = sd(y, na.rm = T)) %>% 
+  ggplot(., aes(x, sd_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+plot_grid(p1,p2)
+```
+
+
+
+### Bias?
+```{r message=F}
+m_mixed <- brm(bf(y | cens(ycens) ~ x + (1|id),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+m_between <- brm(bf(y | cens(ycens) ~ x,
+             sigma ~ x), data = days %>% group_by(x, id) %>% 
+               summarise(y = mean(y)), silent = 2, refresh = 0)
+days <- days %>% left_join(people %>% select(id, x)  %>% mutate(xQ = ntile(x, 4)), by = "id")
+(m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
+             sigma ~ x), data = days, silent = 2, refresh = 0))
+```
+
+
+```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+draws <- bind_rows(
+  m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
+ .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(1, 1, 1, 0, 0.8, 0.8))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+## Censored location-scale between-subject
+```{r}
+people <- people %>% 
+  mutate(
+    mean_log_sd_y = -.5 + 0.8 * x,
+    log_sd_y = 0,
+    mean_y = rnorm(N, sd = exp(mean_log_sd_y)) + x
+  )
+n_days_per_person = rpois(N, n_days)
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              latent_y = rnorm(n(), 
+                        mean = mean_y,
+                        sd = exp(log_sd_y)),
+              y = case_when(
+                latent_y >= 1.5 ~ 1.5,
+                # latent_y <= -1.5 ~ -1.5,
+                TRUE ~ latent_y
+              ),
+              ycens = case_when(
+                latent_y >= 1.5 ~ "right",
+                # latent_y <= -1.5 ~ "left",
+                TRUE ~ "none"
+              )
+            )
+```
+
+
+```{r, fig.cap="Raw data"}
+ggplot(days, aes(x, y)) +
+  geom_point(alpha = 0.3)
+```
+
+
+```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
+
+ggplot(days, aes(x, y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_pointrange(stat = "summary", 
+                  fun = mean, 
+                  fun.min = function(x) { mean(x)-sd(x) },
+                  fun.max = function(x) { mean(x)+sd(x) }, data = days %>% filter(id %in% sel_ids) ) +
+  geom_point(alpha = 0.3, data = days %>% filter(id %in% sel_ids) )
+```
+
+
+```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+library(cowplot)
+p1 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            mean_y = mean(y, na.rm = T)) %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+p2 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            sd_y = sd(y, na.rm = T)) %>% 
+  ggplot(., aes(x, sd_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+plot_grid(p1,p2)
+```
+
+
+
+### Bias?
+```{r message=F}
+m_mixed <- brm(bf(y | cens(ycens) ~ x + (1|id),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+m_between <- brm(bf(y | cens(ycens) ~ x,
+             sigma ~ x), data = days %>% group_by(x, id) %>% 
+               summarise(y = mean(y)), silent = 2, refresh = 0)
+days <- days %>% left_join(people %>% select(id, x)  %>% mutate(xQ = ntile(x, 4)), by = "id")
+(m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
+             sigma ~ x), data = days, silent = 2, refresh = 0))
+
+```
+
+
+```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+draws <- bind_rows(
+  m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
+ .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(1, 1, 1, 0.8, 0, 0))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+## Censored location-scale between-subject and within-subject
+```{r}
+b_mean = 1
+b_sd_bs = 0.8
+b_sd_ws = 0.8
+y_ceiling <- 1.5
+people <- people %>% 
+  mutate(
+    mean_log_sd_y = -0.5 + b_sd_bs * x,
+    log_sd_y = 0 + b_sd_ws * x,
+    mean_y = rnorm(N, sd = exp(mean_log_sd_y)) + b_mean * x
+  )
+n_days_per_person = rpois(N, n_days)
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              latent_y = rnorm(n(), 
+                        mean = mean_y,
+                        sd = exp(log_sd_y)),
+              y = case_when(
+                latent_y >= y_ceiling ~ 1.5,
+                # latent_y <= -1.5 ~ -1.5,
+                TRUE ~ latent_y
+              ),
+              ycens = case_when(
+                latent_y >= y_ceiling ~ "right",
+                # latent_y <= -1.5 ~ "left",
+                TRUE ~ "none"
+              )
+            )
+```
+
+
+```{r, fig.cap="Raw data"}
+ggplot(days, aes(x, y)) +
+  geom_point(alpha = 0.3)
+```
+
+
+```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
+
+ggplot(days, aes(x, y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_pointrange(stat = "summary", 
+                  fun = mean, 
+                  fun.min = function(x) { mean(x)-sd(x) },
+                  fun.max = function(x) { mean(x)+sd(x) }, data = days %>% filter(id %in% sel_ids) ) +
+  geom_point(alpha = 0.3, data = days %>% filter(id %in% sel_ids) )
+```
+
+
+
+```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+library(cowplot)
+p1 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            mean_y = mean(y, na.rm = T)) %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+p2 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            sd_y = sd(y, na.rm = T)) %>% 
+  ggplot(., aes(x, sd_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point() + 
+  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
+
+plot_grid(p1,p2)
+```
+
+
+### Bias?
+```{r message=F}
+m_mixed <- brm(bf(y | cens(ycens) ~ x + (1|id),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+m_between <- brm(bf(y | cens(ycens) ~ x,
+             sigma ~ x), data = days %>% group_by(x, id) %>% 
+               summarise(y = mean(y)), silent = 2, refresh = 0)
+days <- days %>% left_join(people %>% select(id, x)  %>% mutate(xQ = ntile(x, 4)), by = "id")
+(m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
+             sigma ~ x), data = days, silent = 2, refresh = 0))
+
+
+# remotes::install_github("stephensrmmartin/LMMELSM")
+library(LMMELSM)
+nona <- days %>% select(id, x, y) %>% drop_na() %>% as.data.frame()
+m_melsm_2part <- lmmelsm(list(observed ~ y,
+                    location ~ x,
+                    scale ~ x,
+                    between ~ x),
+               id, days)
+```
+
+
+```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+draws <- bind_rows(
+  m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
+ .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(b_mean, b_mean, b_mean, b_sd_bs, b_sd_ws, b_sd_ws))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+
+<!-- ## Attempted solutions -->
+<!-- ```{r} -->
+<!-- (m1wb <- brm(bf(y ~ x + (1|id), -->
+<!--              sigma ~ x), data = days)) -->
+
+<!-- (m1wb3 <- brm(bf(y ~ x + (1|i|id), -->
+<!--              sigma ~ x + mean_y), data = days %>% group_by(id) %>% mutate(mean_y = mean(y)))) -->
+
+
+<!-- (m1wb_fixed_effects <- brm(bf(y ~ id, -->
+<!--              sigma ~ x), iter = 4000, -->
+<!--              control = list(adapt_delta = .8), -->
+<!--              data = days %>% mutate(id=relevel(factor(id), "21")))) -->
+
+<!-- days <- days %>% group_by(id) %>% mutate(meany = mean(y)) -->
+
+<!-- manifest_gmc_lsm <-  -->
+<!--   bf(nl = TRUE, -->
+<!--      y ~ intercept + bx * x, -->
+<!--      nlf(sigma ~ sintercept + bsx * x + bsmy * meany), -->
+<!--      intercept ~ 1 + (1 | id), -->
+<!--      sintercept ~ 1, -->
+<!--      bx ~ 1, -->
+<!--      bsx ~ 1, -->
+<!--      bsmy ~ 1 -->
+<!--   ) -->
+
+<!-- p <- get_prior(manifest_gmc_lsm, data = days) %>% -->
+<!--   mutate( -->
+<!--     prior = "normal(0, 1)" -->
+<!--   ) -->
+
+<!-- (m1wb3_manifest_nlsyntax <- brm( -->
+<!--   manifest_gmc_lsm, -->
+<!--   data = days, -->
+<!--   prior = p -->
+<!-- )) -->
+
+<!-- # latent_gmc_lsm <- -->
+<!-- #   bf(nl = TRUE, -->
+<!-- #   y ~ intercept + bx * x, -->
+<!-- #   nlf(sigma ~ bsx * x + bsmy * latentmeany), -->
+<!-- #   intercept ~ 1 + (1 | id), -->
+<!-- #   bx ~ 1, -->
+<!-- #   bsx ~ 1, -->
+<!-- #   bsmy ~ 1) + -->
+<!-- #   bf(latentmeany | mi() ~ 0) + -->
+<!-- #   bf(meany ~ 0 + mi(latentmeany)) # latent mean estimated from observed mean -->
+
+
+
+
+<!-- nlformula <- bf(y ~ bint + bmx * x,  -->
+<!--       sigma ~ x, nl = T) + -->
+<!--   lf(bmx ~ 1) + -->
+<!--   lf(bint ~ 1 + (1|id)) -->
+<!-- priors <- get_prior(nlformula, days) %>%  -->
+<!--   mutate(prior = "normal(0,1)") -->
+<!-- (m1wb3 <- brm(nlformula -->
+<!--   , data = days, prior = priors)) -->
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- (m1wb <- brm(bf(y ~ x + (1|id), -->
+<!--              sigma ~ x), data = days)) -->
+
+<!-- (m1wb <- brm(bf(y | cens(ycens) ~ x + (1|id), -->
+<!--              sigma ~ x), data = days, -->
+<!--              inits = 0)) -->
+
+<!-- (m3wb <- brm(bf(y | cens(ycens) ~ x + (1|id), -->
+<!--              sigma ~ x + meany), data = days, -->
+<!--              inits = 0)) -->
+<!-- ``` -->
+
+
+<!-- ## Fancy attempt at abusing gr(cov) to do my bidding -->
+<!-- (i.e. to model between-subject SD going up as a function of x) -->
+<!-- ```{r} -->
+<!-- meanx <- days %>% group_by(id) %>% summarise(x = mean(x)) %>% as.data.frame() -->
+
+<!-- sim_mat <- matrix(0, nrow = nrow(meanx), ncol = nrow(meanx)) -->
+
+<!-- # calculate similarity matrix -->
+<!-- for(i in 1:nrow(meanx)) { -->
+<!--   for(j in 1:nrow(meanx)) { -->
+<!--     sim_mat[i,j] <- 1/abs(meanx[i,"x"] - meanx[j,"x"]) # similarity measure -->
+<!--   } -->
+<!-- } -->
+
+<!-- # calculate similarity matrix -->
+<!-- sigma <- 1 # scaling parameter -->
+<!-- sim_mat <- 1-exp(-sim_mat^2/(2*sigma^2)) -->
+<!-- # diag(sim_mat) <- 0.001 -->
+<!-- # set rownames to IDs -->
+<!-- rownames(sim_mat) <- meanx$id -->
+<!-- colnames(sim_mat) <- meanx$id -->
+
+<!-- # print similarity matrix -->
+<!-- # sim_mat -->
+<!-- diag(sim_mat) <- 1e-10 -->
+
+<!-- eigen_values <- eigen(sim_mat, symmetric = TRUE)$values -->
+<!-- min_eig_value <- min(eigen_values) -->
+<!-- if(min_eig_value < 0) { -->
+<!--   sim_mat <- sim_mat - min_eig_value*diag(ncol(sim_mat)) -->
+<!-- } -->
+
+<!-- days$id2 <- days$id -->
+<!-- (m3wb <- brm(bf(y ~ x + (1|id2) + (1|gr(id, cov = sim_mat)), -->
+<!--              sigma ~ x ), data = days, data2 = list(sim_mat = sim_mat), -->
+<!--              control = list(adapt_delta = 0.99), -->
+<!--              init = 0)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- nona <- days %>% select(id, x, y) %>% drop_na() %>% as.data.frame() -->
+<!-- fit <- lmmelsm(list(observed ~ y, -->
+<!--                     location ~ x, -->
+<!--                     scale ~ x, -->
+<!--                     between ~ x), -->
+<!--                id, nona) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+
+<!-- ``` -->
+
