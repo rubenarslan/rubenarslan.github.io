@@ -1,0 +1,141 @@
+
+```{r}
+N <- 150
+n_days = 51
+set.seed(20191005)
+people <- tibble(
+  id = 1:N,
+  x = rnorm(N)) 
+people <- people %>% 
+mutate(
+  mean_y = rnorm(N) + x,
+  log_sd_y = -.5 + 0.8 * x
+)
+n_days_per_person = rpois(N, n_days)
+```
+
+
+```{r}
+people <- people %>% 
+  mutate(
+    mean_log_sd_y = -0.5 + b_sd_bs * x,
+    log_sd_y = 0 + b_sd_ws * x,
+    mean_y = rnorm(N, sd = exp(mean_log_sd_y)) + b_mean * x,
+    xQ = ntile(x, 4)
+    )
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              latent_y = rnorm(n(), 
+                        mean = mean_y,
+                        sd = exp(log_sd_y)),
+              y = case_when(
+                latent_y >= y_ceiling ~ 1.5,
+                # latent_y <= -1.5 ~ -1.5,
+                TRUE ~ latent_y
+              ),
+              ycens = case_when(
+                latent_y >= y_ceiling ~ "right",
+                # latent_y <= -1.5 ~ "left",
+                TRUE ~ "none"
+              )
+            )
+```
+
+
+```{r, fig.cap="Raw data"}
+ggplot(days, aes(x, y)) +
+  geom_point(alpha = 0.3)
+```
+
+
+```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
+
+ggplot(days, aes(x, y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_pointrange(stat = "summary", 
+                  fun = mean, 
+                  fun.min = function(x) { mean(x)-sd(x) },
+                  fun.max = function(x) { mean(x)+sd(x) }, data = days %>% filter(id %in% sel_ids) ) +
+  geom_point(alpha = 0.3, data = days %>% filter(id %in% sel_ids) )
+```
+
+
+
+```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+library(cowplot)
+p1 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            mean_y = mean(y, na.rm = T)) %>% 
+  ggplot(., aes(x, mean_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point()
+
+p2 <- days %>% 
+  group_by(id) %>% 
+  summarise(x = mean(x, na.rm = T),
+            sd_y = sd(y, na.rm = T)) %>% 
+  ggplot(., aes(x, sd_y)) +
+  geom_smooth(method = 'lm', color = "gray", se = F) + 
+  geom_point() + 
+  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
+
+plot_grid(p1,p2)
+```
+
+
+### Bias?
+```{r message=F, results = F}
+m_mixed <- brm(bf(y | cens(ycens) ~ x + (1|id),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+m_between <- brm(bf(y | cens(ycens) ~ x,
+             sigma ~ x), data = days %>% group_by(x, id) %>% 
+               summarise(y = mean(y)) %>% 
+               mutate(ycens = case_when(
+                y >= y_ceiling ~ "right",
+                # latent_y <= -1.5 ~ -1.5,
+                TRUE ~ "none"
+              )), silent = 2, refresh = 0)
+m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
+             sigma ~ x), data = days, silent = 2, refresh = 0)
+```
+
+
+
+```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+draws <- bind_rows(
+  m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
+ .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+draws <- draws %>% group_by(model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(1, 1, 1, 0.8, 0.8, 0.8))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable) +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+
+```{r}
+draws <- m_mixed_2part %>% gather_draws(`sd_.*x.*`, regex = T)
+hdis <- draws %>% mean_hdci(.width = .95) %>% 
+  mutate(xQ = as.numeric(str_match(.variable, "xQ(\\d)")[,2])) %>% 
+  left_join(people %>% group_by(xQ) %>% summarise(x = mean(x)))
+ggplot(hdis, aes(x, .value, 
+                 ymin = .lower, ymax = .upper)) +
+  geom_pointrange() + 
+  geom_line() + 
+  ylab("sd(id)")
+lm(.value ~ x, hdis, weights = 1/(.upper-.lower))
+```
