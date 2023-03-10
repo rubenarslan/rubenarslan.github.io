@@ -18,6 +18,9 @@ output:
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 ```
 
+
+Recently, I got mad at a ceiling.
+
 ```{r}
 library(tidyverse)
 library(brms)
@@ -29,15 +32,12 @@ options(mc.cores = parallel::detectCores(),
 theme_set(theme_bw())
 ```
 
-Recently, I got mad at a ceiling.
-
-
-```{r}
+```{r, echo=FALSE}
 library(tweetrmd)
 tweet_embed("https://twitter.com/rubenarslan/status/1632170569448685569")
 ```
 
-Let me explain. [Kahneman & Deaton (2010)](https://pnas.org/doi/full/10.1073/pnas.1011492107) reported that happiness plateaued at an income of $75,000 or higher. Their measure of happiness was a binary question that a 1000 people answered ~450 times each over the course of a year. [Killingsworth 2021](https://pnas.org/doi/full/10.1073/pnas.2016976118) used his experience sampling data from more than 35,000 individuals responding ~50 times to refute this. The Killingsworth study had a better happiness measure, a sliding scale from very unhappy to very happy. He found a loglinear relationship across the entire income range^[so, a doubling of income is associated with same happiness increment throughout the income range]. He attributed Kahneman & Deaton's (2010) plateau finding to a ceiling effect in their measure. 
+Let me explain. [Kahneman & Deaton (2010)](https://pnas.org/doi/full/10.1073/pnas.1011492107) reported that happiness plateaued at an income of $75,000 or higher. Their measure of happiness was a binary question that 1,000 people answered ~450 times each over the course of a year. [Killingsworth 2021](https://pnas.org/doi/full/10.1073/pnas.2016976118) used his experience sampling data from more than 35,000 individuals responding ~50 times to refute this. The Killingsworth study had a better happiness measure, a sliding scale from very unhappy to very happy. He found a loglinear relationship across the entire income range^[so, a doubling of income is associated with same happiness increment throughout the income range]. He attributed Kahneman & Deaton's (2010) plateau finding to a ceiling effect in their measure. 
 
 Now, in a recent paper, [Killingsworth, Kahneman, and Meller (2023)](https://www.pnas.org/doi/10.1073/pnas.2208661120) re-analyzed Killingsworth's (2021) experience sampling data to determine the relationship between income and experienced well-being, happiness. In the reanalysis, KKM wanted to find out why the results differed in an "adversarial collaboration". 
 
@@ -65,29 +65,29 @@ I was less sure whether #2 has much impact with 51 days per subject on average.
 - Even with on average 51 days per subject and homogeneous within-subject variance, sampling error in the mean attenuates the relationship between `x` and `sd(y)` on the between-subject level. Especially at low levels of x, sampling error can still dominate the true `sd(id)` in `y`.
 
 ```{r fig.cap="Compare the scatter of y around the regression line at the top left and the bottom left to see how sampling error creates a slight bias when estimating the effect on sd(y) on the between-subject level. From the second simulation below."}
-knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0__rmdpartial-28-1.png")
+knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0__means-22-1.png")
 ```
 
 ```{r fig.cap="A between-subject effect on the log(sd) of .8 reduces to .65 because of sampling variance in aggregated means."}
-knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0__rmdpartial-30-1.png")
+knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0__bias-24-1.png")
 ```
 
 
 - Heterogeneous within-subject variance can bias the estimate of the between-subject variance (i.e., what is really a strong tendency for an increased within-subject variance at higher `x` is mistaken for a weak tendency for an increase in between-subject variance at higher `x`).
 
 ```{r fig.cap="A within-subject effect on the log(sd) of .8 shows up as a .2 effect on the between-subject level."}
-knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_WS_0_8_rmdpartial-16-1.png")
+knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_WS_0_8__bias-1.png")
 ```
 
 - Censoring increases bias. When values above or below a certain cutoff (e.g., the maximum value of the scale is 100) get clipped, the bias in the aggregated between-subject model is exacerbated. Why? The aggregation is done without regard to censoring. So, a person with `c(94, 95, 96, 95)` gets 95, just like a person with `c(90, 100, 100, 90)`. But if we model censoring at the within-subject level, we would estimate a higher true value for the second person (my 2-part model correctly recovers the true value). Killingsworth 2021 reports only 5.5% of responses at ceiling and the relationship with the mean is quite weak, so this probably did not hit hard. Still, aggregating loses relevant information (after aggregation "less than 0.5% of people in any income group had experienced well-being equal to the response ceiling, on average").
 
 
 ```{r fig.cap="The true between-subject effect on the log(sd) is underestimated more (~.55 with censoring vs. .65 without censoring vis a vis a true value of .8), even though just 10% of values are right-censored."}
-knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0_2_rmdpartial-48-1.png")
+knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0_2_bias-24-1.png")
 ```
 
 ```{r fig.cap="The between-subject effect on the log(sd) is overestimated  more (~.3 censored vs. .16 non-censored vis a vis a true value of 0) in the censored within-subject model, even though just 12% of values are censored."}
-knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_WS_0_8_2_rmdpartial-39-1.png")
+knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_WS_0_8_2_bias-1.png")
 ```
 
 <!-- - Not a concern for KKM, but for one of my projects: at 51 days per person, there's minimal bias from between-subject to within-subject (i.e. mistaking a between-subject increase in scale for a within-subject increase in scale). At smaller ns this can happen, but it's not much. The bias occurs because the means are estimated to lie on a normal distribution with a constant standard deviation across `x`. -->
@@ -97,18 +97,18 @@ __Technical note:__ There are Mplus (McNeish, 2020) and R-Stan ([Martin, 2022](h
 
 
 ```{r fig.cap="Regressing x on the estimated sd(y) for the quantiles in my two-part model recovers the true between-subject effect even in the censored model."}
-knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0_2_rmdpartial-49-1.png")
+knitr::include_graphics("multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0_2_betweensds-25-1.png")
 ```
 
 You can find my simulations (well, one round) below.
 
 ## Lessons learned
-In German, we of course have a word for this: Verschlimmbesserung.^[My dictionary says "disimprovement". Is that actually in use?] Killingsworth 2021 was a wonderful paper. I think this quantile analysis and adversarial collaboration actually muddled the matter. How come?
+Killingsworth 2021 was a wonderful paper. I think this quantile analysis and adversarial collaboration actually muddled the matter. In German, we of course have a word for this: Verschlimmbesserung.^[My dictionary says "disimprovement". Is that actually in use?] How come?
 
 I have an idea. Adversarial collaborations don't just sound like an oxymoron. Especially with large status differences between adversaries, the interesting stuff happens behind the scenes. Without transparency, power, resources, and stubbornness can win over superior arguments.^[Am I projecting based on my own attempt at adversarial collaboration? Absolutely! Thanks for asking, I'm okay!] I think such disputes should be carried out in the open. And if you want to share data with someone you consider an adversary, may I suggest the following as insurance:
 
 
-```{r}
+```{r,echo=FALSE}
 library(tweetrmd)
 tweet_embed("https://twitter.com/rubenarslan/status/1631789472407859200")
 ```
@@ -133,7 +133,8 @@ fit_models <- function(b_mean,  b_sd_bs, b_sd_ws, y_ceiling) {
 ```
 
 ```{r}
-fit_models(b_mean = 1,  b_sd_bs = 0, b_sd_ws = 0.8, y_ceiling = Inf)
+fit_models(
+  b_mean = 1,  b_sd_bs = 0, b_sd_ws = 0.8, y_ceiling = Inf)
 ```
 
 
@@ -142,7 +143,8 @@ Here, mu(y) is a function of x, as is sigma(y) at the between-subject level.
 
 
 ```{r}
-fit_models(b_mean = 1,  b_sd_bs = 0.8, b_sd_ws = 0, y_ceiling = Inf)
+fit_models(
+  b_mean = 1,  b_sd_bs = 0.8, b_sd_ws = 0, y_ceiling = Inf)
 ```
 
 

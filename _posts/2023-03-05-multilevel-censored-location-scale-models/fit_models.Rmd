@@ -41,13 +41,13 @@ days <- people %>%
 
 Percentage censored: `r sprintf("%.2f", sum(days$ycens=="right")/nrow(days))`
 
-```{r, fig.cap="Raw data"}
+```{r,raw,fig.cap="Raw data"}
 ggplot(days, aes(x, y)) +
   geom_point(alpha = 0.3)
 ```
 
 
-```{r, fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
+```{r,selected,fig.cap="Selected individuals with their means, standard deviations, and the regression line"}
 sel_ids <- c(43, 36, 8, 40, 88, 29, 11, 49, 84, 41, 98)
 
 ggplot(days, aes(x, y)) +
@@ -61,7 +61,7 @@ ggplot(days, aes(x, y)) +
 
 
 
-```{r, fig.cap="The mean and the intraindividual SD as a function of X"}
+```{r,means,fig.cap="The mean and the intraindividual SD as a function of X"}
 library(cowplot)
 p1 <- days %>% 
   group_by(id) %>% 
@@ -90,7 +90,7 @@ plot_grid(p1,p2,p3,ncol = 2)
 
 
 #### Bias?
-```{r message=F, results = F}
+```{r,models,message=F, results = F}
 m_mixed <- brm(bf(y | cens(ycens) ~ x + (1|id),
              sigma ~ x), data = days, silent = 2, refresh = 0)
 m_between <- brm(bf(y | cens(ycens) ~ x,
@@ -102,17 +102,20 @@ m_between <- brm(bf(y | cens(ycens) ~ x,
               )), silent = 2, refresh = 0)
 m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
              sigma ~ x), data = days, silent = 2, refresh = 0)
-m_2part_level2 <- brm(log(.value) | se(se, sigma = FALSE) ~ x, data = hdis %>% mutate(se = (log(.value)-log(.lower))/2))
+draws <- m_mixed_2part %>% gather_draws(`sd_.*x.*`, regex = T)
+betweenhdis <- draws %>% mean_hdci(.width = .95) %>% 
+  mutate(xQ = as.numeric(str_match(.variable, "xQ(\\d)")[,2])) %>% 
+  left_join(people %>% group_by(xQ) %>% summarise(x = mean(x)))
+m_2part_level2 <- brm(log(.value) | se(se, sigma = FALSE) ~ x, data = betweenhdis %>% mutate(se = (log(.value)-log(.lower))/2))
 ```
 
 
 
-```{r, fig.cap="Estimated coefficients and the true values (dashed line)"}
+```{r,bias,fig.cap="Estimated coefficients and the true values (dashed line)"}
 draws <- bind_rows(
   m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
   m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
   m_2part_between = m_2part_level2 %>% gather_draws(`b_(sigma_)?x`, regex = T) %>% mutate(.variable = "b_sigma_x"),
- .id = "model",
   m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
  .id = "model") %>% 
   mutate(model = fct_inorder(factor(model)))
@@ -124,7 +127,7 @@ ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
   geom_pointinterval(position = position_dodge(width = .4)) +
   ggrepel::geom_text_repel(aes(label = if_else(.width == .95, sprintf("%.2f", .value), NA_character_)), nudge_y = .1) +
   geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
-             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part", "m_2part_level2"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(b_mean, b_mean, b_mean, b_sd_bs, b_sd_ws, b_sd_ws, b_sd_ws))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part", "m_2part_between"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(b_mean, b_mean, b_mean, b_sd_bs, b_sd_ws, b_sd_ws, b_sd_bs))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
   facet_grid(model ~ .variable) +
   theme_bw() +
   theme(legend.position = c(0.99,0.99),
@@ -132,12 +135,9 @@ ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
 ```
 
 
-```{r fig.cap="Relationship between x and sd(id) in the two-part model"}
-draws <- m_mixed_2part %>% gather_draws(`sd_.*x.*`, regex = T)
-hdis <- draws %>% mean_hdci(.width = .95) %>% 
-  mutate(xQ = as.numeric(str_match(.variable, "xQ(\\d)")[,2])) %>% 
-  left_join(people %>% group_by(xQ) %>% summarise(x = mean(x)))
-ggplot(hdis, aes(x, .value, 
+```{r,betweensds,fig.cap="Relationship between x and sd(id) in the two-part model"}
+
+ggplot(betweenhdis, aes(x, .value, 
                  ymin = .lower, ymax = .upper)) +
   geom_pointrange() + 
   geom_line() + 
