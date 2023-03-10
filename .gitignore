@@ -3,3 +3,9 @@
 .RData
 .Ruserdata
 .Rprofile
+*.rds
+*.rdx
+*.Rdata
+*.rdb
+*___packages
+*_cache/
