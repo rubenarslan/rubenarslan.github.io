@@ -16,7 +16,7 @@ people <- people %>%
     mean_log_sd_y = -1 + b_sd_bs * x,
     log_sd_y = 0 + b_sd_ws * x,
     mean_y = rnorm(N, sd = exp(mean_log_sd_y)) + b_mean * x,
-    xQ = ntile(x, 4)
+    xQ = ntile(x, 6)
     )
 days <- people %>% 
   full_join(tibble(
@@ -39,6 +39,7 @@ days <- people %>%
             )
 ```
 
+Percentage censored: `r sprintf("%.2f", sum(days$ycens=="right")/nrow(days))`
 
 ```{r, fig.cap="Raw data"}
 ggplot(days, aes(x, y)) +
@@ -101,6 +102,7 @@ m_between <- brm(bf(y | cens(ycens) ~ x,
               )), silent = 2, refresh = 0)
 m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
              sigma ~ x), data = days, silent = 2, refresh = 0)
+m_2part_level2 <- brm(log(.value) | se(se, sigma = FALSE) ~ x, data = hdis %>% mutate(se = (log(.value)-log(.lower))/2))
 ```
 
 
@@ -109,16 +111,20 @@ m_mixed_2part <- brm(bf(y | cens(ycens) ~ x + (1|gr(id, by = xQ)),
 draws <- bind_rows(
   m_mixed = m_mixed %>% gather_draws(`b_(sigma_)?x`, regex = T),
   m_mixed_2part = m_mixed_2part %>% gather_draws(`b_(sigma_)?x`, regex = T),
+  m_2part_between = m_2part_level2 %>% gather_draws(`b_(sigma_)?x`, regex = T) %>% mutate(.variable = "b_sigma_x"),
+ .id = "model",
   m_between = m_between %>% gather_draws(`b_(sigma_)?x`, regex = T),
- .id = "model") %>%   mutate(model = fct_inorder(factor(model)))
+ .id = "model") %>% 
+  mutate(model = fct_inorder(factor(model)))
 draws <- draws %>% group_by(model, .variable) %>% 
   mean_hdci(.width = c(.95, .99)) %>% 
   ungroup()
 
 ggplot(draws, aes(y = .variable, x = .value, xmin = .lower, xmax = .upper)) +
   geom_pointinterval(position = position_dodge(width = .4)) +
+  ggrepel::geom_text_repel(aes(label = if_else(.width == .95, sprintf("%.2f", .value), NA_character_)), nudge_y = .1) +
   geom_vline(aes(xintercept = true_value), linetype = 'dashed', 
-             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(b_mean, b_mean, b_mean, b_sd_bs, b_sd_ws, b_sd_ws))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+             data = tibble(model = c("m_between", "m_mixed", "m_mixed_2part", "m_between", "m_mixed", "m_mixed_2part", "m_2part_level2"), .variable = c("b_x", "b_x", "b_x", "b_sigma_x", "b_sigma_x", "b_sigma_x", "b_sigma_x"), true_value = c(b_mean, b_mean, b_mean, b_sd_bs, b_sd_ws, b_sd_ws, b_sd_ws))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
   facet_grid(model ~ .variable) +
   theme_bw() +
   theme(legend.position = c(0.99,0.99),
@@ -136,14 +142,8 @@ ggplot(hdis, aes(x, .value,
   geom_pointrange() + 
   geom_line() + 
   ylab("sd(id)") +
-  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4))
-
+  scale_y_continuous(trans = "log", breaks = c(0.1, 0.25, 0.5, 1, 2, 4)) +
+  theme_bw()
 ```
 
-
-Does a regression of `x` on `log(sd(id))` recover the true value `r b_sd_bs`?
-
-```{r}
-brm(log(.value) | se(se, sigma = FALSE) ~ x, data = hdis %>% mutate(se = (log(.value)-log(.lower))/2))
-```
 
