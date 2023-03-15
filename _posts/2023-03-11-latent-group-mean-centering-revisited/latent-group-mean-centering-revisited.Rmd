@@ -22,9 +22,20 @@ output:
 knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, results = "hide")
 ```
 
-In a recent [lecture](https://youtu.be/iwVqiiXYeC4?t=3299), [Richard McElreath](https://twitter.com/rlmcelreath) gives an introduction to Mundlak devices ([code](https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r)). Briefly, social scientists would often like to remove confounding at the group level.^[the group here can be an individual measured several times, a sibling group, a school, a nation, etc.] Econometricians and epidemiologists tend to use fixed effects regression for this. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. These two solutions yield similar results. [Arguably](https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31), there are more ways to mess up the random effects model, but it's more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.
+In a recent [lecture](https://youtu.be/iwVqiiXYeC4?t=3299), [Richard McElreath](https://twitter.com/rlmcelreath) gives an introduction to Mundlak devices ([code](https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r)). Briefly, social scientists would often like to remove confounding at the group level.^[the group here can be an individual measured several times, a sibling group, a school, a nation, etc.] 
 
-One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you'd like to adjust for. A solution to this is to adjust for the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so^[What McElreath calls Full Luxury Bayes: Latent Mundlak machine] is fairly easy in Stan, but it's less clear how to do it with everyone's favourite Stan interface, brms. [Matti Vuorre](https://twitter.com/vuorre) shared [a solution](https://vuorre.netlify.app/posts/latent-mean-centering/#brms) using brms' non-linear syntax, but I tried it and it doesn't correctly recover simulated effects.^[I think the "problem" is that in the data he used, from McNeish & Hamaker 2020, the group mean varies very little except for measurement error.].
+Econometricians and epidemiologists tend to use fixed effects regression to do so. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. The two solutions yield similar results.
+
+[Arguably](https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31), there are more ways to mess up the random effects model, but it's more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.
+
+One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you'd like to adjust for. A solution to this is to adjust for the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so^[What McElreath calls Full Luxury Bayes: Latent Mundlak machine] is fairly easy in Stan, but it's less clear how to do it with everyone's favourite Stan interface, brms. [Matti Vuorre](https://twitter.com/vuorre) shared [a solution](https://vuorre.netlify.app/posts/latent-mean-centering/#brms) using brms' non-linear syntax, but I tried it and it doesn't correctly recover simulated effects.^[I think the "problem" is that in the data he used, from McNeish & Hamaker 2020, the group mean varies very little except for measurement error.]
+
+<aside>
+```{r, results='markup'}
+knitr::include_graphics("mundlak.jpg")
+```
+[Yair Mundlak](https://en.wikipedia.org/wiki/Yair_Mundlak)^[Mundlak, Y. 1978: On the pooling of time series and cross section data. Econometrica 46:69-85.] in his Full Luxury Bayes outfit, courtesy of DALL-E.
+</aside>
 
 My attempt at a solution:
 
@@ -33,13 +44,16 @@ My attempt at a solution:
 3. Using the `X2 | mi(Xse)` syntax in brms to estimate the latent group mean with shrinkage. 
 4. Adjusting for `mi(X2)` in the regression on `Y`.
 
-This seems to work, but it's a little hacky. I also see no straightforward way to implement within-group centering.
+## How did it go? <small style="font-size:0.7em;color:gray">High-level summary</small>
 
-## How did it go? <br><small>High-level summary</small>
+My solution seems to work, but it's a little hacky. I also see no straightforward way to implement within-group centering without an explicit adjustment for the latent group mean.
+
+
 - My original plan, using the `me()` syntax did not work consistently, perhaps because there's no shrinkage for the group means.
 - My approach does not work for a non-Gaussian exposure `X`, because `mi()` is not implemented for e.g. binary variables.
-- I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for `b_X`. It does improve estimates for `b_Xbar` (i.e. the group-level confound), but that's not really what we're going for here. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). Am I missing something in my simulations or is latent Mundlak rarely worth the effort? I'd be glad for any pointers.
+- I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for `b_X`. It improves estimates for `b_Xbar` (i.e. the group-level confound), so it's doing what it's supposed to, but that's not really what we're going for here. `b_X` is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). __Am I missing something in my simulations or is latent group mean centering rarely worth the effort?__ I'd be glad for any pointers.
 
+The simulations and their results are documented in detail below. Click on the "Implementations" to see the model code.
 
 ## Bernoulli simulations
 I started with Richard's simulations of a binary outcome. I was not able to reproduce his model performances exactly. Specifically, the latent Mundlak model does not outperform the non-latent Mundlak model by much, except if you care about `b_Xbar` (i.e. the group-level confound).

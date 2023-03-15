@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["latent-group-mean-centering-revisited_files/figure-html5/biasb-1.png","latent-group-mean-centering-revisited_files/figure-html5/biasg-1.png","latent-group-mean-centering-revisited_files/figure-html5/biasgb-1.png","latent-group-mean-centering-revisited_files/figure-html5/unnamed-chunk-21-1.png"]}
+  {"type":"character","attributes":{},"value":["latent-group-mean-centering-revisited_files/anchor-4.2.2/anchor.min.js","latent-group-mean-centering-revisited_files/bowser-1.9.3/bowser.min.js","latent-group-mean-centering-revisited_files/distill-2.2.21/template.v2.js","latent-group-mean-centering-revisited_files/figure-html5/biasb-1.png","latent-group-mean-centering-revisited_files/figure-html5/biasg-1.png","latent-group-mean-centering-revisited_files/figure-html5/biasgb-1.png","latent-group-mean-centering-revisited_files/figure-html5/unnamed-chunk-21-1.png","latent-group-mean-centering-revisited_files/figure-html5/unnamed-chunk-22-1.png","latent-group-mean-centering-revisited_files/header-attrs-2.17/header-attrs.js","latent-group-mean-centering-revisited_files/jquery-3.6.0/jquery-3.6.0.js","latent-group-mean-centering-revisited_files/jquery-3.6.0/jquery-3.6.0.min.js","latent-group-mean-centering-revisited_files/jquery-3.6.0/jquery-3.6.0.min.map","latent-group-mean-centering-revisited_files/popper-2.6.0/popper.min.js","latent-group-mean-centering-revisited_files/tippy-6.2.7/tippy-bundle.umd.min.js","latent-group-mean-centering-revisited_files/tippy-6.2.7/tippy-light-border.css","latent-group-mean-centering-revisited_files/tippy-6.2.7/tippy.css","latent-group-mean-centering-revisited_files/tippy-6.2.7/tippy.umd.min.js","latent-group-mean-centering-revisited_files/webcomponents-2.0.0/webcomponents.js","mundlak.jpg"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1528,6 +1528,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#how-did-it-go-high-level-summary" id="toc-how-did-it-go-high-level-summary">How did it go? <small style="font-size:0.7em;color:gray">High-level summary</small></a></li>
 <li><a href="#bernoulli-simulations" id="toc-bernoulli-simulations">Bernoulli simulations</a>
 <ul>
 <li><a href="#naive" id="toc-naive">Naive</a></li>
@@ -1559,8 +1560,24 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul>
 </nav>
 </div>
-<p>In a recent <a href="https://youtu.be/iwVqiiXYeC4?t=3299">lecture</a>, <a href="https://twitter.com/rlmcelreath">Richard McElreath</a> gives an introduction to Mundlak devices (<a href="https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r">code</a>). Briefly, social scientists would often like to remove confounding at the group level.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Econometricians and epidemiologists tend to use fixed effects regression for this. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. These two solutions yield similar results. <a href="https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31">Arguably</a>, there are more ways to mess up the random effects model, but it’s more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.</p>
-<p>One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you’d like to adjust for. A solution to this is to adjust for the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so is fairly easy in Stan, but it’s less clear how to do it with everyone’s favourite Stan interface, brms. <a href="https://twitter.com/vuorre">Matti Vuorre</a> shared <a href="https://vuorre.netlify.app/posts/latent-mean-centering/#brms">a solution</a> using brms’ non-linear syntax, but I tried it and it doesn’t correctly recover simulated effects.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>In a recent <a href="https://youtu.be/iwVqiiXYeC4?t=3299">lecture</a>, <a href="https://twitter.com/rlmcelreath">Richard McElreath</a> gives an introduction to Mundlak devices (<a href="https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r">code</a>). Briefly, social scientists would often like to remove confounding at the group level.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Econometricians and epidemiologists tend to use fixed effects regression to do so. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. The two solutions yield similar results.</p>
+<p><a href="https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31">Arguably</a>, there are more ways to mess up the random effects model, but it’s more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.</p>
+<p>One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you’d like to adjust for. A solution to this is to adjust for the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is fairly easy in Stan, but it’s less clear how to do it with everyone’s favourite Stan interface, brms. <a href="https://twitter.com/vuorre">Matti Vuorre</a> shared <a href="https://vuorre.netlify.app/posts/latent-mean-centering/#brms">a solution</a> using brms’ non-linear syntax, but I tried it and it doesn’t correctly recover simulated effects.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<aside>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_graphics.html'>include_graphics</a></span><span class='op'>(</span><span class='st'>"mundlak.jpg"</span><span class='op'>)</span></span></code></pre>
+</div>
+</details>
+<p><img src="mundlak.jpg" width="508" /></p>
+</div>
+<a href="https://en.wikipedia.org/wiki/Yair_Mundlak">Yair Mundlak</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> in his Full Luxury Bayes outfit, courtesy of DALL-E.
+</aside>
 <p>My attempt at a solution:</p>
 <ol type="1">
 <li>Duplicating the exposure <code>X-&gt;X2</code></li>
@@ -1568,12 +1585,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li>Using the <code>X2 | mi(Xse)</code> syntax in brms to estimate the latent group mean with shrinkage.</li>
 <li>Adjusting for <code>mi(X2)</code> in the regression on <code>Y</code>.</li>
 </ol>
-<p>This seems to work, but it’s a little hacky. I also see no straightforward way to implement within-group centering.</p>
+<h2 id="how-did-it-go-high-level-summary">How did it go? <small style="font-size:0.7em;color:gray">High-level summary</small></h2>
+<p>My solution seems to work, but it’s a little hacky. I also see no straightforward way to implement within-group centering without an explicit adjustment for the latent group mean.</p>
 <ul>
 <li>My original plan, using the <code>me()</code> syntax did not work consistently, perhaps because there’s no shrinkage for the group means.</li>
 <li>My approach does not work for a non-Gaussian exposure <code>X</code>, because <code>mi()</code> is not implemented for e.g. binary variables.</li>
-<li>I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for <code>b_X</code>. It does improve estimates for <code>b_Xbar</code> (i.e. the group-level confound), but that’s not really what we’re going for here. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). Am I missing something in my simulations or is latent Mundlak rarely worth the effort? I’d be glad for any pointers.</li>
+<li>I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for <code>b_X</code>. It improves estimates for <code>b_Xbar</code> (i.e. the group-level confound), so it’s doing what it’s supposed to, but that’s not really what we’re going for here. <code>b_X</code> is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). <strong>Am I missing something in my simulations or is latent group mean centering rarely worth the effort?</strong> I’d be glad for any pointers.</li>
 </ul>
+<p>The simulations and their results are documented in detail below. Click on the “Implementations” to see the model code.</p>
 <h2 id="bernoulli-simulations">Bernoulli simulations</h2>
 <p>I started with Richard’s simulations of a binary outcome. I was not able to reproduce his model performances exactly. Specifically, the latent Mundlak model does not outperform the non-latent Mundlak model by much, except if you care about <code>b_Xbar</code> (i.e. the group-level confound).</p>
 <p>Up to the latent Mundlak model, the brms equivalents, perform, well, equivalently. For the latent Mundlak model, the brms gets slightly different coefficients, but a similar overall result.</p>
@@ -1982,8 +2001,8 @@ Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup)
 Chain 3 Iteration:  500 / 2000 [ 25%]  (Warmup) 
 Chain 4 Iteration:  500 / 2000 [ 25%]  (Warmup) 
 Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
-Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
 Chain 4 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
 Chain 3 Iteration:  600 / 2000 [ 30%]  (Warmup) 
 Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
 Chain 4 Iteration:  700 / 2000 [ 35%]  (Warmup) 
@@ -1994,8 +2013,8 @@ Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup)
 Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
 Chain 3 Iteration:  800 / 2000 [ 40%]  (Warmup) 
 Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
-Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
 Chain 4 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+Chain 3 Iteration:  900 / 2000 [ 45%]  (Warmup) 
 Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
 Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
@@ -2020,8 +2039,8 @@ Chain 4 Iteration: 1200 / 2000 [ 60%]  (Sampling)
 Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
 Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
 Chain 3 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
-Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
 Chain 4 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
 Chain 3 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
 Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
 Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
@@ -2035,26 +2054,26 @@ Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling)
 Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
 Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 142.1 seconds.
+Chain 3 finished in 178.4 seconds.
 Chain 4 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
 Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
 Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
-Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 165.3 seconds.
+Chain 1 finished in 203.1 seconds.
 Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 171.8 seconds.
+Chain 2 finished in 210.1 seconds.
 Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 184.6 seconds.
+Chain 4 finished in 221.6 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 166.0 seconds.
-Total execution time: 184.7 seconds.</code></pre>
+Mean chain execution time: 203.3 seconds.
+Total execution time: 221.7 seconds.</code></pre>
 <details>
 <summary>
 Show code
@@ -2157,6 +2176,7 @@ Figure 1: Estimated coefficients and the true values (dashed line)
 </p>
 </div>
 </div>
+<p>For some reason, I did not manage to specify a uniform prior in rethinking. I think this explains the poor showing for the rethinking fixed effects model. Fixed effects regression + Bayes is not really a happy couple.</p>
 <h2 id="gaussian-simulations">Gaussian simulations</h2>
 <p>Then, I simulated a Gaussian outcome instead. I didn’t run the rethinking models here, except for the latent Mundlak model.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2347,7 +2367,7 @@ Show code
 <span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>sim</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Ug</span>, <span class='va'>Xbar</span>, ymin <span class='op'>=</span> <span class='va'>Xbar</span> <span class='op'>-</span> <span class='va'>Xse</span>, ymax <span class='op'>=</span> <span class='va'>Xbar</span> <span class='op'>+</span> <span class='va'>Xse</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_linerange.html'>geom_pointrange</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span></span></code></pre>
 </div>
 </details>
-<img src="latent-group-mean-centering-revisited_files/figure-html5/unnamed-chunk-21-1.png" width="624" />
+<img src="latent-group-mean-centering-revisited_files/figure-html5/unnamed-chunk-22-1.png" width="624" />
 <details>
 <summary>
 Show code
@@ -2755,7 +2775,9 @@ Figure 3: Estimated coefficients and the true values (dashed line)
 <hr />
 <ol>
 <li id="fn1"><p>the group here can be an individual measured several times, a sibling group, a school, a nation, etc.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>I think the “problem” is that in the data he used, from McNeish &amp; Hamaker 2020, the group mean varies very little except for measurement error.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>What McElreath calls Full Luxury Bayes: Latent Mundlak machine<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I think the “problem” is that in the data he used, from McNeish &amp; Hamaker 2020, the group mean varies very little except for measurement error.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Mundlak, Y. 1978: On the pooling of time series and cross section data. Econometrica 46:69-85.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
