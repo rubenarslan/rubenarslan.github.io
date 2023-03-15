@@ -1,0 +1,801 @@
+---
+title: "Latent group mean centering with brms"
+description: |
+ Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+date: 2023-03-15
+categories: 
+  - brms
+  - modelling
+  - quick job
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: true
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, results = "hide")
+```
+
+In a recent [lecture](https://youtu.be/iwVqiiXYeC4?t=3299), [Richard McElreath](https://twitter.com/rlmcelreath) gives an introduction to Mundlak devices ([code](https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r)). Briefly, social scientists would often like to remove confounding at the group level.^[the group here can be an individual measured several times, a sibling group, a school, a nation, etc.] Econometricians and epidemiologists tend to use fixed effects regression for this. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. These two solutions yield similar results. [Arguably](https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31), there are more ways to mess up the random effects model, but it's more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.
+
+One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you'd like to adjust for. A solution to this is to adjust for the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so^[What McElreath calls Full Luxury Bayes: Latent Mundlak machine] is fairly easy in Stan, but it's less clear how to do it with everyone's favourite Stan interface, brms. [Matti Vuorre](https://twitter.com/vuorre) shared [a solution](https://vuorre.netlify.app/posts/latent-mean-centering/#brms) using brms' non-linear syntax, but I tried it and it doesn't correctly recover simulated effects.^[I think the "problem" is that in the data he used, from McNeish & Hamaker 2020, the group mean varies very little except for measurement error.].
+
+My attempt at a solution:
+
+1. Duplicating the exposure `X->X2`
+2. Calculating the SE of the group mean outside the brms call
+3. Using the `X2 | mi(Xse)` syntax in brms to estimate the latent group mean with shrinkage. 
+4. Adjusting for `mi(X2)` in the regression on `Y`.
+
+This seems to work, but it's a little hacky. I also see no straightforward way to implement within-group centering.
+
+## How did it go? <br><small>High-level summary</small>
+- My original plan, using the `me()` syntax did not work consistently, perhaps because there's no shrinkage for the group means.
+- My approach does not work for a non-Gaussian exposure `X`, because `mi()` is not implemented for e.g. binary variables.
+- I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for `b_X`. It does improve estimates for `b_Xbar` (i.e. the group-level confound), but that's not really what we're going for here. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). Am I missing something in my simulations or is latent Mundlak rarely worth the effort? I'd be glad for any pointers.
+
+
+## Bernoulli simulations
+I started with Richard's simulations of a binary outcome. I was not able to reproduce his model performances exactly. Specifically, the latent Mundlak model does not outperform the non-latent Mundlak model by much, except if you care about `b_Xbar` (i.e. the group-level confound).
+
+Up to the latent Mundlak model, the brms equivalents, perform, well, equivalently. For the latent Mundlak model, the brms gets slightly different coefficients, but a similar overall result.
+
+```{r}
+library(tidyverse)
+library(rethinking)
+library(tidybayes)
+library(tidybayes.rethinking)
+library(brms)
+options(brms.backend = "cmdstanr",  # I use the cmdstanr backend
+        mc.cores = 8, 
+        brms.threads = 1,           # which allows me to multithread
+        brms.file_refit = "on_change") # this is useful when doing 
+
+set.seed(201910)
+
+# families
+N_groups <- 300
+a0 <- (-2)
+b_X <- (1)
+b_Z <- (-0.5)
+b_Ug <- (3)
+# 2 or more siblings
+g_sizes <- 2 + rpois(N_groups, lambda = 0.2) # sample into groups
+table(g_sizes)
+N_id <- sum(g_sizes)
+g <- rep(1:N_groups, times = g_sizes)
+Ug <- rnorm(N_groups, sd = 0.8) # group confounds
+X <- rnorm(N_id, Ug[g] ) # individual varying trait
+Z <- rnorm(N_groups) # group varying trait (observed)
+Y <- rbern(N_id, p=inv_logit( a0 + b_X * X + b_Ug*Ug[g] + b_Z*Z[g] ) )
+
+# glm(Y ~ X + Z[g] + Ug[g], binomial())
+# glm(Y ~ X + Z[g], binomial())
+groups <- tibble(id = factor(1:N_groups), Ug, Z)
+sim <- tibble(id = factor(g), X, Y) %>% full_join(groups, by = "id") %>% arrange(id) %>% group_by(id) %>% 
+  mutate(Xbar = mean(X)) %>% ungroup()
+sim %>% distinct(id, Ug, Xbar) %>% select(-id) %>% cor(use = "p")
+glm(Y ~ X + Z, data = sim, binomial(link = "logit"))
+glm(Y ~ Ug + X + Z, data = sim, binomial(link = "logit"))
+glm(Y ~ id + X + Z, data = sim, binomial(link = "logit"))
+
+sim <- sim %>% group_by(id) %>% 
+  mutate(Xse = sd(X)/sqrt(n())) %>% ungroup() %>% 
+  mutate(X2 = X)
+```
+
+<details><summary>Implementations of the various models</summary>
+
+### Naive
+
+#### rethinking
+```{r}
+dat <-  list(Y = Y, X = X, g = g, Ng = N_groups, Z = Z)
+mn <- ulam(
+    alist(
+        Y ~ bernoulli(p),
+        logit(p) <- a + b_X*X + b_Z*Z[g],
+        a ~ dnorm(0,2),
+        c(b_X,b_Z) ~ dnorm(0,1)
+    ) , data=dat , chains=4 , cores=4 )
+summary(mn)
+
+mn %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+#### brms
+```{r}
+b_mn <- brm(Y ~ X + Z, data = sim,
+            family = bernoulli(),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 2)", class = "Intercept")))
+b_mn
+
+b_mn %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+
+### Fixed effects
+
+#### rethinking
+```{r}
+dat <-  list(Y = Y, X = X, g = g, Ng = N_groups, Z = Z)
+# fixed effects
+mf <- ulam(alist(
+  Y ~ bernoulli(p),
+  logit(p) <- a[g] + b_X*X + b_Z*Z[g],
+  a[g] ~ dnorm(0,1.5), # can't get it to work using dunif(-1,1)
+  c(b_X,b_Z) ~ dnorm(0,1)
+), data=dat, chains = 4, cores=4 )
+summary(mf)
+
+mf %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+#### brms
+```{r}
+b_mf <- brm(Y ~ 1 + id + X + Z, data = sim,
+            family = bernoulli(),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z")
+              ,set_prior("uniform(-1, 1)",lb = -1, ub = 1, class = "b"))
+            # , sample_prior = "only"
+            )
+
+# b_mf %>% gather_draws(`b_id.*`, regex=T) %>% 
+#   ggplot(aes(inv_logit(.value))) + geom_histogram(binwidth = .01)
+b_mf %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+
+### Multilevel
+
+#### Rethinking
+```{r}
+# varying effects (non-centered - next week! )
+mr <- ulam(
+  alist(
+    Y ~ bernoulli(p),
+    logit(p) <- a[g] + b_X*X + b_Z*Z[g],
+    transpars > vector[Ng]:a <<- abar + z*tau,
+    z[g] ~ dnorm(0,1),
+    c(b_X,b_Z) ~ dnorm(0,1),
+    abar ~ dnorm(0,1),
+    tau ~ dexp(1)
+  ), data=dat , chains=4, cores=4, sample=TRUE)
+
+mr %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+#### brms
+```{r}
+b_mr <- brm(Y ~ (1|id) + X + Z, data = sim,
+            family = bernoulli(),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("exponential(1)", class = "sd")))
+b_mr
+
+b_mr %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+### Multilevel Mundlak
+```{r}
+# The Mundlak Machine
+xbar <- sapply(1:N_groups, function(j) mean (X[g==j]))
+dat$Xbar <- xbar
+mrx <- ulam(
+  alist(
+    Y ~ bernoulli(p),
+    logit (p) <- a[g] + b_X*X + b_Z*Z[g] + buy*Xbar[g],
+    transpars> vector[Ng]:a <<- abar + z*tau, 
+    z[g] ~ dnorm(0,1),
+    c(b_X, buy, b_Z) ~ dnorm(0,1),
+    abar ~ dnorm(0,1),
+    tau ~ dexp(1)
+  ),
+data=dat, chains=4, cores=4 ,
+sample=TRUE )
+
+mrx %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+#### brms
+```{r}
+b_mrx <- brm(Y ~ (1|id) + X + Z + Xbar, data = sim,
+            family = bernoulli(),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 1)", class = "b", coef = "Xbar"),
+              set_prior("exponential(1)", class = "sd")))
+b_mrx
+
+b_mrx %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+
+##### subtracting the group mean instead of adjusting for it
+```{r}
+b_mrc <- brm(Y ~ (1|id) + X + Z, data = sim %>% mutate(X = X - Xbar),
+            family = bernoulli(),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("exponential(1)", class = "sd")))
+b_mrc
+
+b_mrc %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+### Multilevel Latent Mundlak
+```{r}
+# The Latent Mundlak Machine
+mru <- ulam(
+  alist(
+    # y model 
+    Y ~ bernoulli(p),
+    logit(p) <- a[g] + b_X*X + b_Z*Z[g] + buy*u[g],
+    transpars> vector[Ng]:a <<- abar + z*tau,
+    # X model
+    X ~ normal(mu,sigma),
+    mu <- aX + bux*u[g],
+    vector[Ng]:u ~ normal (0,1),
+    
+    # priors
+    z[g] ~ dnorm(0,1),
+    c(aX, b_X, buy, b_Z) ~ dnorm(0, 1),
+    bux ~ dexp(1),
+    abar ~ dnorm (0,1),
+    tau ~ dexp(1),
+    sigma ~ dexp(1)
+  ),
+  data = dat, chains = 4, cores=4, sample=TRUE)
+
+mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+#### brms
+```{r}
+b_mru_mi <- brm(bf(Y ~ (1|id) + X + Z + mi(X2), family = bernoulli()) +
+             bf(X2 | mi(Xse) ~ (1|id), 
+                family = gaussian()), data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", coef = "miX2", resp = "Y"),
+              set_prior("exponential(1)", class = "sd", resp = "Y"),
+              set_prior("exponential(1)", class = "sd", resp = "X2"),
+              set_prior("exponential(1)", class = "sigma", resp = "X2")))
+b_mru_mi
+
+b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z) %>% mean_hdci()
+```
+
+
+
+
+
+### non-working implementation of Matti Vuorre's approach
+This is the approach Matti Vuorre posted on his blog, except that I rearranged to instead the slope of Xbar. This approach does not work at all, as far as I can tell.
+
+```{r, results="markup"}
+latent_formula <- bf(
+  # Y model
+  Y ~ interceptY  + bX*X + bXbar*Xbar + bZ*Z,
+  interceptY ~ 1 + (1 | id),
+  bX + bZ + bXbar ~ 1,
+
+  # Xbar model
+  nlf(X ~ Xbar),
+  Xbar ~ 1 + (1 | id),
+  nl = TRUE
+) #+
+#  bernoulli()
+
+get_prior(latent_formula, data = sim)
+
+b_mru_mv <- brm(latent_formula, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", nlpar = "bX"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "bZ"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "bXbar"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "Xbar"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "interceptY"),
+              set_prior("exponential(1)", class = "sd", nlpar = "interceptY"),
+              set_prior("exponential(1)", class = "sd", nlpar = "Xbar")))
+b_mru_mv
+```
+
+</details>
+
+### Summary
+```{r,biasb,fig.cap="Estimated coefficients and the true values (dashed line)", results='asis', fig.height=9}
+draws <- bind_rows(
+  rethinking_naive = mn %>% gather_draws(b_X, b_Z),
+  rethinking_fixed = mf %>% gather_draws(b_X, b_Z),
+  rethinking_multilevel = mr %>% gather_draws(b_X, b_Z),
+  rethinking_mundlak = mrx %>% gather_draws(b_X, b_Z, buy),
+  brms_naive = b_mn %>% gather_draws(b_X, b_Z),
+  brms_fixed = b_mf %>% gather_draws(b_X, b_Z),
+  brms_multilevel = b_mr %>% gather_draws(b_X, b_Z),
+  brms_mundlak = b_mrx %>% gather_draws(b_X, b_Z, b_Xbar),
+  brms_mundlak_centered = b_mrc %>% gather_draws(b_X, b_Z),
+  rethinking_latent_mundlak = mru %>% gather_draws(b_X, b_Z, buy),
+  brms_latent_mundlak = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
+ .id = "model") %>% 
+  separate(model, c("package", "model"), extra = "merge") %>% 
+  mutate(model = fct_inorder(factor(model)),
+         .variable = str_replace(.variable, "_Y", ""),
+         .variable = recode(.variable, 
+                            "buy" = "b_Xbar",
+                            "bsp_miX2" = "b_Xbar"),
+         .variable = factor(.variable, levels = c("b_X", "b_Z", "b_Xbar")))
+
+draws <- draws %>% group_by(package, model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = package, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  ggrepel::geom_text_repel(aes(label = if_else(.width == .95, sprintf("%.2f", .value), NA_character_)), nudge_y = .1) +
+  geom_vline(aes(xintercept = true_val), linetype = 'dashed', data = tibble(true_val = c(b_X, b_Z, b_Ug - b_X), .variable = factor(c("b_X", "b_Z", "b_Xbar"), levels = c("b_X", "b_Z", "b_Xbar")))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable, scales = "free_x") +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+For some reason, I did not manage to specify a uniform prior in rethinking. I think this explains the poor showing for the rethinking fixed effects model. Fixed effects regression + Bayes is not really a happy couple.
+
+## Gaussian simulations
+Then, I simulated a Gaussian outcome instead. I didn't run the rethinking models here, except for the latent Mundlak model.
+
+```{r}
+set.seed(201910)
+# families
+N_groups <- 300
+a0 <- (-2)
+b_X <- (1)
+b_Z <- (-0.5)
+b_Ug <- (3)
+# 2 or more siblings
+g_sizes <- 2 + rpois(N_groups, lambda = 0.2) # sample into groups
+table(g_sizes)
+N_id <- sum(g_sizes)
+g <- rep(1:N_groups, times = g_sizes)
+Ug <- rnorm(N_groups, sd = 0.8) # group confounds
+X <- rnorm(N_id, Ug[g] ) # individual varying trait
+Z <- rnorm(N_groups) # group varying trait (observed)
+Y <- a0 + b_X * X + b_Ug*Ug[g] + b_Z*Z[g] + rnorm(N_id)
+
+groups <- tibble(id = factor(1:N_groups), Ug, Z)
+sim <- tibble(id = factor(g), X, Y) %>% full_join(groups, by = "id") %>% arrange(id) %>% group_by(id) %>% 
+  mutate(Xbar = mean(X)) %>% ungroup()
+sim %>% distinct(id, Ug, Xbar) %>% select(-id) %>% cor(use = "p")
+lm(Y ~ X + Z, data = sim)
+lm(Y ~ Ug + X + Z, data = sim)
+lm(Y ~ id + X + Z, data = sim)
+
+sim <- sim %>% group_by(id) %>% 
+  mutate(Xse = sd(X)/sqrt(n())) %>% ungroup() %>% 
+  mutate(X2 = X)
+```
+
+<details><summary>Implementations of the various models</summary>
+
+### Naive
+
+#### brms
+```{r}
+b_mn <- brm(Y ~ X + Z, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 2)", class = "Intercept")))
+b_mn
+
+b_mn %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+
+### Fixed effects
+
+#### brms
+```{r}
+b_mf <- brm(Y ~ 1 + id + X + Z, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 2)", class = "b"))
+            # , sample_prior = "only"
+            )
+
+# b_mf %>% gather_draws(`b_id.*`, regex=T) %>% 
+#   ggplot(aes(inv_logit(.value))) + geom_histogram(binwidth = .01)
+b_mf %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+
+### Multilevel
+
+#### brms
+```{r}
+b_mr <- brm(Y ~ (1|id) + X + Z, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("exponential(1)", class = "sd")))
+b_mr
+
+b_mr %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+### Multilevel Mundlak
+
+#### brms
+```{r}
+b_mrx <- brm(Y ~ (1|id) + X + Z + Xbar, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 1)", class = "b", coef = "Xbar"),
+              set_prior("exponential(1)", class = "sd")))
+b_mrx
+
+b_mrx %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+##### subtracting the group mean instead of adjusting for it
+```{r}
+b_mrc <- brm(Y ~ (1|id) + X + Z, data = sim %>% mutate(X = X - Xbar),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("exponential(1)", class = "sd")))
+b_mrc
+
+b_mrc %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+### Multilevel Latent Mundlak
+
+#### rethinking
+```{r}
+dat <-  list(Y = Y, X = X, g = g, Ng = N_groups, Z = Z)
+# The Latent Mundlak Machine
+mru <- ulam(
+  alist(
+    # y model 
+    Y ~ normal(muY, sigmaY),
+    muY <- a[g] + b_X*X + b_Z*Z[g] + buy*u[g],
+    transpars> vector[Ng]:a <<- abar + z*tau,
+    # X model
+    X ~ normal(mu,sigma),
+    mu <- aX + bux*u[g],
+    vector[Ng]:u ~ normal (0,1),
+    
+    # priors
+    z[g] ~ dnorm(0,1),
+    c(aX, b_X, buy, b_Z) ~ dnorm(0, 1),
+    bux ~ dexp(1),
+    abar ~ dnorm (0,1),
+    tau ~ dexp(1),
+    c(sigma, sigmaY) ~ dexp(1)
+  ),iter = 2000,
+  data = dat, chains = 4, cores=4, sample=TRUE)
+
+mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+#### brms
+
+##### brms me() measurement error notation
+
+```{r}
+sim <- sim %>% group_by(id) %>% 
+  mutate(Xse = sd(X)/sqrt(n())) %>% ungroup()
+
+ggplot(sim, aes(Ug, Xbar, ymin = Xbar - Xse, ymax = Xbar + Xse)) + geom_pointrange(alpha = 0.2)
+
+b_mru <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse), data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 1)", class = "b", coef = "meXbarXse"),
+              set_prior("exponential(1)", class = "sd"),
+              set_prior("exponential(1)", class = "sdme")))
+```
+
+
+```{r,results='markup'}
+b_mru
+```
+
+##### brms mi() missingness notation
+```{r}
+b_mru_mi <- brm(bf(Y ~ (1|id) + X + Z + mi(X2)) +
+             bf(X2 | mi(Xse) ~ (1|id), family = gaussian()), data = sim %>% mutate(X2 = X),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", coef = "miX2", resp = "Y"),
+              set_prior("exponential(1)", class = "sd", resp = "Y"),
+              set_prior("exponential(1)", class = "sd", resp = "X2"),
+              set_prior("exponential(1)", class = "sigma", resp = "X2")))
+b_mru_mi
+
+b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z) %>% mean_hdci()
+```
+
+##### working implementation of the mi model using nonlinear syntax
+```{r}
+latent_formula <- bf(nl = TRUE,
+  # Y model
+  Y ~ interceptY  + bX*X + X2l + bZ*Z,
+  X2l ~ 0 + mi(X2),
+  interceptY ~ 1 + (1 | id),
+  bX + bZ ~ 1, family = gaussian()) +
+  bf(X2 | mi(Xse) ~ 1 + (1|id), family = gaussian()) #+
+#  bernoulli()
+
+# get_prior(latent_formula, data = sim)
+
+b_mru_minl <- brm(latent_formula, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", nlpar = "X2l", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "bX", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "bZ", resp = "Y"),
+              # set_prior("normal(0, 1)", class = "b", nlpar = "bX2", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "interceptY", resp = "Y"),
+              set_prior("exponential(1)", class = "sd", nlpar = "interceptY", resp = "Y"),
+              set_prior("normal(0, 1)", class = "Intercept", resp = "X2"),
+              set_prior("exponential(1)", class = "sd", resp = "X2")))
+b_mru_minl
+```
+
+</details>
+
+### Summary
+```{r,biasg,fig.cap="Estimated coefficients and the true values (dashed line)", results='asis', fig.height=9}
+draws <- bind_rows(
+  brms_naive = b_mn %>% gather_draws(b_X, b_Z),
+  brms_fixed = b_mf %>% gather_draws(b_X, b_Z),
+  brms_multilevel = b_mr %>% gather_draws(b_X, b_Z),
+  brms_mundlak = b_mrx %>% gather_draws(b_X, b_Z, b_Xbar),
+  brms_mundlak_centered = b_mrc %>% gather_draws(b_X, b_Z),
+  rethinking_latent_mundlak = mru %>% gather_draws(b_X, b_Z, buy),
+  brms_latent_mundlak = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
+ .id = "model") %>% 
+  separate(model, c("package", "model"), extra = "merge") %>% 
+  mutate(model = fct_inorder(factor(model)),
+         .variable = str_replace(.variable, "_Y", ""),
+         .variable = recode(.variable, 
+                            "buy" = "b_Xbar",
+                            "bsp_miX2" = "b_Xbar"),
+         .variable = factor(.variable, levels = c("b_X", "b_Z", "b_Xbar")))
+
+draws <- draws %>% group_by(package, model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = package, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  ggrepel::geom_text_repel(aes(label = if_else(.width == .95, sprintf("%.2f", .value), NA_character_)), nudge_y = .1) +
+  geom_vline(aes(xintercept = true_val), linetype = 'dashed', data = tibble(true_val = c(b_X, b_Z, b_Ug - b_X), .variable = factor(c("b_X", "b_Z", "b_Xbar"), levels = c("b_X", "b_Z", "b_Xbar")))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable, scales = "free_x") +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
+
+
+## Gaussian + binary exposure simulations
+Finally, I simulated a Gaussian outcome and a binary exposure (X). Especially in small groups, the group average of a binary variable can be pretty far off. I didn't run the rethinking models here, except for the latent Mundlak model.
+
+I was not able to implement this model in brms. brms does not permit the specification of a binary variable as missing using `mi()`. And adjusting for `Xbar` using a linear probability model did not work.
+
+```{r}
+set.seed(201910)
+# families
+N_groups <- 300
+a0 <- (-2)
+b_X <- (1)
+b_Z <- (-0.5)
+b_Ug <- (3)
+# 2 or more siblings
+g_sizes <- 2 + rpois(N_groups, lambda = 0.2) # sample into groups
+table(g_sizes)
+N_id <- sum(g_sizes)
+g <- rep(1:N_groups, times = g_sizes)
+Ug <- rnorm(N_groups, sd = 0.8) # group confounds
+X <- rbern(N_id, p=inv_logit(rnorm(N_id, Ug[g] ) ) )   # individual varying trait
+table(X)
+
+Z <- rnorm(N_groups) # group varying trait (observed)
+Y <- a0 + b_X * X + b_Ug*Ug[g] + b_Z*Z[g] + rnorm(N_id)
+
+groups <- tibble(id = factor(1:N_groups), Ug, Z)
+sim <- tibble(id = factor(g), X, Y) %>% full_join(groups, by = "id") %>% arrange(id) %>% group_by(id) %>% 
+  mutate(Xbar = mean(X)) %>% ungroup()
+sim %>% distinct(id, Ug, Xbar) %>% select(-id) %>% cor(use = "p")
+lm(Y ~ X + Z, data = sim)
+lm(Y ~ Ug + X + Z, data = sim)
+lm(Y ~ id + X + Z, data = sim)
+
+sim <- sim %>% group_by(id) %>% 
+  mutate(Xse = sd(X)/sqrt(n())) %>% ungroup() %>% 
+  mutate(X2 = X)
+```
+
+<details><summary>Implementations of the various models</summary>
+
+### Naive
+
+#### brms
+```{r}
+b_mn <- brm(Y ~ X + Z, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 2)", class = "Intercept")))
+b_mn
+
+b_mn %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+
+### Fixed effects
+
+#### brms
+```{r}
+b_mf <- brm(Y ~ 1 + id + X + Z, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 2)", class = "b"))
+            # , sample_prior = "only"
+            )
+
+# b_mf %>% gather_draws(`b_id.*`, regex=T) %>% 
+#   ggplot(aes(inv_logit(.value))) + geom_histogram(binwidth = .01)
+b_mf %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+
+### Multilevel
+
+#### brms
+```{r}
+b_mr <- brm(Y ~ (1|id) + X + Z, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("exponential(1)", class = "sd")))
+b_mr
+
+b_mr %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+### Multilevel Mundlak
+
+#### brms
+```{r}
+b_mrx <- brm(Y ~ (1|id) + X + Z + Xbar, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("normal(0, 1)", class = "b", coef = "Xbar"),
+              set_prior("exponential(1)", class = "sd")))
+b_mrx
+
+b_mrx %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+##### subtracting the group mean instead of adjusting for it
+```{r}
+b_mrc <- brm(Y ~ (1|id) + X + Z, data = sim %>% mutate(X = X - Xbar),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z"),
+              set_prior("exponential(1)", class = "sd")))
+b_mrc
+
+b_mrc %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+### Multilevel Latent Mundlak
+
+#### rethinking
+```{r}
+dat <-  list(Y = Y, X = X, g = g, Ng = N_groups, Z = Z)
+# The Latent Mundlak Machine
+mru <- ulam(
+  alist(
+    # y model 
+    Y ~ normal(muY, sigmaY),
+    muY <- a[g] + b_X*X + b_Z*Z[g] + buy*u[g],
+    transpars> vector[Ng]:a <<- abar + z*tau,
+    # X model
+    X ~ bernoulli(p),
+    logit(p) <- aX + bux*u[g],
+    vector[Ng]:u ~ normal (0,1),
+    
+    # priors
+    z[g] ~ dnorm(0,1),
+    c(aX, b_X, buy, b_Z) ~ dnorm(0, 1),
+    bux ~ dexp(1),
+    abar ~ dnorm (0,1),
+    tau ~ dexp(1),
+    c(sigma, sigmaY) ~ dexp(1)
+  ),
+  data = dat, chains = 4, cores=4, sample=TRUE)
+
+mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
+```
+
+#### brms
+
+##### brms mi() missingness notation
+
+brms does not support the mi() notation for binary variables. Also, it does not accept zero measurement error, so I averaged across groups to take the mean Xse.
+
+```{r}
+b_mru_mi <- brm(bf(Y ~ (1|id) + X + Z + mi(X2)) +
+             bf(X2 | mi(Xse) ~ (1|id), family = gaussian()), data = sim %>% mutate(Xse = mean(Xse)),
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", coef = "X", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", coef = "Z", resp = "Y"),
+              set_prior("normal(0, 1)", class = "b", coef = "miX2", resp = "Y"),
+              set_prior("exponential(1)", class = "sd", resp = "Y"),
+              set_prior("exponential(1)", class = "sd", resp = "X2"),
+              set_prior("exponential(1)", class = "sigma", resp = "X2")))
+b_mru_mi
+
+b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z) %>% mean_hdci()
+```
+
+</details>
+
+### Summary
+```{r,biasgb,fig.cap="Estimated coefficients and the true values (dashed line)", results='asis', fig.height=9}
+draws <- bind_rows(
+  brms_naive = b_mn %>% gather_draws(b_X, b_Z),
+  brms_fixed = b_mf %>% gather_draws(b_X, b_Z),
+  brms_multilevel = b_mr %>% gather_draws(b_X, b_Z),
+  brms_mundlak = b_mrx %>% gather_draws(b_X, b_Z, b_Xbar),
+  brms_mundlak_centered = b_mrc %>% gather_draws(b_X, b_Z),
+  rethinking_latent_mundlak = mru %>% gather_draws(b_X, b_Z, buy),
+  brms_latent_mundlak = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
+ .id = "model") %>% 
+  separate(model, c("package", "model"), extra = "merge") %>% 
+  mutate(model = fct_inorder(factor(model)),
+         .variable = str_replace(.variable, "_Y", ""),
+         .variable = recode(.variable, 
+                            "buy" = "b_Xbar",
+                            "bsp_miX2" = "b_Xbar"),
+         .variable = factor(.variable, levels = c("b_X", "b_Z", "b_Xbar")))
+
+draws <- draws %>% group_by(package, model, .variable) %>% 
+  mean_hdci(.width = c(.95, .99)) %>% 
+  ungroup()
+
+ggplot(draws, aes(y = package, x = .value, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval(position = position_dodge(width = .4)) +
+  ggrepel::geom_text_repel(aes(label = if_else(.width == .95, sprintf("%.2f", .value), NA_character_)), nudge_y = .1) +
+  geom_vline(aes(xintercept = true_val), linetype = 'dashed', data = tibble(true_val = c(b_X, b_Z, b_Ug - b_X), .variable = factor(c("b_X", "b_Z", "b_Xbar"), levels = c("b_X", "b_Z", "b_Xbar")))) +  scale_color_discrete(breaks = rev(levels(draws$model))) +
+  facet_grid(model ~ .variable, scales = "free_x") +
+  theme_bw() +
+  theme(legend.position = c(0.99,0.99),
+        legend.justification = c(1,1))
+```
