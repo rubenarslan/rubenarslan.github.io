@@ -19,6 +19,15 @@ preview: https://ars.els-cdn.com/content/image/1-s2.0-S0306453023000380-gr1.jpg
 ---
 
 
+<!--
+## Notes:
+- Still haven't figured out what Vuorre's syntax does
+- I can reproduce his results, but neither depb nor depCB appear in the data, I had previously misunderstood this. I don't know how brms knows to subtract the mean of dep given that no observed variable related to dep shows up in the syntax.
+- My application to logOESTR was incorrect (huge SEs)
+- Would be cool to apply this to location scale models
+-->
+
+
 ```{r}
 # importing the data downloaded from the supplementary here https://www.sciencedirect.com/science/article/pii/S0306453023000380#sec0115
 library(tidyverse)
@@ -266,22 +275,17 @@ Well, this makes little if any difference, which makes sense considering that th
 
 ### Latent group mean centering
 
-Being a brms lover, I've been looking for an excuse to try Matti Vuorre's implementation of latent group mean centering in brms. So, here goes.
+Being a brms lover, I've been looking for an excuse to try Matti Vuorre's implementation of latent group mean centering in brms. So, here goes. __Edit:__ I've confirmed through more simulations that this approach does not work.
 
 <details> <summary>Model output </summary>
+
+
 
 ```{r}
 latent_formula <- bf(
   SR_Intercourse ~ intercept + 
-    blogOESTR*(logOESTR - logOESTRlm) # lm = latent mean
-  +  blogPROG*(logPROG - logPROGlm),
-  intercept ~ 1 + (1 | ID),
-  blogOESTR ~ 1 + (1 | ID),
-  blogPROG ~ 1 + (1 | ID),
-  nlf(logOESTRlm ~ logOESTRm), # latent mean estimated from observed mean
-  logOESTRm ~ 1 + (1 | ID), # observed mean estimated as a function of (1|ID)
-  nlf(logPROGlm ~ logPROGm),
-  logPROGm ~ 1 + (1 | ID),
+    blogOESTR*(logOESTR - logOESTRlm), # lm = latent mean,
+  intercept + blogOESTR + logOESTRlm ~ 1 + (1 | ID),
   nl = TRUE
 ) +
   gaussian()
@@ -303,13 +307,37 @@ fit_latent <- brm(
   cores = 8, chains = 4, threads = 2,
   backend = "cmdstanr",
   control = list(adapt_delta = 0.99),
-  file = "brm-fit-latent-mean-centered"
+  file = "brm-fit-latent-mean-centered3"
 )
 
 fit_latent
 ```
 
+
 </details>
+__Edit:__ Here's an approach that does work.
+
+<details> <summary>Model output </summary>
+
+```{r}
+cycles_long <- cycles_long %>% group_by(ID) %>% 
+              mutate(logOESTR2 = logOESTR,
+                     seOE = sd(logOESTR, na.rm = T)/sum(!is.na(logOESTR)),
+                     seP = sd(logPROG, na.rm = T)/sum(!is.na(logOESTR)),
+                     logPROG2 = logPROG)
+
+fit_latent <- brm(
+  bf(SR_Intercourse ~ logOESTR + logPROG + 
+       mi(logOESTR2) + mi(logPROG2) +
+    cycle + (1 + logOESTR + logPROG|i|ID)) +
+  bf(logPROG2 | mi(seP) ~ 1 + (1|ID)) +
+  bf(logOESTR2 | mi(seOE) ~ 1 + (1|ID)) + 
+    set_rescor(FALSE), data = cycles_long, 
+            iter = 4000, file = "m1intercoursegmcmi")
+fit_latent
+```
+</details>
+
 
 ### Imputations and lag
 To get at the question, whether estradiol and progesterone have time-delayed effects on sexual desire, we would ideally like to have measured serum steroids a few days ahead. Unfortunately, this wasn't done here (they did measure serum steroids on some other days, but did not share those data). 
@@ -386,7 +414,7 @@ draws <- bind_rows(
   latent_impute_lag2 = m1lag %>% gather_draws(`bsp_SRIntercourse_milog.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "bsp_SRIntercourse_mi", "b_"), "_lag2", "")),
   imputed_lag2 = m1_lagi %>% gather_draws(`b_est.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "est_estradiol_fc_lag2", "logOESTR"), "est_progesterone_fc_lag2", "logPROG")),
   imputed = m1_i %>% gather_draws(`b_est.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "est_estradiol_fc", "logOESTR"), "est_progesterone_fc", "logPROG")),
-  latent_group_mean_centered = fit_latent %>% gather_draws(`b_blog.+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "b_b", "b_"), "_Intercept", "")),
+  latent_group_mean_centered = fit_latent %>% gather_draws(`b_SRIntercourse_log[A-Z]+`, regex = T) %>% mutate(.variable = str_replace(str_replace(.variable, "b_SRIntercourse_", "b_"), "_Intercept", "")),
   group_mean_centered = m1intercoursegmc %>% gather_draws(`b_log.+`, regex = T),
   location_scale = m1intercourse_sigma %>% gather_draws(`b_log.+`, regex = T),
   multivariate = m1mv %>% gather_draws(`b_SRIntercourse_log.+`, regex = T) %>% mutate(.variable = str_replace(.variable, "b_SRIntercourse_", "b_")),

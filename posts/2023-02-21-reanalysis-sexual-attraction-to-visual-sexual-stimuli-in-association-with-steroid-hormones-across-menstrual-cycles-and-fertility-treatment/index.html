@@ -2218,6 +2218,13 @@ gtag('config', 'UA-2102103-6');
 </ul>
 </nav>
 </div>
+<!--
+## Notes:
+- Still haven't figured out what Vuorre's syntax does
+- I can reproduce his results, but neither depb nor depCB appear in the data, I had previously misunderstood this. I don't know how brms knows to subtract the mean of dep given that no observed variable related to dep shows up in the syntax.
+- My application to logOESTR was incorrect (huge SEs)
+- Would be cool to apply this to location scale models
+-->
 <div class="layout-chunk" data-layout="l-body">
 <details>
 <summary>
@@ -2927,7 +2934,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </details>
 <p>Well, this makes little if any difference, which makes sense considering that there isn’t much between-subject variance in estradiol and progesterone to begin with.</p>
 <h3 id="latent-group-mean-centering">Latent group mean centering</h3>
-<p>Being a brms lover, I’ve been looking for an excuse to try Matti Vuorre’s implementation of latent group mean centering in brms. So, here goes.</p>
+<p>Being a brms lover, I’ve been looking for an excuse to try Matti Vuorre’s implementation of latent group mean centering in brms. So, here goes. <strong>Edit:</strong> I’ve confirmed through more simulations that this approach does not work.</p>
 <details>
 <summary>
 Model output
@@ -2940,15 +2947,8 @@ Show code
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>latent_formula</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span></span>
 <span>  <span class='va'>SR_Intercourse</span> <span class='op'>~</span> <span class='va'>intercept</span> <span class='op'>+</span> </span>
-<span>    <span class='va'>blogOESTR</span><span class='op'>*</span><span class='op'>(</span><span class='va'>logOESTR</span> <span class='op'>-</span> <span class='va'>logOESTRlm</span><span class='op'>)</span> <span class='co'># lm = latent mean</span></span>
-<span>  <span class='op'>+</span>  <span class='va'>blogPROG</span><span class='op'>*</span><span class='op'>(</span><span class='va'>logPROG</span> <span class='op'>-</span> <span class='va'>logPROGlm</span><span class='op'>)</span>,</span>
-<span>  <span class='va'>intercept</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>,</span>
-<span>  <span class='va'>blogOESTR</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>,</span>
-<span>  <span class='va'>blogPROG</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>,</span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>nlf</a></span><span class='op'>(</span><span class='va'>logOESTRlm</span> <span class='op'>~</span> <span class='va'>logOESTRm</span><span class='op'>)</span>, <span class='co'># latent mean estimated from observed mean</span></span>
-<span>  <span class='va'>logOESTRm</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>, <span class='co'># observed mean estimated as a function of (1|ID)</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>nlf</a></span><span class='op'>(</span><span class='va'>logPROGlm</span> <span class='op'>~</span> <span class='va'>logPROGm</span><span class='op'>)</span>,</span>
-<span>  <span class='va'>logPROGm</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>,</span>
+<span>    <span class='va'>blogOESTR</span><span class='op'>*</span><span class='op'>(</span><span class='va'>logOESTR</span> <span class='op'>-</span> <span class='va'>logOESTRlm</span><span class='op'>)</span>, <span class='co'># lm = latent mean,</span></span>
+<span>  <span class='va'>intercept</span> <span class='op'>+</span> <span class='va'>blogOESTR</span> <span class='op'>+</span> <span class='va'>logOESTRlm</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>,</span>
 <span>  nl <span class='op'>=</span> <span class='cn'>TRUE</span></span>
 <span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span></span>
@@ -2970,7 +2970,7 @@ Show code
 <span>  cores <span class='op'>=</span> <span class='fl'>8</span>, chains <span class='op'>=</span> <span class='fl'>4</span>, threads <span class='op'>=</span> <span class='fl'>2</span>,</span>
 <span>  backend <span class='op'>=</span> <span class='st'>"cmdstanr"</span>,</span>
 <span>  control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>adapt_delta <span class='op'>=</span> <span class='fl'>0.99</span><span class='op'>)</span>,</span>
-<span>  file <span class='op'>=</span> <span class='st'>"brm-fit-latent-mean-centered"</span></span>
+<span>  file <span class='op'>=</span> <span class='st'>"brm-fit-latent-mean-centered3"</span></span>
 <span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>fit_latent</span></span></code></pre>
@@ -2978,50 +2978,160 @@ Show code
 </details>
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
-Formula: SR_Intercourse ~ intercept + blogOESTR * (logOESTR - logOESTRlm) + blogPROG * (logPROG - logPROGlm) 
+Formula: SR_Intercourse ~ intercept + blogOESTR * (logOESTR - logOESTRlm) 
          intercept ~ 1 + (1 | ID)
          blogOESTR ~ 1 + (1 | ID)
-         blogPROG ~ 1 + (1 | ID)
-         logOESTRlm ~ logOESTRm
-         logOESTRm ~ 1 + (1 | ID)
-         logPROGlm ~ logPROGm
-         logPROGm ~ 1 + (1 | ID)
-   Data: cycles_long (Number of observations: 551) 
-  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-         total post-warmup draws = 4000
+         logOESTRlm ~ 1 + (1 | ID)
+   Data: cycles_long (Number of observations: 562) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
 
 Group-Level Effects: 
 ~ID (Number of levels: 87) 
-                        Estimate Est.Error l-95% CI u-95% CI Rhat
-sd(intercept_Intercept)     0.58      0.20     0.08     0.86 1.02
-sd(blogOESTR_Intercept)     0.08      0.04     0.01     0.14 1.01
-sd(blogPROG_Intercept)      0.02      0.01     0.00     0.06 1.00
-sd(logOESTRm_Intercept)     0.96      0.96     0.03     3.68 1.01
-sd(logPROGm_Intercept)      0.93      0.80     0.04     3.01 1.00
-                        Bulk_ESS Tail_ESS
-sd(intercept_Intercept)      124      171
-sd(blogOESTR_Intercept)      130      367
-sd(blogPROG_Intercept)      2458     2972
-sd(logOESTRm_Intercept)      370      174
-sd(logPROGm_Intercept)      3051     2357
+                         Estimate Est.Error l-95% CI u-95% CI Rhat
+sd(intercept_Intercept)      0.57      0.21     0.07     0.86 1.03
+sd(blogOESTR_Intercept)      0.08      0.03     0.01     0.14 1.02
+sd(logOESTRlm_Intercept)     1.25      1.30     0.04     5.08 1.02
+                         Bulk_ESS Tail_ESS
+sd(intercept_Intercept)       255      400
+sd(blogOESTR_Intercept)       347     1040
+sd(logOESTRlm_Intercept)      224      111
 
 Population-Level Effects: 
-                    Estimate Est.Error l-95% CI u-95% CI Rhat
-intercept_Intercept     0.26      0.25    -0.25     0.75 1.01
-blogOESTR_Intercept     0.09      0.04     0.01     0.16 1.01
-blogPROG_Intercept     -0.03      0.02    -0.07     0.00 1.00
-logOESTRm_Intercept    -0.03      1.00    -1.96     1.95 1.00
-logPROGm_Intercept     -0.02      1.00    -1.94     1.98 1.00
-                    Bulk_ESS Tail_ESS
-intercept_Intercept      562      287
-blogOESTR_Intercept      587      323
-blogPROG_Intercept      2351     2624
-logOESTRm_Intercept     1671     2151
-logPROGm_Intercept      5971     3201
+                     Estimate Est.Error l-95% CI u-95% CI Rhat
+intercept_Intercept      0.36      0.24    -0.09     0.83 1.01
+blogOESTR_Intercept      0.06      0.04    -0.01     0.13 1.01
+logOESTRlm_Intercept     0.05      1.01    -1.94     2.04 1.00
+                     Bulk_ESS Tail_ESS
+intercept_Intercept       444      389
+blogOESTR_Intercept       748      618
+logOESTRlm_Intercept     1151     1038
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     0.51      0.02     0.48     0.54 1.00     4646     2892
+sigma     0.51      0.02     0.48     0.54 1.00     8720     5997
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</details>
+<p><strong>Edit:</strong> Here’s an approach that does work.</p>
+<details>
+<summary>
+Model output
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cycles_long</span> <span class='op'>&lt;-</span> <span class='va'>cycles_long</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>ID</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>              <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>logOESTR2 <span class='op'>=</span> <span class='va'>logOESTR</span>,</span>
+<span>                     seOE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>logOESTR</span>, na.rm <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>logOESTR</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>                     seP <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>logPROG</span>, na.rm <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>logOESTR</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>                     logPROG2 <span class='op'>=</span> <span class='va'>logPROG</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>fit_latent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>SR_Intercourse</span> <span class='op'>~</span> <span class='va'>logOESTR</span> <span class='op'>+</span> <span class='va'>logPROG</span> <span class='op'>+</span> </span>
+<span>       <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>logOESTR2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>logPROG2</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>    <span class='va'>cycle</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>logOESTR</span> <span class='op'>+</span> <span class='va'>logPROG</span><span class='op'>|</span><span class='va'>i</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>logPROG2</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>seP</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>logOESTR2</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mi.html'>mi</a></span><span class='op'>(</span><span class='va'>seOE</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>ID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>set_rescor</a></span><span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>cycles_long</span>, </span>
+<span>            iter <span class='op'>=</span> <span class='fl'>4000</span>, file <span class='op'>=</span> <span class='st'>"m1intercoursegmcmi"</span><span class='op'>)</span></span>
+<span><span class='va'>fit_latent</span></span></code></pre>
+</div>
+</details>
+<pre><code> Family: MV(gaussian, gaussian, gaussian) 
+  Links: mu = identity; sigma = identity
+         mu = identity; sigma = identity
+         mu = identity; sigma = identity 
+Formula: SR_Intercourse ~ logOESTR + logPROG + mi(logOESTR2) + mi(logPROG2) + cycle + (1 + logOESTR + logPROG | i | ID) 
+         logPROG2 | mi(seP) ~ 1 + (1 | ID) 
+         logOESTR2 | mi(seOE) ~ 1 + (1 | ID) 
+   Data: cycles_long (Number of observations: 551) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Group-Level Effects: 
+~ID (Number of levels: 87) 
+                                                    Estimate
+sd(SRIntercourse_Intercept)                             0.68
+sd(SRIntercourse_logOESTR)                              0.07
+sd(SRIntercourse_logPROG)                               0.02
+sd(logPROG2_Intercept)                                  0.07
+sd(logOESTR2_Intercept)                                 0.08
+cor(SRIntercourse_Intercept,SRIntercourse_logOESTR)     0.04
+cor(SRIntercourse_Intercept,SRIntercourse_logPROG)      0.06
+cor(SRIntercourse_logOESTR,SRIntercourse_logPROG)      -0.04
+                                                    Est.Error
+sd(SRIntercourse_Intercept)                              0.19
+sd(SRIntercourse_logOESTR)                               0.04
+sd(SRIntercourse_logPROG)                                0.01
+sd(logPROG2_Intercept)                                   0.05
+sd(logOESTR2_Intercept)                                  0.05
+cor(SRIntercourse_Intercept,SRIntercourse_logOESTR)      0.43
+cor(SRIntercourse_Intercept,SRIntercourse_logPROG)       0.48
+cor(SRIntercourse_logOESTR,SRIntercourse_logPROG)        0.49
+                                                    l-95% CI u-95% CI
+sd(SRIntercourse_Intercept)                             0.28     1.04
+sd(SRIntercourse_logOESTR)                              0.01     0.15
+sd(SRIntercourse_logPROG)                               0.00     0.05
+sd(logPROG2_Intercept)                                  0.00     0.20
+sd(logOESTR2_Intercept)                                 0.00     0.19
+cor(SRIntercourse_Intercept,SRIntercourse_logOESTR)    -0.69     0.85
+cor(SRIntercourse_Intercept,SRIntercourse_logPROG)     -0.84     0.87
+cor(SRIntercourse_logOESTR,SRIntercourse_logPROG)      -0.88     0.87
+                                                    Rhat Bulk_ESS
+sd(SRIntercourse_Intercept)                         1.00     1937
+sd(SRIntercourse_logOESTR)                          1.02      216
+sd(SRIntercourse_logPROG)                           1.00     3806
+sd(logPROG2_Intercept)                              1.00     4910
+sd(logOESTR2_Intercept)                             1.00     2290
+cor(SRIntercourse_Intercept,SRIntercourse_logOESTR) 1.00      947
+cor(SRIntercourse_Intercept,SRIntercourse_logPROG)  1.00     8227
+cor(SRIntercourse_logOESTR,SRIntercourse_logPROG)   1.00     6669
+                                                    Tail_ESS
+sd(SRIntercourse_Intercept)                             1606
+sd(SRIntercourse_logOESTR)                               832
+sd(SRIntercourse_logPROG)                               3384
+sd(logPROG2_Intercept)                                  3494
+sd(logOESTR2_Intercept)                                 2522
+cor(SRIntercourse_Intercept,SRIntercourse_logOESTR)     1876
+cor(SRIntercourse_Intercept,SRIntercourse_logPROG)      4660
+cor(SRIntercourse_logOESTR,SRIntercourse_logPROG)       5849
+
+Population-Level Effects: 
+                          Estimate Est.Error l-95% CI u-95% CI Rhat
+SRIntercourse_Intercept       0.24      0.21    -0.17     0.65 1.00
+logPROG2_Intercept            1.69      0.06     1.57     1.82 1.00
+logOESTR2_Intercept           5.86      0.03     5.79     5.92 1.00
+SRIntercourse_logOESTR        0.25      0.31    -0.36     0.87 1.00
+SRIntercourse_logPROG        -0.07      0.26    -0.58     0.45 1.00
+SRIntercourse_cycleZ2        -0.00      0.05    -0.09     0.09 1.00
+SRIntercourse_milogOESTR2    -0.15      0.32    -0.80     0.46 1.00
+SRIntercourse_milogPROG2      0.04      0.27    -0.50     0.56 1.00
+                          Bulk_ESS Tail_ESS
+SRIntercourse_Intercept       5048     5438
+logPROG2_Intercept           10305     6300
+logOESTR2_Intercept          10605     6361
+SRIntercourse_logOESTR        1668     2497
+SRIntercourse_logPROG          863     1624
+SRIntercourse_cycleZ2        11095     5934
+SRIntercourse_milogOESTR2     1657     2569
+SRIntercourse_milogPROG2       864     1578
+
+Family Specific Parameters: 
+                    Estimate Est.Error l-95% CI u-95% CI Rhat
+sigma_SRIntercourse     0.50      0.02     0.47     0.54 1.00
+sigma_logPROG2          1.43      0.04     1.34     1.52 1.00
+sigma_logOESTR2         0.77      0.02     0.73     0.82 1.00
+                    Bulk_ESS Tail_ESS
+sigma_SRIntercourse     4409     4243
+sigma_logPROG2         11362     5936
+sigma_logOESTR2        10387     6745
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -3232,7 +3342,7 @@ Show code
 <span>  latent_impute_lag2 <span class='op'>=</span> <span class='va'>m1lag</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`bsp_SRIntercourse_milog.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"bsp_SRIntercourse_mi"</span>, <span class='st'>"b_"</span><span class='op'>)</span>, <span class='st'>"_lag2"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span>  imputed_lag2 <span class='op'>=</span> <span class='va'>m1_lagi</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_est.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"est_estradiol_fc_lag2"</span>, <span class='st'>"logOESTR"</span><span class='op'>)</span>, <span class='st'>"est_progesterone_fc_lag2"</span>, <span class='st'>"logPROG"</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span>  imputed <span class='op'>=</span> <span class='va'>m1_i</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_est.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"est_estradiol_fc"</span>, <span class='st'>"logOESTR"</span><span class='op'>)</span>, <span class='st'>"est_progesterone_fc"</span>, <span class='st'>"logPROG"</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span>  latent_group_mean_centered <span class='op'>=</span> <span class='va'>fit_latent</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_blog.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"b_b"</span>, <span class='st'>"b_"</span><span class='op'>)</span>, <span class='st'>"_Intercept"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  latent_group_mean_centered <span class='op'>=</span> <span class='va'>fit_latent</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_SRIntercourse_log[A-Z]+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"b_SRIntercourse_"</span>, <span class='st'>"b_"</span><span class='op'>)</span>, <span class='st'>"_Intercept"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span>  group_mean_centered <span class='op'>=</span> <span class='va'>m1intercoursegmc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_log.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>,</span>
 <span>  location_scale <span class='op'>=</span> <span class='va'>m1intercourse_sigma</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_log.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>,</span>
 <span>  multivariate <span class='op'>=</span> <span class='va'>m1mv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='http://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span><span class='va'>`b_SRIntercourse_log.+`</span>, regex <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='st'>"b_SRIntercourse_"</span>, <span class='st'>"b_"</span><span class='op'>)</span><span class='op'>)</span>,</span>
@@ -3251,8 +3361,8 @@ Show code
 <span>        legend.justification <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </details>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-13"></span>
-<img src="reanalysis-sexual-attraction-to-visual-sexual-stimuli-in-association-with-steroid-hormones-across-menstrual-cycles-and-fertility-treatment_files/figure-html5/unnamed-chunk-13-1.png" alt="Non-varying slopes for log estradiol and log progesterone" width="576" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-14"></span>
+<img src="reanalysis-sexual-attraction-to-visual-sexual-stimuli-in-association-with-steroid-hormones-across-menstrual-cycles-and-fertility-treatment_files/figure-html5/unnamed-chunk-14-1.png" alt="Non-varying slopes for log estradiol and log progesterone" width="576" />
 <p class="caption">
 Figure 3: Non-varying slopes for log estradiol and log progesterone
 </p>
@@ -3269,7 +3379,7 @@ Figure 3: Non-varying slopes for log estradiol and log progesterone
 <li>I didn’t do any group mean centering at the level of the cycle.</li>
 <li>It confuses me that the results of the latent lag model are more like the results of the imputations without lag than of those with lag.</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
