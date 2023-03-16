@@ -24,11 +24,15 @@ knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, results = "hide")
 
 In a recent [lecture](https://youtu.be/iwVqiiXYeC4?t=3299), [Richard McElreath](https://twitter.com/rlmcelreath) gives an introduction to Mundlak devices ([code](https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r)). Briefly, social scientists would often like to remove confounding at the group level.^[the group here can be an individual measured several times, a sibling group, a school, a nation, etc.] 
 
-Econometricians and epidemiologists tend to use fixed effects regression to do so. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. The two solutions yield similar results.
+Econometricians and epidemiologists tend to use fixed effects regression to do so. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. The two solutions yield similar results for the within-group effect, but differ on how they treat group-level effects.
 
 [Arguably](https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31), there are more ways to mess up the random effects model, but it's more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.
 
-One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you'd like to adjust for. A solution to this is to adjust for the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so^[What McElreath calls Full Luxury Bayes: Latent Mundlak machine] is fairly easy in Stan, but it's less clear how to do it with everyone's favourite Stan interface, brms. [Matti Vuorre](https://twitter.com/vuorre) shared [a solution](https://vuorre.netlify.app/posts/latent-mean-centering/#brms) using brms' non-linear syntax, but I tried it and it doesn't correctly recover simulated effects.^[I think the "problem" is that in the data he used, from McNeish & Hamaker 2020, the group mean varies very little except for measurement error.]
+One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you'd like to adjust for. A solution to this is to estimate the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so^[What McElreath calls Full Luxury Bayes: Latent Mundlak machine] is fairly easy in Stan, but it's less clear how to do it with everyone's favourite Stan interface, brms. 
+
+In which way does this sampling error at the group level bias your results? It attenuates your estimate of `b_Xbar` (Lüdtke's bias). I thought it would also bias my estimate of `b_X`, because I'm underadjusting by ignoring the measurement error in my covariate. That is not so. Why? To get the intuition, it helped me to consider the case where I first subtract `Xbar` from `X`. `Xdiff` is necessarily uncorrelated with `Xbar`, meaning any changes in the association of `Xbar` and `Y` (which we get by modelling sampling error) are irrelevant to `Y ~ Xdiff`.
+
+I think I'm not the only who is confused about this. [Matti Vuorre](https://twitter.com/vuorre) shared [a solution](https://vuorre.netlify.app/posts/latent-mean-centering/#brms) to center X with the latent group mean using brms' non-linear syntax. Centering with the latent group mean is not necessary though.  Also, I tried the syntax and it doesn't correctly recover simulated effects.^[I think the reason he thought it works is that in the data he used, from McNeish & Hamaker 2020, the group mean varies very little except for measurement error, so we expect it not to make a difference.]
 
 <aside>
 ```{r, results='markup'}
@@ -51,7 +55,7 @@ My solution seems to work, but it's a little hacky. I also see no straightforwar
 
 - My original plan, using the `me()` syntax did not work consistently, perhaps because there's no shrinkage for the group means.
 - My approach does not work for a non-Gaussian exposure `X`, because `mi()` is not implemented for e.g. binary variables.
-- I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for `b_X`. It improves estimates for `b_Xbar` (i.e. the group-level confound), so it's doing what it's supposed to, but that's not really what we're going for here. `b_X` is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). __Am I missing something in my simulations or is latent group mean centering rarely worth the effort?__ I'd be glad for any pointers.
+- I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for `b_X`. It improves estimates for `b_Xbar` (i.e. the group-level confound), so it's doing what it's supposed to, but that's not really what we're going for here. `b_X` is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). __Am I missing something in my simulations or is latent group mean centering rarely worth the effort?__ I'd be glad for any pointers. __Edit:__ [Niclas Kuper](https://twitter.com/niclas_kuper) gave me a pointer, so I have clarified above that we do not expect estimation of `b_X` to improve by using latent group means.
 
 The simulations and their results are documented in detail below. Click on the "Implementations" to see the model code.
 
@@ -516,7 +520,7 @@ mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
 
 ##### brms me() measurement error notation
 
-```{r}
+```{r,results='markup'}
 sim <- sim %>% group_by(id) %>% 
   mutate(Xse = sd(X)/sqrt(n())) %>% ungroup()
 
@@ -529,11 +533,21 @@ b_mru <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse), data = sim,
               set_prior("normal(0, 1)", class = "b", coef = "meXbarXse"),
               set_prior("exponential(1)", class = "sd"),
               set_prior("exponential(1)", class = "sdme")))
+
+b_mru_gr <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse, gr = id), data = sim, 
+             prior = c(
+                 set_prior("normal(0, 1)", class = "b", coef = "X"),
+                 set_prior("normal(0, 1)", class = "b", coef = "Z"),
+                 set_prior("normal(0, 1)", class = "b", coef = "meXbarXsegrEQid"),
+                 set_prior("exponential(1)", class = "sd"),
+                 set_prior("exponential(1)", class = "sdme")))
+
 ```
 
 
 ```{r,results='markup'}
 b_mru
+b_mru_gr
 ```
 
 ##### brms mi() missingness notation
