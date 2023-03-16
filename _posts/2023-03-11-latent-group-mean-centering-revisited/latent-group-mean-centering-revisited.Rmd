@@ -22,7 +22,15 @@ output:
 knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, results = "hide")
 ```
 
-In a recent [lecture](https://youtu.be/iwVqiiXYeC4?t=3299), [Richard McElreath](https://twitter.com/rlmcelreath) gives an introduction to Mundlak devices ([code](https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r)). Briefly, social scientists would often like to remove confounding at the group level.^[the group here can be an individual measured several times, a sibling group, a school, a nation, etc.] 
+In a recent [lecture](https://youtu.be/iwVqiiXYeC4?t=3299), [Richard McElreath](https://twitter.com/rlmcelreath) gave an introduction to Mundlak devices ([code](https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r)). Briefly, social scientists would often like to remove confounding at the group level.^[the group here can be an individual measured several times, a sibling group, a school, a nation, etc.] 
+
+
+<aside>
+```{r, results='markup'}
+knitr::include_graphics("mundlak.jpg")
+```
+[Yair Mundlak](https://en.wikipedia.org/wiki/Yair_Mundlak)^[Mundlak, Y. 1978: On the pooling of time series and cross section data. Econometrica 46:69-85.] in his Full Luxury Bayes outfit, courtesy of DALL-E.
+</aside>
 
 Econometricians and epidemiologists tend to use fixed effects regression to do so. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. The two solutions yield similar results for the within-group effect, but differ on how they treat group-level effects.
 
@@ -34,33 +42,34 @@ In which way does this sampling error at the group level bias your results? It a
 
 I think I'm not the only who is confused about this. [Matti Vuorre](https://twitter.com/vuorre) shared [a solution](https://vuorre.netlify.app/posts/latent-mean-centering/#brms) to center X with the latent group mean using brms' non-linear syntax. Centering with the latent group mean is not necessary though.  Also, I tried the syntax and it doesn't correctly recover simulated effects.^[I think the reason he thought it works is that in the data he used, from McNeish & Hamaker 2020, the group mean varies very little except for measurement error, so we expect it not to make a difference.]
 
-<aside>
-```{r, results='markup'}
-knitr::include_graphics("mundlak.jpg")
-```
-[Yair Mundlak](https://en.wikipedia.org/wiki/Yair_Mundlak)^[Mundlak, Y. 1978: On the pooling of time series and cross section data. Econometrica 46:69-85.] in his Full Luxury Bayes outfit, courtesy of DALL-E.
-</aside>
+My two attempts at a solution:
 
-My attempt at a solution:
+Using `me()`
 
+1. Calculate the group mean `Xbar`, e.g. `df %>% group_by(id) %>% mutate(Xbar = mean(X))`.
+2. Calculate the standard error of the mean , e.g. `df %>% group_by(id) %>% mutate(Xse = sd(X)/sqrt(n()))`.
+3. Adjust for the term `me(Xbar, Xse, gr = id)` explicitly specifying the grouping variable.
+4. Profit
+ 
+
+Using `mi()`
+ 
 1. Duplicating the exposure `X->X2`
 2. Calculating the SE of the group mean outside the brms call
-3. Using the `X2 | mi(Xse)` syntax in brms to estimate the latent group mean with shrinkage. 
+3. Using a second formula `bf(X2 | mi(Xse) ~ (1|id))` in brms to estimate the latent group mean with shrinkage. 
 4. Adjusting for `mi(X2)` in the regression on `Y`.
 
 ## How did it go? <small style="font-size:0.7em;color:gray">High-level summary</small>
 
-My solution seems to work, but it's a little hacky. I also see no straightforward way to implement within-group centering without an explicit adjustment for the latent group mean.
-
-
-- My original plan, using the `me()` syntax did not work consistently, perhaps because there's no shrinkage for the group means.
-- My approach does not work for a non-Gaussian exposure `X`, because `mi()` is not implemented for e.g. binary variables.
-- I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for `b_X`. It improves estimates for `b_Xbar` (i.e. the group-level confound), so it's doing what it's supposed to, but that's not really what we're going for here. `b_X` is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). __Am I missing something in my simulations or is latent group mean centering rarely worth the effort?__ I'd be glad for any pointers. __Edit:__ [Niclas Kuper](https://twitter.com/niclas_kuper) gave me a pointer, so I have clarified above that we do not expect estimation of `b_X` to improve by using latent group means.
+- My solutions seem to work, but they're a little hacky. The `me` approach didn't work for me at first until I specified the grouping variable, which makes sense. 
+- I had to add a constant `.01` to `Xse` when SE was zero (in my Bernoulli exposure simulation).
+- `mi()` cannot be combined with non-Gaussian variables. If I treat binary exposure `X` as Gaussian in a LPM, convergence was difficult and I had to fix the sigma to 0.01. The `me()` approach seems to work though. If I do all this, the three approaches (rethinking, me, mi) converge.
+- I never managed to create a simulated scenaro where the latent Mundlak approach consistently outperforms the non-latent Mundlak for `b_X`. It improves estimates for `b_Xbar` (i.e. the group-level confound), so it's doing what it's supposed to, but `b_X` is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). __Am I missing something in my simulations or is latent group mean centering rarely worth the effort?__ I'd be glad for any pointers. __Edit:__ [Niclas Kuper](https://twitter.com/niclas_kuper) gave me the pointer I needed, so I have clarified above that we do not expect estimation of `b_X` to improve by using latent group means.
 
 The simulations and their results are documented in detail below. Click on the "Implementations" to see the model code.
 
 ## Bernoulli simulations
-I started with Richard's simulations of a binary outcome. I was not able to reproduce his model performances exactly. Specifically, the latent Mundlak model does not outperform the non-latent Mundlak model by much, except if you care about `b_Xbar` (i.e. the group-level confound).
+I started with Richard's simulations of a binary outcome. I was not able to reproduce his model performances exactly and ended up increasing the simulated sample size to make estimates a bit more stable (to more clearly show bias vs. variance).
 
 Up to the latent Mundlak model, the brms equivalents, perform, well, equivalently. For the latent Mundlak model, the brms gets slightly different coefficients, but a similar overall result.
 
@@ -290,6 +299,7 @@ mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
 
 ```{r}
 b_mru_gr <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse, gr = id), data = sim, 
+                family = bernoulli(),
              prior = c(
                  set_prior("normal(0, 1)", class = "b", coef = "X"),
                  set_prior("normal(0, 1)", class = "b", coef = "Z"),
@@ -793,14 +803,14 @@ brms does not support the mi() notation for binary variables. Also, it does not 
 
 ```{r}
 b_mru_mi <- brm(bf(Y ~ (1|id) + X + Z + mi(X2)) +
-             bf(X2 | mi(Xse) ~ (1|id), family = gaussian()), data = sim %>% mutate(Xse = mean(Xse)),
+             bf(X2 | mi(Xse) ~ (1|id)), family = gaussian(), data = sim %>% mutate(Xse = Xse + 0.01), iter = 4000,
             prior = c(
               set_prior("normal(0, 1)", class = "b", coef = "X", resp = "Y"),
               set_prior("normal(0, 1)", class = "b", coef = "Z", resp = "Y"),
               set_prior("normal(0, 1)", class = "b", coef = "miX2", resp = "Y"),
               set_prior("exponential(1)", class = "sd", resp = "Y"),
               set_prior("exponential(1)", class = "sd", resp = "X2"),
-              set_prior("exponential(1)", class = "sigma", resp = "X2")))
+              set_prior("constant(0.01)", class = "sigma", resp = "X2")))
 b_mru_mi
 
 b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z) %>% mean_hdci()

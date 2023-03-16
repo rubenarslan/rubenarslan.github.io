@@ -2254,23 +2254,31 @@ Show code
 </div>
 <a href="https://en.wikipedia.org/wiki/Yair_Mundlak">Yair Mundlak</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> in his Full Luxury Bayes outfit, courtesy of DALL-E.
 </aside>
-<p>My attempt at a solution:</p>
+<p>My two attempts at a solution:</p>
+<p>Using <code>me()</code></p>
+<ol type="1">
+<li>Calculate the group mean <code>Xbar</code>, e.g. <code>df %&gt;% group_by(id) %&gt;% mutate(Xbar = mean(X))</code>.</li>
+<li>Calculate the standard error of the mean , e.g. <code>df %&gt;% group_by(id) %&gt;% mutate(Xse = sd(X)/sqrt(n()))</code>.</li>
+<li>Adjust for the term <code>me(Xbar, Xse, gr = id)</code> explicitly specifying the grouping variable.</li>
+<li>Profit</li>
+</ol>
+<p>Using <code>mi()</code></p>
 <ol type="1">
 <li>Duplicating the exposure <code>X-&gt;X2</code></li>
 <li>Calculating the SE of the group mean outside the brms call</li>
-<li>Using the <code>X2 | mi(Xse)</code> syntax in brms to estimate the latent group mean with shrinkage.</li>
+<li>Using a second formula <code>bf(X2 | mi(Xse) ~ (1|id))</code> in brms to estimate the latent group mean with shrinkage.</li>
 <li>Adjusting for <code>mi(X2)</code> in the regression on <code>Y</code>.</li>
 </ol>
 <h2 id="how-did-it-go-high-level-summary">How did it go? <small style="font-size:0.7em;color:gray">High-level summary</small></h2>
-<p>My solution seems to work, but it’s a little hacky. I also see no straightforward way to implement within-group centering without an explicit adjustment for the latent group mean.</p>
 <ul>
-<li>My original plan, using the <code>me()</code> syntax did not work consistently, perhaps because there’s no shrinkage for the group means.</li>
-<li>My approach does not work for a non-Gaussian exposure <code>X</code>, because <code>mi()</code> is not implemented for e.g. binary variables.</li>
-<li>I never managed to create a simulated scenario where the latent Mundlak approach consistently outperforms the non-latent Mundlak for <code>b_X</code>. It improves estimates for <code>b_Xbar</code> (i.e. the group-level confound), so it’s doing what it’s supposed to, but that’s not really what we’re going for here. <code>b_X</code> is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). <strong>Am I missing something in my simulations or is latent group mean centering rarely worth the effort?</strong> I’d be glad for any pointers. <strong>Edit:</strong> <a href="https://twitter.com/niclas_kuper">Niclas Kuper</a> gave me a pointer, so I have clarified above that we do not expect estimation of <code>b_X</code> to improve by using latent group means.</li>
+<li>My solutions seem to work, but they’re a little hacky. The <code>me</code> approach didn’t work for me at first until I specified the grouping variable, which makes sense.</li>
+<li>I had to add a constant <code>.01</code> to <code>Xse</code> when SE was zero (in my Bernoulli exposure simulation).</li>
+<li><code>mi()</code> cannot be combined with non-Gaussian variables. If I treat binary exposure <code>X</code> as Gaussian in a LPM, convergence was difficult and I had to fix the sigma to 0.01. The <code>me()</code> approach seems to work though. If I do all this, the three approaches (rethinking, me, mi) converge.</li>
+<li>I never managed to create a simulated scenaro where the latent Mundlak approach consistently outperforms the non-latent Mundlak for <code>b_X</code>. It improves estimates for <code>b_Xbar</code> (i.e. the group-level confound), so it’s doing what it’s supposed to, but <code>b_X</code> is always already estimated close to the true value with a non-latent Mundlak model. I tried to create conditions to make outperformance likely (small group sizes, much within-subject variation in X relative to between-subject variation, so that Xbar poorly correlates with the group-level confound). <strong>Am I missing something in my simulations or is latent group mean centering rarely worth the effort?</strong> I’d be glad for any pointers. <strong>Edit:</strong> <a href="https://twitter.com/niclas_kuper">Niclas Kuper</a> gave me the pointer I needed, so I have clarified above that we do not expect estimation of <code>b_X</code> to improve by using latent group means.</li>
 </ul>
 <p>The simulations and their results are documented in detail below. Click on the “Implementations” to see the model code.</p>
 <h2 id="bernoulli-simulations">Bernoulli simulations</h2>
-<p>I started with Richard’s simulations of a binary outcome. I was not able to reproduce his model performances exactly. Specifically, the latent Mundlak model does not outperform the non-latent Mundlak model by much, except if you care about <code>b_Xbar</code> (i.e. the group-level confound).</p>
+<p>I started with Richard’s simulations of a binary outcome. I was not able to reproduce his model performances exactly and ended up increasing the simulated sample size to make estimates a bit more stable (to more clearly show bias vs. variance).</p>
 <p>Up to the latent Mundlak model, the brms equivalents, perform, well, equivalently. For the latent Mundlak model, the brms gets slightly different coefficients, but a similar overall result.</p>
 <div class="layout-chunk" data-layout="l-body">
 <details>
@@ -2562,6 +2570,7 @@ Show code
 </summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>b_mru_gr</span> <span class='op'>&lt;-</span> <span class='fu'>brm</span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span> <span class='op'>+</span> <span class='fu'>me</span><span class='op'>(</span><span class='va'>Xbar</span>, <span class='va'>Xse</span>, gr <span class='op'>=</span> <span class='va'>id</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sim</span>, </span>
+<span>                family <span class='op'>=</span> <span class='fu'>bernoulli</span><span class='op'>(</span><span class='op'>)</span>,</span>
 <span>             prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
 <span>                 <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, coef <span class='op'>=</span> <span class='st'>"X"</span><span class='op'>)</span>,</span>
 <span>                 <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, coef <span class='op'>=</span> <span class='st'>"Z"</span><span class='op'>)</span>,</span>
@@ -3378,14 +3387,14 @@ Show code
 </summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>b_mru_mi</span> <span class='op'>&lt;-</span> <span class='fu'>brm</span><span class='op'>(</span><span class='fu'>bf</span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span> <span class='op'>+</span> <span class='fu'>mi</span><span class='op'>(</span><span class='va'>X2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>             <span class='fu'>bf</span><span class='op'>(</span><span class='va'>X2</span> <span class='op'>|</span> <span class='fu'>mi</span><span class='op'>(</span><span class='va'>Xse</span><span class='op'>)</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>id</span><span class='op'>)</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sim</span> <span class='op'>%&gt;%</span> <span class='fu'>mutate</span><span class='op'>(</span>Xse <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>Xse</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>             <span class='fu'>bf</span><span class='op'>(</span><span class='va'>X2</span> <span class='op'>|</span> <span class='fu'>mi</span><span class='op'>(</span><span class='va'>Xse</span><span class='op'>)</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>id</span><span class='op'>)</span><span class='op'>)</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sim</span> <span class='op'>%&gt;%</span> <span class='fu'>mutate</span><span class='op'>(</span>Xse <span class='op'>=</span> <span class='va'>Xse</span> <span class='op'>+</span> <span class='fl'>0.01</span><span class='op'>)</span>, iter <span class='op'>=</span> <span class='fl'>4000</span>,</span>
 <span>            prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
 <span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, coef <span class='op'>=</span> <span class='st'>"X"</span>, resp <span class='op'>=</span> <span class='st'>"Y"</span><span class='op'>)</span>,</span>
 <span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, coef <span class='op'>=</span> <span class='st'>"Z"</span>, resp <span class='op'>=</span> <span class='st'>"Y"</span><span class='op'>)</span>,</span>
 <span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, coef <span class='op'>=</span> <span class='st'>"miX2"</span>, resp <span class='op'>=</span> <span class='st'>"Y"</span><span class='op'>)</span>,</span>
 <span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"exponential(1)"</span>, class <span class='op'>=</span> <span class='st'>"sd"</span>, resp <span class='op'>=</span> <span class='st'>"Y"</span><span class='op'>)</span>,</span>
 <span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"exponential(1)"</span>, class <span class='op'>=</span> <span class='st'>"sd"</span>, resp <span class='op'>=</span> <span class='st'>"X2"</span><span class='op'>)</span>,</span>
-<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"exponential(1)"</span>, class <span class='op'>=</span> <span class='st'>"sigma"</span>, resp <span class='op'>=</span> <span class='st'>"X2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"constant(0.01)"</span>, class <span class='op'>=</span> <span class='st'>"sigma"</span>, resp <span class='op'>=</span> <span class='st'>"X2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
 <span><span class='va'>b_mru_mi</span></span>
 <span></span>
 <span><span class='va'>b_mru_mi</span> <span class='op'>%&gt;%</span> <span class='fu'>gather_draws</span><span class='op'>(</span><span class='va'>b_Y_X</span>, <span class='va'>b_Y_Z</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>mean_hdci</span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
