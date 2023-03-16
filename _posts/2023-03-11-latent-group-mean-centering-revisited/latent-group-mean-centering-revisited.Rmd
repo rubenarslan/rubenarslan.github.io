@@ -30,7 +30,7 @@ Econometricians and epidemiologists tend to use fixed effects regression to do s
 
 One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you'd like to adjust for. A solution to this is to estimate the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so^[What McElreath calls Full Luxury Bayes: Latent Mundlak machine] is fairly easy in Stan, but it's less clear how to do it with everyone's favourite Stan interface, brms. 
 
-In which way does this sampling error at the group level bias your results? It attenuates your estimate of `b_Xbar` (Lüdtke's bias). I thought it would also bias my estimate of `b_X`, because I'm underadjusting by ignoring the measurement error in my covariate. That is not so. Why? To get the intuition, it helped me to consider the case where I first subtract `Xbar` from `X`. `Xdiff` is necessarily uncorrelated with `Xbar`, meaning any changes in the association of `Xbar` and `Y` (which we get by modelling sampling error) are irrelevant to `Y ~ Xdiff`.
+In which way does this sampling error at the group level bias your results? It attenuates your estimate of `b_Xbar` ([Lüdtke's bias](https://pubmed.ncbi.nlm.nih.gov/18778152/)). I thought it would also bias my estimate of `b_X`, because I'm underadjusting by ignoring the measurement error in my covariate. That is not so. Why? To get the intuition, it helped me to consider the case where I first subtract `Xbar` from `X`. `Xdiff` is necessarily uncorrelated with `Xbar`, meaning any changes in the association of `Xbar` and `Y` (which we get by modelling sampling error) are irrelevant to `Y ~ Xdiff`.
 
 I think I'm not the only who is confused about this. [Matti Vuorre](https://twitter.com/vuorre) shared [a solution](https://vuorre.netlify.app/posts/latent-mean-centering/#brms) to center X with the latent group mean using brms' non-linear syntax. Centering with the latent group mean is not necessary though.  Also, I tried the syntax and it doesn't correctly recover simulated effects.^[I think the reason he thought it works is that in the data he used, from McNeish & Hamaker 2020, the group mean varies very little except for measurement error, so we expect it not to make a difference.]
 
@@ -284,6 +284,21 @@ mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
 ```
 
 #### brms
+
+
+##### brms me() measurement error notation
+
+```{r}
+b_mru_gr <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse, gr = id), data = sim, 
+             prior = c(
+                 set_prior("normal(0, 1)", class = "b", coef = "X"),
+                 set_prior("normal(0, 1)", class = "b", coef = "Z"),
+                 set_prior("normal(0, 1)", class = "b", coef = "meXbarXsegrEQid"),
+                 set_prior("exponential(1)", class = "sd"),
+                 set_prior("exponential(1)", class = "sdme")))
+```
+
+##### brms mi() missingness notation
 ```{r}
 b_mru_mi <- brm(bf(Y ~ (1|id) + X + Z + mi(X2), family = bernoulli()) +
              bf(X2 | mi(Xse) ~ (1|id), 
@@ -350,14 +365,16 @@ draws <- bind_rows(
   brms_mundlak = b_mrx %>% gather_draws(b_X, b_Z, b_Xbar),
   brms_mundlak_centered = b_mrc %>% gather_draws(b_X, b_Z),
   rethinking_latent_mundlak = mru %>% gather_draws(b_X, b_Z, buy),
-  brms_latent_mundlak = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
+  brms_latent_mundlak = b_mru_gr %>% gather_draws(b_X, b_Z, bsp_meXbarXsegrEQid),
+  brms_latent_mundlak_mi = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
  .id = "model") %>% 
   separate(model, c("package", "model"), extra = "merge") %>% 
   mutate(model = fct_inorder(factor(model)),
          .variable = str_replace(.variable, "_Y", ""),
          .variable = recode(.variable, 
                             "buy" = "b_Xbar",
-                            "bsp_miX2" = "b_Xbar"),
+                            "bsp_miX2" = "b_Xbar",
+                            "bsp_meXbarXsegrEQid" = "b_Xbar"),
          .variable = factor(.variable, levels = c("b_X", "b_Z", "b_Xbar")))
 
 draws <- draws %>% group_by(package, model, .variable) %>% 
@@ -520,20 +537,7 @@ mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
 
 ##### brms me() measurement error notation
 
-```{r,results='markup'}
-sim <- sim %>% group_by(id) %>% 
-  mutate(Xse = sd(X)/sqrt(n())) %>% ungroup()
-
-ggplot(sim, aes(Ug, Xbar, ymin = Xbar - Xse, ymax = Xbar + Xse)) + geom_pointrange(alpha = 0.2)
-
-b_mru <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse), data = sim,
-            prior = c(
-              set_prior("normal(0, 1)", class = "b", coef = "X"),
-              set_prior("normal(0, 1)", class = "b", coef = "Z"),
-              set_prior("normal(0, 1)", class = "b", coef = "meXbarXse"),
-              set_prior("exponential(1)", class = "sd"),
-              set_prior("exponential(1)", class = "sdme")))
-
+```{r}
 b_mru_gr <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse, gr = id), data = sim, 
              prior = c(
                  set_prior("normal(0, 1)", class = "b", coef = "X"),
@@ -541,14 +545,8 @@ b_mru_gr <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse, gr = id), data = sim,
                  set_prior("normal(0, 1)", class = "b", coef = "meXbarXsegrEQid"),
                  set_prior("exponential(1)", class = "sd"),
                  set_prior("exponential(1)", class = "sdme")))
-
 ```
 
-
-```{r,results='markup'}
-b_mru
-b_mru_gr
-```
 
 ##### brms mi() missingness notation
 ```{r}
@@ -603,14 +601,16 @@ draws <- bind_rows(
   brms_mundlak = b_mrx %>% gather_draws(b_X, b_Z, b_Xbar),
   brms_mundlak_centered = b_mrc %>% gather_draws(b_X, b_Z),
   rethinking_latent_mundlak = mru %>% gather_draws(b_X, b_Z, buy),
-  brms_latent_mundlak = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
+  brms_latent_mundlak = b_mru_gr %>% gather_draws(b_X, b_Z, bsp_meXbarXsegrEQid),
+  brms_latent_mundlak_mi = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
  .id = "model") %>% 
   separate(model, c("package", "model"), extra = "merge") %>% 
   mutate(model = fct_inorder(factor(model)),
          .variable = str_replace(.variable, "_Y", ""),
          .variable = recode(.variable, 
                             "buy" = "b_Xbar",
-                            "bsp_miX2" = "b_Xbar"),
+                            "bsp_miX2" = "b_Xbar",
+                            "bsp_meXbarXsegrEQid" = "b_Xbar"),
          .variable = factor(.variable, levels = c("b_X", "b_Z", "b_Xbar")))
 
 draws <- draws %>% group_by(package, model, .variable) %>% 
@@ -774,6 +774,19 @@ mru %>% gather_draws(b_X, b_Z) %>% mean_hdci()
 
 #### brms
 
+##### brms me() measurement error notation
+I had to add .01 to the `Xse` because brms does not permit 0 measurement error (when modelling measurement error).
+
+```{r}
+b_mru_gr <- brm(Y ~ 1 +(1|id) + X + Z + me(Xbar, Xse, gr = id), data = sim %>% mutate(Xse = Xse + 0.01), 
+             prior = c(
+                 set_prior("normal(0, 1)", class = "b", coef = "X"),
+                 set_prior("normal(0, 1)", class = "b", coef = "Z"),
+                 set_prior("normal(0, 1)", class = "b", coef = "meXbarXsegrEQid"),
+                 set_prior("exponential(1)", class = "sd"),
+                 set_prior("exponential(1)", class = "sdme")))
+```
+
 ##### brms mi() missingness notation
 
 brms does not support the mi() notation for binary variables. Also, it does not accept zero measurement error, so I averaged across groups to take the mean Xse.
@@ -804,14 +817,16 @@ draws <- bind_rows(
   brms_mundlak = b_mrx %>% gather_draws(b_X, b_Z, b_Xbar),
   brms_mundlak_centered = b_mrc %>% gather_draws(b_X, b_Z),
   rethinking_latent_mundlak = mru %>% gather_draws(b_X, b_Z, buy),
-  brms_latent_mundlak = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
+  brms_latent_mundlak = b_mru_gr %>% gather_draws(b_X, b_Z, bsp_meXbarXsegrEQid),
+  brms_latent_mundlak_mi = b_mru_mi %>% gather_draws(b_Y_X, b_Y_Z, bsp_Y_miX2),
  .id = "model") %>% 
   separate(model, c("package", "model"), extra = "merge") %>% 
   mutate(model = fct_inorder(factor(model)),
          .variable = str_replace(.variable, "_Y", ""),
          .variable = recode(.variable, 
                             "buy" = "b_Xbar",
-                            "bsp_miX2" = "b_Xbar"),
+                            "bsp_miX2" = "b_Xbar",
+                            "bsp_meXbarXsegrEQid" = "b_Xbar"),
          .variable = factor(.variable, levels = c("b_X", "b_Z", "b_Xbar")))
 
 draws <- draws %>% group_by(package, model, .variable) %>% 

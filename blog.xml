@@ -7,14 +7,26 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 12 Mar 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Mar 2023 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Latent group mean centering with brms</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited</link>
+      <description>Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.</description>
+      <category>brms</category>
+      <category>modelling</category>
+      <category>quick job</category>
+      <guid>https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited</guid>
+      <pubDate>Tue, 14 Mar 2023 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/mundlak.jpg" medium="image" type="image/jpeg"/>
+    </item>
     <item>
       <title>Multilevel censored location-scale models</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2023-03-05-multilevel-censored-location-scale-models</link>
       <description>Simulating several models and their ability to recover within-subject and between-subject effects on scale</description>
       <guid>https://rubenarslan.github.io/posts/2023-03-05-multilevel-censored-location-scale-models</guid>
-      <pubDate>Sun, 12 Mar 2023 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2023-03-05-multilevel-censored-location-scale-models/multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0__means-22-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
