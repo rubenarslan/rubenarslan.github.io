@@ -9,10 +9,10 @@
     <generator>Distill</generator>
     <lastBuildDate>Tue, 14 Mar 2023 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>Latent group mean centering with brms</title>
+      <title>Latent group means with brms</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited</link>
-      <description>Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.</description>
+      <description>Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.</description>
       <category>brms</category>
       <category>modelling</category>
       <category>quick job</category>

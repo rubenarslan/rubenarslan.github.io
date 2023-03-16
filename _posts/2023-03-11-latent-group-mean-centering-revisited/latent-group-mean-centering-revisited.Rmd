@@ -1,7 +1,7 @@
 ---
-title: "Latent group mean centering with brms"
+title: "Latent group means with brms"
 description: |
- Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.
+ Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.
 author:
   - name: Ruben C. Arslan
     url: https://rubenarslan.github.io

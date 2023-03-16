@@ -88,9 +88,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-<title>One lives only to make blunders: Latent group mean centering with brms</title>
+<title>One lives only to make blunders: Latent group means with brms</title>
 
-<meta property="description" itemprop="description" content="Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."/>
+<meta property="description" itemprop="description" content="Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."/>
 
 <link rel="canonical" href="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
@@ -101,9 +101,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta name="article:author" content="Ruben C. Arslan"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="One lives only to make blunders: Latent group mean centering with brms"/>
+<meta property="og:title" content="One lives only to make blunders: Latent group means with brms"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."/>
+<meta property="og:description" content="Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."/>
 <meta property="og:url" content="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"/>
 <meta property="og:image" content="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/mundlak.jpg"/>
 <meta property="og:locale" content="en_US"/>
@@ -111,14 +111,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary_large_image"/>
-<meta property="twitter:title" content="One lives only to make blunders: Latent group mean centering with brms"/>
-<meta property="twitter:description" content="Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."/>
+<meta property="twitter:title" content="One lives only to make blunders: Latent group means with brms"/>
+<meta property="twitter:description" content="Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."/>
 <meta property="twitter:url" content="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"/>
 <meta property="twitter:image" content="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/mundlak.jpg"/>
 <meta property="twitter:site" content="@rubenarslan"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="One lives only to make blunders: Latent group mean centering with brms"/>
+<meta name="citation_title" content="One lives only to make blunders: Latent group means with brms"/>
 <meta name="citation_fulltext_html_url" content="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
 <meta name="citation_online_date" content="2023/03/15"/>
@@ -128,7 +128,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","categories","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Latent group mean centering with brms"]},{"type":"character","attributes":{},"value":["Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]}]}]},{"type":"character","attributes":{},"value":["2023-03-15"]},{"type":"character","attributes":{},"value":["brms","modelling","quick job"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","code_folding","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","categories","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Latent group means with brms"]},{"type":"character","attributes":{},"value":["Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]}]}]},{"type":"character","attributes":{},"value":["2023-03-15"]},{"type":"character","attributes":{},"value":["brms","modelling","quick job"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","code_folding","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2150,7 +2150,7 @@ gtag('config', 'UA-2102103-6');
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Latent group mean centering with brms","description":"Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-03-15T00:00:00.000+01:00","citationText":"Arslan, 2023"}
+{"title":"Latent group means with brms","description":"Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-03-15T00:00:00.000+01:00","citationText":"Arslan, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2180,7 +2180,7 @@ gtag('config', 'UA-2102103-6');
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Latent group mean centering with brms</h1>
+<h1>Latent group means with brms</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
   <a href="../../blog.html#category:brms" class="dt-tag">brms</a>
@@ -2188,7 +2188,7 @@ gtag('config', 'UA-2102103-6');
   <a href="../../blog.html#category:quick_job" class="dt-tag">quick job</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>Richard McElreath recently shared a tutorial on how to do latent group mean centering (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.</p></p>
+<p><p>Richard McElreath recently shared a tutorial on how to do estimate latent group means (à la Mundlak) in Stan. I try to follow his code, do the same with brms, and try to implement a solution Matti Vuorre posted.</p></p>
 </div>
 
 <div class="d-byline">
@@ -2234,12 +2234,7 @@ gtag('config', 'UA-2102103-6');
 </ul>
 </nav>
 </div>
-<p>In a recent <a href="https://youtu.be/iwVqiiXYeC4?t=3299">lecture</a>, <a href="https://twitter.com/rlmcelreath">Richard McElreath</a> gives an introduction to Mundlak devices (<a href="https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r">code</a>). Briefly, social scientists would often like to remove confounding at the group level.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>Econometricians and epidemiologists tend to use fixed effects regression to do so. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. The two solutions yield similar results for the within-group effect, but differ on how they treat group-level effects.</p>
-<p><a href="https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31">Arguably</a>, there are more ways to mess up the random effects model, but it’s more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.</p>
-<p>One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you’d like to adjust for. A solution to this is to estimate the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is fairly easy in Stan, but it’s less clear how to do it with everyone’s favourite Stan interface, brms.</p>
-<p>In which way does this sampling error at the group level bias your results? It attenuates your estimate of <code>b_Xbar</code> (<a href="https://pubmed.ncbi.nlm.nih.gov/18778152/">Lüdtke’s bias</a>). I thought it would also bias my estimate of <code>b_X</code>, because I’m underadjusting by ignoring the measurement error in my covariate. That is not so. Why? To get the intuition, it helped me to consider the case where I first subtract <code>Xbar</code> from <code>X</code>. <code>Xdiff</code> is necessarily uncorrelated with <code>Xbar</code>, meaning any changes in the association of <code>Xbar</code> and <code>Y</code> (which we get by modelling sampling error) are irrelevant to <code>Y ~ Xdiff</code>.</p>
-<p>I think I’m not the only who is confused about this. <a href="https://twitter.com/vuorre">Matti Vuorre</a> shared <a href="https://vuorre.netlify.app/posts/latent-mean-centering/#brms">a solution</a> to center X with the latent group mean using brms’ non-linear syntax. Centering with the latent group mean is not necessary though. Also, I tried the syntax and it doesn’t correctly recover simulated effects.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>In a recent <a href="https://youtu.be/iwVqiiXYeC4?t=3299">lecture</a>, <a href="https://twitter.com/rlmcelreath">Richard McElreath</a> gave an introduction to Mundlak devices (<a href="https://github.com/rmcelreath/stat_rethinking_2023/blob/main/scripts/12_bonus_mundlak.r">code</a>). Briefly, social scientists would often like to remove confounding at the group level.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <aside>
 <div class="layout-chunk" data-layout="l-body">
 <details>
@@ -2252,8 +2247,13 @@ Show code
 </details>
 <p><img src="mundlak.jpg" width="508" /></p>
 </div>
-<a href="https://en.wikipedia.org/wiki/Yair_Mundlak">Yair Mundlak</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> in his Full Luxury Bayes outfit, courtesy of DALL-E.
+<a href="https://en.wikipedia.org/wiki/Yair_Mundlak">Yair Mundlak</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> in his Full Luxury Bayes outfit, courtesy of DALL-E.
 </aside>
+<p>Econometricians and epidemiologists tend to use fixed effects regression to do so. Psychologists often use random effects regressions and adjust for the mean of the predictor of interest. The two solutions yield similar results for the within-group effect, but differ on how they treat group-level effects.</p>
+<p><a href="https://www.annualreviews.org/doi/full/10.1146/annurev-statistics-040120-024521#_i31">Arguably</a>, there are more ways to mess up the random effects model, but it’s more flexible and efficient and it makes it easier to model e.g., cross-level interactions and effect heterogeneity.</p>
+<p>One way you can mess up, is if your group sizes are small (e.g., sibling groups in a low fertility country) and your estimate of the group mean is a poor stand-in for the confounds you’d like to adjust for. A solution to this is to estimate the latent group mean instead, i.e. to account for the fact that we are estimating it with uncertainty. Doing so<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> is fairly easy in Stan, but it’s less clear how to do it with everyone’s favourite Stan interface, brms.</p>
+<p>In which way does this sampling error at the group level bias your results? It attenuates your estimate of <code>b_Xbar</code> (<a href="https://pubmed.ncbi.nlm.nih.gov/18778152/">Lüdtke’s bias</a>). I thought it would also bias my estimate of <code>b_X</code>, because I’m underadjusting by ignoring the measurement error in my covariate. That is not so. Why? To get the intuition, it helped me to consider the case where I first subtract <code>Xbar</code> from <code>X</code>. <code>Xdiff</code> is necessarily uncorrelated with <code>Xbar</code>, meaning any changes in the association of <code>Xbar</code> and <code>Y</code> (which we get by modelling sampling error) are irrelevant to <code>Y ~ Xdiff</code>.</p>
+<p>I think I’m not the only who is confused about this. <a href="https://twitter.com/vuorre">Matti Vuorre</a> shared <a href="https://vuorre.netlify.app/posts/latent-mean-centering/#brms">a solution</a> to center X with the latent group mean using brms’ non-linear syntax. Centering with the latent group mean is not necessary though. Also, I tried the syntax and it doesn’t correctly recover simulated effects.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p>My two attempts at a solution:</p>
 <p>Using <code>me()</code></p>
 <ol type="1">
@@ -3454,9 +3454,9 @@ Figure 3: Estimated coefficients and the true values (dashed line)
 <hr />
 <ol>
 <li id="fn1"><p>the group here can be an individual measured several times, a sibling group, a school, a nation, etc.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>What McElreath calls Full Luxury Bayes: Latent Mundlak machine<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>I think the reason he thought it works is that in the data he used, from McNeish &amp; Hamaker 2020, the group mean varies very little except for measurement error, so we expect it not to make a difference.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Mundlak, Y. 1978: On the pooling of time series and cross section data. Econometrica 46:69-85.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Mundlak, Y. 1978: On the pooling of time series and cross section data. Econometrica 46:69-85.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>What McElreath calls Full Luxury Bayes: Latent Mundlak machine<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I think the reason he thought it works is that in the data he used, from McNeish &amp; Hamaker 2020, the group mean varies very little except for measurement error, so we expect it not to make a difference.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
@@ -3469,7 +3469,7 @@ Figure 3: Estimated coefficients and the true values (dashed line)
     </span>
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Latent%20group%20mean%20centering%20with%20brms&amp;url=https%3A%2F%2Frubenarslan.github.io%2Fposts%2F2023-03-11-latent-group-mean-centering-revisited%2F" aria-label="share on twitter">
+      <a href="https://twitter.com/share?text=Latent%20group%20means%20with%20brms&amp;url=https%3A%2F%2Frubenarslan.github.io%2Fposts%2F2023-03-11-latent-group-mean-centering-revisited%2F" aria-label="share on twitter">
         <i class="fab fa-twitter" aria-hidden="true"></i>
       </a>
       <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frubenarslan.github.io%2Fposts%2F2023-03-11-latent-group-mean-centering-revisited%2F" aria-label="share on facebook">
@@ -3520,11 +3520,11 @@ var disqus_config = function () {
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rubenarslan/rubenarslan.github.io">https://github.com/rubenarslan/rubenarslan.github.io</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Arslan (2023, March 15). One lives only to make blunders: Latent group mean centering with brms. Retrieved from https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/</pre>
+  <pre class="citation-appendix short">Arslan (2023, March 15). One lives only to make blunders: Latent group means with brms. Retrieved from https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/</pre>
   <p>BibTeX citation</p>
   <pre class="citation-appendix long">@misc{arslan2023latent,
   author = {Arslan, Ruben C.},
-  title = {One lives only to make blunders: Latent group mean centering with brms},
+  title = {One lives only to make blunders: Latent group means with brms},
   url = {https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/},
   year = {2023}
 }</pre>
