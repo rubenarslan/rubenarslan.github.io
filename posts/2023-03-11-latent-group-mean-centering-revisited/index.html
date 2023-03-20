@@ -2220,6 +2220,7 @@ gtag('config', 'UA-2102103-6');
 <li><a href="#multilevel-1" id="toc-multilevel-1">Multilevel</a></li>
 <li><a href="#multilevel-mundlak-1" id="toc-multilevel-mundlak-1">Multilevel Mundlak</a></li>
 <li><a href="#multilevel-latent-mundlak-1" id="toc-multilevel-latent-mundlak-1">Multilevel Latent Mundlak</a></li>
+<li><a href="#non-working-implementation-of-matti-vuorres-approach-1" id="toc-non-working-implementation-of-matti-vuorres-approach-1">non-working implementation of Matti Vuorre’s approach</a></li>
 <li><a href="#summary-1" id="toc-summary-1">Summary</a></li>
 </ul></li>
 <li><a href="#gaussian-binary-exposure-simulations" id="toc-gaussian-binary-exposure-simulations">Gaussian + binary exposure simulations</a>
@@ -3132,6 +3133,94 @@ Show code
 </div>
 </details>
 </div>
+<h3 id="non-working-implementation-of-matti-vuorres-approach-1">non-working implementation of Matti Vuorre’s approach</h3>
+<p>This is the approach Matti Vuorre posted on his blog, except that I rearranged to instead the slope of Xbar. This approach does not work at all, as far as I can tell.</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>latent_formula</span> <span class='op'>&lt;-</span> <span class='fu'>bf</span><span class='op'>(</span></span>
+<span>  <span class='co'># Y model</span></span>
+<span>  <span class='va'>Y</span> <span class='op'>~</span> <span class='va'>interceptY</span>  <span class='op'>+</span> <span class='va'>bX</span><span class='op'>*</span><span class='va'>X</span> <span class='op'>+</span> <span class='va'>bXbar</span><span class='op'>*</span><span class='va'>Xbar</span> <span class='op'>+</span> <span class='va'>bZ</span><span class='op'>*</span><span class='va'>Z</span>,</span>
+<span>  <span class='va'>interceptY</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>,</span>
+<span>  <span class='va'>bX</span> <span class='op'>+</span> <span class='va'>bZ</span> <span class='op'>+</span> <span class='va'>bXbar</span> <span class='op'>~</span> <span class='fl'>1</span>,</span>
+<span></span>
+<span>  <span class='co'># Xbar model</span></span>
+<span>  <span class='fu'>nlf</span><span class='op'>(</span><span class='va'>X</span> <span class='op'>~</span> <span class='va'>Xbar</span><span class='op'>)</span>,</span>
+<span>  <span class='va'>Xbar</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>,</span>
+<span>  nl <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span><span class='op'>)</span> <span class='co'>#+</span></span>
+<span><span class='co'>#  bernoulli()</span></span>
+<span></span>
+<span><span class='fu'>get_prior</span><span class='op'>(</span><span class='va'>latent_formula</span>, data <span class='op'>=</span> <span class='va'>sim</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>b_mru_mv</span> <span class='op'>&lt;-</span> <span class='fu'>brm</span><span class='op'>(</span><span class='va'>latent_formula</span>, data <span class='op'>=</span> <span class='va'>sim</span>,</span>
+<span>            prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, nlpar <span class='op'>=</span> <span class='st'>"bX"</span><span class='op'>)</span>,</span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, nlpar <span class='op'>=</span> <span class='st'>"bZ"</span><span class='op'>)</span>,</span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, nlpar <span class='op'>=</span> <span class='st'>"bXbar"</span><span class='op'>)</span>,</span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, nlpar <span class='op'>=</span> <span class='st'>"Xbar"</span><span class='op'>)</span>,</span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"normal(0, 1)"</span>, class <span class='op'>=</span> <span class='st'>"b"</span>, nlpar <span class='op'>=</span> <span class='st'>"interceptY"</span><span class='op'>)</span>,</span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"exponential(1)"</span>, class <span class='op'>=</span> <span class='st'>"sd"</span>, nlpar <span class='op'>=</span> <span class='st'>"interceptY"</span><span class='op'>)</span>,</span>
+<span>              <span class='fu'>set_prior</span><span class='op'>(</span><span class='st'>"exponential(1)"</span>, class <span class='op'>=</span> <span class='st'>"sd"</span>, nlpar <span class='op'>=</span> <span class='st'>"Xbar"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</details>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>b_mru_mv</span></span></code></pre>
+</div>
+</details>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: Y ~ interceptY + bX * X + bXbar * Xbar + bZ * Z 
+         interceptY ~ 1 + (1 | id)
+         bX ~ 1
+         bZ ~ 1
+         bXbar ~ 1
+         X ~ Xbar
+         Xbar ~ 1 + (1 | id)
+   Data: sim (Number of observations: 646) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~id (Number of levels: 300) 
+                         Estimate Est.Error l-95% CI u-95% CI Rhat
+sd(interceptY_Intercept)     1.76      1.19     0.06     3.43 1.35
+sd(Xbar_Intercept)           1.54      0.99     0.03     3.67 1.19
+                         Bulk_ESS Tail_ESS
+sd(interceptY_Intercept)       10       88
+sd(Xbar_Intercept)             16       84
+
+Population-Level Effects: 
+                     Estimate Est.Error l-95% CI u-95% CI Rhat
+interceptY_Intercept    -0.72      0.92    -2.25     1.14 1.03
+bX_Intercept             0.11      1.10    -2.08     2.16 1.24
+bZ_Intercept            -0.41      0.18    -0.75    -0.04 1.01
+bXbar_Intercept          0.11      1.08    -1.98     2.13 1.24
+Xbar_Intercept           0.06      1.17    -1.80     3.70 1.19
+                     Bulk_ESS Tail_ESS
+interceptY_Intercept      190      554
+bX_Intercept               12      140
+bZ_Intercept             1252     1963
+bXbar_Intercept            12      136
+Xbar_Intercept             15       51
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     1.47      0.06     1.37     1.59 1.02      257       96
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
 </details>
 <h3 id="summary-1">Summary</h3>
 <div class="layout-chunk" data-layout="l-body">
@@ -3202,23 +3291,23 @@ Show code
 <span><span class='va'>N_id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>g_sizes</span><span class='op'>)</span></span>
 <span><span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>N_groups</span>, times <span class='op'>=</span> <span class='va'>g_sizes</span><span class='op'>)</span></span>
 <span><span class='va'>Ug</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N_groups</span>, sd <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span> <span class='co'># group confounds</span></span>
-<span><span class='va'>X</span> <span class='op'>&lt;-</span> <span class='fu'>rbern</span><span class='op'>(</span><span class='va'>N_id</span>, p<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/rethinking/man/rethinking-internal.html'>inv_logit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N_id</span>, <span class='va'>Ug</span><span class='op'>[</span><span class='va'>g</span><span class='op'>]</span> <span class='op'>)</span> <span class='op'>)</span> <span class='op'>)</span>   <span class='co'># individual varying trait</span></span>
+<span><span class='va'>X</span> <span class='op'>&lt;-</span> <span class='fu'>rbern</span><span class='op'>(</span><span class='va'>N_id</span>, p<span class='op'>=</span><span class='fu'>inv_logit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N_id</span>, <span class='va'>Ug</span><span class='op'>[</span><span class='va'>g</span><span class='op'>]</span> <span class='op'>)</span> <span class='op'>)</span> <span class='op'>)</span>   <span class='co'># individual varying trait</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>Z</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N_groups</span><span class='op'>)</span> <span class='co'># group varying trait (observed)</span></span>
 <span><span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='va'>a0</span> <span class='op'>+</span> <span class='va'>b_X</span> <span class='op'>*</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>b_Ug</span><span class='op'>*</span><span class='va'>Ug</span><span class='op'>[</span><span class='va'>g</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>b_Z</span><span class='op'>*</span><span class='va'>Z</span><span class='op'>[</span><span class='va'>g</span><span class='op'>]</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N_id</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>groups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>N_groups</span><span class='op'>)</span>, <span class='va'>Ug</span>, <span class='va'>Z</span><span class='op'>)</span></span>
-<span><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>g</span><span class='op'>)</span>, <span class='va'>X</span>, <span class='va'>Y</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='va'>groups</span>, by <span class='op'>=</span> <span class='st'>"id"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Xbar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span></span>
-<span><span class='va'>sim</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>Ug</span>, <span class='va'>Xbar</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span>use <span class='op'>=</span> <span class='st'>"p"</span><span class='op'>)</span></span>
+<span><span class='va'>groups</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>N_groups</span><span class='op'>)</span>, <span class='va'>Ug</span>, <span class='va'>Z</span><span class='op'>)</span></span>
+<span><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>g</span><span class='op'>)</span>, <span class='va'>X</span>, <span class='va'>Y</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>full_join</span><span class='op'>(</span><span class='va'>groups</span>, by <span class='op'>=</span> <span class='st'>"id"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>arrange</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
+<span>  <span class='fu'>mutate</span><span class='op'>(</span>Xbar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>sim</span> <span class='op'>%&gt;%</span> <span class='fu'>distinct</span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>Ug</span>, <span class='va'>Xbar</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span>use <span class='op'>=</span> <span class='st'>"p"</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span>, data <span class='op'>=</span> <span class='va'>sim</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>Ug</span> <span class='op'>+</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span>, data <span class='op'>=</span> <span class='va'>sim</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>id</span> <span class='op'>+</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span>, data <span class='op'>=</span> <span class='va'>sim</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='va'>sim</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Xse <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>X2 <span class='op'>=</span> <span class='va'>X</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='va'>sim</span> <span class='op'>%&gt;%</span> <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
+<span>  <span class='fu'>mutate</span><span class='op'>(</span>Xse <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
+<span>  <span class='fu'>mutate</span><span class='op'>(</span>X2 <span class='op'>=</span> <span class='va'>X</span><span class='op'>)</span></span></code></pre>
 </div>
 </details>
 </div>
@@ -3449,7 +3538,7 @@ Figure 3: Estimated coefficients and the true values (dashed line)
 </p>
 </div>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

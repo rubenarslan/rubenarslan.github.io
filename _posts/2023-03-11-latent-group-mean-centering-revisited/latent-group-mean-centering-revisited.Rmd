@@ -600,6 +600,42 @@ b_mru_minl <- brm(latent_formula, data = sim,
 b_mru_minl
 ```
 
+### non-working implementation of Matti Vuorre's approach
+This is the approach Matti Vuorre posted on his blog, except that I rearranged to instead the slope of Xbar. This approach does not work at all, as far as I can tell.
+
+```{r, results="hide"}
+latent_formula <- bf(
+  # Y model
+  Y ~ interceptY  + bX*X + bXbar*Xbar + bZ*Z,
+  interceptY ~ 1 + (1 | id),
+  bX + bZ + bXbar ~ 1,
+
+  # Xbar model
+  nlf(X ~ Xbar),
+  Xbar ~ 1 + (1 | id),
+  nl = TRUE
+) #+
+#  bernoulli()
+
+get_prior(latent_formula, data = sim)
+
+b_mru_mv <- brm(latent_formula, data = sim,
+            prior = c(
+              set_prior("normal(0, 1)", class = "b", nlpar = "bX"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "bZ"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "bXbar"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "Xbar"),
+              set_prior("normal(0, 1)", class = "b", nlpar = "interceptY"),
+              set_prior("exponential(1)", class = "sd", nlpar = "interceptY"),
+              set_prior("exponential(1)", class = "sd", nlpar = "Xbar")))
+```
+
+
+```{r, results="markup"}
+b_mru_mv
+```
+
+
 </details>
 
 ### Summary
