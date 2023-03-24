@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #20794d; } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,17 +74,18 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
-code span.sc { color: #20794d; } /* SpecialChar */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
 code span.st { color: #20794d; } /* String */
 code span.va { color: #111111; } /* Variable */
 code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
+
 
   <!--radix_placeholder_meta_tags-->
   <title>One lives only to make blunders: Ruben C. Arslan</title>
@@ -788,6 +790,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1029,10 +1032,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
-  }
-
-  .figure img {
-    width: 100%;
   }
 
   .figure .caption {
@@ -1864,7 +1863,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+        }).join("\n");
         window.tippy(this, {
           allowHTML: true,
           content: refHtml,
@@ -1875,6 +1889,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1974,6 +2013,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1996,7 +2037,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
       });
     }
 
@@ -2035,7 +2076,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2133,10 +2174,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </aside>
 <p>You can reach me at <a href="mailto:ruben.arslan@gmail.com" class="email">ruben.arslan@gmail.com</a> or on <a href="https://twitter.com/rubenarslan">Twitter</a>. If you want to tell me I’m wrong about something anonymously, you can use <a href="https://tellmeimwrong.formr.org">this form</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I also have a standing <a href="bug_bounty.html">bug bounty policy</a> for errors in my published work.</p>
 <h2 id="publications">Publications</h2>
-<p>Here’s a <a href="cv_ruben_arslan.pdf">PDF of my curriculum vitae</a>. All my work is at least green open access and you can find direct links to each publication in this PDF (click on the green/orange lock icons). You can also find my publications on my <a href="https://scholar.google.com/citations?user=X6fXzMcAAAAJ&amp;hl=en">Google Scholar profile</a>. Below are the two main graphs from the two main papers of my dissertation. You can click on them to view the websites I usually create to document my analyses and results.</p>
+<p>Here’s a <a href="cv_ruben_arslan.pdf">PDF of my curriculum vitae</a>. All my work is at least green open access and you can find direct links to each publication in this PDF (click on the green/orange lock icons).
+You can also find my publications on my <a href="https://scholar.google.com/citations?user=X6fXzMcAAAAJ&amp;hl=en">Google Scholar profile</a>. Below are the two main graphs from the two main papers of my dissertation. You can click on them to view the websites I usually create to document my analyses and results.</p>
 <div class="l-body-outset">
 <p>
-<p><a href="https://rubenarslan.github.io/ovulatory_shifts/"><img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width: 45%" alt="Ovulatory changes"></a> <a href="https://rubenarslan.github.io/paternal_age_fitness/"><img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width: 54%;" alt="Paternal age effects on reproductive fitness"></a></p>
+<p><a href="https://rubenarslan.github.io/ovulatory_shifts/"><img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width: 45%" alt="Ovulatory changes"></a>
+<a href="https://rubenarslan.github.io/paternal_age_fitness/"><img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width: 54%;" alt="Paternal age effects on reproductive fitness"></a></p>
 </p>
 </div>
 <h2 id="blogs">Blogs</h2>
@@ -2154,7 +2197,12 @@ Estimates from large-scale replication projects in psychology suggest that the m
 <div class="l-screen-inset">
 <p>
 <center>
-<img src="figures/bad%207.png" style="width: 12%"> <img src="figures/bad%202.png" style="width: 12%"> <img src="figures/bad%204.png" style="width: 12%"> <img src="figures/bad%203.png" style="width: 12%"> <img src="figures/bad%205.png" style="width: 12%"> <img src="figures/bad%206.png" style="width: 12%">
+<img src="figures/bad%207.png" style="width: 12%">
+<img src="figures/bad%202.png" style="width: 12%">
+<img src="figures/bad%204.png" style="width: 12%">
+<img src="figures/bad%203.png" style="width: 12%">
+<img src="figures/bad%205.png" style="width: 12%">
+<img src="figures/bad%206.png" style="width: 12%">
 </p>
 </div>
 </center>
@@ -2168,7 +2216,12 @@ Google now also finds datasets – but will it find yours? How can you share you
 <div class="l-screen-inset">
 <p>
 <center>
-<img src="figures/screen%201.png" style="width: 12%" > <img src="figures/screen%204.png" style="width: 12%"> <img src="figures/screen%206.png" style="width: 12%"> <img src="figures/screen%202.png" style="width: 12%"> <img src="figures/screen%205.png" style="width: 12%"> <img src="figures/screen%203.png" style="width: 12%">
+<img src="figures/screen%201.png" style="width: 12%" >
+<img src="figures/screen%204.png" style="width: 12%">
+<img src="figures/screen%206.png" style="width: 12%">
+<img src="figures/screen%202.png" style="width: 12%">
+<img src="figures/screen%205.png" style="width: 12%">
+<img src="figures/screen%203.png" style="width: 12%">
 </p>
 </div>
 </center>
@@ -2182,7 +2235,12 @@ The survey framework formr.org is a free, open source software for online and la
 <div class="l-screen-inset">
 <p>
 <center>
-<img src="figures/form%207.png" style="width: 12%" > <img src="figures/form%202.png" style="width: 12%"> <img src="figures/form%208.png" style="width: 12%"> <img src="figures/form%203.png" style="width: 12%"> <img src="figures/form%205.png" style="width: 12%"> <img src="figures/form%206.png" style="width: 12%">
+<img src="figures/form%207.png" style="width: 12%" >
+<img src="figures/form%202.png" style="width: 12%">
+<img src="figures/form%208.png" style="width: 12%">
+<img src="figures/form%203.png" style="width: 12%">
+<img src="figures/form%205.png" style="width: 12%">
+<img src="figures/form%206.png" style="width: 12%">
 </p>
 </div>
 </center>
@@ -2195,7 +2253,7 @@ In this workshop, we will try to tackle questions about privacy in the age of bi
 </details>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
-<img src="figures/privacy.jpg" alt="Transparency vs. privacy. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14598219300)" class=external />
+<img src="figures/privacy.jpg" alt="Transparency vs. privacy. From the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14598219300)" width="460" class=external />
 <p class="caption">
 Figure 1: Transparency vs. privacy. From the <a href="https://www.flickr.com/photos/internetarchivebookimages/14598219300">Internet Archive Book Images</a>
 </p>
@@ -2210,16 +2268,17 @@ Figure 1: Transparency vs. privacy. From the <a href="https://www.flickr.com/ph
 <p>codebook is an R package that allows users to document datasets in nice websites that can be read and understood both by co-authors, forgetful future yous, and machines. It was based on a set of convenience functions available in formr. It can make good use of existing metadata, such as item data contained in Qualtrics or formr.org surveys, but also variable and value labels, in Stata, SPSS, and SAS files.</p>
 <p>I wrote a <a href="https://journals.sagepub.com/doi/full/10.1177/2515245919838783">tutorial</a>, but the easiest way to get going is to simply upload a dataset to this <a href="http://codebook.formr.org/">webapp</a>. Iro Eleftheriadou created a <a href="https://rubenarslan.github.io/codebook_gallery/">gallery</a> for codebooks made from datasets uploaded to the Open Science Framework.</p>
 <h3 id="alphabattle.xyz"><a href="https://alphabattle.xyz">Alphabattle.xyz</a></h3>
-<p>A small collaboration with a friend led to this player-vs-player online word game written with <a href="https://www.meteor.com">Meteor</a>. You have to infer the other person’s secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone.</p>
+<p>A small collaboration with a friend led to this player-vs-player online word game written with <a href="https://www.meteor.com">Meteor</a>.
+You have to infer the other person’s secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone.</p>
 <h3 id="brainfunnel.com"><a href="http://brainfunnel.com/">brainfunnel.com</a></h3>
 <p>During a year abroad in Sweden in 2005, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn’t work on Macs, I wrote one in the form of a website. I stopped working on this in 2011, but it still works, and I think it might still be the only one with easy support for gap texts.</p>
 <h3 class="appendix" id="privacy-policy">Privacy Policy</h3>
 <p>See <a href="about.html">here</a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<section class="footnotes" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Some more information about this form can be found <a href="http://www.the100.ci/2018/02/22/tell-me-im-wrong">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Some more information about this form can be found <a href="http://www.the100.ci/2018/02/22/tell-me-im-wrong">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
@@ -2242,7 +2301,8 @@ Figure 1: Transparency vs. privacy. From the <a href="https://www.flickr.com/ph
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2018-2021 Ruben Arslan. <a href="about.html">Privacy Policy</a>.</p>
+<p>© Copyright 2018-2023 Ruben Arslan. <a href="about.html">Privacy
+Policy</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 

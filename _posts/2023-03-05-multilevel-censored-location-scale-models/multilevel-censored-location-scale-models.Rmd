@@ -37,7 +37,7 @@ library(tweetrmd)
 tweet_embed("https://twitter.com/rubenarslan/status/1632170569448685569")
 ```
 
-Let me explain. [Kahneman & Deaton (2010)](https://pnas.org/doi/full/10.1073/pnas.1011492107) reported that happiness plateaued at an income of $75,000 or higher. Their measure of happiness was a binary question that 1,000 people answered ~450 times each over the course of a year. [Killingsworth 2021](https://pnas.org/doi/full/10.1073/pnas.2016976118) used his experience sampling data from more than 35,000 individuals responding ~50 times to refute this. The Killingsworth study had a better happiness measure, a sliding scale from very unhappy to very happy. He found a loglinear relationship across the entire income range^[so, a doubling of income is associated with same happiness increment throughout the income range]. He attributed Kahneman & Deaton's (2010) plateau finding to a ceiling effect in their measure. 
+Let me explain. [Kahneman & Deaton (2010)](https://pnas.org/doi/full/10.1073/pnas.1011492107) reported that happiness plateaued at an income of $75,000 or higher. Their measure of happiness was a binary question that 450,000 people answered in daily, random phone calls to ~1,000 people. [Killingsworth 2021](https://pnas.org/doi/full/10.1073/pnas.2016976118) used his experience sampling data from more than 35,000 individuals responding ~50 times to refute this. The Killingsworth study had a better happiness measure, a sliding scale from very unhappy to very happy. He found a loglinear relationship across the entire income range^[so, a doubling of income is associated with same happiness increment throughout the income range]. He attributed Kahneman & Deaton's (2010) plateau finding to a ceiling effect in their measure. 
 
 Now, in a recent paper, [Killingsworth, Kahneman, and Meller (2023)](https://www.pnas.org/doi/10.1073/pnas.2208661120) re-analyzed Killingsworth's (2021) experience sampling data to determine the relationship between income and experienced well-being, happiness. In the reanalysis, KKM wanted to find out why the results differed in an "adversarial collaboration". 
 
@@ -49,14 +49,13 @@ A better way to put it would have been: at higher `log(income)` the variability 
 
 Now, I'm not particularly well-acquainted with quantile regression. However, I've worked with multilevel location scale models a good deal in the past, a different form of distributional regression. In so doing, I've learned not to trust my intuition, or at least to calibrate with fake data simulation. So, I simulated to check a hunch.
 
-
 ### Two questionable assumptions in the quantile regression
 My conclusion is that KKM make at least two^[two assumptions that I'll touch on here. They do not make their assumptions regarding causal inference explicit, but still very much imply causality. But, like, what else is new?] assumptions that I think are unlikely to hold and which could bias their estimate:
 
 1. that the variance of happiness within-subjects is homogeneous
 2. that their aggregated means of happiness are free of sampling error
 
-I was fairly sure that #1 is false, because, you know, I've seen happiness data, and because I am a human being who knows other human beings. I did not see their happiness data, mind you, which they only shared in aggregated and rounded form upon publication of KKM 2023, so we cannot check within-subject variance homogeneity.^[I requested the raw data on March 4.]
+I was fairly sure that #1 is false, because, you know, I've seen happiness data, and because I am a human being who knows other human beings. I did not see their happiness data, mind you, which they only shared in aggregated and rounded form upon publication of KKM 2023, so we cannot check within-subject variance homogeneity.^[I requested the raw data on March 4 and received an answer that ping-level data could not be shared owing to promises made to participants on March 15.]
 
 I was less sure whether #2 has much impact with 51 days per subject on average. 
 
