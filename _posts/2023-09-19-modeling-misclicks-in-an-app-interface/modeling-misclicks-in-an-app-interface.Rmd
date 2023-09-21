@@ -150,11 +150,8 @@ mean(daily$fp,na.rm=T)
 ```
 
 
-To estimate the true rate, I subtract the false positive rate.
-I can also divide by (1-FP) to account for clicks which were both intended and
-accidental. However, in Clue, if a button is clicked twice, it would be unchecked. However,
-my mental model of how this happens is that users don't feel mittelschmerz accidentally check the button
-but don't bother to correct it. Users who do feel mittelschmerz will pay more attention to make sure the button is in the desired state.
+To estimate the true rate, I subtract the false positive rate and divide by (1-FP) to account for clicks which were both intended and
+accidental. Normally, two clicks on the same button would turn the button off again. However, in Clue, they unfortunately had a problem with their database, so off-toggles went unrecorded. This probably contributes to the fairly high false positive rate.
 
 ```{r}
 glm5 <- glm(o_clicks ~ 1, data = daily, family = binomial)
@@ -162,8 +159,7 @@ daily$obs_rate <- predict(glm5, type = "response")
 daily %>% 
   summarise(obs_rate = mean(obs_rate), fp_rate = mean(fp)) %>% 
   mutate(
-    est_true_rate = (obs_rate - fp_rate),
-    est_true_rate_uncheck = (obs_rate - fp_rate) / (1 - fp_rate)
+    est_true_rate = (obs_rate - fp_rate) / (1 - fp_rate)
     )
 ```
 
@@ -177,11 +173,9 @@ daily %>%
   group_by(time) %>% 
   summarise(obs_rate = mean(obs_rate), fp_rate = mean(fp)) %>% 
   mutate(
-    est_true_rate = (obs_rate - fp_rate),
-    est_true_rate_uncheck = (obs_rate - fp_rate) / (1 - fp_rate)
+    est_true_rate = (obs_rate - fp_rate) / (1 - fp_rate)
     ) %>% 
-  mutate(est_true_rate = if_else(est_true_rate < 0, 0, est_true_rate),
-         est_true_rate_uncheck = if_else(est_true_rate_uncheck < 0, 0, est_true_rate_uncheck)
+  mutate(est_true_rate = if_else(est_true_rate < 0, 0, est_true_rate)
          ) %>% 
   pivot_longer(c(-time)) %>% 
   ggplot(aes(time, value, color = name)) +

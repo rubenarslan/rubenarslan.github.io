@@ -1580,7 +1580,7 @@ is experienced. Mittelschmerz is a pain that occurs around ovulation, i.e. in t
 <span>                      <span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span> <span class='op'>+</span> <span class='fl'>3</span> <span class='op'>*</span> <span class='va'>cs</span> <span class='op'>+</span> <span class='fl'>10</span> <span class='op'>*</span> <span class='va'>os</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>time <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>daily</span>, <span class='st'>"daily.csv"</span><span class='op'>)</span></span>
+<span><span class='co'># readr::write_csv(daily, "daily.csv")</span></span>
 <span><span class='co'># daily %&gt;% group_by(time) %&gt;% summarise_all(mean) %&gt;% View</span></span>
 <span><span class='co'># daily %&gt;% group_by(time) %&gt;% summarise(sprintf("%.7f",mean(o_clicks))) %&gt;% View</span></span></code></pre>
 </div>
@@ -1672,11 +1672,8 @@ Type:  invlink(link) </code></pre>
 </div>
 <pre><code>[1] 0.02373439</code></pre>
 </div>
-<p>To estimate the true rate, I subtract the false positive rate.
-I can also divide by (1-FP) to account for clicks which were both intended and
-accidental. However, in Clue, if a button is clicked twice, it would be unchecked. However,
-my mental model of how this happens is that users don’t feel mittelschmerz accidentally check the button
-but don’t bother to correct it. Users who do feel mittelschmerz will pay more attention to make sure the button is in the desired state.</p>
+<p>To estimate the true rate, I subtract the false positive rate and divide by (1-FP) to account for clicks which were both intended and
+accidental. Normally, two clicks on the same button would turn the button off again. However, in Clue, they unfortunately had a problem with their database, so off-toggles went unrecorded. This probably contributes to the fairly high false positive rate.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>glm5</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>o_clicks</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>daily</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span></span>
@@ -1684,14 +1681,13 @@ but don’t bother to correct it. Users who do feel mittelschmerz will pay more 
 <span><span class='va'>daily</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>obs_rate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>obs_rate</span><span class='op'>)</span>, fp_rate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>fp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    est_true_rate <span class='op'>=</span> <span class='op'>(</span><span class='va'>obs_rate</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span>,</span>
-<span>    est_true_rate_uncheck <span class='op'>=</span> <span class='op'>(</span><span class='va'>obs_rate</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span></span>
+<span>    est_true_rate <span class='op'>=</span> <span class='op'>(</span><span class='va'>obs_rate</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span></span>
 <span>    <span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 1 × 4
-  obs_rate fp_rate est_true_rate est_true_rate_uncheck
-     &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;                 &lt;dbl&gt;
-1   0.0318  0.0237       0.00804               0.00823</code></pre>
+<pre><code># A tibble: 1 × 3
+  obs_rate fp_rate est_true_rate
+     &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;
+1   0.0318  0.0237       0.00823</code></pre>
 </div>
 <p>Let’s bring the time variable back in. The black line is the true curve.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1702,11 +1698,9 @@ but don’t bother to correct it. Users who do feel mittelschmerz will pay more 
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>obs_rate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>obs_rate</span><span class='op'>)</span>, fp_rate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>fp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    est_true_rate <span class='op'>=</span> <span class='op'>(</span><span class='va'>obs_rate</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span>,</span>
-<span>    est_true_rate_uncheck <span class='op'>=</span> <span class='op'>(</span><span class='va'>obs_rate</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span></span>
+<span>    est_true_rate <span class='op'>=</span> <span class='op'>(</span><span class='va'>obs_rate</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span></span>
 <span>    <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>est_true_rate <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>est_true_rate</span> <span class='op'>&lt;</span> <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='va'>est_true_rate</span><span class='op'>)</span>,</span>
-<span>         est_true_rate_uncheck <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>est_true_rate_uncheck</span> <span class='op'>&lt;</span> <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='va'>est_true_rate_uncheck</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>est_true_rate <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>est_true_rate</span> <span class='op'>&lt;</span> <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='va'>est_true_rate</span><span class='op'>)</span></span>
 <span>         <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>time</span>, <span class='va'>value</span>, color <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
