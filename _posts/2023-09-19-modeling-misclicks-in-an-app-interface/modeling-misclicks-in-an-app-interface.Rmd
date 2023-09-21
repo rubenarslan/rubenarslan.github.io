@@ -18,15 +18,6 @@ output:
 preview: clue_interface.png
 ---
 
-NEW IDEA:
-- model predicts FP at day level
-- diff model with agg preds predicts FP at cycle/user level
-- estimate FPs
-- model-based rates
-- true_rate = obs_rate - FPs + obs_rate * FPs
-
-
-
 If you've seen me talk at a conference in recent years, you know that I have been working with data collected by the cycle tracking app [Clue](https://helloclue.com).
 
 The cool thing about this dataset is that it's __a)__ big __b)__ highly repeated (daily tracking) __c)__ spans long time frames (for some users, years).
