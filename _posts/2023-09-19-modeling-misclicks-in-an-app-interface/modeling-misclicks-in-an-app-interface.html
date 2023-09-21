@@ -1535,9 +1535,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>The cool thing about this dataset is that it’s <strong>a)</strong> big <strong>b)</strong> highly repeated (daily tracking) <strong>c)</strong> spans long time frames (for some users, years).</p>
 <p>The not so cool thing is that all outcomes are tracked using single on-off button for each outcome. No multiple items, no Likert scales, not even a way to tell a nonresponse from a no.
 Still, the amount of data, in my view, can more than compensate for this problem, and I find very similar results on e.g. sexual desire as in my other work, which hopefully does better psychometrically but falls way short of Clue’s sample size.</p>
-<p>Another problem that I have been grappling with is that there seems to be a nonzero rate of misclicking in the app. I don’t know whether this sort of problem is more common in daily app data, whether it has to do with the design of the app interface, or whether I would normally simply not have the amount of data to see the false positives.</p>
-<p>The question I’m trying to answer is to estimate the rate of <em>mittelschmerz</em>, i.e.
-how many women ever experience mittelschmerz and/or in how many cycles mittelschmerz
+<p>Another problem that I have been grappling with is that there seems to be a nonzero rate of misclicking in the app. Unfortunately, the Clue database does not record when a button is toggled off again, so even if users correct their misclick, it ends up in my data.</p>
+<p>The substantive question I’m trying to answer is to estimate the rate of <em>mittelschmerz</em>, i.e.
+how many people ever experience mittelschmerz and/or in how many cycles mittelschmerz
 is experienced. Mittelschmerz is a pain that occurs around ovulation, i.e. in the middle of the cycle. Mittelschmerz should not occur during (pre-)menstruation. Nor should people who take combined oral contraceptive pills be ovulating especially frequently. Yet, I observe both of these things. Why?</p>
 <p>I suspect the interface. In Clue, symptom buttons are thematically arranged. As you can see, the “ovulation pain” button is next to the button for cramps and tender breasts. Guess which forms of pain do occur during (pre-)menstruation and for people on the pill. That’s right, cramps and breast tenderness.</p>
 <aside>
@@ -1705,7 +1705,7 @@ accidental. Normally, two clicks on the same button would turn the button off ag
 </div>
 <p><img src="modeling-misclicks-in-an-app-interface_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
 </div>
-<p>In the real example, I’m interested in estimating how many women <strong>ever</strong> experience mittelschmerz. So, I also wanted to estimate false positives at the cycle and user level. For simplication, I just consider user/cycle as one thing here. The strategy remains the same: focus on the (pre-)menstruation period for users who are not ovulating to estimate the false positive rate. Extrapolate it to the rest of the users. Then compute the true rate from the observed rate.</p>
+<p>In the real example, I’m interested in estimating how many users <strong>ever</strong> experience mittelschmerz. So, I also wanted to estimate false positives at the cycle and user level. For simplification, I just consider user/cycle as one thing here. The strategy remains the same: focus on the (pre-)menstruation period for users who are not ovulating to estimate the false positive rate. Extrapolate it to the rest of the users. Then compute the true rate from the observed rate.</p>
 <p>Complications:</p>
 <ol type="1">
 <li>I had to implement an offset to correctly estimate the FP rate from the shorter cycles (after excluding the midcycle period).</li>
@@ -1794,7 +1794,7 @@ Type:  invlink(link) </code></pre>
 </div>
 </div>
 <p>After taking the offset into account, the peaks near the end disappear. I’m pretty satisfied with this.</p>
-<p>In the real example, I’m interested in estimating how many women <strong>ever</strong> experience mittelschmerz. So, I a) want to implement a false positive model at the daily level b) estimate rates of <em>any</em> mittelschmerz per cycle and c) per <em>user</em>. Especially for c) I’d like to specify a model that takes the number of cycles into account (since I’m more likely to observe a cycle with mittelschmerz, the more cycles I have for the user). I have this all set up, but I’m struggling with implementing a false positive model using lme4. It sort of works with brms, but that’s a poor fit for the huge sample size I’m working with. Also, in both cases, I have to use <code>log(fp)</code> as the offset which implies that setting <code>fp=0</code> in my marginal effects yields <code>-Inf</code>. This doesn’t seem right.</p>
+<p>In the real example, I’m interested in estimating how many users <strong>ever</strong> experience mittelschmerz. So, I a) want to implement a false positive model at the daily level b) estimate rates of <em>any</em> mittelschmerz per cycle and c) per <em>user</em>. Especially for c) I’d like to specify a model that takes the number of cycles into account (since I’m more likely to observe a cycle with mittelschmerz, the more cycles I have for the user). I have this all set up, but I’m struggling with implementing a false positive model using lme4. It sort of works with brms, but that’s a poor fit for the huge sample size I’m working with. Also, in both cases, I have to use <code>log(fp)</code> as the offset which implies that setting <code>fp=0</code> in my marginal effects yields <code>-Inf</code>. This doesn’t seem right.</p>
 <p>At this point, I’m wondering whether the approach via <code>offset</code> is silly, but I don’t really have an alternative idea.</p>
 <p>Using lme4</p>
 <div class="layout-chunk" data-layout="l-body">
