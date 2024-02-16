@@ -1,0 +1,138 @@
+---
+title: "The reliability of multilevel parameters in Bayesian regressions"
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+date: 2024-02-15
+categories: 
+  - brms
+  - measurement
+  - reliability
+  - modelling
+  - quick job
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: true
+    toc: true
+    toc_float: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(groundhog)
+groundhog.library(c("dplyr", "brms", "tidybayes", "colorspace"), date = "2024-02-13")
+groundhog.library(c("stan-dev/cmdstanr"), date = "2024-02-13")
+```
+
+For most psychologists, the concept of reliability is the main way they think about statistical error. At least it used to be that way for me and a recent conference I attended didn't disabuse me of this impression. 
+
+In many talks, researchers presented work in which they aimed to explain variation in a parameter of a multilevel model, or using such a parameter to predict something. Basically, in personality, people are moving on from individual differences in means. Some example parameters include random slopes (e.g., the effect of some daily event on daily affect), residual variability (e.g., within-person negative affect variability), but there are many others (e.g., within-subject autocorrelation, "inertia"). 
+
+Now, these higher-level parameters have to be estimated of course. Most researchers are aware that these quantities are not error-free. Still, in most talks I saw, people either didn't address this, or they computed a reliability of some sorts. I saw uses of _split half_ and _getting parameters for multiple items, then computing reliability of the item indices using Cronbach's alpha_. I didn't see anyone use them, but methodologists have published various specific solutions (e.g., [Neubauer, Voelkle, Voss, & Mertens, 2020](https://doi.org/10.1080/00223891.2018.1521418), [Schneider & Junghaenel, 2022](https://doi.org/10.3758/s13428-022-01995-1)).
+
+Most of these approaches require estimating additional models. I.e., you can't just use the model that is being used to study e.g. the moderator that could explain random slope variation. Some of these approaches also require us to know the residual variance, so that they can compute reliability using the classical test theory approach (Rel = Vt/Vt+Ve).
+
+I am not very interested in the merits or demerits of these various approaches.  When we were recently interested in the reliability of within-subject variability in a censored model, we did not find an existing approach fit for our needs.
+
+## Simulation, of course
+
+However, in Bayesian models, we of course already have an estimate of the error of our multilevel parameters. Let's simulate a N=300 within-person diary study. People take part for, on average, 14 days.
+
+```{r}
+set.seed(20191005)
+N <- 300
+n_days = 14
+n_days_per_person = rpois(N, n_days)
+people <- tibble(
+  id = 1:N,
+  x_mean = rnorm(N),
+  y_mean = rnorm(N),
+  x_slope = rnorm(N, 0.5, 0.2),
+  y_var = rnorm(N, 0.3, 0.2),
+  )
+people <- people %>% 
+  mutate(
+    )
+days <- people %>% 
+  full_join(tibble(
+              id = rep(1:N, times = n_days_per_person)
+            ), by = "id", multiple = "all") %>% 
+            mutate(
+              x = x_mean + rnorm(n()),
+              y = rnorm(n(), 
+                        mean = y_mean + x_slope*x,
+                        sd = exp(y_var))
+            )
+
+head(people)
+head(days)
+```
+
+
+Let's not make it too simple. Our outcome y is a function of `x`, which has stable between-person variance, but also varies within-subject. But the effect of `x` varies between persons. Also, the residual variance of `y` varies between persons. Let me specify a brms model to recover our data-generating model.
+
+```{r class.source = "fold-show", }
+m1 <- brm(bf(y ~ 1 + x + (1 + x|id),
+             sigma ~ (1|id)), data = days,
+          backend = "cmdstanr",
+          cores = 4,
+          file = "example_model",
+          file_refit = "on_change")
+```
+
+
+Now, for each person's random intercept, slope or residual variance, we can look at the distribution of the MCMC draws for their estimated slope.^[Presumably SEs calculated with bootstrapping in empirical Bayes models would work too?] 
+
+From this, we can get a standard error. We also have an estimate of the variance of the true slopes (the standard deviation across persons). 
+
+We can get an estimate of each parameter's reliability by dividing the average SEM by the average between-person variance.
+
+```{r class.source = "fold-show"}
+(rel_from_draws <- m1 %>%
+   # grab all estimates of varying/random effects
+    gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
+    group_by(.variable, parameter, .draw) %>%
+    mutate(latent_var = var(.value)) %>% # variance across IDs, per draw
+    group_by(.variable, parameter, id) %>%
+    summarise(error_var = var(.value), # variance within IDs across draws
+              latent_var = mean(latent_var)) %>%
+    mutate(reliability = 1 - error_var/latent_var) %>% # individual rels not guaranteed to be >= 0
+    group_by(.variable, parameter) %>%
+    summarise_all(mean) %>% 
+    select(.variable, parameter, error_var, latent_var, reliability))
+```
+
+## Why does this work?
+To get here, it helped us to work our way back from how a confidence interval is calculated under the regression hypothesis in classical test theory. For me, the CI under the regression hypothesis was my first encounter with shrinkage^[although I don't think this concept was named/the link was made when I was taught].
+
+Namely, the standard error is computed as follows:
+
+$$se = s_X \cdot \sqrt{Rel \cdot (1-Rel)}$$
+We can square this to get the error variance. Now $s_X^2$ is our observed variance.
+
+$$V_E=s_X^2⋅(1−Rel) * Rel$$
+Rearranging the classical test theory definiton of reliability, we can express the observed variance as the latent variance divided by the reliability.
+
+$$Rel=\frac{V_t}{s_X^2}$$
+
+$$s_X^2=\frac{V_t}{Rel}$$
+Substitute 
+
+$$V_E=\frac{V_t}{Rel}⋅(1−Rel) * Rel$$
+Simplify 
+
+
+$$V_E=V_t⋅(1−Rel)$$
+Solve for $Rel$
+
+$$Rel = \frac{V_E}{V_t}$$
+The standard errors of our random slopes are the standard errors of the shrunk estimates. As such, they can be analogised (in our vanilla, uninformative prior model) to the SE computed under the regression hypothesis, where we first shrink the observed value to the population mean and then compute a standard error around that estimate.
+
+We thought this was neat. I'd still appreciate to hear if it is wrong in some way. I also didn't find a way to compute the right uncertainty around my reliability estimates.
+
+Thanks to Stefan Schmukle, Julia Rohrer, and Niclas Kupers for discovering basic mistakes in my thinking and fun exchanges on this topic.
+
+## Boring footnote to ingratiate myself with fellow full luxury Bayesians {.appendix}
+I guess I won't be needing this snippet very often, as I prefer full luxury Bayes. I usually won't extract model parameters to use in two-step modelling, but would rather predict the latent variable in the same model. I am also moving away from interpreting metrics that are relativised to the in-sample standard deviation for various reasons. But in a [recent preprint by Julia Rohrer et al.](https://osf.io/preprints/psyarxiv/dkrxa), we argued that the low reliability of the random slopes we were studying made it fairly pointless to study them further with the amount of data we had. I think the reliability coefficient can also help break down the results of complex models for other researchers and ease the transition as personality psychologists study these complex parameters more.
