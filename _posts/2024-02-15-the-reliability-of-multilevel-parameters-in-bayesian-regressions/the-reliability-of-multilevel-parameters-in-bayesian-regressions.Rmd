@@ -13,7 +13,7 @@ categories:
 output:
   distill::distill_article:
     self_contained: false
-    code_folding: true
+    code_folding: TRUE
     toc: true
     toc_float: true
 ---
@@ -26,7 +26,23 @@ groundhog.library(c("dplyr", "brms", "tidybayes", "colorspace"), date = "2024-02
 groundhog.library(c("stan-dev/cmdstanr"), date = "2024-02-13")
 ```
 
-For most psychologists, the concept of reliability is the main way they think about statistical error. At least it used to be that way for me and a recent conference I attended didn't disabuse me of this impression. 
+
+
+<script type='text/javascript'>
+document.addEventListener('DOMContentLoaded', function() {
+    // Select all <details> elements
+    var details = document.querySelectorAll('details');
+
+    // Iterate through each <details> element and set its open attribute to true
+    for(var i = 1; i < details.length; i++) {
+        details[i].setAttribute('open', '');
+    }
+});
+</script>
+
+
+
+For most psychologists, the concept of reliability is the main way they think about measurement error. At least it used to be that way for me and a recent conference I attended didn't disabuse me of this impression. 
 
 In many talks, researchers presented work in which they aimed to explain variation in a parameter of a multilevel model, or used such a parameter to predict something. Basically, in personality, people are moving on from individual differences in means. Some example parameters include random slopes (e.g., the varying effects of some daily event on daily affect), residual variability (e.g., varying within-person negative affect variability), but there are many others (e.g., within-subject autocorrelation, "inertia"). 
 
@@ -71,7 +87,7 @@ head(days)
 
 Let's not make it too simple. Our outcome y is a function of `x`, which has stable between-person variance, but also varies within-subject. But the effect of `x` varies between persons. Also, the residual variance of `y` varies between persons. Let me specify a brms model to recover our data-generating model.
 
-```{r class.source = "fold-show"}
+```{r}
 m1 <- brm(bf(y ~ 1 + x + (1 + x|id),
              sigma ~ (1|id)), data = days,
           backend = "cmdstanr",
@@ -83,9 +99,9 @@ m1 <- brm(bf(y ~ 1 + x + (1 + x|id),
 
 Now, for each person's random intercept, slope or residual variance, we can look at the distribution of the MCMC draws for their estimated slope.^[Presumably standard errors calculated with bootstrapping in empirical Bayes models would work too?] 
 
-From this, we can get the error variance (the variance across draws). We also have an estimate of the variance of the true slopes (the variance across persons within draws). 
+From this, we can get the error variance (the variance across draws). Each person can have a different amount of error variance (e.g., people who took part in the dairy for few vs. many days). We also have an estimate of the variance of the true scores (the variance across people within draws). We can then average again (this time, the error variance across people, and the true score variance across draws).
 
-We can get an estimate of each parameter's reliability by dividing the average error variance by the average between-person variance.
+Finally, we can get an estimate of each parameter's reliability by dividing the average error variance by the average between-person variance and subtracting this fraction from 1.
 
 ```{r class.source = NULL}
 (rel_from_draws <- m1 %>%
@@ -105,27 +121,27 @@ We can get an estimate of each parameter's reliability by dividing the average e
 ## Why does this work?
 To get here, it helped us to work our way back from how a confidence interval is calculated under the regression hypothesis in classical test theory. For me, the CI under the regression hypothesis was my first encounter with shrinkage^[although I don't think this concept was named/the link was made when I was taught].
 
-Namely, the standard error is computed as follows:
+Namely, the standard error of the shrunk estimate is computed as follows:
 
-$$se = s_X \cdot \sqrt{Rel \cdot (1-Rel)}$$
-We can square this to get the error variance. Now $s_X^2$ is our observed variance.
+$$se_{shrunk} = s_X \cdot \sqrt{Rel \cdot (1-Rel)}$$
+We can square this to get the error variance of the shrunk estimates. Now $s_X^2$ is our observed variance and $V_E$ is $se_{shrunk}^2$.
 
 $$V_E=s_X^2⋅(1−Rel) * Rel$$
 Rearranging the classical test theory definiton of reliability, we can express the observed variance as the latent variance divided by the reliability.
 
-$$Rel=\frac{V_t}{s_X^2}$$
+$$Rel=\frac{V_T}{s_X^2}$$
 
-$$s_X^2=\frac{V_t}{Rel}$$
+$$s_X^2=\frac{V_T}{Rel}$$
 Substitute 
 
-$$V_E=\frac{V_t}{Rel}⋅(1−Rel) * Rel$$
+$$V_E=\frac{V_T}{Rel}⋅(1−Rel) * Rel$$
 Simplify 
 
 
-$$V_E=V_t⋅(1−Rel)$$
+$$V_E=V_T⋅(1−Rel)$$
 Solve for $Rel$
 
-$$Rel = 1 - \frac{V_E}{V_t}$$
+$$Rel = 1 - \frac{V_E}{V_T}$$
 The standard errors (SEs) of our random slopes are the SEs of the shrunk estimates. As such, they can be analogised (in our vanilla, uninformative prior model) to the SE computed under the regression hypothesis, where we first shrink the observed value to the population mean and then compute a standard error around that estimate.
 
 We thought this was neat. I'd still appreciate to hear if it is wrong in some way. I also didn't find a way to compute the right uncertainty around my reliability estimates.
@@ -134,7 +150,7 @@ Thanks to Stefan Schmukle, Julia Rohrer, Taym Alsalti, and Niclas Kupers for dis
 
 ## Footnote on other approaches. {.appendix}
 
-I saw uses of split half, as well as people getting parameters for multiple items, then computing reliability of the item indices using Cronbach's alpha_. Methodologists have published various solutions for specific cases, like random slopes, though I haven't seen them used in the primary literature (e.g., [Neubauer, Voelkle, Voss, & Mertens, 2020](https://doi.org/10.1080/00223891.2018.1521418), [Schneider & Junghaenel, 2022](https://doi.org/10.3758/s13428-022-01995-1)). These two approaches also require estimating additional models. I.e., you can't just use the model that is being used to study e.g. the moderator that could explain random slope variation. These approaches also require us to know the residual variance, so that they can compute reliability using the classical test theory approach $Rel = V_T/V_T+V_E$. Most importantly for us though, they weren't fully general (e.g., didn't work to estimate the reliability of the residual variability).
+I saw uses of split half, as well as people getting parameters for multiple items, then computing reliability of the item indices using Cronbach's alpha_. Methodologists have published various solutions for specific cases, like random slopes, though I haven't seen them used in the primary literature (e.g., [Neubauer, Voelkle, Voss, & Mertens, 2020](https://doi.org/10.1080/00223891.2018.1521418), [Schneider & Junghaenel, 2022](https://doi.org/10.3758/s13428-022-01995-1)). These two approaches also require estimating additional models. I.e., you can't just use the model that is being used to study e.g. the moderator that could explain random slope variation. These approaches also require us to know the residual variance. Most importantly for us though, they weren't fully general (e.g., didn't work to estimate the reliability of the residual variability).
 
 ## Boring footnote to ingratiate myself with fellow full luxury Bayesians {.appendix}
 I guess I won't be needing this snippet very often, as I prefer full luxury Bayes. I usually won't extract model parameters to use in two-step modelling, but would rather predict the latent variable in the same model. I am also moving away from interpreting metrics that are relativised to the in-sample standard deviation for various reasons. But in a [recent preprint by Julia Rohrer et al.](https://osf.io/preprints/psyarxiv/dkrxa), we argued that the low reliability of the random slopes we were studying made it fairly pointless to study them further with the amount of data we had. I think the reliability coefficient can also help break down the results of complex models for other researchers and ease the transition as personality psychologists study these complex parameters more.
