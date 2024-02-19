@@ -52,7 +52,7 @@ When we were recently interested in the reliability of within-subject variabilit
 
 ## Simulation, of course
 
-However, in Bayesian models, we of course already have an estimate of the error of our multilevel parameters. Let's simulate a N=300 within-person diary study. People take part for, on average, 14 days.
+In Bayesian models, we already have an estimate of the error of our multilevel parameters, namely the variance across MCMC draws. Let's simulate a N=300 within-person diary study. People take part for, on average, 14 days.
 
 ```{r}
 set.seed(20191005)
@@ -65,6 +65,7 @@ people <- tibble(
   y_mean = rnorm(N),
   x_slope = rnorm(N, 0.5, 0.2),
   y_var = rnorm(N, 0.3, 0.2),
+  days = n_days_per_person
   )
 people <- people %>% 
   mutate(
@@ -97,9 +98,9 @@ m1 <- brm(bf(y ~ 1 + x + (1 + x|id),
 ```
 
 
-Now, for each person's random intercept, slope or residual variance, we can look at the distribution of the MCMC draws for their estimated slope.^[Presumably standard errors calculated with bootstrapping in empirical Bayes models would work too?] 
+Now, for each person's random intercept, slope or residual variance, we can look at the distribution of the MCMC draws for their estimate.^[Presumably standard errors calculated with bootstrapping in empirical Bayes models would work too?] 
 
-From this, we can get the error variance (the variance across draws). Each person can have a different amount of error variance (e.g., people who took part in the dairy for few vs. many days). We also have an estimate of the variance of the true scores (the variance across people within draws). We can then average again (this time, the error variance across people, and the true score variance across draws).
+From this, we can get the error variance (the variance across draws). Each person can have a different amount of error variance (e.g., people who took part in the diary for few vs. many days). We also have an estimate of the variance of the true scores (the variance across people within draws). We can then average again (this time, the error variance across people, and the true score variance across draws).
 
 Finally, we can get an estimate of each parameter's reliability by dividing the average error variance by the average between-person variance and subtracting this fraction from 1.
 
@@ -116,10 +117,49 @@ Finally, we can get an estimate of each parameter's reliability by dividing the 
     group_by(.variable, parameter) %>%
     summarise_all(mean) %>% 
     select(.variable, parameter, error_var, latent_var, reliability))
+
+(true_score_var <- m1 %>%
+    # grab all estimates of varying/random effects
+    gather_draws( `sd_.+`, regex = TRUE) %>% 
+    mutate(.variable = stringr::str_sub(.variable, 4)) %>% 
+    mutate(latent_var = .value^2))
+
+latent_var_from_draws <- m1 %>%
+                  # grab all estimates of varying/random effects
+    gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
+      tidyr::unite(.variable, .variable, parameter, sep = "__") %>% 
+      mutate(.variable = stringr::str_sub(.variable, 3)) %>% 
+      mutate(.variable = stringr::str_replace(.variable, "__(.+)__", "__\\1_")) %>% 
+      group_by(.variable, .draw) %>%
+      left_join(people %>% select(id, days)) %>% 
+      summarise(latent_var2 = var(.value),
+                latent_var3 = Hmisc::wtd.var(.value, days))# %>% 
+      # summarise(latent_var2 = mean(latent_var2),
+                # latent_var3 = mean(latent_var3)
+                # )
+
+error_var <- m1 %>%
+                  # grab all estimates of varying/random effects
+    gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
+      ungroup() %>% 
+      tidyr::unite(.variable, .variable, parameter, sep = "__") %>% 
+      mutate(.variable = stringr::str_sub(.variable, 3)) %>% 
+      mutate(.variable = stringr::str_replace(.variable, "_sigma__", "_sigma_")) %>% 
+      group_by(.variable, id) %>%
+      summarise(error_var = var(.value)) %>%
+      left_join(people %>% select(id, days)) %>% 
+      summarise(error_var = sum(error_var*days)/sum(days))
+
+(rel_from_draws2 <- true_score_var %>% 
+    full_join(error_var) %>% 
+    group_by(.variable) %>%
+    summarise_all(mean) %>% 
+    mutate(reliability = 1 - error_var/latent_var) %>% # individual rels not guaranteed to be >= 0
+    select(.variable, error_var, latent_var, reliability))
 ```
 
 ## Why does this work?
-To get here, it helped us to work our way back from how a confidence interval is calculated under the regression hypothesis in classical test theory. For me, the CI under the regression hypothesis was my first encounter with shrinkage^[although I don't think this concept was named/the link was made when I was taught].
+To get here, it helped us to work our way back from how a confidence interval is calculated under the regression hypothesis in classical test theory. For me, the CI under the regression hypothesis was my first encounter with [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_(statistics))^[although I don't think this concept was named/the link was made when I was taught].
 
 Namely, the standard error of the shrunk estimate is computed as follows:
 
@@ -127,7 +167,7 @@ $$se_{shrunk} = s_X \cdot \sqrt{Rel \cdot (1-Rel)}$$
 We can square this to get the error variance of the shrunk estimates. Now $s_X^2$ is our observed variance and $V_E$ is $se_{shrunk}^2$.
 
 $$V_E=s_X^2⋅(1−Rel) * Rel$$
-Rearranging the classical test theory definiton of reliability, we can express the observed variance as the latent variance divided by the reliability.
+Rearranging the classical test theory definiton of reliability, we can express the observed variance ($s_X^2$) as the latent true score variance ($V_T$) divided by the reliability ($Rel$).
 
 $$Rel=\frac{V_T}{s_X^2}$$
 
