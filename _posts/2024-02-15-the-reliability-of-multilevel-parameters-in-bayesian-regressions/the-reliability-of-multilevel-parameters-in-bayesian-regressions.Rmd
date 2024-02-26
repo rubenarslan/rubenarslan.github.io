@@ -9,7 +9,6 @@ categories:
   - measurement
   - reliability
   - modelling
-  - quick job
 output:
   distill::distill_article:
     self_contained: false
@@ -124,11 +123,13 @@ We get our estimate of the variance of the true scores by taking the `sd` hyperp
 ```{r}
 SEE2 <- m1 %>%
       # grab all estimates of varying/random effects
-      gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
+      gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], 
+                    regex = TRUE) %>%
       ungroup() %>% 
       tidyr::unite(.variable, .variable, parameter, sep = "__") %>% 
       mutate(.variable = stringr::str_sub(.variable, 3)) %>% 
-      mutate(.variable = stringr::str_replace(.variable, "_sigma__", "_sigma_")) %>% 
+      mutate(.variable = stringr::str_replace(.variable, 
+                                              "_sigma__", "_sigma_")) %>% 
       group_by(.variable, id) %>%
       # compute variance across draws
       summarise(SEE2 = var(.value)) %>%
@@ -136,9 +137,11 @@ SEE2 <- m1 %>%
       # give more weight to error var estimated from people 
       # who contributed more data
       summarise(
-        # weighted SEE^2 reflects the amount of error you get if you take along the uncertainty in your model
+        # weighted SEE^2 reflects the amount of error you get if you take 
+        # along the uncertainty in your model
         weighted_SEE2 = sum(SEE2*days)/sum(days),
-        # unweighted SEE^2 reflects the amount of error you get if you extract the manifest random intercepts/slopes/variances
+        # unweighted SEE^2 reflects the amount of error you get if you 
+        # extract the manifest random intercepts/slopes/variances
         SEE2 = mean(SEE2)
         )
 ```
@@ -196,3 +199,6 @@ I saw uses of split half, as well as people getting parameters for multiple item
 
 ## Boring footnote to ingratiate myself with fellow full luxury Bayesians {.appendix}
 I guess I won't be needing this formula/snippet very often, as I prefer full luxury Bayes. I usually won't extract model parameters to use in two-step modelling, but would rather predict the latent variable in the same model. I am also moving away from interpreting metrics that are relativised to the in-sample standard deviation for various reasons. But in a [recent preprint by Julia Rohrer et al.](https://osf.io/preprints/psyarxiv/dkrxa), we argued that the low reliability of the random slopes we were studying made it fairly pointless to study them further with the amount of data we had. That seems like a suitable use case and will hopefully motivate someone to collect more data. I think the reliability coefficient can also help break down the results of complex models for other researchers and ease the transition as personality psychologists study these complex parameters more.
+
+## Enough with the footnotes {.appendix}
+This blog post is subject to my [bug bounty policy](/bug_bounty.html), which means that I'd appreciate hearing about errors in this post and will pay you (or a charity) a small bounty.
