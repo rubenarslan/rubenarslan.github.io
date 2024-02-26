@@ -67,9 +67,7 @@ people <- tibble(
   y_var = rnorm(N, 0.3, 0.2),
   days = n_days_per_person
   )
-people <- people %>% 
-  mutate(
-    )
+
 days <- people %>% 
   full_join(tibble(
               id = rep(1:N, times = n_days_per_person)
