@@ -7,7 +7,20 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>2023-09-01</lastBuildDate>
+    <lastBuildDate>Sun, 25 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>The reliability of multilevel parameters in Bayesian regressions</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2024-02-15-the-reliability-of-multilevel-parameters-in-bayesian-regressions</link>
+      <description>The reliability of multilevel parameters in Bayesian regressions</description>
+      <category>brms</category>
+      <category>measurement</category>
+      <category>reliability</category>
+      <category>modelling</category>
+      <category>quick job</category>
+      <guid>https://rubenarslan.github.io/posts/2024-02-15-the-reliability-of-multilevel-parameters-in-bayesian-regressions</guid>
+      <pubDate>Sun, 25 Feb 2024 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Modeling misclicks in an app interface</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
@@ -16,7 +29,7 @@
       <category>measurement</category>
       <category>methods</category>
       <guid>https://rubenarslan.github.io/posts/2023-09-19-modeling-misclicks-in-an-app-interface</guid>
-      <pubDate>2023-09-01</pubDate>
+      <pubDate>Sat, 02 Sep 2023 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2023-09-19-modeling-misclicks-in-an-app-interface/clue_interface.png" medium="image" type="image/png" width="604" height="1212"/>
     </item>
     <item>
@@ -28,7 +41,7 @@
       <category>modelling</category>
       <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited</guid>
-      <pubDate>2023-03-15</pubDate>
+      <pubDate>Wed, 15 Mar 2023 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2023-03-11-latent-group-mean-centering-revisited/mundlak.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
@@ -37,7 +50,7 @@
       <link>https://rubenarslan.github.io/posts/2023-03-05-multilevel-censored-location-scale-models</link>
       <description>Simulating several models and their ability to recover within-subject and between-subject effects on scale</description>
       <guid>https://rubenarslan.github.io/posts/2023-03-05-multilevel-censored-location-scale-models</guid>
-      <pubDate>2023-03-13</pubDate>
+      <pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2023-03-05-multilevel-censored-location-scale-models/multilevel-censored-location-scale-models_files/figure-html5/BS_0_8_WS_0__means-22-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -48,7 +61,7 @@
       <category>hormones</category>
       <category>hibar</category>
       <guid>https://rubenarslan.github.io/posts/2023-02-21-reanalysis-sexual-attraction-to-visual-sexual-stimuli-in-association-with-steroid-hormones-across-menstrual-cycles-and-fertility-treatment</guid>
-      <pubDate>2023-02-22</pubDate>
+      <pubDate>Wed, 22 Feb 2023 00:00:00 +0000</pubDate>
       <media:content url="https://ars.els-cdn.com/content/image/1-s2.0-S0306453023000380-gr1.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
@@ -59,7 +72,7 @@
       <category>teaching</category>
       <category>opportunity-equality-genetics</category>
       <guid>https://rubenarslan.github.io/posts/2022-10-20-opportunity-equality-and-genetics-session-2</guid>
-      <pubDate>2022-10-20</pubDate>
+      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
       <media:content url="https://pbs.twimg.com/media/FfVg9isWIAAGV-Z?format=png&amp;name=medium" medium="image" type="text/plain"/>
     </item>
     <item>
@@ -70,7 +83,7 @@
       <category>teaching</category>
       <category>opportunity-equality-genetics</category>
       <guid>https://rubenarslan.github.io/posts/2022-10-19-opportunity-equality-and-genes-a-seminar</guid>
-      <pubDate>2022-10-19</pubDate>
+      <pubDate>Wed, 19 Oct 2022 00:00:00 +0000</pubDate>
       <media:content url="https://pup-assets.imgix.net/onix/images/9780691190808.jpg?w=1500&amp;auto=format" medium="image" type="text/plain"/>
     </item>
     <item>
@@ -82,7 +95,7 @@
       <category>re-analysis</category>
       <category>risk taking</category>
       <guid>https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking</guid>
-      <pubDate>2020-09-23</pubDate>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2020-09-23-hibar-effects-of-acetaminophen-on-risk-taking/pole_balloon.png" medium="image" type="image/png" width="525" height="391"/>
     </item>
     <item>
@@ -94,7 +107,7 @@
       <category>mistakes</category>
       <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation</guid>
-      <pubDate>2020-06-23</pubDate>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2020-06-23-mis-allocated-scrutiny-in-science-a-quick-simulation/mis-allocated-scrutiny-in-science-a-quick-simulation_files/figure-html5/unnamed-chunk-5-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -108,7 +121,7 @@
       <category>marriage</category>
       <category>relationships</category>
       <guid>https://rubenarslan.github.io/posts/2019-09-03-hibar-sexdifferentiated-changes-in-sexual-desire-predict-marital-dissatisfaction</guid>
-      <pubDate>2019-09-03</pubDate>
+      <pubDate>Tue, 03 Sep 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-09-03-hibar-sexdifferentiated-changes-in-sexual-desire-predict-marital-dissatisfaction/book_cover.png" medium="image" type="image/png" width="673" height="1019"/>
     </item>
     <item>
@@ -119,7 +132,7 @@
       <category>correction</category>
       <category>ovulation</category>
       <guid>https://rubenarslan.github.io/posts/2019-06-20-correction-to-arslan-et-al-2019-using-26000-diary-entries-to-show-ovulatory-changes-in-sexual-desire-and-behavior</guid>
-      <pubDate>2019-06-20</pubDate>
+      <pubDate>Thu, 20 Jun 2019 00:00:00 +0000</pubDate>
       <media:content url="https://live.staticflickr.com/3862/14751616975_c06d479338_o_d.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
@@ -132,7 +145,7 @@
       <category>temperature</category>
       <category>experience sampling</category>
       <guid>https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness</guid>
-      <pubDate>2019-06-19</pubDate>
+      <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-06-19-tympanic-temperature-and-social-connectedness/tympanic-temperature-and-social-connectedness_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -146,7 +159,7 @@
       <category>meta science</category>
       <category>bibliometrics</category>
       <guid>https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology</guid>
-      <pubDate>2019-06-14</pubDate>
+      <pubDate>Fri, 14 Jun 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-06-14-hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology/hibar-how-methods-and-practices-changed-after-the-replication-crisis-in-social-psychology_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="3456" height="768"/>
     </item>
     <item>
@@ -160,7 +173,7 @@
       <category>sex</category>
       <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-21-who-initiates</guid>
-      <pubDate>2019-04-26</pubDate>
+      <pubDate>Fri, 26 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-21-who-initiates/who-initiates_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -173,7 +186,7 @@
       <category>sexual activity</category>
       <category>sex</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night</guid>
-      <pubDate>2019-04-12</pubDate>
+      <pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-08-sex-by-day-and-by-night/sex-by-day-and-by-night_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -185,7 +198,7 @@
       <category>open science</category>
       <category>contraception</category>
       <guid>https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception</guid>
-      <pubDate>2019-04-02</pubDate>
+      <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-04-02-measuring-contraception/measuring-contraception_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -198,7 +211,7 @@
       <category>feedback</category>
       <category>visualization</category>
       <guid>https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback</guid>
-      <pubDate>2019-03-19</pubDate>
+      <pubDate>Tue, 19 Mar 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-03-13-intra-individual-feedback/intra-individual-feedback_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1920" height="1344"/>
     </item>
     <item>
@@ -210,7 +223,7 @@
       <category>data-generating model</category>
       <category>brms</category>
       <guid>https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression</guid>
-      <pubDate>2019-03-13</pubDate>
+      <pubDate>Wed, 13 Mar 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-03-12-moderation-vs-distributional-regression/moderation-vs-distributional-regression_files/figure-html5/unnamed-chunk-8-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -221,7 +234,7 @@
       <category>sex diary</category>
       <category>open science</category>
       <guid>https://rubenarslan.github.io/posts/2019-03-08-the-golden-age-of-never-finishing-anything</guid>
-      <pubDate>2019-03-11</pubDate>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
       <media:content url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg/981px-Baldomer_Gili_Roig._La_Sagrada_Fam%C3%ADlia%2C_1905_Copia_moderna_del_negatiu_original_de_vidre.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
@@ -232,7 +245,7 @@
       <link>https://rubenarslan.github.io/posts/2019-01-21-genetic-analyses-and-solidarity</link>
       <description>Genetische Unterschiede sind ein Argument für den Sozialstaat</description>
       <guid>https://rubenarslan.github.io/posts/2019-01-21-genetic-analyses-and-solidarity</guid>
-      <pubDate>2019-01-21</pubDate>
+      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Revised: Are studies that replicate cited more?</title>
@@ -245,7 +258,7 @@
       <category>reproducibility</category>
       <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2019-01-02-are-studies-that-replicate-cited-more</guid>
-      <pubDate>2019-01-02</pubDate>
+      <pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2019-01-02-are-studies-that-replicate-cited-more/are-studies-that-replicate-cited-more_files/figure-html5/unnamed-chunk-5-1.png" medium="image" type="image/png" width="1152" height="768"/>
     </item>
     <item>
@@ -256,7 +269,7 @@
       <category>mistakes</category>
       <category>bug bounty</category>
       <guid>https://rubenarslan.github.io/posts/2018-10-26-on-making-mistakes-and-my-bug-bounty-program</guid>
-      <pubDate>2018-10-26</pubDate>
+      <pubDate>Fri, 26 Oct 2018 00:00:00 +0000</pubDate>
       <media:content url="https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
@@ -270,7 +283,7 @@
       <category>reproducibility</category>
       <category>quick job</category>
       <guid>https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more</guid>
-      <pubDate>2018-10-22</pubDate>
+      <pubDate>Mon, 22 Oct 2018 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2018-10-15-are-big-studies-cited-more/are-big-studies-cited-more_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1920" height="768"/>
     </item>
   </channel>

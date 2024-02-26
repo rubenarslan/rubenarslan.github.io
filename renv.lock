@@ -3,6 +3,10 @@
     "Version": "4.1.2",
     "Repositories": [
       {
+        "Name": "P3M",
+        "URL": "https://p3m.dev/cran/2024-02-05"
+      },
+      {
         "Name": "CRAN",
         "URL": "https://cran.rstudio.com"
       }
@@ -969,10 +973,13 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "1.0.2",
-      "OS_type": null,
+      "Version": "1.0.3",
+      "OS_type": NA,
+      "NeedsCompilation": "no",
       "Repository": "CRAN",
-      "Source": "Repository"
+      "Path": NA,
+      "Source": "Repository",
+      "Requirements": []
     },
     "reprex": {
       "Package": "reprex",

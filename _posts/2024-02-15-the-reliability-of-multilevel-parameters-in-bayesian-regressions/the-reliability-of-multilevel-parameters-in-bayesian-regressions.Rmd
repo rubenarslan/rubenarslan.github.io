@@ -3,7 +3,7 @@ title: "The reliability of multilevel parameters in Bayesian regressions"
 author:
   - name: Ruben C. Arslan
     url: https://rubenarslan.github.io
-date: 2024-02-15
+date: 2024-02-26
 categories: 
   - brms
   - measurement
@@ -24,6 +24,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(groundhog)
 groundhog.library(c("dplyr", "brms", "tidybayes", "colorspace"), date = "2024-02-13")
 groundhog.library(c("stan-dev/cmdstanr"), date = "2024-02-13")
+options(digits = 2)
 ```
 
 
@@ -44,11 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 For most psychologists, the concept of reliability is the main way they think about measurement error. At least it used to be that way for me and a recent conference I attended didn't disabuse me of this impression. 
 
-In many talks, researchers presented work in which they aimed to explain variation in a parameter of a multilevel model, or used such a parameter to predict something. Basically, in personality, people are moving on from individual differences in means. Some example parameters include random slopes (e.g., the varying effects of some daily event on daily affect), residual variability (e.g., varying within-person negative affect variability), but there are many others (e.g., within-subject autocorrelation, "inertia"). 
+At the conference, many researchers presented work in which they aimed to explain variation in a parameter of a multilevel model, or used such a parameter to predict something. Basically, in personality, people are moving on from individual differences in means. Some example parameters include random slopes (e.g., the varying effects of some daily event on daily affect), residual variability (e.g., varying within-person negative affect variability), but there are many others (e.g., within-subject autocorrelation, "inertia"). 
 
-Now, these higher-level parameters have to be estimated of course. Most researchers are aware that these quantities are not error-free. Still, in most talks I saw, people either didn't address this, or they computed a reliability of some roundabout way (e.g., split-half).^[See below on other approaches]
+Now, these higher-level parameters have to be estimated of course. Most researchers are aware that these quantities are not error-free.^[Like everything else in psychology] Still, in most talks I saw, people either didn't address this, or they computed a reliability in some roundabout way (e.g., split-half).^[See below on other approaches]
 
-When we were recently interested in the reliability of within-subject variability in a censored model, we did not find an existing approach fit for our needs. Our solution happens to be fully general and works for random intercepts, slopes, residual variances, etc.
+When we were recently interested in the reliability of within-subject variability in a censored model, we did not find an existing approach fit for our needs. Our solution happens to be easy, fully general and works for random intercepts, slopes, residual variances, etc.
 
 ## Simulation, of course
 
@@ -80,9 +81,16 @@ days <- people %>%
                         mean = y_mean + x_slope*x,
                         sd = exp(y_var))
             )
+```
 
-head(people)
-head(days)
+
+```{r}
+rmarkdown::paged_table(people)
+```
+
+
+```{r}
+rmarkdown::paged_table(days)
 ```
 
 
@@ -98,99 +106,93 @@ m1 <- brm(bf(y ~ 1 + x + (1 + x|id),
 ```
 
 
-Now, for each person's random intercept, slope or residual variance, we can look at the distribution of the MCMC draws for their estimate.^[Presumably standard errors calculated with bootstrapping in empirical Bayes models would work too?] 
+Now, for each person's random intercept, slope or residual variance, we can look at the distribution of the MCMC draws for their estimate.^[Presumably standard errors calculated with bootstrapping in empirical Bayes models would work too?]
 
-From this, we can get the error variance (the variance across draws). Each person can have a different amount of error variance (e.g., people who took part in the diary for few vs. many days). We also have an estimate of the variance of the true scores (the variance across people within draws). We can then average again (this time, the error variance across people, and the true score variance across draws).
 
-Finally, we can get an estimate of each parameter's reliability by dividing the average error variance by the average between-person variance and subtracting this fraction from 1.
-
-```{r class.source = NULL}
-(rel_from_draws <- m1 %>%
-   # grab all estimates of varying/random effects
-    gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
-    group_by(.variable, parameter, .draw) %>%
-    mutate(latent_var = var(.value)) %>% # variance across IDs, per draw
-    group_by(.variable, parameter, id) %>%
-    summarise(error_var = var(.value), # variance within IDs across draws
-              latent_var = mean(latent_var)) %>%
-    mutate(reliability = 1 - error_var/latent_var) %>% # individual rels not guaranteed to be >= 0
-    group_by(.variable, parameter) %>%
-    summarise_all(mean) %>% 
-    select(.variable, parameter, error_var, latent_var, reliability))
-
-(true_score_var <- m1 %>%
+```{r}
+true_score_var <- m1 %>%
     # grab all estimates of varying/random effects
     gather_draws( `sd_.+`, regex = TRUE) %>% 
     mutate(.variable = stringr::str_sub(.variable, 4)) %>% 
-    mutate(latent_var = .value^2))
+    mutate(latent_var = .value^2) %>% 
+    group_by(.variable) %>%
+    summarise(latent_var = mean(latent_var))
+```
 
-latent_var_from_draws <- m1 %>%
-                  # grab all estimates of varying/random effects
-    gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
-      tidyr::unite(.variable, .variable, parameter, sep = "__") %>% 
-      mutate(.variable = stringr::str_sub(.variable, 3)) %>% 
-      mutate(.variable = stringr::str_replace(.variable, "__(.+)__", "__\\1_")) %>% 
-      group_by(.variable, .draw) %>%
-      left_join(people %>% select(id, days)) %>% 
-      summarise(latent_var2 = var(.value),
-                latent_var3 = Hmisc::wtd.var(.value, days))# %>% 
-      # summarise(latent_var2 = mean(latent_var2),
-                # latent_var3 = mean(latent_var3)
-                # )
+We get our estimate of the variance of the true scores by taking the `sd` hyperparameters for the random intercept, slope and residual variance. We square the SDs to get the variance and then average across MCMC draws.^[Caution, don't just square the sd parameter reported in the brms model summary or in VarCorr, `mean(sd)^2 != mean(sd^2)`]
 
-error_var <- m1 %>%
-                  # grab all estimates of varying/random effects
-    gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
+```{r}
+SEE2 <- m1 %>%
+      # grab all estimates of varying/random effects
+      gather_draws( `r_.+__.+`[id,parameter], `r_[^_]+_?[^_]+`[id,parameter], regex = TRUE) %>%
       ungroup() %>% 
       tidyr::unite(.variable, .variable, parameter, sep = "__") %>% 
       mutate(.variable = stringr::str_sub(.variable, 3)) %>% 
       mutate(.variable = stringr::str_replace(.variable, "_sigma__", "_sigma_")) %>% 
       group_by(.variable, id) %>%
-      summarise(error_var = var(.value)) %>%
+      # compute variance across draws
+      summarise(SEE2 = var(.value)) %>%
       left_join(people %>% select(id, days)) %>% 
-      summarise(error_var = sum(error_var*days)/sum(days))
+      # give more weight to error var estimated from people 
+      # who contributed more data
+      summarise(
+        # weighted SEE^2 reflects the amount of error you get if you take along the uncertainty in your model
+        weighted_SEE2 = sum(SEE2*days)/sum(days),
+        # unweighted SEE^2 reflects the amount of error you get if you extract the manifest random intercepts/slopes/variances
+        SEE2 = mean(SEE2)
+        )
+```
 
-(rel_from_draws2 <- true_score_var %>% 
-    full_join(error_var) %>% 
-    group_by(.variable) %>%
-    summarise_all(mean) %>% 
-    mutate(reliability = 1 - error_var/latent_var) %>% # individual rels not guaranteed to be >= 0
-    select(.variable, error_var, latent_var, reliability))
+
+Now, in addition to the hyperparameter sd, the model also estimated a random intercept, slope, residual variance for each person. The `sd` hyperparameter affected how much the observed intercepts/slopes/variances were shrunk towards the mean. Some random intercepts are estimated with more, some with less error, depending (in our example) on the number of days the person participated in the diary. The uncertainty of random intercept is reflected by the variance across MCMC draws, which I call ${SEE}^2$ here. So, we compute the variance across draws for each person and then average across people.^[There's a wrinkle here. For the main calculation, I take the unweighted average across people. That's the relevant case for people who extract random slopes from a model and use them as a predictor. But if you estimate a moderator in a one-step model or if you take along the uncertainty by working with the draws, I think the weighted SEE^2 is more appropriate]
+
+Finally, we can get an estimate of each parameter's reliability by dividing the average ${SEE}^2$ by the average between-person variance and subtracting this fraction from 1.
+
+```{r}
+true_score_var %>% left_join(SEE2) %>% 
+    mutate(reliability = 1 - SEE2/latent_var,
+           weighted_reliability = 1 - weighted_SEE2/latent_var,
+           ) %>% 
+  knitr::kable()
 ```
 
 ## Why does this work?
-To get here, it helped us to work our way back from how a confidence interval is calculated under the regression hypothesis in classical test theory. For me, the CI under the regression hypothesis was my first encounter with [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_(statistics))^[although I don't think this concept was named/the link was made when I was taught].
+To get here, it helped us to work our way back from how a confidence interval is calculated under the regression hypothesis in classical test theory using Kelley's formula (1923, p. 214^[Kelley, T. L. (1923). Statistical method. Macmillan.]). For me, the CI under the regression hypothesis was my first encounter with [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_(statistics)). In my teaching, the connection to the Bayesian concepts was not made, though apparently [Novick (1971)](https://link.springer.com/article/10.1007/BF02297848) made the connection to Kelley's formula^[I only learned about this after the fact. Thanks to Stefan Schmukle for pointing me to Levy, R. & Mislevy, R. J. (2016). Bayesian psychometric modeling. Taylor & Francis]
 
-Namely, the standard error of the shrunk estimate is computed as follows:
+Namely, the standard error of the shrunk estimate is computed as follows, where $SEE$ stands for "standard error of the estimate" and $s_X$ is the observed SD:
 
-$$se_{shrunk} = s_X \cdot \sqrt{Rel \cdot (1-Rel)}$$
+$$SEE = s_X \cdot \sqrt{Rel \cdot (1-Rel)}$$
 We can square this to get the error variance of the shrunk estimates. Now $s_X^2$ is our observed variance and $V_E$ is $se_{shrunk}^2$.
 
-$$V_E=s_X^2⋅(1−Rel) * Rel$$
-Rearranging the classical test theory definiton of reliability, we can express the observed variance ($s_X^2$) as the latent true score variance ($V_T$) divided by the reliability ($Rel$).
+$${SEE}^2=s_X^2⋅(1−Rel) * Rel$$
+Rearranging the classical test theory definition of reliability, we can express the observed variance ($s_X^2$) as the latent true score variance ($V_T$) divided by the reliability ($Rel$).
 
-$$Rel=\frac{V_T}{s_X^2}$$
+$$
+Rel=\frac{V_T}{s_X^2}
+$$
+$$
+s_X^2=\frac{V_T}{Rel}
+$$
 
-$$s_X^2=\frac{V_T}{Rel}$$
 Substitute 
 
-$$V_E=\frac{V_T}{Rel}⋅(1−Rel) * Rel$$
+$${SEE}^2=\frac{V_T}{Rel}⋅(1−Rel) * Rel$$
 Simplify 
 
 
-$$V_E=V_T⋅(1−Rel)$$
+$${SEE}^2=V_T⋅(1−Rel)$$
 Solve for $Rel$
 
-$$Rel = 1 - \frac{V_E}{V_T}$$
-The standard errors (SEs) of our random slopes are the SEs of the shrunk estimates. As such, they can be analogised (in our vanilla, uninformative prior model) to the SE computed under the regression hypothesis, where we first shrink the observed value to the population mean and then compute a standard error around that estimate.
+$$Rel = 1 - \frac{{SEE}^2}{V_T}$$
+The standard errors (SEs) of our random slopes are the SEs of the shrunk estimates. As such, they can be analogised (in our vanilla, uninformative prior model) to the SE computed under the regression hypothesis ($SEE$), where we first shrink the observed value to the population mean and then compute a standard error around that estimate.
 
-We thought this was neat. I'd still appreciate to hear if it is wrong in some way. I also didn't find a way to compute the right uncertainty around my reliability estimates.
+I thought this was neat. I'd appreciate to hear if it is wrong in some way and/or is discussed more elsewhere.^[I fully expect to be embarrassed by someone having pointed this out in 1930 already, but I'll be a little less embarrassed because I asked around and it's not obvious to everyone in my field.] I am also still looking for a way to compute the right uncertainty around the reliability estimates.
 
-Thanks to Stefan Schmukle, Julia Rohrer, Taym Alsalti, and Niclas Kupers for discovering basic mistakes in my thinking and fun exchanges on this topic.
+Thanks especially to Stefan Schmukle (who has a related paper draft he really needs to publish), but also Niclas Kupers, Julia Rohrer, and Taym Alsalti for discovering basic mistakes in my thinking and fun exchanges on this topic.
 
 ## Footnote on other approaches. {.appendix}
 
-I saw uses of split half, as well as people getting parameters for multiple items, then computing reliability of the item indices using Cronbach's alpha_. Methodologists have published various solutions for specific cases, like random slopes, though I haven't seen them used in the primary literature (e.g., [Neubauer, Voelkle, Voss, & Mertens, 2020](https://doi.org/10.1080/00223891.2018.1521418), [Schneider & Junghaenel, 2022](https://doi.org/10.3758/s13428-022-01995-1)). These two approaches also require estimating additional models. I.e., you can't just use the model that is being used to study e.g. the moderator that could explain random slope variation. These approaches also require us to know the residual variance. Most importantly for us though, they weren't fully general (e.g., didn't work to estimate the reliability of the residual variability).
+I saw uses of split half, as well as people getting parameters for multiple items, then computing reliability of the item indices using Cronbach's alpha. Methodologists have published various solutions for specific cases, like random slopes, though I haven't seen them used in the primary literature (e.g., [Neubauer, Voelkle, Voss, & Mertens, 2020](https://doi.org/10.1080/00223891.2018.1521418), [Schneider & Junghaenel, 2022](https://doi.org/10.3758/s13428-022-01995-1)). All of these approaches also require estimating additional models. I.e., you can't just use the model that is being used to study e.g. the moderator that could explain random slope variation. The latter two approaches also require us to know the residual variance. Most importantly for us though, they weren't fully general (e.g., didn't work to estimate the reliability of the residual variability).
 
 ## Boring footnote to ingratiate myself with fellow full luxury Bayesians {.appendix}
-I guess I won't be needing this snippet very often, as I prefer full luxury Bayes. I usually won't extract model parameters to use in two-step modelling, but would rather predict the latent variable in the same model. I am also moving away from interpreting metrics that are relativised to the in-sample standard deviation for various reasons. But in a [recent preprint by Julia Rohrer et al.](https://osf.io/preprints/psyarxiv/dkrxa), we argued that the low reliability of the random slopes we were studying made it fairly pointless to study them further with the amount of data we had. I think the reliability coefficient can also help break down the results of complex models for other researchers and ease the transition as personality psychologists study these complex parameters more.
+I guess I won't be needing this formula/snippet very often, as I prefer full luxury Bayes. I usually won't extract model parameters to use in two-step modelling, but would rather predict the latent variable in the same model. I am also moving away from interpreting metrics that are relativised to the in-sample standard deviation for various reasons. But in a [recent preprint by Julia Rohrer et al.](https://osf.io/preprints/psyarxiv/dkrxa), we argued that the low reliability of the random slopes we were studying made it fairly pointless to study them further with the amount of data we had. That seems like a suitable use case and will hopefully motivate someone to collect more data. I think the reliability coefficient can also help break down the results of complex models for other researchers and ease the transition as personality psychologists study these complex parameters more.
