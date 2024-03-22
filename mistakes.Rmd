@@ -8,6 +8,28 @@ description: |
   Errors, bugs, mistakes found in my scientific work
 ---
 
+## Elson, Alsalti, Hussey, & Arslan (2023)
+
+__Project:__ [Elson, Alsalti, Hussey, & Arslan (2023)](https://www.nature.com/articles/s44271-023-00026-9). Psychological measures aren’t toothbrushes.
+
+__Timing__: After publication.
+
+__Reporter:__ I found this myself.
+
+__Type of mistake:__ Coding error that changes a conclusion in the manuscript.
+
+__Description:__ I incorrectly implemented the normalisation of Shannon entropy. We submitted the following correction notice: A previous version incorrectly normalised Shannon entropy by the log of the number of times measures were used rather than by the number of measures that were used at least once. After correcting this mistake, we see a less pronounced increase in normalised entropy over time and overall higher levels of entropy (i.e. higher fragmentation). 
+
+__Delay:__ After finding the error, I took some time to revisit the other code and asked Taym Alsalti to also review my code. We were working on a follow-up project. After this process concluded, we submitted a correction notice on March 20, 2024. I'm posting this note March 22, 2024.
+
+__Solution:__ Correctly normalize by the number of measures that were used at all. See figure to see the difference (dotted lines were the incorrect, published numbers).
+
+![Corrected graph. Dotted lines are the incorrectly normalized, published numbers.](figures/fig_entropy_correction.png)
+
+__Future Measures:__ More code review, always write and test a function when hand-coding a metric. Also, avoid hand-coding metrics, I evidently suck at it :-)
+
+__Bounty:__ I found this myself, so I guess the bounty doesn't apply. I donate to Against Malaria anyway. If the sum of my errors this year exceeds what I usually donate, I'll have to consider increasing my donation.
+
 ## Holzleitner et al., 2021, preprint revision
 
 __Project:__ [Holzleitner et al., 2021](https://www.biorxiv.org/content/10.1101/192054v4). No evidence that inbreeding avoidance is up-regulated during the ovulatory phase of the menstrual cycle.
