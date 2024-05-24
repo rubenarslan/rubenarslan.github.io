@@ -7,7 +7,16 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 25 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 May 2024 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Simulation on adjusting for confounders in a mixed model</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2024-05-24-simulation-on-adjusting-for-confounders-in-a-mixed-model</link>
+      <description>A brief tidyverse-style simulation to figure out what happens, if I don't include
+varying slopes in a model.</description>
+      <guid>https://rubenarslan.github.io/posts/2024-05-24-simulation-on-adjusting-for-confounders-in-a-mixed-model</guid>
+      <pubDate>Thu, 23 May 2024 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>The reliability of multilevel parameters in Bayesian regressions</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
@@ -18,7 +27,7 @@
       <category>reliability</category>
       <category>modelling</category>
       <guid>https://rubenarslan.github.io/posts/2024-02-15-the-reliability-of-multilevel-parameters-in-bayesian-regressions</guid>
-      <pubDate>Sun, 25 Feb 2024 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 26 Feb 2024 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Modeling misclicks in an app interface</title>

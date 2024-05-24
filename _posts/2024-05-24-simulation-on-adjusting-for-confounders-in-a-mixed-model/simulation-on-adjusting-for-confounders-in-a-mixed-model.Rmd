@@ -1,0 +1,189 @@
+---
+title: "Simulation on adjusting for confounders in a mixed model"
+description: |
+  A brief tidyverse-style simulation to figure out what happens, if I don't include
+  varying slopes in a model.
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+date: 2024-05-24
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+I recently tried to a write a very simple simulation script in tidyverse to demonstrate simulation-based power analysis for students. Today, I had occasion to adapt the script myself, because a student asked me whether she needed to include varying slopes for adjusted confounders in a multilevel model. My first thought was "yes, that's better" but I was a little scared of the impact on model complexity, because it's a large dataset. 
+
+So, I ran a little simulation and found out I was wrong to expect bias. To be frank, this runs counter to my intuition, so I'm hoping that posting this will either make someone point out an error in my simulation or help me develop the right intuition.
+
+```{r}
+library(tidyverse)
+library(lmerTest)
+library(broom.mixed)
+
+theme_set(theme_bw())
+lmer <- function(...) tryCatch({ suppressMessages(suppressWarnings(lmerTest::lmer(...))) }, 
+                              error = function(e) NULL)
+
+alpha = 0.05 # false positive rate
+```
+
+
+## Set up simulation scenarios
+The `expand_grid` function makes this easy. For a power analysis, we could also
+calculate the budget and filter out scenarios we cannot afford (or scenarios that make no sense a priori).
+
+```{r}
+Scenarios = expand_grid(
+    # Number of countries
+    N = c(20, 30, 40),
+    # Number of days per person
+    obs_per_country = c(1000),
+    # Effect of female parliamentarians
+    b_fem_parl = c(-0.2),
+    # Does the effect vary between countries
+    sd_fem_parl = c(0.2),
+    # Effect of GDP
+    b_GDP = c(1),
+    # Does the effect vary between countries
+    sd_GDP = c(0, 1),
+    b_fem_parl_GDP = c(1),
+    sd_fem_parl_GDP = c(0, 1),
+    # Simulate each scenario 200 times
+    Simulation = 1:50)
+```
+
+```{r}
+generate_data_and_fit_model <- function(N, obs_per_country, 
+                                        b_fem_parl, sd_fem_parl, 
+                                        b_GDP, sd_GDP, 
+                                        b_fem_parl_GDP, sd_fem_parl_GDP, 
+                                        Simulation) {
+  
+  # Store scenario's parameters
+  Parameters <- environment() %>% as.list() %>% as_tibble()
+  
+  # Generate Dataset
+  Days = tibble(
+    # A number that identifies each person, repeated days_per_person times
+    country = 1:N %>% rep(each = obs_per_country),
+    # N draws from the normal distribution with mean = 0, SD = 1
+    general_wellbeing = rnorm(N, mean = 0, sd = 1)[country],
+    # The effect of GDP varies from country to country
+    GDP_i = rnorm(N, mean = b_GDP, sd = sd_GDP)[country],
+    # the effect of fem_parl also varies from country to country
+    fem_parl_i = rnorm(N, mean = b_fem_parl, sd = sd_fem_parl)[country],
+    # the effect of GDP on female parliamentarians also varies from country to country 
+    fem_parl_GDP_i = rnorm(N, mean = b_fem_parl_GDP, sd = sd_fem_parl_GDP)[country],
+    # within country predictors
+    GDP = rnorm(N * obs_per_country),
+    fem_parl = rnorm(N * obs_per_country) + fem_parl_GDP_i * GDP,
+    # today's well being results from stable country differences
+    # the GDP effect, the female parliamentarians effect, and a residual term
+    well_being = general_wellbeing + fem_parl_i * fem_parl
+                    + GDP_i * GDP + rnorm(N * obs_per_country)
+  )
+
+  # Our three statistical models predict well-being
+  models <- list(
+    Model_varFP = lmer(well_being ~ fem_parl + GDP + (1 + fem_parl | country), data = Days),
+    Model_varFP_GDP = lmer(well_being ~ fem_parl + GDP + (1 + fem_parl + GDP || country), data = Days),
+    Model_varFP_GDP_cor = lmer(well_being ~ fem_parl + GDP + (1 + fem_parl + GDP | country), data = Days)
+   )
+  
+  # store their output in tidy form, together with the scenario parameters
+  models %>% map(~ broom.mixed::tidy(., conf.int = TRUE)) %>% 
+    bind_rows(.id = "Model") %>% 
+    bind_cols(Parameters, .)
+}
+
+# To try this out and debug the script
+# debug(generate_data_and_fit_model)
+
+# Scenarios %>% slice(1) %>% pmap(generate_data_and_fit_model) %>% bind_rows() %>% filter(term == "fem_parl") %>% View()
+```
+
+# Simulate
+We loop over all scenarios, generate the data, fit the models, and store the results.
+
+```{r, echo=FALSE}
+SimulationResults <- readRDS("SimulationResults3.rds")
+```
+
+```{r, eval = FALSE}
+SimulationResults = Scenarios %>%
+  pmap(generate_data_and_fit_model, .progress = T) %>%
+  # Combine everything into a data frame
+  bind_rows()
+```
+
+
+This call above wasn't parallelised, but could easily be using `furrr` instead of `purrr`.
+
+```{r, eval=FALSE}
+library(furrr)
+plan(multisession)
+SimulationResults = Scenarios %>%
+  furrr::future_pmap(generate_data_and_fit_model, .progress = T,
+                     .options = furrr::furrr_options(seed = 20191005)) %>%
+  # Combine everything into a data frame
+  bind_rows()
+
+write_rds(SimulationResults, "SimulationResults3.rds")
+```
+
+
+
+If our goal was a power analysis, we could check how often the effect is significant.
+
+```{r}
+SimulationResults <- SimulationResults %>%
+  mutate(significant_two_sided = p.value < alpha)
+```
+
+
+Here, my goal is finding out whether my estimate is likely to be biased away from the true simulated value.
+
+```{r}
+SimulationResults <- SimulationResults %>%
+  mutate(bias = if_else(term == "fem_parl", b_fem_parl - estimate, NA_real_))
+```
+
+
+We summarise across the scenarios and models to average power, estimates,
+standard error, and bias.
+
+```{r}
+SummarisedResults <- SimulationResults %>%
+  filter(term == "fem_parl") %>% 
+  group_by(across(c(N:Model,-Simulation))) %>%
+  summarise(
+    power = mean(p.value < alpha),
+    bias = mean(b_fem_parl - estimate),
+    mean(std.error),
+    mean(estimate),
+    Simulations = n()
+  ) %>%
+  arrange(desc(abs(bias)))
+```
+
+
+I expected bias to be bigger if our model does not match the data-generating process (i.e., Model_varFP but the effect of GDP on FP and WB varied). This was not the case, though standard errors increased. I am little surprised by this, but I've learned not to trust my intuition on these topics.
+
+```{r}
+SimulationResults %>% 
+  filter(term == "fem_parl") %>% 
+  filter(b_fem_parl != 0) %>% 
+  group_by(sd_GDP, sd_fem_parl_GDP, Model, b_fem_parl) %>% 
+  summarise(bias = mean(bias), 
+            est = mean(estimate, na.rm = T), 
+            std.error = mean(std.error), 
+            n()) %>% 
+  kableExtra::kbl()
+```
