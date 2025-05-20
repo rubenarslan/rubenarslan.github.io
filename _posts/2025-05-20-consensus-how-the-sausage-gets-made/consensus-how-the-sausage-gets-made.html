@@ -1,0 +1,2851 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Consensus: How the sausage gets made</title>
+
+  <meta property="description" itemprop="description" content="What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus."/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2025-05-20"/>
+  <meta property="article:created" itemprop="dateCreated" content="2025-05-20"/>
+  <meta name="article:author" content="Ruben C. Arslan"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Consensus: How the sausage gets made"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus."/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Consensus: How the sausage gets made"/>
+  <meta property="twitter:description" content="What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus."/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Consensus: How the sausage gets made"]},{"type":"character","attributes":{},"value":["What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]},{"type":"character","attributes":{},"value":["Psychological Research Methods, University Witten/Herdecke"]}]}]},{"type":"character","attributes":{},"value":["2025-05-20"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["consensus-how-the-sausage-gets-made_files/anchor-4.2.2/anchor.min.js","consensus-how-the-sausage-gets-made_files/bowser-1.9.3/bowser.min.js","consensus-how-the-sausage-gets-made_files/distill-2.2.21/template.v2.js","consensus-how-the-sausage-gets-made_files/header-attrs-2.25/header-attrs.js","consensus-how-the-sausage-gets-made_files/jquery-3.6.0/jquery-3.6.0.js","consensus-how-the-sausage-gets-made_files/jquery-3.6.0/jquery-3.6.0.min.js","consensus-how-the-sausage-gets-made_files/jquery-3.6.0/jquery-3.6.0.min.map","consensus-how-the-sausage-gets-made_files/popper-2.6.0/popper.min.js","consensus-how-the-sausage-gets-made_files/tippy-6.2.7/tippy-bundle.umd.min.js","consensus-how-the-sausage-gets-made_files/tippy-6.2.7/tippy-light-border.css","consensus-how-the-sausage-gets-made_files/tippy-6.2.7/tippy.css","consensus-how-the-sausage-gets-made_files/tippy-6.2.7/tippy.umd.min.js","consensus-how-the-sausage-gets-made_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+    font-size: 100%;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  hr.section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0px;
+  }
+
+
+  d-byline {
+    border-top: none;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+    border-top: none;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // separator
+    var separator = '<hr class="section-separator" style="clear: both"/>';
+    // prepend separator above appendix
+    $('.d-byline').before(separator);
+    $('.d-article').before(separator);
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        var author_name = front_matter.authors[i].author
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="consensus-how-the-sausage-gets-made_files/header-attrs-2.25/header-attrs.js"></script>
+  <script src="consensus-how-the-sausage-gets-made_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="consensus-how-the-sausage-gets-made_files/popper-2.6.0/popper.min.js"></script>
+  <link href="consensus-how-the-sausage-gets-made_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="consensus-how-the-sausage-gets-made_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="consensus-how-the-sausage-gets-made_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="consensus-how-the-sausage-gets-made_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="consensus-how-the-sausage-gets-made_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="consensus-how-the-sausage-gets-made_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="consensus-how-the-sausage-gets-made_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Consensus: How the sausage gets made","description":"What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus.","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"Psychological Research Methods, University Witten/Herdecke","affiliationURL":"#","orcidID":""}],"publishedDate":"2025-05-20T00:00:00.000+02:00","citationText":"Arslan, 2025"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Consensus: How the sausage gets made</h1>
+
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus.</p></p>
+</div>
+
+<div class="d-byline">
+  Ruben C. Arslan <a href="https://rubenarslan.github.io" class="uri">https://rubenarslan.github.io</a> (Psychological Research Methods, University Witten/Herdecke)
+  
+<br/>2025-05-20
+</div>
+
+<div class="d-article">
+<p>A large working group of psychologists recently put out <a href="https://osf.io/preprints/psyarxiv/b94dy_v1">a consensus statement</a> on social media and mental health effects, based on Haidt’s book “The Anxious Generation”.</p>
+<p>Many of the scholars I respect the most in this space (e.g., <a href="https://www.lucyfoulkes.com/books">Lucy Foulkes</a>, Amy Orben, Andrew Przybylski) seem to have not participated or dropped out of this effort. I know that in at least two cases this was because they did not trust the process. I am not an expert in this field myself, but I did read “The Anxious Generation”, “What Mental Illness Really Is … And What It Isn’t” and a few other things and have some familiarity with how strong the evidence base is. Now, personally, I think this consensus effort is premature. For many of the claims they examined we don’t have the evidence to assess many of these claims well. Consensus is not a shortcut to understanding the world.</p>
+<p>In the end, the participants found consensus for only one causal claim (“Heavy smartphone and social media use can cause sleep problems.”), several weak claims about associations (e.g., “social media may be associated with visual social comparison in girls”) as well as a claim that adolescent mental health has declined in several Western countries. <a href="https://www.the100.ci/2024/12/10/the-hare-brained-generation-teen-mental-health-crisis-or-lacklustre-record-keeping/">To me</a>, not even the evidence for this mental health decline is very compelling. But generally this consensus is not far away from my own current understanding. What irks me is how this was communicated and what they chose to focus on.</p>
+<p>It’s not your fault if <a href="https://bsky.app/profile/jayvanbavel.bsky.social/post/3lpaaktc6bc2x">recent social media posts</a> led you to believe there was a “ton of consensus” that “Adolescent mental health has declined”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> or that rejecting this consensus is akin to denying climate change.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p><img src="https://gist.github.com/user-attachments/assets/1611e649-db2d-4bde-843e-525c8ece5b61" alt="A now deleted skeet by Jay van Bavel" />
+Screenshot of now deleted tweet by Jay van Bavel</p>
+<p>However, even if I don’t think the consensus statement has much value, I think it’s meta-scientifically interesting to look at how the participating scholars assessed the level of evidence for each claim. Maybe this will also give us an idea what kind of experts self-selected into the process. Potentially, the <a href="https://en.wikipedia.org/wiki/Delphi_method">Delphi method</a> corrected for all problems. I am not trying to assess that. I am only looking at Study 1 here to understand “how the sausage gets made”. Similarly, I found it interesting to read how the first author dealt with critical comments, <a href="https://osf.io/5fxqu/?view_only=487a27ae00084776839e7fac58cb31ba">documented on OSF</a>.</p>
+<p>Naively, you might expect that sometimes, when people have expertise in one area but not another, they would not answer questions in those areas where they cannot assess the evidence base. You would not expect them to report a stronger evidence base than exists. Consider replicated experimental field studies. These are very effortful studies, done either at considerable expense or making use of widely reported policy changes. You certainly wouldn’t expect a researcher to say such studies exist in their field of expertise when they don’t. In fact, I fail my students when they make claims their citations cannot support (I’ve gotten stricter about this because it’s such an LLM hallmark). WELL!</p>
+<p>You might be surprised to hear that, initially, <strong>for at least seven claims</strong> a substantial fraction of scholars said there were causally informative field studies <strong>yet none were cited in the final consensus statement’s evidence summary</strong> according to language model Gemini 2.5 Pro.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The first author, Valerio Capraro, seems to agree that the evidence for most claims is <a href="https://x.com/ValerioCapraro/status/1923999522352455753">weak and correlational</a>. So, I don’t think my assessment that some scholars overestimated the evidence is out of whack with the first author’s views.</p>
+<p>So, who are these scholars who think there have been replicated causally informative field studies showing that social media affects body image? Maybe they have references that didn’t make the cut. Unfortunately, I don’t know! Turns out the responses were anonymized, as is standard in the Delphi method. I.e. even for those scholars who participated non-anonymously, we don’t know what they said for each claim. Expertise without accountability? Truly, you can have it all.</p>
+<details>
+<summary>
+What question did they answer exactly when assessing the evidence base for causal claims?
+</summary>
+<blockquote>
+<p>To the best of your knowledge, what is the level of evidence regarding this claim?</p>
+<ul>
+<li>▢ No evidence, only opinions, perspectives, general theory or anecdotes (1)</li>
+<li>▢ Some correlational evidence (laboratories, surveys, online, field) (2)</li>
+<li>▢ Some causal evidence but in limited settings (laboratories, surveys, and online, self-reported measures) (3)</li>
+<li>▢ Causal evidence in a field study (4)</li>
+<li>▢ Replicated causal evidence from field studies (5)</li>
+<li>▢ Wide-scale causal evidence from multiple field studies, policy evaluations or other natural settings (6)</li>
+</ul>
+</blockquote>
+</details>
+<p>What did they say in Study 1?</p>
+<p><img width="1045" alt="image" src="https://gist.github.com/user-attachments/assets/3603659f-efa8-414b-9017-7a0800cdc5d3" /></p>
+<details>
+<summary>
+Figure caption for Figure 3
+</summary>
+<blockquote>
+<p>Figure 3. Summary of responses to the “level” question for each of the 26 claims from
+Survey 1, ordered as in Figure 2. For each claim, the “level” question asked in Survey 1
+was: “To the best of your knowledge, what is the level of evidence regarding this claim?”.
+Available answers depended on the claim. For non-causal claims 1-7, 16, and 22-23, the
+available answers were: No evidence, only opinions, perspectives, general theory or
+anecdotes; Some empirical evidence but in limited settings (laboratories, surveys and online,
+self-reported measures); Field evidence; Replicated evidence in field studies or other natural
+settings; Wide-scale evidence from multiple field studies, policy evaluations or other natural
+settings. For causal claims 8-15, 17-21, and 24-26, the available answers were: No evidence,
+only opinions, perspectives, general theory or anecdotes; Some correlational evidence
+(laboratories, surveys, online, field); Some causal evidence but in limited settings
+(laboratories, surveys, and online, self-reported measures); Causal evidence in a field study;
+Replicated causal evidence from field studies; Wide-scale causal evidence from multiple field
+studies, policy evaluations or other natural settings. For visualization purposes, we
+shortened the wording of the claims. Refer to Table 1 for the exact wording of the claims.</p>
+</blockquote>
+</details>
+<p>As far as I could tell at a glance, the authors didn’t precisely define what counts as causal vs. correlational. I’m one of those weirdos who believe you can infer causality from observational/correlational data if you’re careful, but from the contrast to “correlational”, I guess the authors considered only experiments and natural experiments “causal evidence”.</p>
+<p>Now, after examining this graph, you would be excused if you thought these categories were mutually exclusive. But no:</p>
+<blockquote>
+<p>Moreover, after careful consideration within the core group, we decided to allow multiple answers for this question to avoid forcing participants to rank the level of evidence.</p>
+</blockquote>
+<p>Yes, you certainly wouldn’t want to rank levels of evidence. How would those poor correlational studies and opinions feel? Still, you might be confused, after all, Figure 3 (above) tabulates them as if responses summed to 100%. But actually authors could and did endorse multiple mutually exclusive answers. Most obviously, more than 70 responses say both there is “no evidence” and at the same time say there is evidence. I guess they exist in a state of superposition. It would collapse if we actually observed the evidence, but, like, who has the time?</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">value</th>
+<th style="text-align: right;">n()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1,2</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr>
+<td style="text-align: left;">1,2,3</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr>
+<td style="text-align: left;">1,2,3,4,6</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">1,3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">1,3,4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">1,5</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">1,6</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>The paper didn’t document how the graph was made, so <a href="https://x.com/rubenarslan/status/1924354087182614676">I asked</a>) and it turns out they expanded the denominator. It sums to 100% because the denominator is “number of checkboxes clicked”. I don’t think that’s a useful denominator. People who checked no box are excluded and you can’t interpret the percentage as the number of experts who endorsed X.</p>
+<p>I looked into this because several experts claimed that there were <em>replicated causally informative field studies</em> showing that social media increases visual social comparison in girls. That seemed odd, because a) this seems difficult to study experimentally in the field b) I looked at this literature briefly a while ago and didn’t encounter anything of the sort. So, I checked the evidence summary in Supplementary Section S5. Indeed, no field studies are highlighted at all. Weird. Did they imagine these studies? Do they exist, but for some reason the best-quality evidence (sorry, sorry, I know evidence shan’t be ranked) isn’t mentioned?</p>
+<p>To find out how this stacks up for the other claims, I let Gemini 2.5 Pro take a stab at tabulating how often experts say studies exist that then seem to be missing in action in the evidence review. I only hand-checked the visual social comparison section. Gemini agreed with my assessment there. So, here we have it: It’s not just LLMs that occasionally hallucinate scientific papers.</p>
+<p>Does this mean the consensus statement is wrong? They went through three more rounds and had a chance to rectify such problems with grounding. Still, I worry that people who admit uncertainty self-selected out and people who incorrectly believe causally informative field studies exist where there are none, self-selected in.</p>
+<div class="l-screen-inset">
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 29%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Claim</th>
+<th style="text-align: center;">% Causal Field (Est. from Fig 3)</th>
+<th style="text-align: center;">% Causal Field or Higher (Est. from Fig 3)</th>
+<th style="text-align: center;">S5 Text: Experimental Field, Natural Experiment, or Well-Controlled Design in Field Supporting Causal Claim?</th>
+<th style="text-align: center;">S5 Text: Observational Study Cited as Supporting Causal Claim?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>8. Heavy daily use of smartphones and social media can cause sleep deprivation.</strong></td>
+<td style="text-align: center;">~10-12%</td>
+<td style="text-align: center;">~25-30%</td>
+<td style="text-align: center;">Yes (Intervention studies like Martin et al., Perrault et al., Tu et al., described as improving sleep by reducing screen time, could be field experiments). Schechter et al. (meta-analysis of blue light interventions) and Hartstein et al. (consensus panel review) also point to experimental/interventional evidence.</td>
+<td style="text-align: center;">Yes (Longitudinal studies like Rod et al., Liu et al. cited for associations).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9. Chronic sleep deprivation can cause a decline in mental health.</strong></td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">~75-80%</td>
+<td style="text-align: center;">Yes (Scott et al. meta-analysis of sleep-improvement interventions showing mental health benefits is strong. Pires et al. also likely experimental).</td>
+<td style="text-align: center;">Yes (Liu et al. review of longitudinal studies).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>10. Heavy daily use of smartphones and social media can cause attention fragmentation.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~10-12%</td>
+<td style="text-align: center;">Potentially (van Wezel et al. intervention, though manipulation failed, was field-based. “Mere presence” studies like Ward et al. are lab).</td>
+<td style="text-align: center;">Yes (Longitudinal studies like Ra et al., Deng et al. cited for associations with ADHD symptoms).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>11. Attention fragmentation can cause a decline in mental health…</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">Potentially (Intervention studies on disabling notifications like Fitz et al., Olson et al. are field-based and show some MH impact).</td>
+<td style="text-align: center;">Yes (Correlational studies on multitasking and MH like Becker et al., Shin et al.).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>12. Heavy daily use of smartphones and social media can cause behavioral addiction.</strong></td>
+<td style="text-align: center;">~7-10%</td>
+<td style="text-align: center;">~20-25%</td>
+<td style="text-align: center;">Yes (Allcott et al. 2022 is explicitly cited as a field study suggesting habit formation and self-control problems).</td>
+<td style="text-align: center;">Yes (Truzoli et al. on distress post-internet; Anderson &amp; Wood on blunted reward sensitivity).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13. Behavioral addiction can cause a decline in mental health.</strong></td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">~50-55%</td>
+<td style="text-align: center;">No direct experimental field study cited for <em>causing</em> decline. The argument is often definitional or based on comorbidity.</td>
+<td style="text-align: center;">Yes (Hartmann &amp; Blaszczynski longitudinal study on gambling; Petry et al., Ko et al. on comorbidity).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14. Heavy daily use of smartphones and social media can cause social deprivation…</strong></td>
+<td style="text-align: center;">~2-4%</td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">Yes (Allcott et al. 2020 deactivating Facebook was an experimental field study. Geraci et al. 2022 quasi-experimental study on internet speed is a natural experiment).</td>
+<td style="text-align: center;">Yes (Meta-analyses by Appel et al., Liu &amp; Baumeister cited, though Cheng et al. found no overall association).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>15. Chronic social deprivation can cause a decline in mental health.</strong></td>
+<td style="text-align: center;">~10-12%</td>
+<td style="text-align: center;">~60-65%</td>
+<td style="text-align: center;">Yes (Killgore et al. 2020 on lockdown effects is a natural experiment. Intervention studies like Alvarez et al., Costello et al., Lai et al. on increasing social interaction improve MH and are likely field-based).</td>
+<td style="text-align: center;">Yes (Cacioppo et al. longitudinal study on isolation and depression).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17. Social media increases visual social comparisons among adolescent girls.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~15-20%</td>
+<td style="text-align: center;">No (Cited experimental studies like Fardouly et al. 2015, Kleemans et al. 2018, Tiggemann &amp; Anderberg 2020 are lab/online, not field studies measuring social comparison as an outcome in a consequential real-world setting).</td>
+<td style="text-align: center;">Yes (Couture Bue 2020 eye-tracking study; Fardouly et al. 2017 survey).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18. Social media increases perfectionism among adolescent girls.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: center;">No (Consensus states no experimental studies directly manipulating social media for this. Vanhoffelen et al. 2025 longitudinal study showed weak evidence).</td>
+<td style="text-align: center;">Yes (Surveys by Danielsen et al. 2024, Simon et al. 2022, Harren et al. 2021).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>19. Social media increases relational aggression among adolescent girls…</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">No (Consensus states no experimental evidence for SM use -&gt; increased RA. Martins &amp; Weaver meta-analysis included experiments on “exposure to RA -&gt; RA behavior,” not direct SM manipulation).</td>
+<td style="text-align: center;">Yes (Marinoni et al. 2023 on cyberbullying vulnerability).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>20. Among adolescent girls, social media increases exposure to other people displaying or discussing their mental disorders.</strong></td>
+<td style="text-align: center;">~3-5%</td>
+<td style="text-align: center;">~15-20%</td>
+<td style="text-align: center;">No (Consensus states no direct causal link references. Cited studies are observational, e.g., phenomena on TikTok, Twitter disclosures).</td>
+<td style="text-align: center;">Yes (Alho et al. on peer networks; Hamilton et al. on self-harm content exposure).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>21. Social media increases sexual predation and harassment of adolescent girls…</strong></td>
+<td style="text-align: center;">~1-2%</td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">Potentially (Bhuller et al. 2013 quasi-experimental study on <em>general internet access</em> and sex crimes is a natural experiment, but not specific to SM mechanisms for predation). Consensus states no SM-specific experimental studies.</td>
+<td style="text-align: center;">Yes (Bratton et al. 2020 on Facebook use and online harassment).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>24. If most parents waited… it would benefit the mental health of adolescents overall.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: center;">No (Cited studies are correlational/longitudinal. No experimental field studies manipulating delayed access).</td>
+<td style="text-align: center;">Yes (Dempsey et al., Vaterlaus et al., Gerosa et al., Sapien Labs, Sun 2023, all observational).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>25. Imposing (and enforcing) a legal minimum age of 16… would benefit the mental health of adolescents overall.</strong></td>
+<td style="text-align: center;">~1-2%</td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">No (Consensus states no strictly related references. Cited experimental work like Ferguson 2024 is on temporary abstention, not age limits).</td>
+<td style="text-align: center;">Yes (General research linking SM to decreased MH like Twenge &amp; Campbell 2018 cited as rationale, but it’s not testing the policy).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>26. Phone-free schools would benefit the mental health of adolescents overall.</strong></td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">Yes (Studies of school phone bans cited in Böttger &amp; Zierer 2024 meta-analysis, King et al. 2024, Campbell et al. 2024 review, Goodyear et al. 2025 meta-analysis are natural experiments in field settings).</td>
+<td style="text-align: center;">No (The studies cited are evaluations of bans, not general observational studies of phone use in schools).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Notes on Estimation from Figure 3:</strong>
+The percentages for “% Causal Field” and “% Causal Field or Higher” are visual estimations from the provided stacked bar chart (Figure 3, p. 11 of the PDF). They are approximate due to the nature of reading from a graph.</p>
+<h2 class="appendix" id="my-requests">My requests</h2>
+<p>I made a few requests and then had Gemini summarise. I put the final summary up top, the rest is in conversational order.</p>
+<blockquote>
+<p>For each of the claims, there is a summary of the evidence in Supplementary Section 5. Look only at claims that make a causal claim. Then, note, for each claim, how many experts assessed the evidence as being causal, causal/field, replicated evidence, widespread causal evidence. Then, assess whether the studies cited in that section are causally informative, field studies or direct replications of one another. Note if there is a conflict with the expert assessment.
+Start with the claim that “Social media increases visual social comparison in girls”. We’ll take the claims in turn.</p>
+</blockquote>
+<p>You’re right, Figure S3 (which is Figure 3 in the main text on page 11, not Supplementary Section S4 as I previously misremembered) is a stacked bar chart where the segments <em>do appear to represent mutually exclusive portions of the respondents who answered the “level” question for each claim,</em> likely categorized by the <strong>highest level of evidence they endorsed.</strong></p>
+<p>My apologies, my previous interpretation was incorrect based on how these charts are typically constructed to represent a whole. The explicit mention of allowing multiple answers is for the <em>data collection phase</em>, but for visualization in a stacked bar chart aiming for 100%, a recoding to the highest level endorsed is standard.</p>
+<p>Let’s re-examine based on this understanding and your new request to specifically look for <em>experimental field studies, natural experiments in the field, or well-controlled designs cited as supporting the causal claim in Section S5</em>, and to report the “Causal Field” percentage directly from Figure 3.</p>
+<p><strong>Revised Interpretation of Figure 3 (formerly S3):</strong>
+The bars in Figure 3 sum to 100% for each claim (representing all experts who provided a “level of evidence” response for that claim). Each colored segment represents the proportion of those experts for whom that <em>specific level</em> was their <strong>highest endorsed level of evidence.</strong></p>
+<ul>
+<li>The dark purple (“Wide-scale causal”) is the highest.</li>
+<li>The next blue (“Wide-scale”) would be for non-causal claims.</li>
+<li>Then “Replicated causal field,” “Replicated field,” “Causal field,” “Field,” “Causal limited,” “Correlational,” “Empirical,” and finally “None (e.g., opinion).”</li>
+<li>The “No response” category mentioned in the Figure S3 caption (page 63) is not visually part of the stacked bars in Figure 3 on page 11, meaning Figure 3 likely only includes those who <em>did</em> provide a level of evidence.</li>
+</ul>
+<p>I will now go through the claims again, try to estimate the “Causal field” percentage from the visual in Figure 3 (page 11), and assess the S5 text for the types of evidence you’ve specified.</p>
+<hr />
+<p><strong>Revised Table</strong></p>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 29%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Claim</th>
+<th style="text-align: center;">% Causal Field (Est. from Fig 3)</th>
+<th style="text-align: center;">% Causal Field or Higher (Est. from Fig 3)</th>
+<th style="text-align: center;">S5 Text: Experimental Field, Natural Experiment, or Well-Controlled Design in Field Supporting Causal Claim?</th>
+<th style="text-align: center;">S5 Text: Observational Study Cited as Supporting Causal Claim?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>8. Heavy daily use of smartphones and social media can cause sleep deprivation.</strong></td>
+<td style="text-align: center;">~10-12%</td>
+<td style="text-align: center;">~25-30%</td>
+<td style="text-align: center;">Yes (Intervention studies like Martin et al., Perrault et al., Tu et al., described as improving sleep by reducing screen time, could be field experiments). Schechter et al. (meta-analysis of blue light interventions) and Hartstein et al. (consensus panel review) also point to experimental/interventional evidence.</td>
+<td style="text-align: center;">Yes (Longitudinal studies like Rod et al., Liu et al. cited for associations).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9. Chronic sleep deprivation can cause a decline in mental health.</strong></td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">~75-80%</td>
+<td style="text-align: center;">Yes (Scott et al. meta-analysis of sleep-improvement interventions showing mental health benefits is strong. Pires et al. also likely experimental).</td>
+<td style="text-align: center;">Yes (Liu et al. review of longitudinal studies).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>10. Heavy daily use of smartphones and social media can cause attention fragmentation.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~10-12%</td>
+<td style="text-align: center;">Potentially (van Wezel et al. intervention, though manipulation failed, was field-based. “Mere presence” studies like Ward et al. are lab).</td>
+<td style="text-align: center;">Yes (Longitudinal studies like Ra et al., Deng et al. cited for associations with ADHD symptoms).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>11. Attention fragmentation can cause a decline in mental health…</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">Potentially (Intervention studies on disabling notifications like Fitz et al., Olson et al. are field-based and show some MH impact).</td>
+<td style="text-align: center;">Yes (Correlational studies on multitasking and MH like Becker et al., Shin et al.).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>12. Heavy daily use of smartphones and social media can cause behavioral addiction.</strong></td>
+<td style="text-align: center;">~7-10%</td>
+<td style="text-align: center;">~20-25%</td>
+<td style="text-align: center;">Yes (Allcott et al. 2022 is explicitly cited as a field study suggesting habit formation and self-control problems).</td>
+<td style="text-align: center;">Yes (Truzoli et al. on distress post-internet; Anderson &amp; Wood on blunted reward sensitivity).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13. Behavioral addiction can cause a decline in mental health.</strong></td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">~50-55%</td>
+<td style="text-align: center;">No direct experimental field study cited for <em>causing</em> decline. The argument is often definitional or based on comorbidity.</td>
+<td style="text-align: center;">Yes (Hartmann &amp; Blaszczynski longitudinal study on gambling; Petry et al., Ko et al. on comorbidity).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14. Heavy daily use of smartphones and social media can cause social deprivation…</strong></td>
+<td style="text-align: center;">~2-4%</td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">Yes (Allcott et al. 2020 deactivating Facebook was an experimental field study. Geraci et al. 2022 quasi-experimental study on internet speed is a natural experiment).</td>
+<td style="text-align: center;">Yes (Meta-analyses by Appel et al., Liu &amp; Baumeister cited, though Cheng et al. found no overall association).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>15. Chronic social deprivation can cause a decline in mental health.</strong></td>
+<td style="text-align: center;">~10-12%</td>
+<td style="text-align: center;">~60-65%</td>
+<td style="text-align: center;">Yes (Killgore et al. 2020 on lockdown effects is a natural experiment. Intervention studies like Alvarez et al., Costello et al., Lai et al. on increasing social interaction improve MH and are likely field-based).</td>
+<td style="text-align: center;">Yes (Cacioppo et al. longitudinal study on isolation and depression).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>17. Social media increases visual social comparisons among adolescent girls.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~15-20%</td>
+<td style="text-align: center;">No (Cited experimental studies like Fardouly et al. 2015, Kleemans et al. 2018, Tiggemann &amp; Anderberg 2020 are lab/online, not field studies measuring social comparison as an outcome in a consequential real-world setting).</td>
+<td style="text-align: center;">Yes (Couture Bue 2020 eye-tracking study; Fardouly et al. 2017 survey).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>18. Social media increases perfectionism among adolescent girls.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: center;">No (Consensus states no experimental studies directly manipulating social media for this. Vanhoffelen et al. 2025 longitudinal study showed weak evidence).</td>
+<td style="text-align: center;">Yes (Surveys by Danielsen et al. 2024, Simon et al. 2022, Harren et al. 2021).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>19. Social media increases relational aggression among adolescent girls…</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">No (Consensus states no experimental evidence for SM use -&gt; increased RA. Martins &amp; Weaver meta-analysis included experiments on “exposure to RA -&gt; RA behavior,” not direct SM manipulation).</td>
+<td style="text-align: center;">Yes (Marinoni et al. 2023 on cyberbullying vulnerability).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>20. Among adolescent girls, social media increases exposure to other people displaying or discussing their mental disorders.</strong></td>
+<td style="text-align: center;">~3-5%</td>
+<td style="text-align: center;">~15-20%</td>
+<td style="text-align: center;">No (Consensus states no direct causal link references. Cited studies are observational, e.g., phenomena on TikTok, Twitter disclosures).</td>
+<td style="text-align: center;">Yes (Alho et al. on peer networks; Hamilton et al. on self-harm content exposure).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>21. Social media increases sexual predation and harassment of adolescent girls…</strong></td>
+<td style="text-align: center;">~1-2%</td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">Potentially (Bhuller et al. 2013 quasi-experimental study on <em>general internet access</em> and sex crimes is a natural experiment, but not specific to SM mechanisms for predation). Consensus states no SM-specific experimental studies.</td>
+<td style="text-align: center;">Yes (Bratton et al. 2020 on Facebook use and online harassment).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>24. If most parents waited… it would benefit the mental health of adolescents overall.</strong></td>
+<td style="text-align: center;">~2-3%</td>
+<td style="text-align: center;">~5-8%</td>
+<td style="text-align: center;">No (Cited studies are correlational/longitudinal. No experimental field studies manipulating delayed access).</td>
+<td style="text-align: center;">Yes (Dempsey et al., Vaterlaus et al., Gerosa et al., Sapien Labs, Sun 2023, all observational).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>25. Imposing (and enforcing) a legal minimum age of 16… would benefit the mental health of adolescents overall.</strong></td>
+<td style="text-align: center;">~1-2%</td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">No (Consensus states no strictly related references. Cited experimental work like Ferguson 2024 is on temporary abstention, not age limits).</td>
+<td style="text-align: center;">Yes (General research linking SM to decreased MH like Twenge &amp; Campbell 2018 cited as rationale, but it’s not testing the policy).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>26. Phone-free schools would benefit the mental health of adolescents overall.</strong></td>
+<td style="text-align: center;">~5-7%</td>
+<td style="text-align: center;">~10-15%</td>
+<td style="text-align: center;">Yes (Studies of school phone bans cited in Böttger &amp; Zierer 2024 meta-analysis, King et al. 2024, Campbell et al. 2024 review, Goodyear et al. 2025 meta-analysis are natural experiments in field settings).</td>
+<td style="text-align: center;">No (The studies cited are evaluations of bans, not general observational studies of phone use in schools).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes on Estimation from Figure 3:</strong>
+The percentages for “% Causal Field” and “% Causal Field or Higher” are visual estimations from the provided stacked bar chart (Figure 3, p. 11 of the PDF). They are approximate due to the nature of reading from a graph.</p>
+<p><strong>Key Revisions and Observations:</strong></p>
+<ul>
+<li>The table now includes an estimated “% Causal Field” directly from the figure.</li>
+<li>The assessment specifically looks for <em>experimental</em> field studies, <em>natural experiments</em> in the field, or <em>well-controlled designs in the field</em> that Section S5 cites as supporting the causal claim.</li>
+<li>An additional column notes if Section S5 cites observational studies as evidence for the causal direction (often longitudinal or strong associational data).</li>
+<li>For many claims, especially those about “Social media increases X,” direct experimental field evidence cited in S5 is often lacking, even if observational data or lab experiments are mentioned. The expert ratings for “Causal Field” for these claims often seem to reflect a broader interpretation or knowledge base beyond what’s explicitly detailed as <em>experimental field research</em> in the S5 summary.</li>
+<li>The policy-related claims (#24, #25) still show a lack of direct experimental field testing of the policies themselves, though #26 (phone-free schools) has natural experiment data.</li>
+</ul>
+<p><strong>Response</strong>
+Okay, this is a detailed task. I will go through each of the identified causal claims, extract the expert assessment of evidence levels, and then analyze the studies cited in the consensus statement for that claim to assess their nature (causally informative, field, replication) and identify any conflicts.</p>
+<p>The definition of “Field evidence” provided in the document (page 24) is: “Evidence collected in real-world, consequential settings using objective measures (e.g., official statistics in real-world settings, such as suicide rates; self-reported surveys are not field evidence).” This is a strict definition. “Causally informative” will generally refer to experimental studies (lab, field, or well-designed interventions).</p>
+<p>Let’s start with Claim 17 as requested, then proceed through the other causal claims.</p>
+<p><strong>Causal Claims from Table 1:</strong>
+* General Causal Claims: 8, 9, 10, 11, 12, 13, 14, 15
+* Gender-related Causal Claims: 17, 18, 19, 20, 21
+* Policy Recommendation Causal Claims: 24, 25, 26</p>
+<hr />
+<p><strong>Claim 17. Social media increases visual social comparisons among adolescent girls.</strong> (Consensus statement: p. 98-100)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=96):</strong>
+<ul>
+<li>No evidence: 14.58%</li>
+<li>Correlational: 57.29%</li>
+<li>Causal limited (lab, surveys, online, self-reported): 44.79%</li>
+<li>Causal Field: 11.46%</li>
+<li>Replicated Causal Field: 12.50%</li>
+<li>Wide-scale Causal: 8.33%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies in Consensus Statement for Claim 17:</strong>
+<ul>
+<li><strong>Saiphoo &amp; Vahedi (2019):</strong> Meta-analysis of 63 samples. Found social media use <em>associated</em> with decreased body satisfaction. Gender not a significant moderator. (This is correlational in nature for the primary studies it likely aggregates, though meta-analyses <em>can</em> include experimental work).</li>
+<li><strong>Fioravanti et al. (2022):</strong> Systematic review of <em>experimental studies</em>. Indicated idealized images <em>increased</em> body dissatisfaction, with appearance comparison as a mediator. (Causally informative - experimental).</li>
+<li><strong>Couture Bue (2020):</strong> Eye-tracking study. Showed Instagram use <em>predicted</em> greater attention to body regions associated with anxiety, effect mediated by appearance comparisons and body dissatisfaction. (Observational/correlational, though eye-tracking provides objective attention measures).</li>
+<li><strong>Goodyear et al. (2022):</strong> Qualitative studies. Highlights how girls use social media to compare bodies. (Descriptive, not primarily causal).</li>
+<li><strong>Fardouly et al. (2015):</strong> Experimental study. Assigned young women to browse Facebook, magazines, or websites. Found <em>no significant Facebook effect</em> on body dissatisfaction overall, but identified a moderating role of upward social comparison (those high in it showed increased discrepancy after Facebook). (Causally informative - experimental).</li>
+<li><strong>Kleemans et al. (2018):</strong> Experimental study. Exposed adolescent girls to edited Instagram content. Girls with higher comparison tendency were more strongly affected. (Causally informative - experimental).</li>
+<li><strong>Tiggemann &amp; Anderberg (2020):</strong> Experimental study. Viewing “Instagram vs. reality” content <em>reduced</em> body dissatisfaction compared to idealized images. Appearance comparison did <em>not</em> significantly vary across conditions. (Causally informative - experimental).</li>
+<li><strong>Ferguson (2018):</strong> Cited as a hypothesis that social media reminds women of body dissatisfaction. (Likely a review/theoretical piece, not primary causal data).</li>
+<li><strong>Roberts et al. (2022):</strong> Stated as finding “social media contributes to body dissatisfaction, beyond traditional media.” The nature of “contributes” is key; if based on predictive modeling of non-experimental data, it’s correlational.</li>
+<li><strong>Fardouly et al. (2017):</strong> Found upward comparisons on social media <em>are associated</em> with worse body image outcomes compared to in-person or traditional media. (Correlational).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Fioravanti et al. (2022 review of experiments), Fardouly et al. (2015 experiment), Kleemans et al. (2018 experiment), Tiggemann &amp; Anderberg (2020 experiment). These are primarily lab/online experiments.</li>
+<li><strong>Field Studies (as per document definition):</strong> None of the cited experimental studies appear to be field studies under the strict definition (real-world, consequential settings, objective measures like official statistics).</li>
+<li><strong>Direct Replications:</strong> The experimental studies address similar constructs but use different specific manipulations and measures; they are not direct replications of each other.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>The expert assessment of “Causal limited” (44.79%) is well-supported by the citation of several experimental studies.</li>
+<li>The expert ratings for “Causal Field” (11.46%), “Replicated Causal Field” (12.50%), and “Wide-scale Causal” (8.33%) seem less directly supported by the <em>explicitly described experimental studies</em> in the consensus text, as these are mostly lab/online experiments, not field studies.</li>
+<li>The consensus statement concludes that evidence suggests an <em>association</em> between social media use and body dissatisfaction, with the role of <em>increased visual social comparison</em> as the direct causal link still under consideration and likely moderated. This aligns with the mixed findings from the experimental studies regarding the specific mechanism of <em>visual social comparison</em>.</li>
+</ul></li>
+</ul>
+<hr />
+<p>Now, for the other causal claims:</p>
+<p><strong>Claim 8. Heavy daily use of smartphones and social media can cause sleep deprivation.</strong> (Consensus statement: p. 77-79)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=105):</strong>
+<ul>
+<li>No evidence: 4.76%</li>
+<li>Correlational: 64.76%</li>
+<li>Causal limited: 57.14%</li>
+<li>Causal Field: 20.00%</li>
+<li>Replicated Causal Field: 8.57%</li>
+<li>Wide-scale Causal: 9.52%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li>Correlational: Alonzo et al. (2021), Cheng et al. (2024), Alimoradi et al. (2019), Orben &amp; Przybylski (2020), Gjoneska et al. (2022), Brosnan et al. (2024), Ahmed et al. (2024 meta-analysis of largely correlational studies), Sumter et al. (2024).</li>
+<li>Longitudinal (observational): Rod et al. (2018), Liu et al. (2019).</li>
+<li>Intervention studies (reducing screen time): Martin et al. (2020), Perrault et al. (2019), Tu et al. (2023). (Causally informative). These could be considered field experiments depending on setting and measures.</li>
+<li>Laboratory experiments (biological mechanisms): Chang et al. (2015) - light emission. (Causally informative).</li>
+<li>Meta-analysis of interventions: Schechter et al. (2022) - blue light reduction. (Causally informative).</li>
+<li>Consensus panel review: Hartstein et al. (2024) - reviewed experimental and intervention studies. (Summarizes causally informative work).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Martin et al. (2020), Perrault et al. (2019), Tu et al. (2023), Chang et al. (2015), Schechter et al. (2022), Hartstein et al. (2024 review).</li>
+<li><strong>Field Studies:</strong> The intervention studies (Martin, Perrault, Tu) could qualify if conducted in naturalistic settings with objective sleep measures (though some might use self-report). The consensus text doesn’t detail their methodology to confirm field status per the document’s definition.</li>
+<li><strong>Direct Replications:</strong> The intervention studies are conceptually similar but likely not direct replications.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>The high expert rating for “Correlational” (64.76%) and “Causal limited” (57.14%) is well-supported by the cited literature. The “Causal Field” (20.00%) rating is plausible given the intervention studies.</li>
+<li>No major conflict. The consensus accurately reflects a mix of correlational and some experimental/interventional evidence. The conclusion that the extent to which it <em>specifically</em> causes sleep deprivation (vs. general sleep problems) is unclear seems justified.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 9. Chronic sleep deprivation can cause a decline in mental health.</strong> (Consensus statement: p. 81)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=100):</strong>
+<ul>
+<li>No evidence: 1.00%</li>
+<li>Correlational: 44.44% (Note: this should be “Correlational” as per the question options for causal claims, the text lists it as 44.00% without the label but it’s the first option after “No evidence”).</li>
+<li>Causal limited: 45.00%</li>
+<li>Causal field: 26.00%</li>
+<li>Replicated causal field: 30.00%</li>
+<li>Wide-scale causal: 44.00%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Pires et al. (2016):</strong> Sleep deprivation shown to increase state anxiety. (Likely experimental if “shown to increase”).</li>
+<li><strong>Roberts &amp; Duong (2014):</strong> Six or fewer hours of sleep <em>predicts</em> higher depression. (Longitudinal observational, predictive but not strictly experimental manipulation of sleep deprivation).</li>
+<li><strong>Liu et al. (2020):</strong> Review of 41 longitudinal studies; sleep disturbances <em>predictors</em> of suicidal ideation. (Summarizes observational longitudinal work).</li>
+<li><strong>Scott et al. (2021):</strong> Meta-analysis of sleep-improvement <em>interventions</em>. Improving sleep had positive effect on mental health. (Causally informative).</li>
+<li><strong>Short et al. (2022):</strong> Highlights vulnerability of adolescents. (Likely review/conceptual).</li>
+<li><strong>McEwen &amp; Lasley (2002):</strong> Biological mechanisms – sleep deprivation disrupts brain areas. (Reviews of mechanistic studies, some of which could be experimental).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Scott et al. (2021 meta-analysis of interventions), Pires et al. (2016, likely experimental). Mechanistic studies discussed by McEwen &amp; Lasley (2002) could also be experimental.</li>
+<li><strong>Field Studies:</strong> The interventions reviewed by Scott et al. might include field studies.</li>
+<li><strong>Direct Replications:</strong> Unclear from the summary.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>The expert ratings are quite high across “Causal limited” (45%), “Replicated causal field” (30%), and “Wide-scale causal” (44%).</li>
+<li>The cited evidence strongly supports a causal link, especially through the meta-analysis of interventions (Scott et al.). The biological mechanism work also supports causality.</li>
+<li>The consensus is strong. There isn’t a clear conflict; the evidence cited (especially interventions) supports the higher-level causal inferences made by experts.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 10. Heavy daily use of smartphones and social media can cause attention fragmentation.</strong> (Consensus statement: p. 82-83)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=88):</strong>
+<ul>
+<li>No evidence: 9.09%</li>
+<li>Correlational: 63.64%</li>
+<li>Causal limited: 57.95%</li>
+<li>Causal field: 9.09%</li>
+<li>Replicated causal field: 5.68%</li>
+<li>Wide-scale causal: 7.95%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Santos et al. (2022):</strong> Systematic review; excessive screen time in children <em>can be associated</em> with attention problems. (Reviews largely correlational work).</li>
+<li><strong>Barry et al. (2017):</strong> Observed an <em>association</em> between number of social media accounts and DSM-5 inattention symptoms. (Correlational).</li>
+<li>Longitudinal studies on smartphone use and ADHD symptoms: George et al. (2017) - <em>association</em>; Ra et al. (2018) - high social media use <em>associated</em> with later ADHD symptoms; Deng et al. (2024) - online social activities <em>linked</em> to ADHD symptoms. (Observational longitudinal).</li>
+<li>Studies on “mere presence” of smartphone: Ward et al. (2017), Skowronek et al. (2023) - presence <em>could reduce</em> cognitive capacity. (Experimental, causally informative for “mere presence” not “heavy use”).</li>
+<li><strong>Parry (2024):</strong> Meta-analysis; mere presence <em>negatively impacted</em> working memory. (Reviews experimental work on “mere presence”).</li>
+<li><strong>van Wezel et al. (2021):</strong> Experimental study (reducing social media); <em>no effect</em> on attention (manipulation failed). (Causally informative, but with null/inconclusive result due to design issue).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Ward et al. (2017), Skowronek et al. (2023), Parry (2024 meta-analysis of these types of studies), van Wezel et al. (2021). These mostly relate to “mere presence” or effects of reduction, not directly “heavy use causes fragmentation.”</li>
+<li><strong>Field Studies:</strong> van Wezel et al. was an intervention that could be a field study.</li>
+<li><strong>Direct Replications:</strong> Not apparent.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (63.64%) and “Causal limited” (57.95%) high.</li>
+<li>The cited literature is predominantly correlational or observational longitudinal, especially regarding “heavy use.” The experimental evidence cited (Ward, Skowronek, Parry) focuses on the “mere presence” effect, which is different from “heavy daily use.”</li>
+<li>The consensus statement itself notes the definitional issues with “attention fragmentation” vs. “inattention/ADHD.” The conclusion that “the evidence is not robust enough to definitively confirm a causal link” for heavy use causing attention fragmentation seems justified given the cited studies. The expert rating for “Causal limited” might be slightly generous if strictly applied to “heavy use causing fragmentation” as opposed to related concepts.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 11. Attention fragmentation can cause a decline in mental health (possibly through mediating factors such as its negative impact on social relationships).</strong> (Consensus statement: p. 84-85)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=54):</strong>
+<ul>
+<li>No evidence: 29.62%</li>
+<li>Correlational: 48.15%</li>
+<li>Causal limited: 25.93%</li>
+<li>Causal field: 7.41%</li>
+<li>Replicated causal field: 7.41%</li>
+<li>Wide-scale causal: 5.55%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong> (The statement notes “attention fragmentation” is not well-established, so it discusses related constructs).
+<ul>
+<li>Mind-wandering: Killingsworth &amp; Gilbert (2010) - mind-wandering <em>associated</em> with unhappiness (correlational). Smallwood &amp; Schooler (2015) - review. Poerio et al. (2013), Welz et al. (2018) - null or positive effects of mind-wandering (correlational).</li>
+<li>Cognitive load: Mizuno et al. (2011), Hawthorne et al. (2019) - <em>link</em> between cognitive load and negative well-being (correlational). Hu et al. (2021) - cognitive load <em>may increase</em> well-being in some cases (potentially experimental or quasi-experimental).</li>
+<li>Multitasking: Becker et al. (2013), Shin et al. (2024) - media multitasking <em>associated</em> with higher depression/anxiety (correlational). Hatchel et al. (2018) - <em>associated</em> with negative affect/low self-esteem (correlational).</li>
+<li>Intervention studies (disabling notifications): Fitz et al. (2019), Olson et al. (2023) - <em>positive effects</em> on well-being (causally informative). Dekker et al. (2024), Liao et al. (2022) - drawbacks like increased checking/anxiety (causally informative, but for a different outcome).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Fitz et al. (2019), Olson et al. (2023), Dekker et al. (2024), Liao et al. (2022) – these are interventions on notifications, indirectly related to fragmentation. Hu et al. (2021) might be.</li>
+<li><strong>Field Studies:</strong> The intervention studies might qualify.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Expert ratings are highest for “Correlational” (48.15%) and relatively low for causal levels. “No evidence” is also high (29.62%).</li>
+<li>The cited literature is heavily correlational for the link between related constructs (mind-wandering, cognitive load, multitasking) and mental health. The experimental evidence on interventions (disabling notifications) is mixed and indirect.</li>
+<li>The consensus statement’s conclusion that “evidence regarding the effect of attention fragmentation on mental health is preliminary” aligns well with the cited studies and the expert assessment. No major conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 12. Heavy daily use of smartphones and social media can cause behavioral addiction.</strong> (Consensus statement: p. 87-88)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=94):</strong>
+<ul>
+<li>No evidence: 9.57%</li>
+<li>Correlational: 64.89%</li>
+<li>Causal limited: 48.93%</li>
+<li>Causal field: 19.15%</li>
+<li>Replicated causal field: 10.64%</li>
+<li>Wide-scale causal: 11.70%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Truzoli et al. (2023):</strong> Social media users with high Internet Addiction Test scores reported lower distress after ceasing internet session (consistent with mobile device use as sedative). (Correlational/observational).</li>
+<li><strong>Anderson &amp; Wood (2023):</strong> Frequent social media users show blunted sensitivity to social rewards (habituation). (Observational, potentially experimental if reward sensitivity was tested).</li>
+<li><strong>Allcott et al. (2022):</strong> <em>Field study</em> suggesting social media usage may involve self-control problems and be habit-forming. (Causally informative – likely an intervention or natural experiment).</li>
+<li>TikTok internal study (NPR, 2024): 35 mins of videos sufficient to develop a habit. (Internal industry data, nature of study unclear but suggests rapid habit formation).</li>
+<li>Neuroimaging studies (He et al., 2017; Montag et al., 2017): Parallels in brain activity between problematic smartphone use and other behavioral addictions. (Correlational/Observational).</li>
+<li>Books on dopamine/addiction (Courtwright, 2019; Lembke, 2021). Design features (Schüll, 2012; Sherman et al., 2016; Lindström et al., 2021). (Theoretical/Mechanistic arguments).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Allcott et al. (2022) is explicitly called a field study and its findings (self-control, habit) are causally suggestive.</li>
+<li><strong>Field Studies:</strong> Allcott et al. (2022).</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (64.89%) and “Causal limited” (48.93%) high. “Causal field” is 19.15%.</li>
+<li>The consensus statement itself notes “no experts provided experimental evidence about this claim” and “experimental evidence is virtually absent.” This seems to contradict the mention of Allcott et al. (2022) as a field study suggesting habit formation. However, “habit formation” and “self-control problems” are not identical to “causing behavioral addiction” as a clinical disorder.</li>
+<li>There’s a slight tension: experts rate some level of causal evidence, one field study with suggestive findings is cited, but the consensus text emphasizes the <em>absence</em> of direct experimental proof for addiction as a disorder. The conclusion that “preliminary correlational evidence” exists but “experimental evidence is virtually absent” is largely accurate for addiction as a formally recognized disorder, even if related phenomena like habit formation have some experimental backing.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 13. Behavioral addiction can cause a decline in mental health.</strong> (Consensus statement: p. 90)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=81):</strong>
+<ul>
+<li>No evidence: 12.35%</li>
+<li>Correlational: 50.62%</li>
+<li>Causal limited: 41.96%</li>
+<li>Causal field: 19.75%</li>
+<li>Replicated causal field: 23.46%</li>
+<li>Wide-scale causal: 34.57%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Grant et al. (2010):</strong> Review; behavioral addictions share similarities with substance addictions (co-occurring disorders).</li>
+<li><strong>Petry et al. (2005):</strong> High comorbidity between pathological gambling and psychiatric disorders (depression, anxiety). (Cross-sectional/Correlational).</li>
+<li><strong>Ko et al. (2009):</strong> Linked excessive online gaming to depression, anxiety, social phobia. (Likely correlational).</li>
+<li><strong>Hartmann &amp; Blaszczynski (2018):</strong> Gambling problems <em>can lead to</em> increased depression/anxiety over time. (Longitudinal, suggesting directionality).</li>
+<li><strong>Marchant et al. (2017):</strong> Review; linking “internet-related problematic behaviors” to self-harm/suicidal behaviors, but direction of causality unclear.</li>
+<li><strong>Alimoradi et al. (2024):</strong> Meta-analysis; problematic internet-related behaviors <em>consistently associated</em> with mental health issues. (Aggregates largely correlational data).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Hartmann &amp; Blaszczynski (2018) is longitudinal and suggests directionality, which is a step towards causal inference but not a manipulated experiment. Most others are correlational or reviews of correlational work. The claim is broad (“behavioral addiction”), and some of these studies (gambling) have a longer history of research than, say, social media addiction.</li>
+<li><strong>Field Studies:</strong> Not apparent from summaries.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (50.62%) and “Causal limited” (41.96%) highest, with “Wide-scale causal” also notably high (34.57%).</li>
+<li>The literature cited is largely based on associations, comorbidities, and some longitudinal data (gambling). The consensus states the claim is “true by definition” for DSM/ICD, which is a strong point.</li>
+<li>The conclusion that “the direction of the causal relationship remains unclear” (despite the definitional point) reflects the limitations of most primary research (often correlational) vs. the clinical definitions. No major conflict, but the high “Wide-scale causal” rating might be more based on the definitional aspect and long-standing clinical observation for established addictions (like gambling) rather than rigorous experimental proof for <em>all</em> behavioral addictions causing mental health decline.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 14. Heavy daily use of smartphones and social media can cause social deprivation, such as isolation and lack of formative social experiences.</strong> (Consensus statement: p. 92-93)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=83):</strong>
+<ul>
+<li>No evidence: 13.25%</li>
+<li>Correlational: 63.86%</li>
+<li>Causal limited: 42.17%</li>
+<li>Causal field: 14.46%</li>
+<li>Replicated causal field: 9.64%</li>
+<li>Wide-scale causal: 8.43%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li>Meta-analyses on social media &amp; loneliness: Appel et al. (2020), Liu &amp; Baumeister (2016) - found positive correlation. Cheng et al. (2019) - largest meta-analysis, <em>no overall association</em>.</li>
+<li><strong>Geraci et al. (2022):</strong> Quasi-experimental; higher connection speeds/internet use <em>can lead to</em> reduced social engagement. (Causally suggestive).</li>
+<li><strong>Allcott et al. (2020):</strong> Experimental (deactivating Facebook); <em>results in more in-person socialization</em> but also more solitary TV. (Causally informative).</li>
+<li>Pew Research (Anderson &amp; Jiang, 2018): Survey; 81% teens feel <em>more connected</em> via social media. (Correlational, self-report).</li>
+<li><strong>Steinsbekk et al. (2024):</strong> Social media use <em>associated</em> with more time with friends offline. (Correlational/Longitudinal).</li>
+<li>Studies on benefits for LGBTQ+ youth (Berger et al., 2022; Paceley et al., 2022) or students with disabilities.</li>
+<li><strong>Wang et al. (2018):</strong> Longitudinal; U-shaped relationship between active Facebook use and loneliness.</li>
+<li>Displacement hypothesis studies (Verduyn et al., 2021; Dienlin et al., 2017; Hall et al., 2019a, 2019b) - mixed evidence, social media may displace other entertainment not just social interaction.</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Geraci et al. (2022, quasi-experimental), Allcott et al. (2020, experimental).</li>
+<li><strong>Field Studies:</strong> Allcott et al. (2020) was a field experiment.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (63.86%) and “Causal limited” (42.17%) high.</li>
+<li>The cited literature is mixed: correlational studies go both ways, meta-analyses are mixed, and a couple of experimental/quasi-experimental studies show some causal effects (both positive and negative for social connection aspects).</li>
+<li>The consensus conclusion that the “strength and even the direction of the potential causal relationship…likely depends on various…factors” and that future work should explore moderators aligns well with the mixed evidence and expert ratings. No major conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 15. Chronic social deprivation can cause a decline in mental health.</strong> (Consensus statement: p. 95)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=91):</strong>
+<ul>
+<li>No evidence: 1.10%</li>
+<li>Correlational: 49.45%</li>
+<li>Causal limited: 51.65%</li>
+<li>Causal field: 32.97%</li>
+<li>Replicated causal field: 27.47%</li>
+<li>Wide-scale causal: 37.36%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li>National health surveys (NHS, Newlove-Delgado et al., 2022): <em>report associations</em> between social deprivation and poor mental health. (Correlational).</li>
+<li><strong>Cacioppo et al. (2006):</strong> Longitudinal; demonstrated increased depression in socially isolated participants. (Observational longitudinal).</li>
+<li>Dickerson &amp; Kemeny (2004): Social-evaluative stressors <em>associated</em> with cortisol levels. (Likely review of experimental and correlational work).</li>
+<li>Field studies/Natural experiments (COVID-19): Killgore et al. (2020) - analyzed mental health data across lockdown, found increased depression/suicidal ideation <em>associated</em> with extended social isolation. (Natural experiment, observational).</li>
+<li>Experimental studies: Alvarez et al. (2024), Costello et al. (2022), Lai et al. (2020) - increasing social interactions <em>improves</em> mental health outcomes. (Causally informative - interventions).</li>
+<li><strong>Holt-Lunstad (2024):</strong> Review; social connections a key factor.</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Alvarez et al. (2024), Costello et al. (2022), Lai et al. (2020) are intervention studies. The natural experiment by Killgore et al. (2020) is also causally suggestive.</li>
+<li><strong>Field Studies:</strong> The interventions might qualify. Killgore et al. is a natural field study.</li>
+<li><strong>Direct Replications:</strong> Not apparent.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Causal limited” (51.65%) high, with substantial ratings for “Causal field” (32.97%) and “Wide-scale causal” (37.36%).</li>
+<li>The cited literature includes strong correlational, longitudinal, natural experimental, and intervention studies. The consensus itself notes the converging evidence but points out the ethical impossibility of <em>depriving</em> people of social interaction in controlled experiments for this specific claim.</li>
+<li>The statement’s conclusion that “experts agreed that the evidence supports the claim” is consistent. The evidence is strong, even if direct experimental deprivation isn’t ethically feasible. No major conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 18. Social media increases perfectionism among adolescent girls.</strong> (Consensus statement: p. 101-102)
+* <strong>Expert Assessment of Evidence Level (N=72):</strong>
+* No evidence: 23.61%
+* Correlational: 63.89%
+* Causal limited: 27.78%
+* Causal field: 9.72%
+* Replicated causal field: 5.55%
+* Wide-scale causal: 5.55%</p>
+<ul>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Danielsen et al. (2024):</strong> Survey; upward social comparison <em>associated</em> with higher perfectionism (boys &amp; girls). (Correlational).</li>
+<li><strong>Simon et al. (2022):</strong> Survey; self-reported Instagram addiction <em>positively correlated</em> with concerns about physical imperfections. (Correlational).</li>
+<li><strong>Harren et al. (2021):</strong> Survey; problematic Instagram/Facebook uses <em>linked</em> to perfectionism. (Correlational).</li>
+<li><strong>Vanhoffelen et al. (2025):</strong> Longitudinal study; <em>weak evidence</em> that exposure to superior individuals on social media increases perfectionism. (Observational longitudinal).</li>
+<li>Broader research on rising perfectionism (Curran &amp; Hill, 2019) - not specific to social media.</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> The consensus states “no evidence from experimental studies directly manipulating social media exposure.” Vanhoffelen et al. (2025) is longitudinal, which offers more than cross-sectional but isn’t experimental.</li>
+<li><strong>Field Studies:</strong> None cited.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (63.89%) highest, with “Causal limited” at 27.78%. “No evidence” is also substantial (23.61%).</li>
+<li>The cited primary research specific to social media and perfectionism is correlational or longitudinal with weak findings. The consensus explicitly states the lack of experimental evidence.</li>
+<li>The conclusion that “social media <em>may be associated</em> with perfectionism” and that future studies should “explore potential causal links” aligns perfectly with the cited evidence and expert assessments. No conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 19. Social media increases relational aggression among adolescent girls, for example by providing tools for cyberbullying and exclusion.</strong> (Consensus statement: p. 103-104)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=71):</strong>
+<ul>
+<li>No evidence: 19.72%</li>
+<li>Correlational: 69.01%</li>
+<li>Causal limited: 30.99%</li>
+<li>Causal field: 8.45%</li>
+<li>Replicated causal field: 1.41%</li>
+<li>Wide-scale causal: 4.23%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Marinoni et al. (2023):</strong> Found girls more vulnerable to cyberbullying/victimization than boys during pandemic. (Correlational, specific context).</li>
+<li><strong>Martins &amp; Weaver (2019):</strong> Meta-analysis (surveys, longitudinal, experimental); exposure to relational aggression <em>strongly predicted</em> relationally aggressive behaviors. (This meta-analysis includes experimental studies, making it causally informative for the “exposure to RA -&gt; RA behavior” link, but not directly “social media use -&gt; increases RA”).</li>
+<li><strong>Kvardova et al. (2025):</strong> Higher pro-social social media use <em>positively related</em> to increased prosocial behaviors. (Correlational, opposite direction for prosocial).</li>
+<li><strong>Hinduja &amp; Patchin (2014):</strong> Argues social media features may amplify relational aggression. (Theoretical/Argumentative).</li>
+<li><strong>Lapidot-Lefler et al. (2012):</strong> Lab study (adults); lack of eye contact <em>can contribute</em> to disinhibition/toxic behavior. (Experimental, but on adults and general toxic behavior, not specific to social media or relational aggression in girls).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Martins &amp; Weaver (2019) meta-analysis includes experimental studies, but the link is “exposure to RA -&gt; RA behaviors”. Lapidot-Lefler et al. (2012) is experimental but indirect. The consensus notes “no experts provided experimental evidence establishing a causal link between social media use and increased relational aggression.”</li>
+<li><strong>Field Studies:</strong> None cited directly.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (69.01%) highest, with “Causal limited” (30.99%) next.</li>
+<li>The primary evidence cited is largely correlational or indirect. The experimental evidence from Martins &amp; Weaver is about exposure to RA, not social media causing RA.</li>
+<li>The consensus conclusion that “the evidence that social media use increases relational aggression among adolescent girls is preliminary” is well-supported. No major conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 20. Among adolescent girls, social media increases exposure to other people displaying or discussing their mental disorders.</strong> (Consensus statement: p. 105-106)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=72):</strong>
+<ul>
+<li>No evidence: 18.06%</li>
+<li>Correlational: 69.44%</li>
+<li>Causal limited: 27.78%</li>
+<li>Causal field: 12.50%</li>
+<li>Replicated causal field: 9.72%</li>
+<li>Wide-scale causal: 8.33%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Alho et al. (2024):</strong> Mental disorders may be socially transmitted in adolescent peer networks (classmates). (Observational, not specific to social media).</li>
+<li>Studies on tic-like behaviors spreading on TikTok: Frey et al. (2022), Giedinghagen (2023), Haltigan et al. (2023), Hull et al. (2021), Olvera et al. (2021). (Observational, case reports, descriptive of a phenomenon).</li>
+<li><strong>Ernala et al. (2018):</strong> Research on Twitter suggests reciprocal behavior in self-disclosure of mental illness. (Observational/Content analysis).</li>
+<li><strong>Hamilton et al. (2025):</strong> Exposure to self-harm content <em>associated</em> with greater likelihood of urges/engaging in self-harm. (Correlational/Longitudinal).</li>
+<li><strong>Ali et al. (2024):</strong> Analyzed DMs about self-harm/suicide on Instagram; found significant helping behavior. (Observational/Content analysis, counter-example).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> The consensus states “no experts provided references for a direct causal link.” The studies are observational, content analyses, or describe phenomena (tic-like behaviors).</li>
+<li><strong>Field Studies:</strong> None in the experimental sense.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (69.44%) highest, with “Causal limited” (27.78%) next.</li>
+<li>The cited literature describes associations and observed phenomena but does not establish social media <em>causes</em> increased exposure in an experimental sense (though it’s highly plausible by nature of the platforms).</li>
+<li>The conclusion that future studies should “explore potential causal links” and notes the lack of direct causal link evidence is consistent. No major conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 21. Social media increases sexual predation and harassment of adolescent girls, for example by providing predators with access to potential victims.</strong> (Consensus statement: p. 107-108)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=59):</strong>
+<ul>
+<li>No evidence: 28.81%</li>
+<li>Correlational: 52.54%</li>
+<li>Causal limited: 13.56%</li>
+<li>Causal field: 5.08%</li>
+<li>Replicated causal field: 3.39%</li>
+<li>Wide-scale causal: 11.86%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li>Common Sense Media survey (Nesi et al., 2023): Girls report being contacted by strangers. (Self-report survey).</li>
+<li>Journalistic investigations (WSJ, 2024a, 2023): Documenting harassment and platforms facilitating illegal behavior.</li>
+<li>Internal Meta survey (Instagram, 2021), Snap study (WSJ, 2024b): Internal industry data on unwanted advances/sextortion.</li>
+<li><strong>Bratton et al. (2020):</strong> Correlational study; <em>association</em> between Facebook use and online harassment.</li>
+<li><strong>Bhuller et al. (2013):</strong> Quasi-experimental; increased internet access <em>associated</em> with rise in sex crimes (linked to pornography). (Causally suggestive for general internet, not specific social media mechanisms for predation).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> The consensus states “no experts provided experimental studies manipulating social media usage and measuring its effect on harassment or sexual predation.” Bhuller et al. (2013) is quasi-experimental for general internet access.</li>
+<li><strong>Field Studies:</strong> Bhuller et al. could be considered a natural field experiment.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (52.54%) highest. “No evidence” is also high (28.81%). Causal ratings are low.</li>
+<li>The cited evidence consists of surveys, journalistic reports, internal industry data, and one quasi-experimental study on general internet access. There’s a lack of direct experimental evidence on social media <em>causing</em> increased predation.</li>
+<li>The conclusion to “investigate whether a causal link exists” is appropriate. No major conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 24. If most parents waited until their children were in high school to give them their first smartphones, it would benefit the mental health of adolescents overall.</strong> (Consensus statement: p. 112-113)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=93):</strong>
+<ul>
+<li>No evidence: 50.68%</li>
+<li>Correlational: 39.73%</li>
+<li>Causal limited: 26.03%</li>
+<li>Causal field: 8.22%</li>
+<li>Replicated causal field: 2.74%</li>
+<li>Wide-scale causal: 5.48%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Dempsey et al. (2020):</strong> Found <em>no significant links</em> between early mobile phone ownership and psychosocial outcomes. (Correlational/Longitudinal).</li>
+<li><strong>Vaterlaus et al. (2021):</strong> Age of first smartphone had <em>little to no predictive value</em> for later well-being. (Correlational/Longitudinal).</li>
+<li><strong>Gerosa et al. (2024):</strong> Contrasting relationships by gender; early ownership positive for girls’ life satisfaction, negative for boys. (Correlational/Longitudinal).</li>
+<li>Sapien Labs (2024): Large survey; mental health outcomes <em>associated</em> with later age of first smartphone/tablet, more pronounced for females. (Correlational).</li>
+<li><strong>Sun (2023):</strong> Longitudinal; <em>no significant associations</em> between age of phone acquisition and depression, academic performance, sleep. (Longitudinal).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> None of the cited studies are experimental manipulations of delaying smartphone access. They are all observational/longitudinal.</li>
+<li><strong>Field Studies:</strong> No.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “No evidence” (50.68%) highest, followed by “Correlational” (39.73%). Causal ratings are low.</li>
+<li>The cited literature is entirely correlational/longitudinal with mixed findings.</li>
+<li>The consensus conclusion that “the evidence is insufficient to draw conclusions about this claim” is well-supported. No conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 25. Imposing (and enforcing) a legal minimum age of 16 for opening social media accounts would benefit the mental health of adolescents overall.</strong> (Consensus statement: p. 114-115)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=68):</strong>
+<ul>
+<li>No evidence: 70.59%</li>
+<li>Correlational: 26.47%</li>
+<li>Causal limited: 10.29%</li>
+<li>Causal field: 2.94%</li>
+<li>Replicated causal field: 2.94%</li>
+<li>Wide-scale causal: 5.88%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li>The consensus states: “Experts provided no references that were strictly related to the claim”.</li>
+<li>It then cites general research linking social media to decreased mental health (Twenge &amp; Campbell, 2018; Orben et al., 2022).</li>
+<li><strong>Ferguson (2024) meta-analysis:</strong> <em>No significant mental health differences</em> between experimental abstention and control. (Causally informative, but about temporary abstention, not age limits).</li>
+<li><strong>Thrul et al. (2025) re-analysis:</strong> Duration of reduction matters. (Methodological re-evaluation of existing studies).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> The consensus explicitly states no direct evidence was provided for this specific policy. Ferguson (2024) and Thrul et al. (2025) are about effects of <em>reducing</em> use, not <em>delaying initial access</em> via age limits.</li>
+<li><strong>Field Studies:</strong> No.</li>
+<li><strong>Direct Replications:</strong> No.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “No evidence” (70.59%) overwhelmingly highest. All other ratings are very low.</li>
+<li>This aligns perfectly with the consensus statement noting the lack of direct evidence. The discussion appropriately shifts to practical/legal/ethical issues and alternative approaches due to this evidentiary gap. No conflict.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Claim 26. Phone-free schools would benefit the mental health of adolescents overall.</strong> (Consensus statement: p. 116-117)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=77):</strong>
+<ul>
+<li>No evidence: 28.57%</li>
+<li>Correlational: 44.16%</li>
+<li>Causal limited: 25.97%</li>
+<li>Causal field: 16.88%</li>
+<li>Replicated causal field: 2.60%</li>
+<li>Wide-scale causal: 11.69%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies:</strong>
+<ul>
+<li><strong>Böttger &amp; Zierer (2024):</strong> Meta-analysis of 5 studies; small significant overall effect, notable benefits in social well-being (bullying). (Synthesizes existing, likely mixed-methodology studies).</li>
+<li><strong>King et al. (2024):</strong> Pre-registered study (Australia); <em>no meaningful changes</em> in problematic phone use, engagement, belonging after phone ban. (Observational, natural experiment).</li>
+<li><strong>Campbell et al. (2024):</strong> Scoping review; highlighted limitations, lack of RCTs. Small majority of studies reported positive effects on bullying/cyberbullying, similar small majority found no significant impact on mental health/well-being.</li>
+<li><strong>Goodyear et al. (2025):</strong> Meta-analysis; comparing restrictive vs. permissive policies, <em>no significant differences</em> in mental health/performance (but only 4/20 schools fully implemented phone-free).</li>
+</ul></li>
+<li><strong>Assessment of Cited Studies:</strong>
+<ul>
+<li><strong>Causally Informative:</strong> Studies included in these reviews/meta-analyses are likely observational or quasi-experimental (natural experiments of school bans). King et al. (2024) is a natural experiment. The consensus notes a lack of RCTs.</li>
+<li><strong>Field Studies:</strong> School ban studies are inherently field studies.</li>
+<li><strong>Direct Replications:</strong> No, methodologies vary.</li>
+</ul></li>
+<li><strong>Conflict Assessment:</strong>
+<ul>
+<li>Experts rate “Correlational” (44.16%) highest, with “No evidence” (28.57%) and “Causal limited” (25.97%) also substantial.</li>
+<li>The cited reviews and studies show mixed and limited evidence. Methodological issues abound.</li>
+<li>The consensus conclusion that “available evidence is too limited and inconsistent to draw conclusions” is strongly supported by the nature of the cited research and the expert ratings. No conflict.</li>
+</ul></li>
+</ul>
+<p>You are absolutely correct. Claims like “Social media increases…” are indeed causal claims, even if they aren’t explicitly about causing a <em>decline in mental health</em>. I will re-evaluate with that in mind, focusing on the “Causal field” expert assessment for <em>all</em> identified causal claims and explicitly noting if any cited studies are experimental field studies.</p>
+<p>Let’s go through them again.</p>
+<hr />
+<p><strong>Claim 8. Heavy daily use of smartphones and social media can cause sleep deprivation.</strong> (Consensus statement: p. 77-79)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=105):</strong>
+<ul>
+<li>Correlational: 64.76%</li>
+<li>Causal limited: 57.14%</li>
+<li><strong>Causal Field: 20.00%</strong></li>
+<li>Replicated Causal Field: 8.57%</li>
+<li>Wide-scale Causal: 9.52%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Intervention studies (reducing screen time): Martin et al. (2020), Perrault et al. (2019), Tu et al. (2023).</strong> These are described as showing that reducing screen time can improve sleep. If these interventions were conducted in participants’ natural environments (e.g., homes, not a sleep lab) and measured sleep objectively (e.g., actigraphy) or even through validated diaries over a period, they could qualify as experimental field studies. The consensus text doesn’t provide enough detail on their methodology to definitively categorize them as such per the strict definition, but they are the strongest candidates.</li>
+<li>Laboratory experiments (Chang et al., 2015) are not field studies.</li>
+<li>Meta-analyses (Schechter et al., 2022; Hartstein et al., 2024) might include experimental field studies, but the summary doesn’t break this down.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Potentially, through the intervention studies (Martin, Perrault, Tu).</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 20.00% of experts rated the evidence as “Causal Field.” This is plausible if the intervention studies are considered as such.</li>
+</ul>
+<hr />
+<p><strong>Claim 9. Chronic sleep deprivation can cause a decline in mental health.</strong> (Consensus statement: p. 81)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=100):</strong>
+<ul>
+<li>Correlational: 44.44%</li>
+<li>Causal limited: 45.00%</li>
+<li><strong>Causal field: 26.00%</strong></li>
+<li>Replicated causal field: 30.00%</li>
+<li>Wide-scale causal: 44.00%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Scott et al. (2021):</strong> Meta-analysis of sleep-improvement <em>interventions</em>. Improving sleep had a positive effect on mental health. Some of these interventions could have been conducted in field settings (e.g., CBT-I delivered in a community setting with real-world mental health outcomes).</li>
+<li>Pires et al. (2016) (likely experimental) and mechanistic studies (McEwen &amp; Lasley, 2002) are more likely lab-based.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Potentially, within the interventions reviewed by Scott et al. (2021).</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 26.00%. This aligns with the possibility that some interventions reviewed were field-based.</li>
+</ul>
+<hr />
+<p><strong>Claim 10. Heavy daily use of smartphones and social media can cause attention fragmentation.</strong> (Consensus statement: p. 82-83)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=88):</strong>
+<ul>
+<li>Correlational: 63.64%</li>
+<li>Causal limited: 57.95%</li>
+<li><strong>Causal field: 9.09%</strong></li>
+<li>Replicated causal field: 5.68%</li>
+<li>Wide-scale causal: 7.95%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>van Wezel et al. (2021):</strong> Experimental study (reducing social media); no effect on attention (manipulation failed). This was an intervention in participants’ daily lives, so it could be considered an experimental field study.</li>
+<li>Studies on “mere presence” (Ward et al., 2017; Skowronek et al., 2023) are lab experiments.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Yes, van Wezel et al. (2021) is a candidate.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 9.09%. This is a low percentage, consistent with only one potential (and inconclusive) field experiment being cited.</li>
+</ul>
+<hr />
+<p><strong>Claim 11. Attention fragmentation can cause a decline in mental health…</strong> (Consensus statement: p. 84-85)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=54):</strong>
+<ul>
+<li>Correlational: 48.15%</li>
+<li>Causal limited: 25.93%</li>
+<li><strong>Causal field: 7.41%</strong></li>
+<li>Replicated causal field: 7.41%</li>
+<li>Wide-scale causal: 5.55%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Intervention studies (disabling notifications): Fitz et al. (2019), Olson et al. (2023), Dekker et al. (2024), Liao et al. (2022).</strong> These interventions, if conducted in participants’ natural environments with real-world well-being measures, would be experimental field studies.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Potentially, through the notification intervention studies.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 7.41%. This is low, suggesting experts are cautious about the strength or directness of these field interventions for this specific broad claim.</li>
+</ul>
+<hr />
+<p><strong>Claim 12. Heavy daily use of smartphones and social media can cause behavioral addiction.</strong> (Consensus statement: p. 87-88)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=94):</strong>
+<ul>
+<li>Correlational: 64.89%</li>
+<li>Causal limited: 48.93%</li>
+<li><strong>Causal field: 19.15%</strong></li>
+<li>Replicated causal field: 10.64%</li>
+<li>Wide-scale causal: 11.70%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Allcott et al. (2022):</strong> Explicitly called a <em>field study</em> suggesting social media usage may involve self-control problems and be habit-forming. This is an experimental field study (likely involving an intervention or random assignment in a real-world context).</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Yes, Allcott et al. (2022).</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 19.15%. This aligns with one prominent field experiment being cited.</li>
+</ul>
+<hr />
+<p><strong>Claim 13. Behavioral addiction can cause a decline in mental health.</strong> (Consensus statement: p. 90)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=81):</strong>
+<ul>
+<li>Correlational: 50.62%</li>
+<li>Causal limited: 41.96%</li>
+<li><strong>Causal field: 19.75%</strong></li>
+<li>Replicated causal field: 23.46%</li>
+<li>Wide-scale causal: 34.57%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li>The consensus mentions <strong>Hartmann &amp; Blaszczynski (2018)</strong> showed gambling problems <em>can lead to</em> increased depression/anxiety <em>over time</em>. While longitudinal, it’s observational rather than an experimental field study manipulating addiction to see its effect on mental health. The claim is broad (“behavioral addiction”). It’s difficult to ethically conduct experimental field studies where addiction is <em>induced</em> to observe mental health decline. Treatment studies (interventions for addiction showing improved mental health) would be more common and could be field-based, but aren’t the primary focus of this claim’s wording.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Unlikely for <em>causing</em> decline through manipulation of addiction itself in a field setting. Intervention studies for addiction that measure mental health outcomes in the field would be relevant but focus on <em>reversal</em>.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 19.75%. This might reflect interpretations of strong longitudinal data or broader clinical field observations rather than direct experimental field manipulations of <em>causing</em> decline.</li>
+</ul>
+<hr />
+<p><strong>Claim 14. Heavy daily use of smartphones and social media can cause social deprivation…</strong> (Consensus statement: p. 92-93)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=83):</strong>
+<ul>
+<li>Correlational: 63.86%</li>
+<li>Causal limited: 42.17%</li>
+<li><strong>Causal field: 14.46%</strong></li>
+<li>Replicated causal field: 9.64%</li>
+<li>Wide-scale causal: 8.43%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Geraci et al. (2022):</strong> <em>Quasi-experimental study</em>; higher connection speeds/internet use can lead to reduced social engagement. This could be a natural experiment in the field.</li>
+<li><strong>Allcott et al. (2020):</strong> <em>Experimental study</em> (deactivating Facebook); results in more in-person socialization but also more solitary TV. This was a field experiment.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Yes, Allcott et al. (2020) and potentially Geraci et al. (2022) as a natural field experiment.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 14.46%. This is consistent with a couple of relevant studies.</li>
+</ul>
+<hr />
+<p><strong>Claim 15. Chronic social deprivation can cause a decline in mental health.</strong> (Consensus statement: p. 95)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=91):</strong>
+<ul>
+<li>Correlational: 49.45%</li>
+<li>Causal limited: 51.65%</li>
+<li><strong>Causal field: 32.97%</strong></li>
+<li>Replicated causal field: 27.47%</li>
+<li>Wide-scale causal: 37.36%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Killgore et al. (2020):</strong> Analyzed mental health data across lockdown periods (COVID-19). This is a <em>natural experiment</em> in a field setting.</li>
+<li><strong>Experimental studies (Alvarez et al., 2024; Costello et al., 2022; Lai et al., 2020):</strong> Increasing social interactions improves mental health. These are interventions. If conducted in real-world settings with community participants, they would be experimental field studies.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Yes, Killgore et al. (2020) as a natural field experiment, and potentially the intervention studies.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 32.97%. This aligns well with the presence of a significant natural experiment and other intervention studies that are likely field-based.</li>
+</ul>
+<hr />
+<p><strong>Claim 17. Social media increases visual social comparisons among adolescent girls.</strong> (Consensus statement: p. 98-100)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=96):</strong>
+<ul>
+<li>Correlational: 57.29%</li>
+<li>Causal limited: 44.79%</li>
+<li><strong>Causal Field: 11.46%</strong></li>
+<li>Replicated Causal Field: 12.50%</li>
+<li>Wide-scale Causal: 8.33%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Fardouly et al. (2015), Kleemans et al. (2018), Tiggemann &amp; Anderberg (2020):</strong> These are described as experimental studies. They involve manipulating exposure to social media content (or similar) and measuring outcomes. These are generally lab or online experiments, not field studies according to the strict definition (real-world, consequential settings, objective measures like official statistics for the outcome of <em>social comparison itself</em>). The outcomes are typically self-reported comparison tendencies or body dissatisfaction.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Unlikely, based on the descriptions. The experiments are more controlled (lab/online) settings.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 11.46%. This percentage seems a bit high if the cited experimental studies are primarily lab/online. Experts might be interpreting “field” more broadly or considering other non-cited studies.</li>
+</ul>
+<hr />
+<p><strong>Claim 18. Social media increases perfectionism among adolescent girls.</strong> (Consensus statement: p. 101-102)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=72):</strong>
+<ul>
+<li>Correlational: 63.89%</li>
+<li>Causal limited: 27.78%</li>
+<li><strong>Causal field: 9.72%</strong></li>
+<li>Replicated causal field: 5.55%</li>
+<li>Wide-scale causal: 5.55%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li>The consensus states: “experts provided no evidence from experimental studies directly manipulating social media exposure to measure its effect on perfectionism.”</li>
+<li><strong>Vanhoffelen et al. (2025):</strong> Longitudinal study offered weak evidence. Not an experimental field study.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> No, as per the consensus statement.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 9.72%. Given the lack of cited experimental (field or lab) evidence directly manipulating social media to measure perfectionism, this rating is likely based on broader interpretations or non-cited work.</li>
+</ul>
+<hr />
+<p><strong>Claim 19. Social media increases relational aggression among adolescent girls…</strong> (Consensus statement: p. 103-104)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=71):</strong>
+<ul>
+<li>Correlational: 69.01%</li>
+<li>Causal limited: 30.99%</li>
+<li><strong>Causal field: 8.45%</strong></li>
+<li>Replicated causal field: 1.41%</li>
+<li>Wide-scale causal: 4.23%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li>The consensus states: “no experts provided experimental evidence establishing a causal link between social media use and increased relational aggression.”</li>
+<li>Martins &amp; Weaver (2019) meta-analysis included experimental studies on “exposure to RA -&gt; RA behaviors,” not specific social media use causing RA.</li>
+<li>Lapidot-Lefler et al. (2012) lab study on adults and general toxic behavior.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> No, for the direct claim.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 8.45%. This is low and consistent with the lack of direct experimental field evidence.</li>
+</ul>
+<hr />
+<p><strong>Claim 20. Among adolescent girls, social media increases exposure to other people displaying or discussing their mental disorders.</strong> (Consensus statement: p. 105-106)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=72):</strong>
+<ul>
+<li>Correlational: 69.44%</li>
+<li>Causal limited: 27.78%</li>
+<li><strong>Causal field: 12.50%</strong></li>
+<li>Replicated causal field: 9.72%</li>
+<li>Wide-scale causal: 8.33%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li>The consensus states: “no experts provided references for a direct causal link.”</li>
+<li>Studies cited are observational (Alho et al. on peer networks; phenomena on TikTok; Ernala et al. on Twitter disclosures; Hamilton et al. on self-harm content exposure; Ali et al. on Instagram DMs). These describe patterns of exposure or association, not experimental manipulation of social media use to measure changes in exposure levels in a field setting.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> No.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 12.50%. This rating seems to suggest some experts believe such evidence exists or interpret observational field data more strongly in a causal direction for this specific type of “increase.”</li>
+</ul>
+<hr />
+<p><strong>Claim 21. Social media increases sexual predation and harassment of adolescent girls…</strong> (Consensus statement: p. 107-108)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=59):</strong>
+<ul>
+<li>Correlational: 52.54%</li>
+<li>Causal limited: 13.56%</li>
+<li><strong>Causal field: 5.08%</strong></li>
+<li>Replicated causal field: 3.39%</li>
+<li>Wide-scale causal: 11.86%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li>The consensus states: “no experts provided experimental studies manipulating social media usage and measuring its effect on harassment or sexual predation.”</li>
+<li><strong>Bhuller et al. (2013):</strong> Quasi-experimental on general internet access and sex crimes. This is a natural field experiment.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Yes, Bhuller et al. (2013) for general internet, but not specifically social media mechanisms for predation/harassment.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 5.08%. Very low, consistent with the lack of direct social media field experiments.</li>
+</ul>
+<hr />
+<p><strong>Claim 24. If most parents waited… it would benefit the mental health of adolescents overall.</strong> (Consensus statement: p. 112-113)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=93):</strong>
+<ul>
+<li>Correlational: 39.73%</li>
+<li>Causal limited: 26.03%</li>
+<li><strong>Causal field: 8.22%</strong></li>
+<li>Replicated causal field: 2.74%</li>
+<li>Wide-scale causal: 5.48%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li>The consensus notes studies are correlational/longitudinal (Dempsey et al., 2020; Vaterlaus et al., 2021; Gerosa et al., 2024; Sapien Labs, 2024; Sun, 2023). None are experimental field studies manipulating delayed smartphone access for a cohort and measuring mental health. The discussion of “group-level effects” is hypothetical due to lack of data.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> No.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 8.22%. Low, reflecting the absence of such studies.</li>
+</ul>
+<hr />
+<p><strong>Claim 25. Imposing (and enforcing) a legal minimum age of 16 for opening social media accounts would benefit the mental health of adolescents overall.</strong> (Consensus statement: p. 114-115)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=68):</strong>
+<ul>
+<li>Correlational: 26.47%</li>
+<li>Causal limited: 10.29%</li>
+<li><strong>Causal field: 2.94%</strong></li>
+<li>Replicated causal field: 2.94%</li>
+<li>Wide-scale causal: 5.88%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li>Consensus: “Experts provided no references that were strictly related to the claim.” Ferguson (2024) and Thrul et al. (2025) are about effects of <em>reducing</em> use, not <em>delaying initial access</em> via legal age limits in a field experiment.</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> No.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 2.94%. Extremely low, reflecting the absence of such policy evaluation field experiments.</li>
+</ul>
+<hr />
+<p><strong>Claim 26. Phone-free schools would benefit the mental health of adolescents overall.</strong> (Consensus statement: p. 116-117)</p>
+<ul>
+<li><strong>Expert Assessment of Evidence Level (N=77):</strong>
+<ul>
+<li>Correlational: 44.16%</li>
+<li>Causal limited: 25.97%</li>
+<li><strong>Causal field: 16.88%</strong></li>
+<li>Replicated causal field: 2.60%</li>
+<li>Wide-scale causal: 11.69%</li>
+</ul></li>
+<li><strong>Analysis of Cited Studies (Focus on Experimental Field Studies):</strong>
+<ul>
+<li><strong>Böttger &amp; Zierer (2024) meta-analysis:</strong> Reviews 5 studies on school bans. These are natural experiments in field settings.</li>
+<li><strong>King et al. (2024):</strong> Pre-registered study of a phone ban. This is a natural experiment in a field setting.</li>
+<li><strong>Campbell et al. (2024) scoping review:</strong> Includes studies of school bans (natural field experiments).</li>
+<li><strong>Goodyear et al. (2025) meta-analysis:</strong> Compares restrictive vs. permissive policies in schools (natural field experiments).</li>
+</ul></li>
+<li><strong>Experimental Field Studies Present?</strong> Yes, studies of school phone bans are natural experiments in field settings.</li>
+<li><strong>Expert Assessment of “Causal Field” Evidence:</strong> 16.88%. This is consistent with several (though limited in number and with mixed/methodologically critiqued results) natural field experiments being available.</li>
+</ul>
+<hr />
+<p><strong>Summary of Experimental Field Studies &amp; Expert Assessment:</strong></p>
+<ul>
+<li><strong>Claim 8 (Sleep Deprivation):</strong> Potentially yes (intervention studies). <strong>20.00%</strong> experts say Causal Field.</li>
+<li><strong>Claim 9 (Sleep Dep &amp; MH Decline):</strong> Potentially yes (interventions). <strong>26.00%</strong> experts say Causal Field.</li>
+<li><strong>Claim 10 (Attention Frag.):</strong> Potentially one (van Wezel et al.). <strong>9.09%</strong> experts say Causal Field.</li>
+<li><strong>Claim 11 (Attention Frag &amp; MH Decline):</strong> Potentially yes (notification interventions). <strong>7.41%</strong> experts say Causal Field.</li>
+<li><strong>Claim 12 (Behavioral Addiction):</strong> Yes (Allcott et al.). <strong>19.15%</strong> experts say Causal Field.</li>
+<li><strong>Claim 13 (Behav. Add. &amp; MH Decline):</strong> Unlikely direct experimental field study causing decline. <strong>19.75%</strong> experts say Causal Field (likely broader interpretation).</li>
+<li><strong>Claim 14 (Social Deprivation):</strong> Yes (Allcott et al., Geraci et al.). <strong>14.46%</strong> experts say Causal Field.</li>
+<li><strong>Claim 15 (Social Dep. &amp; MH Decline):</strong> Yes (Killgore et al., interventions). <strong>32.97%</strong> experts say Causal Field.</li>
+<li><strong>Claim 17 (Visual Social Comp.):</strong> Unlikely from cited studies. <strong>11.46%</strong> experts say Causal Field.</li>
+<li><strong>Claim 18 (Perfectionism):</strong> No from cited studies. <strong>9.72%</strong> experts say Causal Field.</li>
+<li><strong>Claim 19 (Relational Aggression):</strong> No direct from cited studies. <strong>8.45%</strong> experts say Causal Field.</li>
+<li><strong>Claim 20 (Exposure to Disorders):</strong> No from cited studies. <strong>12.50%</strong> experts say Causal Field.</li>
+<li><strong>Claim 21 (Sexual Predation):</strong> Yes, for general internet (Bhuller et al.). <strong>5.08%</strong> experts say Causal Field.</li>
+<li><strong>Claim 24 (Delay Smartphones &amp; MH):</strong> No from cited studies. <strong>8.22%</strong> experts say Causal Field.</li>
+<li><strong>Claim 25 (Age Limits &amp; MH):</strong> No from cited studies. <strong>2.94%</strong> experts say Causal Field.</li>
+<li><strong>Claim 26 (Phone-Free Schools &amp; MH):</strong> Yes (school ban studies). <strong>16.88%</strong> experts say Causal Field.</li>
+</ul>
+<p>It seems for many claims directly testing “Social media <em>increases</em> X” with experimental field studies, the evidence is sparse or non-existent according to the cited literature. The expert ratings for “Causal Field” are generally low for these, but sometimes higher than what the cited <em>experimental</em> field literature in the consensus statements would directly support, suggesting experts might be drawing on a wider body of knowledge or interpreting observational field data more causally. For policy-related claims, the expert assessment of causal field evidence is also very low, reflecting the difficulty and rarity of such large-scale experimental policy evaluations.</p>
+<p><strong>Request for summary table</strong>
+First draft:</p>
+<blockquote>
+<p>So, experts could endorse multiple levels of evidence (despite some of them being mutually exclusive). Do the authors describe how they recoded these responses to make a graph where categories sum to 100%? Highest/lowest level of evidence endorsed?</p>
+</blockquote>
+<p>Second draft:</p>
+<blockquote>
+<p>Earlier I asked for experimental field studies, but causal evidence could also come from natural experiments or well-controlled designs. Please revise the table and assess whether an experiment or natural experiment in the field supporting the claim is reported. If the text in Section S5 makes the case that an observational study can be used to back up the causal claim, mention it.
+Also, don’t sum up the reported percentages for causal field and above since they are not mutually exclusive. Instead, try to read it off the plot and also report the percentage who say causal field in another column.</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>In reality, this claim in the graph pertains only to the US, surely they could make room for that important qualification.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Jay van Bavel later deleted this tweet and <a href="https://bsky.app/profile/jayvanbavel.bsky.social/post/3lphzhk43as2o">said</a> he was not trying to equate their consensus to the consensus around climate change. I would say he tried… and had to walk it back.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I manually vetted only one claim (about body image/visual social comparison), so Gemini could get this wrong (e.g. misclassify a study), but I think distilling documents is one of the things it does rather well.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

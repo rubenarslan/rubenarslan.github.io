@@ -7,7 +7,15 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 23 May 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 May 2025 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Consensus: How the sausage gets made</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2025-05-20-consensus-how-the-sausage-gets-made</link>
+      <description>What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus.</description>
+      <guid>https://rubenarslan.github.io/posts/2025-05-20-consensus-how-the-sausage-gets-made</guid>
+      <pubDate>Mon, 19 May 2025 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Simulation on adjusting for confounders in a mixed model</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
@@ -15,7 +23,7 @@
       <description>A brief tidyverse-style simulation to figure out what happens, if I don't include
 varying slopes in a model.</description>
       <guid>https://rubenarslan.github.io/posts/2024-05-24-simulation-on-adjusting-for-confounders-in-a-mixed-model</guid>
-      <pubDate>Thu, 23 May 2024 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 24 May 2024 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>The reliability of multilevel parameters in Bayesian regressions</title>
