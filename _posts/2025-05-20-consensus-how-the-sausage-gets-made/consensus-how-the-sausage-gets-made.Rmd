@@ -21,7 +21,7 @@ In the end, the participants found consensus for only one causal claim ("Heavy s
 It's not your fault if [recent social media posts](https://bsky.app/profile/jayvanbavel.bsky.social/post/3lpaaktc6bc2x) led you to believe there was a "ton of consensus" that "Adolescent mental health has declined"^[In reality, this claim in the graph pertains only to the US, surely they could make room for that important qualification.] or that rejecting this consensus is akin to denying climate change.^[Jay van Bavel later deleted this tweet and [said](https://bsky.app/profile/jayvanbavel.bsky.social/post/3lphzhk43as2o) he was not trying to equate their consensus to the consensus around climate change. I would say he tried...  and had to walk it back.]
 
 ![A now deleted skeet by Jay van Bavel](https://gist.github.com/user-attachments/assets/1611e649-db2d-4bde-843e-525c8ece5b61)
-Screenshot of now deleted tweet by Jay van Bavel
+Screenshot of now deleted skeet by Jay van Bavel
 
 However, even if I don't think the consensus statement has much value, I think it's meta-scientifically interesting to look at how the participating scholars assessed the level of evidence for each claim. Maybe this will also give us an idea what kind of experts self-selected into the process. Potentially, the [Delphi method](https://en.wikipedia.org/wiki/Delphi_method) corrected for all problems. I am not trying to assess that. I am only looking at Study 1 here to understand "how the sausage gets made". Similarly, I found it interesting to read how the first author dealt with critical comments, [documented on OSF](https://osf.io/5fxqu/?view_only=487a27ae00084776839e7fac58cb31ba).
 
