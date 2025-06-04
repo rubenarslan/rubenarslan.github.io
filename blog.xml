@@ -7,14 +7,22 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 19 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Resources for learning R</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2025-06-04-resources-for-learning-r</link>
+      <description>Resources for learning R</description>
+      <guid>https://rubenarslan.github.io/posts/2025-06-04-resources-for-learning-r</guid>
+      <pubDate>Tue, 03 Jun 2025 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Consensus: How the sausage gets made</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2025-05-20-consensus-how-the-sausage-gets-made</link>
       <description>What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus.</description>
       <guid>https://rubenarslan.github.io/posts/2025-05-20-consensus-how-the-sausage-gets-made</guid>
-      <pubDate>Mon, 19 May 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Simulation on adjusting for confounders in a mixed model</title>

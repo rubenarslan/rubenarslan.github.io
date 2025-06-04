@@ -1,0 +1,47 @@
+---
+title: "Resources for learning R"
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+    affiliation: Psychological Research Methods, University Witten/Herdecke
+date: 2025-06-04
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+One of my students expressed an interest in learning R on her own. Our university only recently switched to R, so some older students only encountered SPSS. Of course, I'd like to kindle any interest in R among those who missed out.
+
+So, I asked my friends and compiled a few resources and advice that stands out. I learned R by doing and after a short intro course, but I already had substantial programming experience, so my approach won't work for most of my students. My impression is that now is a good time to learn programming skills, because LLMs are widely available and can help you over the most frustrating hurdles for beginners (such as not grasping key subtleties of syntax or simply not seeing your error because of a cryptic error message).
+
+Here are some of the resources I found attractive:
+
+The psyTeachR team at the University of Glasgow has done great work teaching R at all levels and their resources are freely available online.
+https://psyteachr.github.io/
+
+Emily Nordmann has written a guide on how you can use LLMs to tutor you: https://psyteachr.github.io/AITutoR/
+Of course, the available models quickly become outdated. As of today, I get a lot of value out of Gemini Pro at https://aistudio.google.com/ which has a fairly generous free tier, but of course other recent models largely write great R code too. [Positron](https://positron.posit.co/), a new product from Posit (makers of RStudio) also will apparently have native support for a chat interface while coding. I use Cursor, but it isn't natively that useful for R because it lacks context about datasets and variable names.
+
+I recently started using webr/quarto-live in my teaching for fairly basic simulations and code samples. This reduces the hurdle of needing to install software. I saw that Andrew Heiss has some cool materials making use of this: https://r-primers.andrewheiss.com/, https://datavizs24.classes.andrewheiss.com/lesson/
+
+By searching, I also found [Datanovia](https://www.datanovia.com/learn/interactive/r/basics.html) which seems to be free and makes use of Quarto-live. I hadn't heard of it before.
+
+My friend Malte Elson recommended Sean Murphy's  guided tour of R, which is "A self-paced version of an introductory R workshop taught at SPSP 2018. Will probably take 4-10 hours to work through, depending on experience and pacing."
+https://github.com/seanchrismurphy/A-Guided-Tour-of-R
+
+He also has his slides and exercises from a 6 week live class online:
+https://github.com/seanchrismurphy/A-Psychologists-Guide-to-R
+
+In German, Martin Schultze's group has made their entire statistics curriculum, which is R based, available online:
+https://pandar.netlify.app/lehre/main/
+
+This is more advanced, but this is a book I've gotten a lot of value out of and that Solomon Kurz also recommended:
+R4DS https://r4ds.hadley.nz/
+
+There are a few textbooks that people bring up for beginners, but I haven't compared them:
+
+- https://learningstatisticswithr.com/
+- https://moderndive.com/v2/index.html (recommended by Solomon Kurz)
+
+There also the courses on [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r) but they're not free and my impression is that the R community is largely boycotting DataCamp since a [mishandled sexual harassment incident](https://www.buzzfeednews.com/article/daveyalba/datacamp-sexual-harassment-metoo-tech-startup).

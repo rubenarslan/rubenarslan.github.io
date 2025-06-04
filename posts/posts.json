@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2025-06-04-resources-for-learning-r/",
+    "title": "Resources for learning R",
+    "description": {},
+    "author": [
+      {
+        "name": "Ruben C. Arslan",
+        "url": "https://rubenarslan.github.io"
+      }
+    ],
+    "date": "2025-06-04",
+    "categories": [],
+    "contents": "\nOne of my students expressed an interest in learning R on her own. Our university only recently switched to R, so some older students only encountered SPSS. Of course, I’d like to kindle any interest in R among those who missed out.\nSo, I asked my friends and compiled a few resources and advice that stands out. I learned R by doing and after a short intro course, but I already had substantial programming experience, so my approach won’t work for most of my students. My impression is that now is a good time to learn programming skills, because LLMs are widely available and can help you over the most frustrating hurdles for beginners (such as not grasping key subtleties of syntax or simply not seeing your error because of a cryptic error message).\nHere are some of the resources I found attractive:\nThe psyTeachR team at the University of Glasgow has done great work teaching R at all levels and their resources are freely available online.\nhttps://psyteachr.github.io/\nEmily Nordmann has written a guide on how you can use LLMs to tutor you: https://psyteachr.github.io/AITutoR/\nOf course, the available models quickly become outdated. As of today, I get a lot of value out of Gemini Pro at https://aistudio.google.com/ which has a fairly generous free tier, but of course other recent models largely write great R code too. Positron, a new product from Posit (makers of RStudio) also will apparently have native support for a chat interface while coding. I use Cursor, but it isn’t natively that useful for R because it lacks context about datasets and variable names.\nI recently started using webr/quarto-live in my teaching for fairly basic simulations and code samples. This reduces the hurdle of needing to install software. I saw that Andrew Heiss has some cool materials making use of this: https://r-primers.andrewheiss.com/, https://datavizs24.classes.andrewheiss.com/lesson/\nBy searching, I also found Datanovia which seems to be free and makes use of Quarto-live. I hadn’t heard of it before.\nMy friend Malte Elson recommended Sean Murphy’s guided tour of R, which is “A self-paced version of an introductory R workshop taught at SPSP 2018. Will probably take 4-10 hours to work through, depending on experience and pacing.”\nhttps://github.com/seanchrismurphy/A-Guided-Tour-of-R\nHe also has his slides and exercises from a 6 week live class online:\nhttps://github.com/seanchrismurphy/A-Psychologists-Guide-to-R\nIn German, Martin Schultze’s group has made their entire statistics curriculum, which is R based, available online:\nhttps://pandar.netlify.app/lehre/main/\nThis is more advanced, but this is a book I’ve gotten a lot of value out of and that Solomon Kurz also recommended:\nR4DS https://r4ds.hadley.nz/\nThere are a few textbooks that people bring up for beginners, but I haven’t compared them:\nhttps://learningstatisticswithr.com/\nhttps://moderndive.com/v2/index.html (recommended by Solomon Kurz)\nThere also the courses on DataCamp but they’re not free and my impression is that the R community is largely boycotting DataCamp since a mishandled sexual harassment incident.\n\n\n\n",
+    "preview": {},
+    "last_modified": "2025-06-04T13:51:29+02:00",
+    "input_file": "resources-for-learning-r.knit.md"
+  },
+  {
     "path": "posts/2025-05-20-consensus-how-the-sausage-gets-made/",
     "title": "Consensus: How the sausage gets made",
     "description": "What can we learn about the experts involved in the recent social media effects consensus preprint and what does that say about the consensus.",
