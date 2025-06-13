@@ -24,15 +24,15 @@ __Delay:__ After finding the error, I took some time to revisit the other code a
 
 __Solution:__ Correctly normalize by the number of measures that were used at all. See figure to see the difference (dotted lines were the incorrect, published numbers).
 
-__Follow-up:__ While we incorrectly described what we did in the paper, this mistake caused me to revisit this issue and collaborate with an ecologist, Zach Marion, to understand the benefits and drawbacks of different indices for diversity/entropy. As it turns out, ecologists see a problem with normalising diversity indices using the number of distinct species found. The problem is that the number of distinct species found is itself censored and could be low because of low diversity or because of low sampling effort. Hence, other methods normalize instead using the number of individuals found (which is the method we originally used, but incorrectly described). The number of individuals found more directly reflects sampling effort. So, in the [follow-up paper](https://osf.io/preprints/psyarxiv/b4muj_v2), among other things, we better explain our rationale for our diversity index, our normalization procedure and the inferential problems involved. It's all [documented here](https://rubenarslan.github.io/construct_proliferation/4_proliferation.html#revised-approach-using-hill-diversity-and-coverage).
-
-
 
 ![Corrected graph. Dotted lines are the incorrectly normalized, published numbers.](figures/fig_entropy_correction.png)
 
 __Future Measures:__ More code review, always write and test a function when hand-coding a metric. Also, avoid hand-coding metrics, I evidently suck at it :-)
 
 __Bounty:__ I found this myself, so I guess the bounty doesn't apply. I donate to Against Malaria anyway. If the sum of my errors this year exceeds what I usually donate, I'll have to consider increasing my donation.
+
+
+__Follow-up:__ While we incorrectly described what we did in the paper, this mistake caused me to revisit this issue and collaborate with an ecologist, Zach Marion, to understand the benefits and drawbacks of different indices for diversity/entropy. As it turns out, ecologists see a problem with normalising diversity indices using the number of distinct species found. The problem is that the number of distinct species found is itself censored and could be low because of low diversity or because of low sampling effort. Hence, other methods normalize instead using the number of individuals found (which is the method we originally used, but incorrectly described). The number of individuals found more directly reflects sampling effort. So, in the [follow-up paper](https://osf.io/preprints/psyarxiv/b4muj_v2), among other things, we better explain our rationale for our diversity index, our normalization procedure and the inferential problems involved. It's all [documented here](https://rubenarslan.github.io/construct_proliferation/4_proliferation.html#revised-approach-using-hill-diversity-and-coverage).
 
 ## Holzleitner et al., 2021, preprint revision
 
