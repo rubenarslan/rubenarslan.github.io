@@ -20,8 +20,9 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -32,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -460,8 +461,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
 
   <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
   <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
@@ -2101,7 +2102,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2214,6 +2215,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><strong>Description:</strong> I incorrectly implemented the normalisation of Shannon entropy. We submitted the following correction notice: A previous version incorrectly normalised Shannon entropy by the log of the number of times measures were used rather than by the number of measures that were used at least once. After correcting this mistake, we see a less pronounced increase in normalised entropy over time and overall higher levels of entropy (i.e. higher fragmentation).</p>
 <p><strong>Delay:</strong> After finding the error, I took some time to revisit the other code and asked Taym Alsalti to also review my code. We were working on a follow-up project. After this process concluded, we submitted a correction notice on March 20, 2024. I’m posting this note March 22, 2024.</p>
 <p><strong>Solution:</strong> Correctly normalize by the number of measures that were used at all. See figure to see the difference (dotted lines were the incorrect, published numbers).</p>
+<p><strong>Follow-up:</strong> While we incorrectly described what we did in the paper, this mistake caused me to revisit this issue and collaborate with an ecologist, Zach Marion, to understand the benefits and drawbacks of different indices for diversity/entropy. As it turns out, ecologists see a problem with normalising diversity indices using the number of distinct species found. The problem is that the number of distinct species found is itself censored and could be low because of low diversity or because of low sampling effort. Hence, other methods normalize instead using the number of individuals found (which is the method we originally used, but incorrectly described). The number of individuals found more directly reflects sampling effort. So, in the <a href="https://osf.io/preprints/psyarxiv/b4muj_v2">follow-up paper</a>, among other things, we better explain our rationale for our diversity index, our normalization procedure and the inferential problems involved. It’s all <a href="https://rubenarslan.github.io/construct_proliferation/4_proliferation.html#revised-approach-using-hill-diversity-and-coverage">documented here</a>.</p>
 <figure>
 <img src="figures/fig_entropy_correction.png" alt="Corrected graph. Dotted lines are the incorrectly normalized, published numbers." />
 <figcaption aria-hidden="true">Corrected graph. Dotted lines are the incorrectly normalized, published numbers.</figcaption>
