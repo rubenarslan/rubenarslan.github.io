@@ -17,24 +17,64 @@ exclude:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-I study genetic and hormonal causes of why people differ and change, especially their personality, intelligence, and sexuality. Open, reproducible science is important to me, so I focus on methods, measures, and transparency and dabble in research software development. I live in Berlin and work at the [University of Leipzig](https://www.lw.uni-leipzig.de/institut-fuer-psychologie-wilhelm-wundt/arbeitsgruppen/persoenlichkeitspsychologie-und-psychologische-diagnostik/team/dr-ruben-arslan-lennartz/). 
+I study genetic and hormonal causes of why people differ and change, especially their personality, intelligence, and sexuality. Open, reproducible science is important to me, so I often work on methods, measures, and transparency and dabble in research software development. I teach research methods at [Witten/Herdecke University](https://www.uni-wh.de/en/contact-person/ruben-lennartz). 
 
 <aside>
 <img src="figures/ruben.jpg" class="img-circle" alt="Ruben Arslan">
 </aside>
 
-You can reach me at ruben.arslan@gmail.com or on [Twitter](https://twitter.com/rubenarslan). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org).^[Some more information about this form can be found [here](http://www.the100.ci/2018/02/22/tell-me-im-wrong).] I also have a standing [bug bounty policy](bug_bounty.html) for errors in my published work.
+You can reach me at ruben.arslan@gmail.com or on [Bluesky](https://bsky.app/profile/ruben.the100.ci). If you want to tell me I'm wrong about something anonymously, you can use [this form](https://tellmeimwrong.formr.org).^[Some more information about this form can be found [here](http://www.the100.ci/2018/02/22/tell-me-im-wrong).] I also have a standing [bug bounty policy](bug_bounty.html) for errors in my published work.
 
 
 ## Publications
-Here's a [PDF of my curriculum vitae](cv_ruben_arslan.pdf). All my work is at least green open access and you can find direct links to each publication in this PDF (click on the green/orange lock icons).
-You can also find my publications on my [Google Scholar profile](https://scholar.google.com/citations?user=X6fXzMcAAAAJ&hl=en). Below are the two main graphs from the two main papers of my dissertation. You can click on them to view the websites I usually create to document my analyses and results.
+Here's a usually slightly outdated [PDF of my curriculum vitae](cv_ruben_arslan.pdf). All my work is at least green open access and you can find direct links to each publication in this PDF (click on the green/orange lock icons).
+You can also find my publications on my [Google Scholar profile](https://scholar.google.com/citations?user=X6fXzMcAAAAJ&hl=en). 
 
-<div class="l-body-outset"><p>
-<a href="https://rubenarslan.github.io/ovulatory_shifts/"><img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width: 45%" alt="Ovulatory changes"></a>
-<a href="https://rubenarslan.github.io/paternal_age_fitness/"><img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width: 54%;" alt="Paternal age effects on reproductive fitness"></a>
+I often make websites to document my analyses and results. You can click on the graphs below to view them.
 
-</p></div>
+:::l-body-inset
+
+[![Ovulatory changes in sexual desire across the menstrual cycle](https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png){width=100%}](https://rubenarslan.github.io/ovulatory_shifts/)
+From 'Using 26 thousand diary entries to show ovulatory changes in sexual desire and behaviour.' (2017), [PDF](https://osf.io/preprints/psyarxiv/jp2ym_v1)
+
+-----
+
+[![Paternal age effects on reproductive fitness](https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png){width=100%}](https://rubenarslan.github.io/paternal_age_fitness/)
+From 'Older fathers’ children have lower evolutionary fitness across four centuries and in four populations.' (2017), [PDF](https://doi.org/10.1098/rspb.2017.1562)
+
+
+----
+
+[![Genomic effects on intelligence and personality](https://rubenarslan.github.io/generation_scotland_pedigree_gcta/index_files/figure-html/unnamed-chunk-1-31.png){width=100%}](https://rubenarslan.github.io/generation_scotland_pedigree_gcta/)
+From 'Genomic analysis of family data reveals additional genetic effects on intelligence and personality' (2018), [PDF](https://www.nature.com/articles/s41380-017-0005-1)
+
+----
+
+
+[![Voices and Personality](figures/voices_d3.png){width=100%}](https://rubenarslan.github.io/voices_personality/)
+From 'Do voices carry valid information about a speaker’s personality?' (2021), [PDF](https://osf.io/preprints/psyarxiv/9a68c_v1)
+
+----
+
+
+[![Steroid validity results](figures/steroids.png){width=100%}](https://rubenarslan.github.io/invalidity_on_steroids)
+From 'Not within spitting distance: salivary immunoassays of estradiol have subpar validity for predicting cycle phase.' (2023), [PDF](https://osf.io/5r8mg_v1)
+
+----
+
+
+[![SurveyBot3000 pilot study results](https://synth-science.github.io/surveybot3000/Figure_pilot.png){width=100%}](https://synth-science.github.io/surveybot3000/)
+From 'Language models accurately infer correlations between psychological items and scales from text alone.' (2025), [PDF](https://doi.org/10.31234/osf.io/kjuce)
+
+----
+
+
+[![Fragmentation of psychological measures](https://rubenarslan.github.io/construct_proliferation/figures/treemap_overall.png){width=100%}](https://rubenarslan.github.io/construct_proliferation/)
+From 'A fragmented field: Construct and measure proliferation in psychology.' (2025), [PDF](https://osf.io/preprints/psyarxiv/b4muj_v3)
+
+
+:::l-body-outset
+
 
 ## Blogs
 Together with [three wonderful people](http://www.the100.ci/about/), I founded [The 100% CI](http://www.the100.ci/), a blog focused on open science and meta science. Posts that I wrote primarily, can be found [here](http://www.the100.ci/author/ruben/), although we all edit and review each other. My [personal blog](blog.html) features some small analyses, simulations, post-publication criticism, and accounting for errors in my work. The blog's name (One lives only to make blunders) is taken from this famous letter from [Darwin to Lyell](https://www.darwinproject.ac.uk/letter/DCP-LETT-3272.xml).
@@ -109,7 +149,7 @@ knitr::include_graphics("figures/privacy.jpg")
 I have published a few tools, mostly written in PHP, Javascript, or R, all of which are free to use, and two of which are open source. Missing from this list is one website that I had to take offline because a German dictionary didn't get the joke and threatened to sue me. Don't ask. You can find the open source software and some of my reproducible statistical analyses on [Github](https://github.com/rubenarslan) and [OSF](http://osf.io/dryyc).
 
 ### [formr.org](https://formr.org)
-_formr.org_ is a study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata and Matthias Walther are helping me develop and maintain the software since 2015 and 2018, respectively. I also wrote an R package simply called [formr](https://github.com/rubenarslan/formr) to help users make the most of the data and metadata.
+_formr.org_ is an open source study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata is helping me develop and maintain the software since 2015. I also wrote an R package simply called [formr](https://github.com/rubenarslan/formr) to help users make the most of the data and metadata. Recently, I've added the ability to turn studies into small phone apps that can send push notifications.
 
 In addition to extensive documentation supplied by us and supplemented by our users in a Wiki, there is also a [paper](https://link.springer.com/article/10.3758/s13428-019-01236-y) describing the software.
  
@@ -120,10 +160,10 @@ I wrote a [tutorial](https://journals.sagepub.com/doi/full/10.1177/2515245919838
 
 ### [Alphabattle.xyz](https://alphabattle.xyz)
 A small collaboration with a friend led to this player-vs-player online word game written with [Meteor](https://www.meteor.com). 
-You have to infer the other person's secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone.
+You have to infer the other person's secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone. It predates Wordle.
 
-### [brainfunnel.com](http://brainfunnel.com/)
-During a year abroad in Sweden in 2005, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn't work on Macs, I wrote one in the form of a website. I stopped working on this in 2011, but it still works, and I think it might still be the only one with easy support for gap texts.
+### [brainfunnel.com](http://beta.brainfunnel.com/)
+During a year abroad in Sweden in 2005, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn't work on Macs, I wrote one in the form of a website. I stopped working on this in 2011. I think it might still be the only one with easy support for gap texts.
 
 
 ### Privacy Policy {.appendix}

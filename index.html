@@ -20,6 +20,7 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -460,8 +461,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
 
   <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
   <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
@@ -831,9 +832,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     display: none !important;
   }
 
+  hr.section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0px;
+  }
+
+
+  d-byline {
+    border-top: none;
+  }
+
   d-article {
     padding-top: 2.5rem;
     padding-bottom: 30px;
+    border-top: none;
   }
 
   d-appendix {
@@ -928,6 +941,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article div.sourceCode pre {
     padding-left: 18px;
     font-size: 14px;
+  }
+
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
   }
 
   d-article pre {
@@ -1689,6 +1707,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // create d-title
     $('.d-title').changeElementType('d-title');
 
+    // separator
+    var separator = '<hr class="section-separator" style="clear: both"/>';
+    // prepend separator above appendix
+    $('.d-byline').before(separator);
+    $('.d-article').before(separator);
+
     // create d-byline
     var byline = $('<d-byline></d-byline>');
     $('.d-byline').replaceWith(byline);
@@ -1766,8 +1790,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     $('.distill-force-highlighting-css').parent().remove();
 
     // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme
-    $('code.sourceCode a:empty').remove();
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
 
     // load distill framework
     load_distill_framework();
@@ -1793,12 +1818,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       // add orcid ids
       $('.authors-affiliations').find('.author').each(function(i, el) {
         var orcid_id = front_matter.authors[i].orcidID;
+        var author_name = front_matter.authors[i].author
         if (orcid_id) {
           var a = $('<a></a>');
           a.attr('href', 'https://orcid.org/' + orcid_id);
           var img = $('<img></img>');
           img.addClass('orcid-id');
-          img.attr('alt', 'ORCID ID');
+          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
           img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
           a.append(img);
           $(this).append(a);
@@ -2076,7 +2102,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2161,6 +2187,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-title">
 <h1>Ruben C. Arslan</h1>
+
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 <p><p>Personal home page, links to scientific work, blogs, and software.</p></p>
@@ -2168,20 +2195,37 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
 <div class="d-article">
-<p>I study genetic and hormonal causes of why people differ and change, especially their personality, intelligence, and sexuality. Open, reproducible science is important to me, so I focus on methods, measures, and transparency and dabble in research software development. I live in Berlin and work at the <a href="https://www.lw.uni-leipzig.de/institut-fuer-psychologie-wilhelm-wundt/arbeitsgruppen/persoenlichkeitspsychologie-und-psychologische-diagnostik/team/dr-ruben-arslan-lennartz/">University of Leipzig</a>.</p>
+<p>I study genetic and hormonal causes of why people differ and change, especially their personality, intelligence, and sexuality. Open, reproducible science is important to me, so I often work on methods, measures, and transparency and dabble in research software development. I teach research methods at <a href="https://www.uni-wh.de/en/contact-person/ruben-lennartz">Witten/Herdecke University</a>.</p>
 <aside>
 <img src="figures/ruben.jpg" class="img-circle" alt="Ruben Arslan">
 </aside>
-<p>You can reach me at <a href="mailto:ruben.arslan@gmail.com" class="email">ruben.arslan@gmail.com</a> or on <a href="https://twitter.com/rubenarslan">Twitter</a>. If you want to tell me I’m wrong about something anonymously, you can use <a href="https://tellmeimwrong.formr.org">this form</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I also have a standing <a href="bug_bounty.html">bug bounty policy</a> for errors in my published work.</p>
+<p>You can reach me at <a href="mailto:ruben.arslan@gmail.com" class="email">ruben.arslan@gmail.com</a> or on <a href="https://bsky.app/profile/ruben.the100.ci">Bluesky</a>. If you want to tell me I’m wrong about something anonymously, you can use <a href="https://tellmeimwrong.formr.org">this form</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I also have a standing <a href="bug_bounty.html">bug bounty policy</a> for errors in my published work.</p>
 <h2 id="publications">Publications</h2>
-<p>Here’s a <a href="cv_ruben_arslan.pdf">PDF of my curriculum vitae</a>. All my work is at least green open access and you can find direct links to each publication in this PDF (click on the green/orange lock icons).
-You can also find my publications on my <a href="https://scholar.google.com/citations?user=X6fXzMcAAAAJ&amp;hl=en">Google Scholar profile</a>. Below are the two main graphs from the two main papers of my dissertation. You can click on them to view the websites I usually create to document my analyses and results.</p>
+<p>Here’s a usually slightly outdated <a href="cv_ruben_arslan.pdf">PDF of my curriculum vitae</a>. All my work is at least green open access and you can find direct links to each publication in this PDF (click on the green/orange lock icons).
+You can also find my publications on my <a href="https://scholar.google.com/citations?user=X6fXzMcAAAAJ&amp;hl=en">Google Scholar profile</a>.</p>
+<p>I often make websites to document my analyses and results. You can click on the graphs below to view them.</p>
+<div class="l-body-inset">
+<p><a href="https://rubenarslan.github.io/ovulatory_shifts/"><img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width:100.0%" alt="Ovulatory changes in sexual desire across the menstrual cycle" /></a>
+From ‘Using 26 thousand diary entries to show ovulatory changes in sexual desire and behaviour.’ (2017), <a href="https://osf.io/preprints/psyarxiv/jp2ym_v1">PDF</a></p>
+<hr />
+<p><a href="https://rubenarslan.github.io/paternal_age_fitness/"><img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width:100.0%" alt="Paternal age effects on reproductive fitness" /></a>
+From ‘Older fathers’ children have lower evolutionary fitness across four centuries and in four populations.’ (2017), <a href="https://doi.org/10.1098/rspb.2017.1562">PDF</a></p>
+<hr />
+<p><a href="https://rubenarslan.github.io/generation_scotland_pedigree_gcta/"><img src="https://rubenarslan.github.io/generation_scotland_pedigree_gcta/index_files/figure-html/unnamed-chunk-1-31.png" style="width:100.0%" alt="Genomic effects on intelligence and personality" /></a>
+From ‘Genomic analysis of family data reveals additional genetic effects on intelligence and personality’ (2018), <a href="https://www.nature.com/articles/s41380-017-0005-1">PDF</a></p>
+<hr />
+<p><a href="https://rubenarslan.github.io/voices_personality/"><img src="figures/voices_d3.png" style="width:100.0%" alt="Voices and Personality" /></a>
+From ‘Do voices carry valid information about a speaker’s personality?’ (2021), <a href="https://osf.io/preprints/psyarxiv/9a68c_v1">PDF</a></p>
+<hr />
+<p><a href="https://rubenarslan.github.io/invalidity_on_steroids"><img src="figures/steroids.png" style="width:100.0%" alt="Steroid validity results" /></a>
+From ‘Not within spitting distance: salivary immunoassays of estradiol have subpar validity for predicting cycle phase.’ (2023), <a href="https://osf.io/5r8mg_v1">PDF</a></p>
+<hr />
+<p><a href="https://synth-science.github.io/surveybot3000/"><img src="https://synth-science.github.io/surveybot3000/Figure_pilot.png" style="width:100.0%" alt="SurveyBot3000 pilot study results" /></a>
+From ‘Language models accurately infer correlations between psychological items and scales from text alone.’ (2025), <a href="https://doi.org/10.31234/osf.io/kjuce">PDF</a></p>
+<hr />
+<p><a href="https://rubenarslan.github.io/construct_proliferation/"><img src="https://rubenarslan.github.io/construct_proliferation/figures/treemap_overall.png" style="width:100.0%" alt="Fragmentation of psychological measures" /></a>
+From ‘A fragmented field: Construct and measure proliferation in psychology.’ (2025), <a href="https://osf.io/preprints/psyarxiv/b4muj_v3">PDF</a></p>
 <div class="l-body-outset">
-<p>
-<p><a href="https://rubenarslan.github.io/ovulatory_shifts/"><img src="https://rubenarslan.github.io/ovulatory_shifts/library/curves_paper.png" style="width: 45%" alt="Ovulatory changes"></a>
-<a href="https://rubenarslan.github.io/paternal_age_fitness/"><img src="https://rubenarslan.github.io/paternal_age_fitness/library/mcmc_comp.png" style="width: 54%;" alt="Paternal age effects on reproductive fitness"></a></p>
-</p>
-</div>
 <h2 id="blogs">Blogs</h2>
 <p>Together with <a href="http://www.the100.ci/about/">three wonderful people</a>, I founded <a href="http://www.the100.ci/">The 100% CI</a>, a blog focused on open science and meta science. Posts that I wrote primarily, can be found <a href="http://www.the100.ci/author/ruben/">here</a>, although we all edit and review each other. My <a href="blog.html">personal blog</a> features some small analyses, simulations, post-publication criticism, and accounting for errors in my work. The blog’s name (One lives only to make blunders) is taken from this famous letter from <a href="https://www.darwinproject.ac.uk/letter/DCP-LETT-3272.xml">Darwin to Lyell</a>.</p>
 <h2 id="open-science">Open Science</h2>
@@ -2262,19 +2306,24 @@ Figure 1: Transparency vs. privacy. From the <a href="https://www.flickr.com/ph
 <h2 id="software">Software</h2>
 <p>I have published a few tools, mostly written in PHP, Javascript, or R, all of which are free to use, and two of which are open source. Missing from this list is one website that I had to take offline because a German dictionary didn’t get the joke and threatened to sue me. Don’t ask. You can find the open source software and some of my reproducible statistical analyses on <a href="https://github.com/rubenarslan">Github</a> and <a href="http://osf.io/dryyc">OSF</a>.</p>
 <h3 id="formr.org"><a href="https://formr.org">formr.org</a></h3>
-<p><em>formr.org</em> is a study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata and Matthias Walther are helping me develop and maintain the software since 2015 and 2018, respectively. I also wrote an R package simply called <a href="https://github.com/rubenarslan/formr">formr</a> to help users make the most of the data and metadata.</p>
+<p><em>formr.org</em> is an open source study framework. Most users use it to run fancy surveys with feedback and control complex studies, such as experience sampling, and longitudinal research. I started working on an early version of this before my PhD and continued developing it during my PhD. Core niceties include that a direct link to R allows users to program studies with fairly unlimited complexity. Cyril Tata is helping me develop and maintain the software since 2015. I also wrote an R package simply called <a href="https://github.com/rubenarslan/formr">formr</a> to help users make the most of the data and metadata. Recently, I’ve added the ability to turn studies into small phone apps that can send push notifications.</p>
 <p>In addition to extensive documentation supplied by us and supplemented by our users in a Wiki, there is also a <a href="https://link.springer.com/article/10.3758/s13428-019-01236-y">paper</a> describing the software.</p>
 <h3 id="codebook"><a href="https://cran.r-project.org/web/packages/codebook/">codebook</a></h3>
 <p>codebook is an R package that allows users to document datasets in nice websites that can be read and understood both by co-authors, forgetful future yous, and machines. It was based on a set of convenience functions available in formr. It can make good use of existing metadata, such as item data contained in Qualtrics or formr.org surveys, but also variable and value labels, in Stata, SPSS, and SAS files.</p>
 <p>I wrote a <a href="https://journals.sagepub.com/doi/full/10.1177/2515245919838783">tutorial</a>, but the easiest way to get going is to simply upload a dataset to this <a href="http://codebook.formr.org/">webapp</a>. Iro Eleftheriadou created a <a href="https://rubenarslan.github.io/codebook_gallery/">gallery</a> for codebooks made from datasets uploaded to the Open Science Framework.</p>
 <h3 id="alphabattle.xyz"><a href="https://alphabattle.xyz">Alphabattle.xyz</a></h3>
 <p>A small collaboration with a friend led to this player-vs-player online word game written with <a href="https://www.meteor.com">Meteor</a>.
-You have to infer the other person’s secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone.</p>
-<h3 id="brainfunnel.com"><a href="http://brainfunnel.com/">brainfunnel.com</a></h3>
-<p>During a year abroad in Sweden in 2005, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn’t work on Macs, I wrote one in the form of a website. I stopped working on this in 2011, but it still works, and I think it might still be the only one with easy support for gap texts.</p>
+You have to infer the other person’s secret word by asking words, but only learning whether letters matched or not. We kept it very similar to the paper-pencil version that we used to play before it became less common to carry paper and pencil than a smartphone. It predates Wordle.</p>
+<h3 id="brainfunnel.com"><a href="http://beta.brainfunnel.com/">brainfunnel.com</a></h3>
+<p>During a year abroad in Sweden in 2005, I tried to speed up my vocabulary learning using spaced repetition and habit forming (I probably learned more PHP and Javascript than Swedish because of this). Because most existing software that I could find was commercial and didn’t work on Macs, I wrote one in the form of a website. I stopped working on this in 2011. I think it might still be the only one with easy support for gap texts.</p>
 <h3 class="appendix" id="privacy-policy">Privacy Policy</h3>
 <p>See <a href="about.html">here</a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
@@ -2301,7 +2350,7 @@ You have to infer the other person’s secret word by asking words, but only lea
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2018-2023 Ruben Arslan. <a href="about.html">Privacy
+<p>© Copyright 2018-2025 Ruben Arslan. <a href="about.html">Privacy
 Policy</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
