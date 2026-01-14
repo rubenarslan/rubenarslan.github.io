@@ -7,14 +7,29 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 16 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Berkson Error: Why the slope of our synthetic estimates is 1</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1</link>
+      <description>Berkson Error: Why the slope of our synthetic estimates is 1</description>
+      <category>simulation</category>
+      <category>data-generating model</category>
+      <category>error</category>
+      <category>measurement</category>
+      <category>reliability</category>
+      <category>modelling</category>
+      <guid>https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1</guid>
+      <pubDate>Tue, 13 Jan 2026 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1/berkson-error-why-the-slope-of-your-synthetic-estimates-is-1_files/figure-html5/classical-plot-1.png" medium="image" type="image/png" width="1920" height="768"/>
+    </item>
     <item>
       <title>Thinking inside the box, part 1: Euclidean distance is probably not what you want</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2025-12-17-thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need</link>
       <description>Thinking inside the box, part 1: Euclidean distance is probably not what you want</description>
       <guid>https://rubenarslan.github.io/posts/2025-12-17-thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need</guid>
-      <pubDate>Tue, 16 Dec 2025 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2025-12-17-thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need/thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need_files/figure-html5/space-simple-1.png" medium="image" type="image/png" width="1536" height="1152"/>
     </item>
     <item>
