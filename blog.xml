@@ -7,14 +7,23 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 03 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Thinking inside the box, part 1: Euclidean distance is probably not what you want</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2025-12-17-thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need</link>
+      <description>Thinking inside the box, part 1: Euclidean distance is probably not what you want</description>
+      <guid>https://rubenarslan.github.io/posts/2025-12-17-thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need</guid>
+      <pubDate>Tue, 16 Dec 2025 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2025-12-17-thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need/thinking-inside-the-box-part-1-euclidean-distance-is-probably-not-what-you-need_files/figure-html5/space-simple-1.png" medium="image" type="image/png" width="1536" height="1152"/>
+    </item>
     <item>
       <title>Resources for learning R</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2025-06-04-resources-for-learning-r</link>
       <description>Resources for learning R</description>
       <guid>https://rubenarslan.github.io/posts/2025-06-04-resources-for-learning-r</guid>
-      <pubDate>Tue, 03 Jun 2025 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 04 Jun 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Consensus: How the sausage gets made</title>
