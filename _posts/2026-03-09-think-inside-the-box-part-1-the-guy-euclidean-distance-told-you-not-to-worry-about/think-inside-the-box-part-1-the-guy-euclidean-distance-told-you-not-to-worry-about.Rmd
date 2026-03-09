@@ -1,12 +1,20 @@
 ---
-title: "Thinking inside the box, part 1: The guy Euclidean distance told you not to worry about"
+title: "Think inside the box, part 1: The guy Euclidean distance told you not to worry about"
 author:
   - name: Ruben C. Arslan
     url: https://rubenarslan.github.io
     affiliation: Psychological Research Methods, University Witten/Herdecke
 date: 2025-12-17
+categories: 
+  - simulation
+  - data-generating model
+  - measurement
+  - modelling
+  - ceiling effects
 output:
-  word_document
+  distill::distill_article:
+    self_contained: false
+    code_folding: "Show code"
 ---
 
 ```{r setup, include=FALSE}
@@ -58,23 +66,25 @@ col_actual <- "#2E8B57"
 col_distance <- "#FF8C00"
 ```
 
-Romance could be so simple if only we were two-dimensional. You simply find the closest available partner and go for it. To find out who is closest, you might compute a distance measure. The Euclidean distance, which this post is about is $$d(p,q) = \sqrt{(p_1-q_1)^2 + (p_2-q_2)^2}$$ (where 1 and 2 are the two dimensions and p and q are a 2D girl and a 2D boy).
+<smaller>(Reproducible) cross-post from [The 100% CI](https://www.the100.ci/2026/03/09/think-inside-the-box-part-1-the-guy-euclidean-distance-told-you-not-to-worry-about/)</smaller>
+
+Romance could be so simple if only we were two-dimensional. You just find the closest available partner and go for it. To find out who is closest, you might compute a distance measure. The Euclidean distance, which this post is about, is $$d(p,q) = \sqrt{(p_1-q_1)^2 + (p_2-q_2)^2}$$ where 1 and 2 are the two dimensions and p and q are a 2D girl and a 2D boy.
 
 ```{r space-simple1, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Romance in 2D world is simple. Boy A and Girl A can hook up much more easily because they're closer. They could apply the Pythagorean theorem or, you know, just look around."}
 set.seed(20191005)
 
 space_data <- data.frame(
   id = c("Boy A", "Boy B", "Girl A", "Girl B"),
-  x = c(2, 8, 2.2, 10),
-  y = c(3, 8, 6, 4),
+  x = c(2, 8, 4, 10),
+  y = c(3, 8, 4, 4),
   type = c("boy", "boy", "girl", "girl")
 )
 
 pairs_simple <- data.frame(
   x_start = c(2, 8),
   y_start = c(3, 8),
-  x_end = c(2.2, 10),
-  y_end = c(6, 4)
+  x_end = c(4, 10),
+  y_end = c(4, 4)
 )
 
 ggplot() +
@@ -99,11 +109,13 @@ ggplot() +
   theme_space
 ```
 
-Unfortunately, most of us aren't two-dimensional. Still, we often want to quantify similarity. Psychology has a lot of use cases for a similarity metric. Ideal partners and actual partners. Ideal jobs and actual jobs. You and your partner. To quantify similarity, they often choose a distance metric, and the Euclidean distance is a popular one. 
+In 2D-romance, Boy A and Girl A can hook up much more easily because they're closer. They could apply the Pythagorean theorem or, you know, just look around.
 
-So, if you think of your ideal and an actually available partner as being in a space, you can also compute a distance between the ideal traits you desire and the partner's actual traits. 
+Unfortunately, most of us aren't two-dimensional and our dating decisions are correspondingly more complex. Although physical space plays a role in attraction, people also care about attractiveness, height, cooking skills, personality, interests and so on. To analyze this decision problem, psychologists have projected these different traits and ideals into a multi-dimensional Euclidean space. The Euclidean distance then quantifies how close two points are in this space. Bob from accounting and your ideal partner. The new neighbour and your partner's ideal partner. That random guy across the street and your ideal partner. The contact saved as 'Dentist' and your ideal partner. The barista who 'accidentally' draws a heart in the foam of your partner's latte and your partner's ideal partner. 
 
-```{r space-simple, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Two actual boys measured on two traits and Girl A's ideal boy in terms of these traits"}
+Let's stay in 2D for now to keep it simple to visualize:
+
+```{r space-traits, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Two actual boys measured on two traits and Girl A's ideal boy in terms of these traits"}
 set.seed(42)
 
 space_data <- data.frame(
@@ -138,7 +150,6 @@ ggplot() +
   scale_y_continuous(limits = c(150, 225), expand = c(0, 0)) +
   labs(x = "Cooking skill",
        y = "Height (cm)") +
-  coord_fixed(ratio = 1) +
   theme_space +
   theme(axis.ticks = element_line(),
       axis.text = element_text()
@@ -147,13 +158,11 @@ ggplot() +
 
 Boy A is closer to Girl A's ideal, so we would not be surprised if she picked him over boy B.
 
-In a typical study using this metric, we use the distance to quantify how far from ideal the actual partner is. In a second step, the Euclidean distance would usually be correlated with some measure of success (e.g., relationship satisfaction).
+Now, from a purely statistical perspective, this may work reasonably well for height and cooking skills. However, the problem with psychologists is that they want to apply this to psychological traits. And psychological traits are not measured using a ruler^[they are also not measured in CQ=Cooking Quotient points, I'm afraid I made those up.]; they are usually measured on questionnaire rating scales.
 
-This may work reasonably well for height and cooking skill. However, there's a problem. Psychological traits are not measured using a ruler and most are not even measured on a open-ended scale. 
+So, while our dream partner is limited only by our imagination, questionnaires tend to impose more prosaic additional limits. For example, studies in this area often use dimensions such as kindness and attractiveness, and the corresponding questions ("How hot would you like your ideal partner?") are answered from a set of options, e.g. from "very ugly (1)" to "super hot (6)". These are called Likert scales (["never rarely sometimes always"](https://en.wikipedia.org/wiki/Never_Rarely_Sometimes_Always)^[or even more popular but less evocative "strongly disagree, disagree, neither disagree nor agree, agree, strongly agree"]) and they are __bounded__. When studies ask about partner preferences or have people rate themselves or their partners, they frequently use such Likert scales.
 
-So, while our dream partner is limited only by our imagination, questionnaires tend to impose more prosaic additional limits. For example, studies in this research space often use dimensions such as kindness and attractiveness, and the corresponding questions (“How hot would you like your ideal partner?”)  are answered from a set of options, e.g. from "very ugly (1)" to "super hot (6)". These are called Likert scales (["never rarely sometimes always"](https://en.wikipedia.org/wiki/Never_Rarely_Sometimes_Always)^[or even more popular but less evocative "strongly disagree, disagree, neither disagree nor agree, agree, strongly agree"]) and they are  __bounded__. When studies ask about partner preferences or have people rate themselves or their partners, they frequently use such Likert scales.
-
-So, those ideal boys and actual boys? After the data is in, they're no longer in a space. They're in a box.^[Yeah, yeah, a box is a kind of space, but like a banana is a kind of berry.]
+So, those ideal boys and actual boys? After the data are in, they're no longer in a space. They're in a box.^[Yeah, yeah, a box is a kind of space, but like a banana is a kind of berry.]
 
 ```{r box-single, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Where are all the ideal boys? Hiding in the corner."}
 box_data <- data.frame(
@@ -188,100 +197,15 @@ ggplot() +
   theme_box
 ```
 
-Now, here's a thing that might not surprise you: Most people's ideal partner is hot. And kind.^[And smart. And funny. And so on. If we consider this problem in more than two-dimensional space, it's harder to visualize. But just like you can be in the top right corner of a 2D box, you can be in corner of a hypercube.]
+Now, here's a thing that might not surprise you: Most people's ideal partner is hot. And kind.^[And smart. And funny. And so on. If we consider this problem in more than two-dimensional space, it's harder to visualize. But just like you can be in the top right corner of a 2D box, you can be in the corner of a hypercube.]
 
-Why care? Because my alter ego is ✨ ceiling effect boy ✨ and my bat sign is whenever somebody ignores that their data are bounded at their peril.
+If you are anything like me – my alter ego is ✨ ceiling effect boy ✨– data being stuck in a corner immediately raises a red flag. People ignore the bounds of their data at their peril. 
 
 https://x.com/rubenarslan/status/1632170569448685569
 
-Ok, why should you care? Because now our distance metric (how closely does this person match my preferences) is pretty much just a noisy version of the location of actual boy (how hot and kind is this person?). And this matters for interpretation. Let's go back to 2D romance again.
+So, if we are looking at ideal boys and actual boys, location and distance are — what's the word — confounded. Necessarily so, because they're in a box. The farthest you can be from the corner of a box is the opposite corner. In other words, when everybody's preference is in the top right corner of a box, our distance metric (how closely does this person match my preferences?) is pretty much just a noisy version of the location of actual boy, that is, distance turns simply into an (inverted) measure of how hot and kind the person is. The hotter and kinder the person, the closer they are to the ideal in the corner, and the lower the distance. Looking at the situation from the opposite corner of the box, when we find that an actual boy is far from ideal, we can be reasonably sure he is not very hot or kind. 
 
-```{r flock-space, echo=FALSE, fig.width=8, fig.height=6, fig.cap="2D Boy A wants to go to 2D Girl A, 2D Boy B to 2D Girl B."}
-n_boys <- 6
-set.seed(1)
-boys_flock <- dplyr::tibble(
-  id = paste("Boy", LETTERS[1:n_boys]),
-  x = runif(n_boys, 3.5, 5.5),
-  y = runif(n_boys, 4, 6.5) - x/6,
-  type = "boy"
-)
-
-girl_a <- data.frame(id = "Girl A", x = 5.6, y = 5.6, type = "girl")
-girl_b <- data.frame(id = "Girl B", x = 1.5, y = 1.6, type = "girl")
-
-flock_pairs <- data.frame(
-  x_start = boys_flock$x,
-  y_start = boys_flock$y,
-  x_end = rep(girl_a$x, n_boys),
-  y_end = rep(girl_a$y, n_boys)
-)
-
-ggplot() +
-  geom_segment(data = flock_pairs,
-               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
-               color = col_distance, linewidth = 0.7, alpha = 0.6, linetype = "dashed",
-               arrow = arrow(length = unit(0.2, "cm"), type = "closed")) +
-  geom_point(data = boys_flock, aes(x = x, y = y),
-             color = col_boy, size = 4, shape = 15) +
-  geom_point(data = girl_a, aes(x = x, y = y),
-             color = col_girl, size = 7, shape = 17) +
-  geom_point(data = girl_b, aes(x = x, y = y),
-             color = col_girl, size = 7, shape = 17) +
-  annotate("text", x = girl_a$x+0.1, y = girl_a$y, label = "🥤",
-           size = 10, color = "#666666") +
-  geom_label_repel(data = girl_a, aes(x = x, y = y, label = id),
-                   color = col_girl, size = 4, fontface = "bold",
-                   nudge_y = 0.3, nudge_x = -0.3, fill = "#f0f4f8") +
-  geom_label_repel(data = girl_b, aes(x = x, y = y, label = id),
-                   color = col_girl, size = 4, fontface = "bold",
-                   nudge_y = 0.3, nudge_x = -0.3, fill = "#f0f4f8") +
-  annotate("text", label = "all the boys", x = 4, y = 3.7, color = col_boy) +
-  scale_x_continuous(limits = c(1, 6), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(1, 6), expand = c(0, 0)) +
-  labs(x = "← West · · · East →",
-       y = "← South · · · North →") +
-  coord_fixed(ratio = 1) +
-  theme_space
-```
-
-So, it turns out all the boys are flocking to 2D girl A. Is this because she is so close? Well, it might look like that, but actually what matters is her absolute location (she is in a yard, making milkshakes). Now, in 2D romance we have an easy time figuring out it's location, not distance that brings the boys, because any location and distance are independent. Girls can leave the milkshake yard and are suddenly found less interesting.
-
-```{r outside-box1, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Girl C is closer, but she's not in the yard"}
-girl_c <- data.frame(id = "Girl C", x = 4, y = 6.4, type = "girl")
-
-ggplot() +
-  annotate("rect", xmin = 1, xmax = 6, ymin = 1, ymax = 6, 
-         fill = NA, color = "#8b4513", linewidth = 1.5) +
-  annotate("text", x = 6.2, y = 1.5, label = "if this were a box...", hjust = 0,
-           color = "#8b4513", fontface = "italic", size = 3) +
-  geom_segment(data = flock_pairs,
-               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
-               color = col_distance, linewidth = 0.5, alpha = 0.4, linetype = "dashed") +
-  geom_point(data = boys_flock, aes(x = x, y = y),
-             color = col_boy, size = 4, shape = 15) +
-  geom_point(data = girl_a, aes(x = x, y = y),
-             color = col_girl, size = 6, shape = 17) +
-  geom_point(data = girl_b, aes(x = x, y = y),
-             color = col_girl, size = 6, shape = 17) +
-  geom_point(data = girl_c, aes(x = x, y = y),
-             color = col_girl, size = 6, shape = 17) +
-  geom_label_repel(data = rbind(girl_a, girl_c),
-                   aes(x = x, y = y, label = id),
-                   color = col_girl, size = 4, fontface = "bold",
-                   fill = "#f0f4f8", box.padding = 0.5) +
-  annotate("text", x = 3, y = 7, label = "Girl C: closer to many,\nbut 'impossible' in a box",
-           color = "#666666", size = 3, hjust = 0) +
-  scale_x_continuous(limits = c(0, 8), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, 8), expand = c(0, 0)) +
-  labs(x = "← West · · · East →",
-       y = "← South · · · North →") +
-  coord_fixed(ratio = 1) +
-  theme_space
-```
-
-But if we are looking at ideal boys and actual boys, location and distance are — what's the word — confounded. Necessarily so, because they're in a box. The farthest you can be from the corner of a box is the opposite corner. So, when we find that an actual boy is quite far from ideal, we can be reasonably sure he is not very hot or kind. And when an actual boy is close to ideal, we can be reasonably sure he is fairly hot and kind. 
-
-```{r confounding-demo, echo=FALSE, fig.width=14, fig.height=6,fig.cap="When ideals cluster at the bounds of the scale, a distance measure is just a location measure in disguise"}
+```{r confounding-demo, echo=FALSE, fig.width=14, fig.height=6, fig.cap="When ideals cluster at the bounds of the scale, a distance measure is just a location measure in disguise"}
 n_people <- 40
 
 ideals <- data.frame(
@@ -348,13 +272,17 @@ p_cor <- ggplot(actuals, aes(x = actual_mean, y = distance)) +
 p_box + p_cor
 ```
 
-What this implies is that if we want to learn whether _distance to the ideal_ causally influences who we fuck/marry/kill, we should take care to adjust for location (i.e., how hot and kind our actual boy is). Because we already _know_ that hotness and kindness have strong main effects on the desirability of a partner; if we want to establish that distance (or preferences or similarity) matters, it needs to do so beyond those simple facts of life.
+What this implies is that if we want to learn whether _distance to the ideal_ causally influences relationship satisfaction, or who we date/marry/divorce, we should take care to adjust for location (i.e., how hot and kind our actual boy is). Because we already _know_ that hotness and kindness have strong main effects on the desirability of a partner; if we want to establish that distance (or preferences or similarity) matters, it needs to do so beyond those simple facts of life.
 
-Do researchers do that? Erm, not usually. There is _some_ awareness of the problem that actual traits (location of the actual boy) dominate distance measures when variance in ideals is lower (which it is). But I've (re)analyzed multiple datasets where a significant prediction from Euclidean distance evaporates once I adjust for location (e.g., levels of hotness and kindness). In some cases, the reader would never know from the paper that these levels confound the central analysis. If readers are unaware of this problem, they would falsely accord preferences/partner ideals a greater causal role than they have.
+Do researchers do that? Erm, not usually. There is _some_ awareness of the problem that variance in ideals is lower than variance in traits (which it is; people tend to have fairly mainstream ideas about how they'd like their partners). But I've (re)analyzed multiple datasets where a significant prediction from Euclidean distance is completely absorbed when I simply adjust for actual traits (e.g., levels of hotness and kindness). So the more interesting stories – for example, that people pick partners that match their idiosyncratic preferences – can be reduced to much more mundane stories – for example, that people pick partners that are hot and kind.
 
-But what if researchers (or practitioners) do not care about causal inference, but just want to predict matches?^[Let's assume counterfactually they're not misleading themselves about this, because IMO generalizing from the sample to new data always involved some key causal assumptions.]  Then Euclidean distance would probably still be wrong tool. I'll give two reasons.
+In some cases, the reader would never know from the paper that these levels confound the central analysis. If readers are unaware of this problem, they would falsely accord idiosyncratic differences in preferences/partner ideals a greater causal role than they have.
 
-One, the differences in ideals/preferences tend not to matter very much in the studies that checked. But more importantly, Euclidean distances are a very rigid summary. We weight each dimension the same and treat them as uncorrelated. So, physical attractiveness is given the same weight as Tetris skill or punctuality. And if you include two items measuring punctuality, they'll be weighted twice as much as physical attractiveness. Those are probably not the best weights for prediction. 
+But what if researchers (or practitioners) do not care about causal inference, but just want to predict matches?^[Let's assume counterfactually they're not misleading themselves about this, even if they loudly proclaim "I did not have causal relations with that variable", because IMO generalizing from the sample to new data always involves some key causal assumptions.] Then Euclidean distance would probably still be the wrong tool. I'll give two reasons.
+
+There are other reasons why Euclidean distance may not be the best way to quantify "distance" (or its opposite, similarity).
+
+First, Euclidean distances are very rigid: We give each dimension the same weight and treat them as uncorrelated. So, physical attractiveness is given the same weight as Tetris skill or punctuality, or whatever else is included in its calculation. And if you include two items measuring punctuality, they'll be weighted twice as much as physical attractiveness. Those are probably not the best weights for prediction.
 
 It's like telling 2D girl A that she's best suited for 2D boy A because he's closer when getting to him would mean scaling a mountainside while 2D boy B is in reach of a leisurely stroll. Yes, they're 3D boys and girls now; they grow up so fast.
 
@@ -409,15 +337,11 @@ ggplot() +
        y = "← South · · · North →") +
   coord_fixed(ratio = 1) +
   theme_space
-
 ```
 
+> I know this girl who'd be perfect for you. Just 100 meters from you (up a vertical mountain cliff).
 
-
-> I know this girl who'd be perfect for you. Just 100 meters from you (up a vertical mountain cliff). ![Jerry Moffatt free soloing)](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Jerry_moffatt_climb.jpg/1280px-Jerry_moffatt_climb.jpg)
-
-Also, if someone scores higher than your ideal on some dimensions, the Euclidean distance counts that against them. This might be plausible for a few traits like religiousness, where some prefer low and others prefer high levels. But it seems less plausible for physical attractiveness or kindness, where most would happily take “more” as a nice bonus. Or at least we haven’t heard of anybody complaining that their date turned out to be hotter than their Tinder profile suggested.^[Or [helped more poor children than their profile picture](https://humanitariansoftinder.com/archive) suggested.] 
-
+Second, if someone scores higher than your ideal on some dimensions, the Euclidean distance counts that _against_ them. This might be plausible for a few traits like religiousness, where some prefer low and others prefer high levels. But it seems less plausible for physical attractiveness or kindness, where most would happily take "more" as a nice bonus. Or at least we haven't heard of anybody complaining that their date turned out to be hotter than their Tinder profile suggested.^[Or [helped more poor children than their profile picture](https://humanitariansoftinder.com/archive) suggested.]
 
 ```{r box-exceed, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Where are all the ideal boys? Hiding in the corner."}
 box_data <- data.frame(
@@ -459,9 +383,11 @@ ggplot() +
   labs(x = "", y = "") +
   coord_fixed(ratio = 1) +
   theme_box
-
 ```
 
-So, do we have a way to figure the right weights out? Yes, it's called regression. Compare a model with just the traits of the partner to a model with traits + discrepancies or (linearly equivalent) traits + ideals. As long as you rein in overfitting, this is a workable technique to find out whether distance matters.
+So, do we have a way to figure out the right weights and not punish partners for being too good? Yes, it's called regression. Compare a model with just the traits of the partner to a model with traits + discrepancies or (linearly equivalent) traits + ideals. As long as you rein in overfitting, this is a workable technique to find out whether distance matters.
 
-What do researchers do? I don't read all the literatures where Euclidean distances are used, but in the partner preference literature some have switched to distinctive profile correlations/the corrected pattern metric. Those ostensibly solve the issue that normatively desirable people are always closer in preference space, but they have a different problem, which will be the subject of my next post. Some researchers, especially in personality psychology, also go for response surface analysis. This adequately controls for confounding but the data requirements to do this a large number of traits are onerous, and as I might discuss in a future post, there is a good reason not to examine outcomes like relationship satisfaction trait-by-trait.
+What do researchers do? I don't read all literatures that use Euclidean distance, but in the partner preference literature, some have switched to _distinctive profile correlations_/_the corrected pattern metric_. Those ostensibly solve the issue that normatively desirable people are always closer to the ideal in preference space, but they have a different problem, which will be the subject of my next post. Some researchers, especially in personality psychology, also go for _response surface analysis_. This adequately controls for confounding but the data requirements to do this for a large number of traits are onerous, and as I might discuss in a future post, there is a good reason not to examine outcomes like relationship satisfaction trait-by-trait.
+
+---
+
