@@ -1,0 +1,467 @@
+---
+title: "Thinking inside the box, part 1: The guy Euclidean distance told you not to worry about"
+author:
+  - name: Ruben C. Arslan
+    url: https://rubenarslan.github.io
+    affiliation: Psychological Research Methods, University Witten/Herdecke
+date: 2025-12-17
+output:
+  word_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(ggrepel)
+library(patchwork)
+knitr::opts_chunk$set(warning = FALSE)
+
+# =============================================================================
+# THEMES: Space vs Box
+# =============================================================================
+
+theme_space <- theme_minimal(base_size = 14) +
+    theme(
+      panel.background = element_rect(fill = "#f0f4f8", color = NA),
+      plot.background = element_rect(fill = "#f0f4f8", color = NA),
+      panel.grid.major = element_line(color = "#d0d8e0", linewidth = 0.3),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(color = "#708090", linewidth = 0.5,
+                               arrow = arrow(length = unit(0.2, "cm"), type = "closed")),
+      axis.ticks = element_blank(),
+      axis.title = element_text(color = "#506070", face = "italic"),
+      axis.text = element_blank(),
+      plot.title = element_text(face = "bold", color = "#304050"),
+      plot.subtitle = element_text(color = "#506070"),
+      legend.position = "none"
+    )
+# Box theme: feels constrained, bounded, walls emphasized
+theme_box <- theme_minimal(base_size = 14) +
+    theme(
+      panel.background = element_rect(fill = "#f0f4f8", color = NA),
+      plot.background = element_rect(fill = "#fffbf5", color = NA),
+      panel.grid.major = element_line(color = "#e8dcc8", linewidth = 0.3),
+      panel.grid.minor = element_blank(),
+      axis.line = element_blank(),
+      axis.ticks = element_line(color = "#8b4513"),
+      axis.title = element_text(color = "#5c3317", face = "bold"),
+      axis.text = element_text(color = "#5c3317"),
+      plot.title = element_text(face = "bold", color = "#5c3317"),
+      plot.subtitle = element_text(color = "#7a5230"),
+      legend.position = "none"
+    )
+
+# Colors
+col_boy <- "#4169E1"
+col_girl <- "#DC143C"
+col_ideal <- "#9932CC"
+col_actual <- "#2E8B57"
+col_distance <- "#FF8C00"
+```
+
+Romance could be so simple if only we were two-dimensional. You simply find the closest available partner and go for it. To find out who is closest, you might compute a distance measure. The Euclidean distance, which this post is about is $$d(p,q) = \sqrt{(p_1-q_1)^2 + (p_2-q_2)^2}$$ (where 1 and 2 are the two dimensions and p and q are a 2D girl and a 2D boy).
+
+```{r space-simple1, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Romance in 2D world is simple. Boy A and Girl A can hook up much more easily because they're closer. They could apply the Pythagorean theorem or, you know, just look around."}
+set.seed(20191005)
+
+space_data <- data.frame(
+  id = c("Boy A", "Boy B", "Girl A", "Girl B"),
+  x = c(2, 8, 2.2, 10),
+  y = c(3, 8, 6, 4),
+  type = c("boy", "boy", "girl", "girl")
+)
+
+pairs_simple <- data.frame(
+  x_start = c(2, 8),
+  y_start = c(3, 8),
+  x_end = c(2.2, 10),
+  y_end = c(6, 4)
+)
+
+ggplot() +
+  geom_segment(data = pairs_simple,
+               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
+               color = col_distance, linewidth = 1, linetype = "dashed") +
+  geom_point(data = space_data,
+             aes(x = x, y = y, shape = type, color = type),
+             size = 5, stroke = 1.5) +
+  geom_label_repel(data = space_data,
+                   aes(x = x, y = y, label = id, color = type),
+                   size = 4, fontface = "bold",
+                   box.padding = 0.5, point.padding = 0.3,
+                   fill = "#f0f4f8") +
+  scale_color_manual(values = c("boy" = col_boy, "girl" = col_girl)) +
+  scale_shape_manual(values = c("boy" = 15, "girl" = 17)) +
+  scale_x_continuous(limits = c(0, 12), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 10), expand = c(0, 0)) +
+  labs(x = "← West · · · East →",
+       y = "← South · · · North →") +
+  coord_fixed(ratio = 1) +
+  theme_space
+```
+
+Unfortunately, most of us aren't two-dimensional. Still, we often want to quantify similarity. Psychology has a lot of use cases for a similarity metric. Ideal partners and actual partners. Ideal jobs and actual jobs. You and your partner. To quantify similarity, they often choose a distance metric, and the Euclidean distance is a popular one. 
+
+So, if you think of your ideal and an actually available partner as being in a space, you can also compute a distance between the ideal traits you desire and the partner's actual traits. 
+
+```{r space-simple, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Two actual boys measured on two traits and Girl A's ideal boy in terms of these traits"}
+set.seed(42)
+
+space_data <- data.frame(
+  id = c("Boy A", "Boy B", "Girl A's ideal boy"),
+  x = c(110, 90, 120),
+  y = c(192, 170, 190),
+  type = c("boy", "boy", "ideal boy")
+)
+
+pairs_simple <- data.frame(
+  x_start = c(110, 90),
+  y_start = c(192, 170),
+  x_end = c(120, 120),
+  y_end = c(190, 190)
+)
+
+ggplot() +
+  geom_segment(data = pairs_simple,
+               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
+               color = col_distance, linewidth = 1, linetype = "dashed") +
+  geom_point(data = space_data,
+             aes(x = x, y = y, shape = type, color = type),
+             size = 5, stroke = 1.5) +
+  geom_label_repel(data = space_data,
+                   aes(x = x, y = y, label = id, color = type),
+                   size = 4, fontface = "bold",
+                   box.padding = 0.5, point.padding = 0.3,
+                   fill = "#f0f4f8") +
+  scale_color_manual(values = c("boy" = col_boy, "ideal boy" = col_ideal)) +
+  scale_shape_manual(values = c("boy" = 15, "ideal boy" = 18)) +
+  scale_x_continuous(limits = c(70, 130), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(150, 225), expand = c(0, 0)) +
+  labs(x = "Cooking skill",
+       y = "Height (cm)") +
+  coord_fixed(ratio = 1) +
+  theme_space +
+  theme(axis.ticks = element_line(),
+      axis.text = element_text()
+  )
+```
+
+Boy A is closer to Girl A's ideal, so we would not be surprised if she picked him over boy B.
+
+In a typical study using this metric, we use the distance to quantify how far from ideal the actual partner is. In a second step, the Euclidean distance would usually be correlated with some measure of success (e.g., relationship satisfaction).
+
+This may work reasonably well for height and cooking skill. However, there's a problem. Psychological traits are not measured using a ruler and most are not even measured on a open-ended scale. 
+
+So, while our dream partner is limited only by our imagination, questionnaires tend to impose more prosaic additional limits. For example, studies in this research space often use dimensions such as kindness and attractiveness, and the corresponding questions (“How hot would you like your ideal partner?”)  are answered from a set of options, e.g. from "very ugly (1)" to "super hot (6)". These are called Likert scales (["never rarely sometimes always"](https://en.wikipedia.org/wiki/Never_Rarely_Sometimes_Always)^[or even more popular but less evocative "strongly disagree, disagree, neither disagree nor agree, agree, strongly agree"]) and they are  __bounded__. When studies ask about partner preferences or have people rate themselves or their partners, they frequently use such Likert scales.
+
+So, those ideal boys and actual boys? After the data is in, they're no longer in a space. They're in a box.^[Yeah, yeah, a box is a kind of space, but like a banana is a kind of berry.]
+
+```{r box-single, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Where are all the ideal boys? Hiding in the corner."}
+box_data <- data.frame(
+  id = c("Ideal", "Actual"),
+  x = c(5.5, 3.2),
+  y = c(5.7, 3.5),
+  type = c("ideal", "actual")
+)
+
+ggplot() +
+  geom_segment(aes(x = 3.2, y = 3.5, xend = 5.5, yend = 5.7),
+               color = col_distance, linewidth = 1.2, linetype = "dashed") +
+  annotate("rect", xmin = 1, xmax = 6, ymin = 1, ymax = 6, 
+         fill = NA, color = "#8b4513", linewidth = 1.5) +
+  geom_point(data = box_data,
+             aes(x = x, y = y, color = type),
+             size = 6, shape = 18) +
+  geom_label_repel(data = box_data,
+                   aes(x = x, y = y, label = id, color = type),
+                   size = 4, fontface = "bold",
+                   box.padding = 0.6, point.padding = 0.3,
+                   fill = "#fffbf5") +
+  annotate("text", x = 4.1, y = 4.2, label = "distance",
+           color = col_distance, fontface = "italic", size = 3.5, angle = 40) +
+  scale_color_manual(values = c("ideal" = col_ideal, "actual" = col_actual)) +
+  scale_x_continuous(limits = c(1, 6), breaks = 1:6,
+                     labels = c("1\nVery\nugly", "2", "3", "4", "5", "6\nSuper\nhot")) +
+  scale_y_continuous(limits = c(1, 6), breaks = 1:6,
+                     labels = c("1\nSuper\nmean", "2", "3", "4", "5", "6\nVery\nkind")) +
+  labs(x = "", y = "") +
+  coord_fixed(ratio = 1) +
+  theme_box
+```
+
+Now, here's a thing that might not surprise you: Most people's ideal partner is hot. And kind.^[And smart. And funny. And so on. If we consider this problem in more than two-dimensional space, it's harder to visualize. But just like you can be in the top right corner of a 2D box, you can be in corner of a hypercube.]
+
+Why care? Because my alter ego is ✨ ceiling effect boy ✨ and my bat sign is whenever somebody ignores that their data are bounded at their peril.
+
+https://x.com/rubenarslan/status/1632170569448685569
+
+Ok, why should you care? Because now our distance metric (how closely does this person match my preferences) is pretty much just a noisy version of the location of actual boy (how hot and kind is this person?). And this matters for interpretation. Let's go back to 2D romance again.
+
+```{r flock-space, echo=FALSE, fig.width=8, fig.height=6, fig.cap="2D Boy A wants to go to 2D Girl A, 2D Boy B to 2D Girl B."}
+n_boys <- 6
+set.seed(1)
+boys_flock <- dplyr::tibble(
+  id = paste("Boy", LETTERS[1:n_boys]),
+  x = runif(n_boys, 3.5, 5.5),
+  y = runif(n_boys, 4, 6.5) - x/6,
+  type = "boy"
+)
+
+girl_a <- data.frame(id = "Girl A", x = 5.6, y = 5.6, type = "girl")
+girl_b <- data.frame(id = "Girl B", x = 1.5, y = 1.6, type = "girl")
+
+flock_pairs <- data.frame(
+  x_start = boys_flock$x,
+  y_start = boys_flock$y,
+  x_end = rep(girl_a$x, n_boys),
+  y_end = rep(girl_a$y, n_boys)
+)
+
+ggplot() +
+  geom_segment(data = flock_pairs,
+               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
+               color = col_distance, linewidth = 0.7, alpha = 0.6, linetype = "dashed",
+               arrow = arrow(length = unit(0.2, "cm"), type = "closed")) +
+  geom_point(data = boys_flock, aes(x = x, y = y),
+             color = col_boy, size = 4, shape = 15) +
+  geom_point(data = girl_a, aes(x = x, y = y),
+             color = col_girl, size = 7, shape = 17) +
+  geom_point(data = girl_b, aes(x = x, y = y),
+             color = col_girl, size = 7, shape = 17) +
+  annotate("text", x = girl_a$x+0.1, y = girl_a$y, label = "🥤",
+           size = 10, color = "#666666") +
+  geom_label_repel(data = girl_a, aes(x = x, y = y, label = id),
+                   color = col_girl, size = 4, fontface = "bold",
+                   nudge_y = 0.3, nudge_x = -0.3, fill = "#f0f4f8") +
+  geom_label_repel(data = girl_b, aes(x = x, y = y, label = id),
+                   color = col_girl, size = 4, fontface = "bold",
+                   nudge_y = 0.3, nudge_x = -0.3, fill = "#f0f4f8") +
+  annotate("text", label = "all the boys", x = 4, y = 3.7, color = col_boy) +
+  scale_x_continuous(limits = c(1, 6), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(1, 6), expand = c(0, 0)) +
+  labs(x = "← West · · · East →",
+       y = "← South · · · North →") +
+  coord_fixed(ratio = 1) +
+  theme_space
+```
+
+So, it turns out all the boys are flocking to 2D girl A. Is this because she is so close? Well, it might look like that, but actually what matters is her absolute location (she is in a yard, making milkshakes). Now, in 2D romance we have an easy time figuring out it's location, not distance that brings the boys, because any location and distance are independent. Girls can leave the milkshake yard and are suddenly found less interesting.
+
+```{r outside-box1, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Girl C is closer, but she's not in the yard"}
+girl_c <- data.frame(id = "Girl C", x = 4, y = 6.4, type = "girl")
+
+ggplot() +
+  annotate("rect", xmin = 1, xmax = 6, ymin = 1, ymax = 6, 
+         fill = NA, color = "#8b4513", linewidth = 1.5) +
+  annotate("text", x = 6.2, y = 1.5, label = "if this were a box...", hjust = 0,
+           color = "#8b4513", fontface = "italic", size = 3) +
+  geom_segment(data = flock_pairs,
+               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
+               color = col_distance, linewidth = 0.5, alpha = 0.4, linetype = "dashed") +
+  geom_point(data = boys_flock, aes(x = x, y = y),
+             color = col_boy, size = 4, shape = 15) +
+  geom_point(data = girl_a, aes(x = x, y = y),
+             color = col_girl, size = 6, shape = 17) +
+  geom_point(data = girl_b, aes(x = x, y = y),
+             color = col_girl, size = 6, shape = 17) +
+  geom_point(data = girl_c, aes(x = x, y = y),
+             color = col_girl, size = 6, shape = 17) +
+  geom_label_repel(data = rbind(girl_a, girl_c),
+                   aes(x = x, y = y, label = id),
+                   color = col_girl, size = 4, fontface = "bold",
+                   fill = "#f0f4f8", box.padding = 0.5) +
+  annotate("text", x = 3, y = 7, label = "Girl C: closer to many,\nbut 'impossible' in a box",
+           color = "#666666", size = 3, hjust = 0) +
+  scale_x_continuous(limits = c(0, 8), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 8), expand = c(0, 0)) +
+  labs(x = "← West · · · East →",
+       y = "← South · · · North →") +
+  coord_fixed(ratio = 1) +
+  theme_space
+```
+
+But if we are looking at ideal boys and actual boys, location and distance are — what's the word — confounded. Necessarily so, because they're in a box. The farthest you can be from the corner of a box is the opposite corner. So, when we find that an actual boy is quite far from ideal, we can be reasonably sure he is not very hot or kind. And when an actual boy is close to ideal, we can be reasonably sure he is fairly hot and kind. 
+
+```{r confounding-demo, echo=FALSE, fig.width=14, fig.height=6,fig.cap="When ideals cluster at the bounds of the scale, a distance measure is just a location measure in disguise"}
+n_people <- 40
+
+ideals <- data.frame(
+  id = 1:n_people,
+  x = pmin(6, pmax(1, rnorm(n_people, mean = 5.3, sd = 0.6))),
+  y = pmin(6, pmax(1, rnorm(n_people, mean = 5.5, sd = 0.6))),
+  type = "ideal"
+)
+
+actuals <- data.frame(
+  id = 1:n_people,
+  x = pmin(6, pmax(1, rnorm(n_people, mean = 3.5, sd = 1.1))),
+  y = pmin(6, pmax(1, rnorm(n_people, mean = 3.8, sd = 1.0))),
+  type = "actual"
+)
+
+distances <- sqrt((actuals$x - ideals$x)^2 + (actuals$y - ideals$y)^2)
+actuals$distance <- distances
+actuals$actual_mean <- (actuals$x + actuals$y) / 2
+
+subset_ids <- c(1, 5, 10, 15, 20, 25, 30, 35)
+distance_segments <- data.frame(
+  x_start = actuals$x[subset_ids],
+  y_start = actuals$y[subset_ids],
+  x_end = ideals$x[subset_ids],
+  y_end = ideals$y[subset_ids]
+)
+
+p_box <- ggplot() +
+  annotate("rect", xmin = 1, xmax = 6, ymin = 1, ymax = 6, 
+         fill = NA, color = "#8b4513", linewidth = 1.5) +
+  geom_segment(data = distance_segments,
+               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
+               color = col_distance, linewidth = 0.6, alpha = 0.7, linetype = "dashed") +
+  geom_point(data = actuals, aes(x = x, y = y),
+             color = col_actual, size = 3, alpha = 0.7, shape = 16) +
+  geom_point(data = ideals, aes(x = x, y = y),
+             color = col_ideal, size = 3, alpha = 0.7, shape = 18) +
+  scale_x_continuous(limits = c(1, 6), breaks = 1:6,
+                     labels = c("1\nUgly", "2", "3", "4", "5", "6\nHot")) +
+  scale_y_continuous(limits = c(1, 6), breaks = 1:6,
+                     labels = c("1\nMean", "2", "3", "4", "5", "6\nKind")) +
+  labs(title = "Ideals cluster at ceiling",
+       x = "", y = "") +
+  coord_fixed(ratio = 1) +
+  theme_box
+
+p_cor <- ggplot(actuals, aes(x = actual_mean, y = distance)) +
+  annotate("rect", xmin = 1, xmax = 6, ymin = 0, ymax = sqrt((1 - 6)^2 + (1 - 6)^2), 
+         fill = NA, color = "#8b4513", linewidth = 1.5) +
+  geom_point(color = col_actual, size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", color = col_distance, fill = col_distance,
+              alpha = 0.2, linewidth = 1.2) +
+  annotate("text", x = 2, y = 4.5,
+           label = paste0("r = ", round(cor(actuals$actual_mean, actuals$distance), 2)),
+           size = 5, fontface = "bold", color = col_distance) +
+  scale_x_continuous(limits = c(1, 6)) +
+  scale_y_continuous(limits = c(0, sqrt((1 - 6)^2 + (1 - 6)^2))) +
+  labs(title = "Distance = location in disguise",
+       x = "Mean actual trait level", y = "Euclidean distance ('mismatch')") +
+  theme_box +
+  theme(axis.text = element_text(color = "#5c3317"))
+
+p_box + p_cor
+```
+
+What this implies is that if we want to learn whether _distance to the ideal_ causally influences who we fuck/marry/kill, we should take care to adjust for location (i.e., how hot and kind our actual boy is). Because we already _know_ that hotness and kindness have strong main effects on the desirability of a partner; if we want to establish that distance (or preferences or similarity) matters, it needs to do so beyond those simple facts of life.
+
+Do researchers do that? Erm, not usually. There is _some_ awareness of the problem that actual traits (location of the actual boy) dominate distance measures when variance in ideals is lower (which it is). But I've (re)analyzed multiple datasets where a significant prediction from Euclidean distance evaporates once I adjust for location (e.g., levels of hotness and kindness). In some cases, the reader would never know from the paper that these levels confound the central analysis. If readers are unaware of this problem, they would falsely accord preferences/partner ideals a greater causal role than they have.
+
+But what if researchers (or practitioners) do not care about causal inference, but just want to predict matches?^[Let's assume counterfactually they're not misleading themselves about this, because IMO generalizing from the sample to new data always involved some key causal assumptions.]  Then Euclidean distance would probably still be wrong tool. I'll give two reasons.
+
+One, the differences in ideals/preferences tend not to matter very much in the studies that checked. But more importantly, Euclidean distances are a very rigid summary. We weight each dimension the same and treat them as uncorrelated. So, physical attractiveness is given the same weight as Tetris skill or punctuality. And if you include two items measuring punctuality, they'll be weighted twice as much as physical attractiveness. Those are probably not the best weights for prediction. 
+
+It's like telling 2D girl A that she's best suited for 2D boy A because he's closer when getting to him would mean scaling a mountainside while 2D boy B is in reach of a leisurely stroll. Yes, they're 3D boys and girls now; they grow up so fast.
+
+```{r outside-box, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Boy A may be closer, but boy B sure seems more convenient."}
+set.seed(20191005)
+
+terrain_grid <- expand.grid(
+  x = seq(0, 12, length.out = 100),
+  y = seq(0, 10, length.out = 100)
+)
+
+# North is mountains, south is lowlands, with some ridges and valleys
+terrain_grid$z <- terrain_grid$y + 
+  1 * sin(terrain_grid$x * 0.8) * cos(terrain_grid$y * 0.3) +
+  1 * sin((terrain_grid$x + terrain_grid$y) * 0.3)
+
+space_data <- data.frame(
+  id = c("Boy A", "Boy B", "Girl A", "Girl B"),
+  x = c(2, 7, 2.2, 9),
+  y = c(3, 8, 6, 2),
+  type = c("boy", "boy", "girl", "girl")
+)
+
+pairs_simple <- data.frame(
+  x_start = c(2, 7),
+  y_start = c(3, 8),
+  x_end = c(2.2, 9),
+  y_end = c(6, 2)
+)
+
+ggplot() +
+  geom_contour(data = terrain_grid, aes(x = x, y = y, z = z),
+               color = "#8B7355", linewidth = 0.4, alpha = 0.6,
+               bins = 10) +
+  geom_segment(data = pairs_simple,
+               aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
+               color = col_distance, linewidth = 1, linetype = "dashed",
+               arrow = arrow(length = unit(0.3, "cm"), type = "closed")) +
+  geom_point(data = space_data,
+             aes(x = x, y = y, shape = type, color = type),
+             size = 5, stroke = 1.5) +
+  geom_label_repel(data = space_data,
+                   aes(x = x, y = y, label = id, color = type),
+                   size = 4, fontface = "bold",
+                   box.padding = 0.5, point.padding = 0.3,
+                   fill = "#f0f4f8") +
+  scale_color_manual(values = c("boy" = col_boy, "girl" = col_girl)) +
+  scale_shape_manual(values = c("boy" = 15, "girl" = 17)) +
+  scale_x_continuous(limits = c(0, 12), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 10), expand = c(0, 0)) +
+  labs(x = "← West · · · East →",
+       y = "← South · · · North →") +
+  coord_fixed(ratio = 1) +
+  theme_space
+
+```
+
+
+
+> I know this girl who'd be perfect for you. Just 100 meters from you (up a vertical mountain cliff). ![Jerry Moffatt free soloing)](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Jerry_moffatt_climb.jpg/1280px-Jerry_moffatt_climb.jpg)
+
+Also, if someone scores higher than your ideal on some dimensions, the Euclidean distance counts that against them. This might be plausible for a few traits like religiousness, where some prefer low and others prefer high levels. But it seems less plausible for physical attractiveness or kindness, where most would happily take “more” as a nice bonus. Or at least we haven’t heard of anybody complaining that their date turned out to be hotter than their Tinder profile suggested.^[Or [helped more poor children than their profile picture](https://humanitariansoftinder.com/archive) suggested.] 
+
+
+```{r box-exceed, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Where are all the ideal boys? Hiding in the corner."}
+box_data <- data.frame(
+  id = c("Ideal", "You", "The Guy\nEuclidean Distance\nTold You Not To\nWorry About"),
+  x = c(5.1, 4.6, 5.9),
+  y = c(4.9, 4.4, 5.8),
+  type = c("ideal", "actual", "actual"),
+  # manual label positions
+  lx = c(5.1, 2.8, 5),
+  ly = c(3.8, 2.8, 2.2)
+)
+
+ggplot() +
+  geom_segment(aes(x = 5.1, y = 4.9, xend = 4.6, yend = 4.4),
+               color = col_distance, linewidth = 1.2, linetype = "dashed",
+               arrow = arrow(length = unit(0.3, "cm"), type = "closed", ends = "first")) +
+  geom_segment(aes(x = 5.1, y = 4.9, xend = 5.9, yend = 5.8),
+               color = col_distance, linewidth = 1.2, linetype = "dashed",
+               arrow = arrow(length = unit(0.3, "cm"), type = "closed", ends = "first")) +
+  annotate("rect", xmin = 1, xmax = 6, ymin = 1, ymax = 6,
+           fill = NA, color = "#8b4513", linewidth = 1.5) +
+  annotate("text", x = 3.5, y = 2.5, label = "vs.") +
+  # connector lines from labels to points
+  geom_segment(data = box_data,
+               aes(x = lx, y = ly, xend = x, yend = y, color = type),
+               linewidth = 0.4) +
+  geom_point(data = box_data,
+             aes(x = x, y = y, color = type),
+             size = 6, shape = 18) +
+  geom_label(data = box_data,
+             aes(x = lx, y = ly, label = id, color = type),
+             size = 4, fontface = "bold",
+             fill = "#fffbf5", label.padding = unit(0.4, "lines")) +
+  scale_color_manual(values = c("ideal" = col_ideal, "actual" = col_actual)) +
+  scale_x_continuous(limits = c(1, 6), breaks = 1:6,
+                     labels = c("1\nVery\nugly", "2", "3", "4", "5", "6\nSuper\nhot")) +
+  scale_y_continuous(limits = c(1, 6), breaks = 1:6,
+                     labels = c("1\nSuper\nmean", "2", "3", "4", "5", "6\nVery\nkind")) +
+  labs(x = "", y = "") +
+  coord_fixed(ratio = 1) +
+  theme_box
+
+```
+
+So, do we have a way to figure the right weights out? Yes, it's called regression. Compare a model with just the traits of the partner to a model with traits + discrepancies or (linearly equivalent) traits + ideals. As long as you rein in overfitting, this is a workable technique to find out whether distance matters.
+
+What do researchers do? I don't read all the literatures where Euclidean distances are used, but in the partner preference literature some have switched to distinctive profile correlations/the corrected pattern metric. Those ostensibly solve the issue that normatively desirable people are always closer in preference space, but they have a different problem, which will be the subject of my next post. Some researchers, especially in personality psychology, also go for response surface analysis. This adequately controls for confounding but the data requirements to do this a large number of traits are onerous, and as I might discuss in a future post, there is a good reason not to examine outcomes like relationship satisfaction trait-by-trait.
