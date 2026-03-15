@@ -21,8 +21,10 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(groundhog)
-groundhog.library(c("dplyr", "brms", "tidybayes", "colorspace"), date = "2024-02-13")
-groundhog.library(c("stan-dev/cmdstanr"), date = "2024-02-13")
+library(dplyr)
+library(brms)
+library(tidybayes)
+library(colorspace)
 options(digits = 2)
 ```
 
@@ -41,6 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
+## Update:
+I originally footnoted this: "I fully expect to be embarrassed by someone having pointed this out in 1930 already, but I'll be a little less embarrassed because I asked around and it's not obvious to everyone in my field."
+
+This has now happened twice, so I should update the post, so you know the references too. At least, they're not from 1930 but from 2003/2005. In October 2025 I found a name (empirical reliability) and a reference ([Du Toit, 2003](https://books.google.be/books?hl=en&lr=&id=fbH0RgiZmoAC&oi=fnd&pg=PA16&dq=du+toit+2003&ots=2SHmql8EQQ&sig=Z1CbHV3gRBCz-sWptv5THWgMgyI&redir_esc=y#v=onepage&q=du%20toit%202003&f=false)) for the approach I describe below in a paper by [Bignardi et al., 2025](https://bsky.app/profile/ruben.the100.ci/post/3m24ut3oha22e). [Bignardi, Kievit, & Bürkner (2025)](https://osf.io/preprints/psyarxiv/h54k8_v1) also describe a new approach 'relative measurement uncertainty', which is superior to the approach below because it quantifies the uncertainty in the reliability statistic itself. In March 2026, Jana Holtmann also pointed me to relevant prior work by [Adams, 2005](https://linkinghub.elsevier.com/retrieve/pii/S0191491X05000234). Thanks!
+
+## Old post start
 
 For most psychologists, the concept of reliability is the main way they think about measurement error. At least it used to be that way for me and a recent conference I attended didn't disabuse me of this impression. 
 

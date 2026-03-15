@@ -20,8 +20,9 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -115,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/anchor-4.2.2/anchor.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/bowser-1.9.3/bowser.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/distill-2.2.21/template.v2.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/header-attrs-2.25/header-attrs.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/jquery-3.6.0/jquery-3.6.0.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/jquery-3.6.0/jquery-3.6.0.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/jquery-3.6.0/jquery-3.6.0.min.map","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/pagedtable-1.1/css/pagedtable.css","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/pagedtable-1.1/js/pagedtable.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/popper-2.6.0/popper.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy-light-border.css","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy.css","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy.umd.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/anchor-4.2.2/anchor.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/bowser-1.9.3/bowser.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/distill-2.2.21/template.v2.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/header-attrs-2.25/header-attrs.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/header-attrs-2.30/header-attrs.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/jquery-3.6.0/jquery-3.6.0.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/jquery-3.6.0/jquery-3.6.0.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/jquery-3.6.0/jquery-3.6.0.min.map","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/pagedtable-1.1/css/pagedtable.css","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/pagedtable-1.1/js/pagedtable.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/popper-2.6.0/popper.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy-light-border.css","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy.css","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/tippy-6.2.7/tippy.umd.min.js","the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1497,7 +1498,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/header-attrs-2.25/header-attrs.js"></script>
+  <script src="the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/header-attrs-2.30/header-attrs.js"></script>
   <link href="the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
   <script src="the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/pagedtable-1.1/js/pagedtable.js"></script>
   <script src="the-reliability-of-multilevel-parameters-in-bayesian-regressions_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -1554,6 +1555,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#update" id="toc-update">Update:</a></li>
+<li><a href="#old-post-start" id="toc-old-post-start">Old post start</a></li>
 <li><a href="#simulation-of-course" id="toc-simulation-of-course">Simulation, of course</a></li>
 <li><a href="#why-does-this-work" id="toc-why-does-this-work">Why does this work?</a></li>
 <li><a href="#footnote-on-other-approaches." id="toc-footnote-on-other-approaches.">Footnote on other approaches.</a></li>
@@ -1573,6 +1576,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+<h2 id="update">Update:</h2>
+<p>I originally footnoted this: “I fully expect to be embarrassed by someone having pointed this out in 1930 already, but I’ll be a little less embarrassed because I asked around and it’s not obvious to everyone in my field.”</p>
+<p>This has now happened twice, so I should update the post, so you know the references too. At least, they’re not from 1930 but from 2003/2005. In October 2025 I found a name (empirical reliability) and a reference (<a href="https://books.google.be/books?hl=en&amp;lr=&amp;id=fbH0RgiZmoAC&amp;oi=fnd&amp;pg=PA16&amp;dq=du+toit+2003&amp;ots=2SHmql8EQQ&amp;sig=Z1CbHV3gRBCz-sWptv5THWgMgyI&amp;redir_esc=y#v=onepage&amp;q=du%20toit%202003&amp;f=false">Du Toit, 2003</a>) for the approach I describe below in a paper by <a href="https://bsky.app/profile/ruben.the100.ci/post/3m24ut3oha22e">Bignardi et al., 2025</a>. <a href="https://osf.io/preprints/psyarxiv/h54k8_v1">Bignardi, Kievit, &amp; Bürkner (2025)</a> also describe a new approach ‘relative measurement uncertainty’, which is superior to the approach below because it quantifies the uncertainty in the reliability statistic itself. In March 2026, Jana Holtmann also pointed me to relevant prior work by <a href="https://linkinghub.elsevier.com/retrieve/pii/S0191491X05000234">Adams, 2005</a>. Thanks!</p>
+<h2 id="old-post-start">Old post start</h2>
 <p>For most psychologists, the concept of reliability is the main way they think about measurement error. At least it used to be that way for me and a recent conference I attended didn’t disabuse me of this impression.</p>
 <p>At the conference, many researchers presented work in which they aimed to explain variation in a parameter of a multilevel model, or used such a parameter to predict something. Basically, in personality, people are moving on from individual differences in means. Some example parameters include random slopes (e.g., the varying effects of some daily event on daily affect), residual variability (e.g., varying within-person negative affect variability), but there are many others (e.g., within-subject autocorrelation, “inertia”).</p>
 <p>Now, these higher-level parameters have to be estimated of course. Most researchers are aware that these quantities are not error-free.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Still, in most talks I saw, people either didn’t address this, or they computed a reliability in some roundabout way (e.g., split-half).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
@@ -1589,7 +1596,7 @@ Show code
 <span><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fl'>300</span></span>
 <span><span class='va'>n_days</span> <span class='op'>=</span> <span class='fl'>14</span></span>
 <span><span class='va'>n_days_per_person</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span><span class='op'>(</span><span class='va'>N</span>, <span class='va'>n_days</span><span class='op'>)</span></span>
-<span><span class='va'>people</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='op'>(</span></span>
+<span><span class='va'>people</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
 <span>  id <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>N</span>,</span>
 <span>  x_mean <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N</span><span class='op'>)</span>,</span>
 <span>  y_mean <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N</span><span class='op'>)</span>,</span>
@@ -1598,13 +1605,13 @@ Show code
 <span>  days <span class='op'>=</span> <span class='va'>n_days_per_person</span></span>
 <span>  <span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>days</span> <span class='op'>&lt;-</span> <span class='va'>people</span> <span class='op'>%&gt;%</span> </span>
-<span>  <span class='fu'>full_join</span><span class='op'>(</span><span class='fu'>tibble</span><span class='op'>(</span></span>
+<span><span class='va'>days</span> <span class='op'>&lt;-</span> <span class='va'>people</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
 <span>              id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>N</span>, times <span class='op'>=</span> <span class='va'>n_days_per_person</span><span class='op'>)</span></span>
-<span>            <span class='op'>)</span>, by <span class='op'>=</span> <span class='st'>"id"</span>, multiple <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>            <span class='fu'>mutate</span><span class='op'>(</span></span>
-<span>              x <span class='op'>=</span> <span class='va'>x_mean</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span>              y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>, </span>
+<span>            <span class='op'>)</span>, by <span class='op'>=</span> <span class='st'>"id"</span>, multiple <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>            <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>              x <span class='op'>=</span> <span class='va'>x_mean</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>              y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
 <span>                        mean <span class='op'>=</span> <span class='va'>y_mean</span> <span class='op'>+</span> <span class='va'>x_slope</span><span class='op'>*</span><span class='va'>x</span>,</span>
 <span>                        sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>y_var</span><span class='op'>)</span><span class='op'>)</span></span>
 <span>            <span class='op'>)</span></span></code></pre>
@@ -1648,7 +1655,7 @@ Show code
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'>brm</span><span class='op'>(</span><span class='fu'>bf</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x</span><span class='op'>|</span><span class='va'>id</span><span class='op'>)</span>,</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://paulbuerkner.com/brms/reference/brm.html'>brm</a></span><span class='op'>(</span><span class='fu'><a href='https://paulbuerkner.com/brms/reference/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x</span><span class='op'>|</span><span class='va'>id</span><span class='op'>)</span>,</span>
 <span>             <span class='va'>sigma</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>id</span><span class='op'>)</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>days</span>,</span>
 <span>          backend <span class='op'>=</span> <span class='st'>"cmdstanr"</span>,</span>
 <span>          cores <span class='op'>=</span> <span class='fl'>4</span>,</span>
@@ -1664,13 +1671,13 @@ Show code
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>true_score_var</span> <span class='op'>&lt;-</span> <span class='va'>m1</span> <span class='op'>%&gt;%</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>true_score_var</span> <span class='op'>&lt;-</span> <span class='va'>m1</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>    <span class='co'># grab all estimates of varying/random effects</span></span>
-<span>    <span class='fu'>gather_draws</span><span class='op'>(</span> <span class='va'>`sd_.+`</span>, regex <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>    <span class='fu'>mutate</span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>    <span class='fu'>mutate</span><span class='op'>(</span>latent_var <span class='op'>=</span> <span class='va'>.value</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>    <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>.variable</span><span class='op'>)</span> <span class='op'>%&gt;%</span></span>
-<span>    <span class='fu'>summarise</span><span class='op'>(</span>latent_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>latent_var</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span>    <span class='fu'><a href='https://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span> <span class='va'>`sd_.+`</span>, regex <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>latent_var <span class='op'>=</span> <span class='va'>.value</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>.variable</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>latent_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>latent_var</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </details>
 </div>
@@ -1681,22 +1688,22 @@ Show code
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>SEE2</span> <span class='op'>&lt;-</span> <span class='va'>m1</span> <span class='op'>%&gt;%</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>SEE2</span> <span class='op'>&lt;-</span> <span class='va'>m1</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>      <span class='co'># grab all estimates of varying/random effects</span></span>
-<span>      <span class='fu'>gather_draws</span><span class='op'>(</span> <span class='va'>`r_.+__.+`</span><span class='op'>[</span><span class='va'>id</span>,<span class='va'>parameter</span><span class='op'>]</span>, <span class='va'>`r_[^_]+_?[^_]+`</span><span class='op'>[</span><span class='va'>id</span>,<span class='va'>parameter</span><span class='op'>]</span>, </span>
-<span>                    regex <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span></span>
-<span>      <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>      <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/unite.html'>unite</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='va'>.variable</span>, <span class='va'>parameter</span>, sep <span class='op'>=</span> <span class='st'>"__"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>      <span class='fu'>mutate</span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>      <span class='fu'>mutate</span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, </span>
-<span>                                              <span class='st'>"_sigma__"</span>, <span class='st'>"_sigma_"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>      <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>.variable</span>, <span class='va'>id</span><span class='op'>)</span> <span class='op'>%&gt;%</span></span>
+<span>      <span class='fu'><a href='https://mjskay.github.io/tidybayes/reference/spread_draws.html'>gather_draws</a></span><span class='op'>(</span> <span class='va'>`r_.+__.+`</span><span class='op'>[</span><span class='va'>id</span>,<span class='va'>parameter</span><span class='op'>]</span>, <span class='va'>`r_[^_]+_?[^_]+`</span><span class='op'>[</span><span class='va'>id</span>,<span class='va'>parameter</span><span class='op'>]</span>, </span>
+<span>                    regex <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>      <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/unite.html'>unite</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='va'>.variable</span>, <span class='va'>parameter</span>, sep <span class='op'>=</span> <span class='st'>"__"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>      <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>      <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>.variable <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='va'>.variable</span>, </span>
+<span>                                              <span class='st'>"_sigma__"</span>, <span class='st'>"_sigma_"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>      <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>.variable</span>, <span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>      <span class='co'># compute variance across draws</span></span>
-<span>      <span class='fu'>summarise</span><span class='op'>(</span>SEE2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>var</a></span><span class='op'>(</span><span class='va'>.value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span></span>
-<span>      <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>people</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>days</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
+<span>      <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>SEE2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>var</a></span><span class='op'>(</span><span class='va'>.value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>people</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>days</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>      <span class='co'># give more weight to error var estimated from people </span></span>
 <span>      <span class='co'># who contributed more data</span></span>
-<span>      <span class='fu'>summarise</span><span class='op'>(</span></span>
+<span>      <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span></span>
 <span>        <span class='co'># weighted SEE^2 reflects the amount of error you get if you take </span></span>
 <span>        <span class='co'># along the uncertainty in your model</span></span>
 <span>        weighted_SEE2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>SEE2</span><span class='op'>*</span><span class='va'>days</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>days</span><span class='op'>)</span>,</span>
@@ -1715,10 +1722,10 @@ Show code
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>true_score_var</span> <span class='op'>%&gt;%</span> <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>SEE2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
-<span>    <span class='fu'>mutate</span><span class='op'>(</span>reliability <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>-</span> <span class='va'>SEE2</span><span class='op'>/</span><span class='va'>latent_var</span>,</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>true_score_var</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>SEE2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>reliability <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>-</span> <span class='va'>SEE2</span><span class='op'>/</span><span class='va'>latent_var</span>,</span>
 <span>           weighted_reliability <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>-</span> <span class='va'>weighted_SEE2</span><span class='op'>/</span><span class='va'>latent_var</span>,</span>
-<span>           <span class='op'>)</span> <span class='op'>%&gt;%</span> </span>
+<span>           <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
 </details>
@@ -1744,7 +1751,7 @@ Show code
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">id__Intercept</td>
-<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.99</td>
 <td style="text-align: right;">0.15</td>
 <td style="text-align: right;">0.16</td>
 <td style="text-align: right;">0.84</td>
@@ -1756,15 +1763,15 @@ Show code
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.52</td>
-<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">0.54</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">id__x</td>
 <td style="text-align: right;">0.03</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.18</td>
 <td style="text-align: right;">0.19</td>
-<td style="text-align: right;">0.20</td>
 </tr>
 </tbody>
 </table>
@@ -1798,7 +1805,7 @@ The standard errors (SEs) of our random slopes are the SEs of the shrunk estimat
 <h2 class="appendix" id="enough-with-the-footnotes">Enough with the footnotes</h2>
 <p>This blog post is subject to my <a href="/bug_bounty.html">bug bounty policy</a>, which means that I’d appreciate hearing about errors in this post and will pay you (or a charity) a small bounty.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Like everything else in psychology<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1810,7 +1817,7 @@ The standard errors (SEs) of our random slopes are the SEs of the shrunk estimat
 <li id="fn7"><p>I only learned about this after the fact. Thanks to Stefan Schmukle for pointing me to Levy, R. &amp; Mislevy, R. J. (2016). Bayesian psychometric modeling. Taylor &amp; Francis<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>I fully expect to be embarrassed by someone having pointed this out in 1930 already, but I’ll be a little less embarrassed because I asked around and it’s not obvious to everyone in my field.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
