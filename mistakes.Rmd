@@ -22,7 +22,7 @@ __Description:__ When we use multiple generated regressors in a regression, we c
 
 __Delay:__ Three months. After finding the error, I [ran simulations](posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1/) to better understand the problem and reran the Bayesian models I used to generate the regressor as multivariate models with residual correlations. Initially, I found a substantial mismatch, but I also noticed I had subset the data differently (because any missing value in any of the outcomes led to row-wise elimination of data). Once I corrected this, the differences were minor. The analyses are documented [here](http://rubenarslan.github.io/invalidity_on_steroids/5_multivariate_imputations.html).
 
-__Solution:__ I've uploaded the slightly improved multivariate regressors on the OSF along with a README. Since the numbers change only very little I don't see the need to do a "recall" for anyone who might've used the numbers and all the numbers in the manuscript itself should be ~correct since they don't use multivariate predictions.
+__Solution:__ I've uploaded the slightly improved multivariate regressors on the [OSF](https://osf.io/u9xad/files/osfstorage) and updated the README. Since the numbers change only very little I don't see the need to do a "recall" for anyone who might've used the numbers and all the numbers in the manuscript itself should be ~correct since they don't use multivariate predictions.
 
 
 ![Corrected graph. Dotted lines are the incorrectly normalized, published numbers.](figures/fig_entropy_correction.png)
