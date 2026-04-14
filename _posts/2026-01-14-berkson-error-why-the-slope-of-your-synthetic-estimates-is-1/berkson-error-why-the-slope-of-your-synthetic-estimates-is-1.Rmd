@@ -1,9 +1,9 @@
 ---
-title: "Berkson Error: Why the slope of our synthetic estimates is 1"
+title: "Berkson Error: A different kind of error"
 author:
   - name: Ruben C. Arslan
     url: https://rubenarslan.github.io
-date: 2026-01-14
+date: 2026-04-14
 categories: 
   - simulation
   - data-generating model
@@ -22,17 +22,25 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+Sometimes, once we have a new concept, we [see it everywhere](https://en.wikipedia.org/wiki/Frequency_illusion). For me, this recently happened with the concept of [Berkson error](https://en.wikipedia.org/wiki/Berkson_error_model). The [original paper](http://www.tandfonline.com/doi/abs/10.1080/01621459.1950.10483349) is very readable. If, like me, you haven't noticed this concept before, maybe you'll also recognize it around you soon. 
+
+Let's say, you want to measure how much müsli I eat for breakfast, I pour it into my bowl and you weigh my bowl before I eat it. The measured weight depends on the true weight (T -> X). The error of the scale means your measured value is slightly off the true value. Sometimes, it might be a bit high, sometimes it will be a bit low, but the error is unrelated to T. This is classical measurement error, very familiar to psychologists.
+
+However, if you continue your research into my müsli consumption by assigning me experimentally assigned portion sizes, something flips. Now, you'll pour müsli into the bowl until it's exactly 30 grams (if you want me to have a bad day) or 60 grams (if you want me to have a good day). If after your initial pour, the scale shows 25 grams, you'll add more until it shows 30 grams. But the scale still has error, sometimes it's a bit high, sometimes it's a bit low. Maybe when it showed 25 grams, it truly was already at 30 grams. What has changed is that now the true value is dependent on the measured value (X -> T) and the error is independent of X, not of T.
+
+Does this matter? In fact, I've come across this problem several times, even outside the important field of müsli research.
+
 I have worked with imputed or synthetic estimates a few times. In [my work on fertile window effects](https://rubenarslan.github.io/ovulatory_shifts/), we used the imputed probability of being in the fertile window (courtesy of [Gangestad et al. 2016](http://www.sciencedirect.com/science/article/pii/S109051381500080X)). In my [work on steroid hormones](https://rubenarslan.github.io/invalidity_on_steroids) across the cycle, I imputed serum sex steroids from menstrual cycle position. And recently, with Björn Hommel, we worked on [synthetic estimates for correlations between survey items](https://synth-science.github.io/surveybot3000/).
 
 ![Why is the slope ~1 (the brown line is on the dashed line)?](https://rubenarslan.github.io/surveybot3000/Figure_rr.png)
 
 What these estimates have in common is that they come from a regression model, i.e. they are predicted true values. Also, none of them are free of error. Initially, I thought this error would need to be modelled (e.g, through SEM or errors-in-variables) if these estimates were to be used as predictors. Through simulations, I learned that this was not the case, their effects were unbiased. I understood this had something to do with the fact that the regression basically "shrunk" the estimates, but I didn't have a name for the problem. 
 
-Fortunately, LLMs make it easy to discover names you don't know. So, today, when Stefan Schmukle asked me why the slopes of our synthetic correlations are 1 and not attenuated by error, I broke out into cold sweat. When Stefan is befuddled, I've usually made a mistake. So,  I made some plots and simulations together with Claude Opus 4.5 and Gemini 3 Pro and learned the name of this problem: [Berkson Error](https://www.tandfonline.com/doi/abs/10.1080/01621459.1950.10483349)^[In econometrics, this problem is often discussed under the label "generated regressors" (e.g., Pagan, 1984). That literature focuses on the fact that while coefficients are consistent (if the generated regressor is a conditional expectation), the standard errors need adjustment because the regressor is estimated, not known.].
+Fortunately, LLMs make it easy to discover names you don't know. So, recently, when Stefan Schmukle asked me why the slopes of our synthetic correlations are 1 and not attenuated by error, I broke out into cold sweat. When Stefan is befuddled, I've usually made a mistake. So,  I made some plots and simulations together with Claude Opus 4.5 and Gemini 3 Pro and learned the name of this problem: [Berkson Error](https://www.tandfonline.com/doi/abs/10.1080/01621459.1950.10483349)^[In econometrics, this problem is often discussed under the label "generated regressors" (e.g., Pagan, 1984). That literature focuses on the fact that while coefficients are consistent (if the generated regressor is a conditional expectation), the standard errors need adjustment because the regressor is estimated, not known.].
 
-There's a lot of research on this, so here I'm just trying to convey the problem visually through simulations.
+The TL;DR is that when you use predicted values as predictors, you have Berkson error. The predictions will be "shrunken" relative to the true values, and in the bivariate case you do not even need to correct for it. No SEM, no nothing. So, in the case of our synthetic correlations, my cold sweat was unnecessary. However, when it came to the imputed steroid estimates which will sometimes be used for multivariate analyses, I had ignored residual confounding. Fortunately, this ended up [not mattering substantially](https://rubenarslan.github.io/mistakes.html).
 
-The TL;DR is that when you use predicted values as predictors, you have Berkson error. The predictions will be "shrunken" relative to the true values, and you do not even need to correct for it. So, in the case of our synthetic correlations, my cold sweat was unnecessary. However, when it came to the imputed steroid estimates, I had ignored residual confounding.
+There's a lot of research on this, so here I'm just trying to convey the problem visually through simulations and to connect it to concepts I already had as a psychologist like shrinking values towards the mean as a function of reliability. I would be curious to understand why this concept is not more widely taught in psychology, even though we tend to be fairly attentive to measurement error, use imputations etc. I suspect it is because we're often so focused on correlations, which still get attenuated, but I might be wrong.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(

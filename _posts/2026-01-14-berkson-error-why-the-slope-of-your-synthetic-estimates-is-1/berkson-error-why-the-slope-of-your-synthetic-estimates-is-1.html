@@ -89,29 +89,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Berkson Error: Why the slope of our synthetic estimates is 1</title>
+  <title>Berkson Error: A different kind of error</title>
 
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2026-01-14"/>
-  <meta property="article:created" itemprop="dateCreated" content="2026-01-14"/>
+  <meta property="article:published" itemprop="datePublished" content="2026-04-14"/>
+  <meta property="article:created" itemprop="dateCreated" content="2026-04-14"/>
   <meta name="article:author" content="Ruben C. Arslan"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Berkson Error: Why the slope of our synthetic estimates is 1"/>
+  <meta property="og:title" content="Berkson Error: A different kind of error"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Berkson Error: Why the slope of our synthetic estimates is 1"/>
+  <meta property="twitter:title" content="Berkson Error: A different kind of error"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","categories","output"]}},"value":[{"type":"character","attributes":{},"value":["Berkson Error: Why the slope of our synthetic estimates is 1"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]}]}]},{"type":"character","attributes":{},"value":["2026-01-14"]},{"type":"character","attributes":{},"value":["simulation","data-generating model","error","measurement","reliability","modelling"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","code_folding"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["Show code"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","categories","output"]}},"value":[{"type":"character","attributes":{},"value":["Berkson Error: A different kind of error"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]}]}]},{"type":"character","attributes":{},"value":["2026-04-14"]},{"type":"character","attributes":{},"value":["simulation","data-generating model","error","measurement","reliability","modelling"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","code_folding"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["Show code"]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1519,7 +1519,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Berkson Error: Why the slope of our synthetic estimates is 1","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2026-01-14T00:00:00.000+01:00","citationText":"Arslan, 2026"}
+{"title":"Berkson Error: A different kind of error","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2026-04-14T00:00:00.000+02:00","citationText":"Arslan, 2026"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1529,7 +1529,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Berkson Error: Why the slope of our synthetic estimates is 1</h1>
+<h1>Berkson Error: A different kind of error</h1>
 
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
@@ -1547,19 +1547,23 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-byline">
   Ruben C. Arslan <a href="https://rubenarslan.github.io" class="uri">https://rubenarslan.github.io</a> 
   
-<br/>2026-01-14
+<br/>2026-04-14
 </div>
 
 <div class="d-article">
+<p>Sometimes, once we have a new concept, we <a href="https://en.wikipedia.org/wiki/Frequency_illusion">see it everywhere</a>. For me, this recently happened with the concept of <a href="https://en.wikipedia.org/wiki/Berkson_error_model">Berkson error</a>. The <a href="http://www.tandfonline.com/doi/abs/10.1080/01621459.1950.10483349">original paper</a> is very readable. If, like me, you haven’t noticed this concept before, maybe you’ll also recognize it around you soon.</p>
+<p>Let’s say, you want to measure how much müsli I eat for breakfast, I pour it into my bowl and you weigh my bowl before I eat it. The measured weight depends on the true weight (T -&gt; X). The error of the scale means your measured value is slightly off the true value. Sometimes, it might be a bit high, sometimes it will be a bit low, but the error is unrelated to T. This is classical measurement error, very familiar to psychologists.</p>
+<p>However, if you continue your research into my müsli consumption by assigning me experimentally assigned portion sizes, something flips. Now, you’ll pour müsli into the bowl until it’s exactly 30 grams (if you want me to have a bad day) or 60 grams (if you want me to have a good day). If after your initial pour, the scale shows 25 grams, you’ll add more until it shows 30 grams. But the scale still has error, sometimes it’s a bit high, sometimes it’s a bit low. Maybe when it showed 25 grams, it truly was already at 30 grams. What has changed is that now the true value is dependent on the measured value (X -&gt; T) and the error is independent of X, not of T.</p>
+<p>Does this matter? In fact, I’ve come across this problem several times, even outside the important field of müsli research.</p>
 <p>I have worked with imputed or synthetic estimates a few times. In <a href="https://rubenarslan.github.io/ovulatory_shifts/">my work on fertile window effects</a>, we used the imputed probability of being in the fertile window (courtesy of <a href="http://www.sciencedirect.com/science/article/pii/S109051381500080X">Gangestad et al. 2016</a>). In my <a href="https://rubenarslan.github.io/invalidity_on_steroids">work on steroid hormones</a> across the cycle, I imputed serum sex steroids from menstrual cycle position. And recently, with Björn Hommel, we worked on <a href="https://synth-science.github.io/surveybot3000/">synthetic estimates for correlations between survey items</a>.</p>
 <figure>
 <img src="https://rubenarslan.github.io/surveybot3000/Figure_rr.png" alt="Why is the slope ~1 (the brown line is on the dashed line)?" />
 <figcaption aria-hidden="true">Why is the slope ~1 (the brown line is on the dashed line)?</figcaption>
 </figure>
 <p>What these estimates have in common is that they come from a regression model, i.e. they are predicted true values. Also, none of them are free of error. Initially, I thought this error would need to be modelled (e.g, through SEM or errors-in-variables) if these estimates were to be used as predictors. Through simulations, I learned that this was not the case, their effects were unbiased. I understood this had something to do with the fact that the regression basically “shrunk” the estimates, but I didn’t have a name for the problem.</p>
-<p>Fortunately, LLMs make it easy to discover names you don’t know. So, today, when Stefan Schmukle asked me why the slopes of our synthetic correlations are 1 and not attenuated by error, I broke out into cold sweat. When Stefan is befuddled, I’ve usually made a mistake. So, I made some plots and simulations together with Claude Opus 4.5 and Gemini 3 Pro and learned the name of this problem: <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1950.10483349">Berkson Error</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>There’s a lot of research on this, so here I’m just trying to convey the problem visually through simulations.</p>
-<p>The TL;DR is that when you use predicted values as predictors, you have Berkson error. The predictions will be “shrunken” relative to the true values, and you do not even need to correct for it. So, in the case of our synthetic correlations, my cold sweat was unnecessary. However, when it came to the imputed steroid estimates, I had ignored residual confounding.</p>
+<p>Fortunately, LLMs make it easy to discover names you don’t know. So, recently, when Stefan Schmukle asked me why the slopes of our synthetic correlations are 1 and not attenuated by error, I broke out into cold sweat. When Stefan is befuddled, I’ve usually made a mistake. So, I made some plots and simulations together with Claude Opus 4.5 and Gemini 3 Pro and learned the name of this problem: <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1950.10483349">Berkson Error</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>The TL;DR is that when you use predicted values as predictors, you have Berkson error. The predictions will be “shrunken” relative to the true values, and in the bivariate case you do not even need to correct for it. No SEM, no nothing. So, in the case of our synthetic correlations, my cold sweat was unnecessary. However, when it came to the imputed steroid estimates which will sometimes be used for multivariate analyses, I had ignored residual confounding. Fortunately, this ended up <a href="https://rubenarslan.github.io/mistakes.html">not mattering substantially</a>.</p>
+<p>There’s a lot of research on this, so here I’m just trying to convey the problem visually through simulations and to connect it to concepts I already had as a psychologist like shrinking values towards the mean as a function of reliability. I would be curious to understand why this concept is not more widely taught in psychology, even though we tend to be fairly attentive to measurement error, use imputations etc. I suspect it is because we’re often so focused on correlations, which still get attenuated, but I might be wrong.</p>
 <h2 id="common-to-all-scenarios">Common to all scenarios</h2>
 <p>You have a predictor <span class="math inline">\(T\)</span> (the “true score”) that affects some outcome <span class="math inline">\(Y\)</span>:</p>
 <p><span class="math display">\[Y = \beta T + \varepsilon\]</span></p>
