@@ -7,12 +7,12 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 14 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>Berkson Error: Why the slope of our synthetic estimates is 1</title>
+      <title>Berkson Error: A different kind of error</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
       <link>https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1</link>
-      <description>Berkson Error: Why the slope of our synthetic estimates is 1</description>
+      <description>Berkson Error: A different kind of error</description>
       <category>simulation</category>
       <category>data-generating model</category>
       <category>error</category>
@@ -20,7 +20,7 @@
       <category>reliability</category>
       <category>modelling</category>
       <guid>https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1</guid>
-      <pubDate>Wed, 14 Jan 2026 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1/berkson-error-why-the-slope-of-your-synthetic-estimates-is-1_files/figure-html5/classical-plot-1.png" medium="image" type="image/png" width="1920" height="768"/>
     </item>
     <item>
@@ -72,7 +72,7 @@ varying slopes in a model.</description>
       <category>reliability</category>
       <category>modelling</category>
       <guid>https://rubenarslan.github.io/posts/2024-02-15-the-reliability-of-multilevel-parameters-in-bayesian-regressions</guid>
-      <pubDate>Sun, 25 Feb 2024 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 26 Feb 2024 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Modeling misclicks in an app interface</title>

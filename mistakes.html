@@ -2199,6 +2199,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#arslan-et-al.-2023" id="toc-arslan-et-al.-2023">Arslan et al. (2023)</a></li>
 <li><a href="#elson-alsalti-hussey-arslan-2023" id="toc-elson-alsalti-hussey-arslan-2023">Elson, Alsalti, Hussey, &amp; Arslan (2023)</a></li>
 <li><a href="#holzleitner-et-al.-2021-preprint-revision" id="toc-holzleitner-et-al.-2021-preprint-revision">Holzleitner et al., 2021, preprint revision</a></li>
 <li><a href="#arslan-et-al.-2018" id="toc-arslan-et-al.-2018">Arslan et al., 2018</a></li>
@@ -2207,6 +2208,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul>
 </nav>
 </div>
+<h2 id="arslan-et-al.-2023">Arslan et al. (2023)</h2>
+<p><strong>Project:</strong> <a href="https://dx.doi.org/10.1016/j.psyneuen.2022.105994">Arslan et al. (2023)</a>. Not within spitting distance: Salivary immunoassays of estradiol have subpar validity for predicting cycle phase</p>
+<p><strong>Timing</strong>: After publication.</p>
+<p><strong>Reporter:</strong> I found this with the help of LLMs Opus 4.5 and Gemini Pro 3.1, because a good question from Stefan Schmukle made me wonder.</p>
+<p><strong>Type of mistake:</strong> Statistical error that changes imputed numbers slightly.</p>
+<p><strong>Description:</strong> When we use multiple generated regressors in a regression, we can underadjust for Berkson error if the regressors were generated independently without accounting for residual correlations. I didn’t know this and generated my regressor for serum steroids independently, even though there is some residual correlation.</p>
+<p><strong>Delay:</strong> Three months. After finding the error, I <a href="posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1/">ran simulations</a> to better understand the problem and reran the Bayesian models I used to generate the regressor as multivariate models with residual correlations. Initially, I found a substantial mismatch, but I also noticed I had subset the data differently (because any missing value in any of the outcomes led to row-wise elimination of data). Once I corrected this, the differences were minor. The analyses are documented <a href="http://rubenarslan.github.io/invalidity_on_steroids/5_multivariate_imputations.html">here</a>.</p>
+<p><strong>Solution:</strong> I’ve uploaded the slightly improved multivariate regressors on the OSF along with a README. Since the numbers change only very little I don’t see the need to do a “recall” for anyone who might’ve used the numbers and all the numbers in the manuscript itself should be ~correct since they don’t use multivariate predictions.</p>
+<figure>
+<img src="figures/fig_entropy_correction.png" alt="Corrected graph. Dotted lines are the incorrectly normalized, published numbers." />
+<figcaption aria-hidden="true">Corrected graph. Dotted lines are the incorrectly normalized, published numbers.</figcaption>
+</figure>
+<p><strong>Future Measures:</strong> More code review, always write and test a function when hand-coding a metric. Also, avoid hand-coding metrics, I evidently suck at it :-)</p>
+<p><strong>Bounty:</strong> I found this myself, so I guess the bounty doesn’t apply. I donate to Against Malaria anyway. If the sum of my errors this year exceeds what I usually donate, I’ll have to consider increasing my donation.</p>
+<p><strong>Follow-up:</strong> While we incorrectly described what we did in the paper, this mistake caused me to revisit this issue and collaborate with an ecologist, Zach Marion, to understand the benefits and drawbacks of different indices for diversity/entropy. As it turns out, ecologists see a problem with normalising diversity indices using the number of distinct species found. The problem is that the number of distinct species found is itself censored and could be low because of low diversity or because of low sampling effort. Hence, other methods normalize instead using the number of individuals found (which is the method we originally used, but incorrectly described). The number of individuals found more directly reflects sampling effort. So, in the <a href="https://osf.io/preprints/psyarxiv/b4muj_v2">follow-up paper</a>, among other things, we better explain our rationale for our diversity index, our normalization procedure and the inferential problems involved. It’s all <a href="https://rubenarslan.github.io/construct_proliferation/4_proliferation.html#revised-approach-using-hill-diversity-and-coverage">documented here</a>.</p>
 <h2 id="elson-alsalti-hussey-arslan-2023">Elson, Alsalti, Hussey, &amp; Arslan (2023)</h2>
 <p><strong>Project:</strong> <a href="https://www.nature.com/articles/s44271-023-00026-9">Elson, Alsalti, Hussey, &amp; Arslan (2023)</a>. Psychological measures aren’t toothbrushes.</p>
 <p><strong>Timing</strong>: After publication.</p>
