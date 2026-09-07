@@ -20,7 +20,6 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -89,640 +88,39 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>One lives only to make blunders: Bug Bounty Program</title>
+  <title>Opportunity, equality, and genetics, seminar session 2</title>
 
-  <meta property="description" itemprop="description" content="Terms for my scientific bug bounty program."/>
+  <meta property="description" itemprop="description" content="Notes on my seminar (German title &quot;Chancen, Gleichheit und Genetik&quot;) oriented around K. Paige Harden&#39;s book &quot;The Genetic Lottery&quot; (2021)."/>
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2022-10-20"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-10-20"/>
+  <meta name="article:author" content="Ruben C. Arslan"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="One lives only to make blunders: Bug Bounty Program"/>
+  <meta property="og:title" content="Opportunity, equality, and genetics, seminar session 2"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Terms for my scientific bug bounty program."/>
+  <meta property="og:description" content="Notes on my seminar (German title &quot;Chancen, Gleichheit und Genetik&quot;) oriented around K. Paige Harden&#39;s book &quot;The Genetic Lottery&quot; (2021)."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="One lives only to make blunders"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="One lives only to make blunders: Bug Bounty Program"/>
-  <meta property="twitter:description" content="Terms for my scientific bug bounty program."/>
-  <meta property="twitter:site" content="@rubenarslan"/>
+  <meta property="twitter:title" content="Opportunity, equality, and genetics, seminar session 2"/>
+  <meta property="twitter:description" content="Notes on my seminar (German title &quot;Chancen, Gleichheit und Genetik&quot;) oriented around K. Paige Harden&#39;s book &quot;The Genetic Lottery&quot; (2021)."/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["Bug Bounty Program"]},{"type":"character","attributes":{},"value":["Terms for my scientific bug bounty program."]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","categories","output","preview"]}},"value":[{"type":"character","attributes":{},"value":["Opportunity, equality, and genetics, seminar session 2"]},{"type":"character","attributes":{},"value":["Notes on my seminar (German title \"Chancen, Gleichheit und Genetik\") oriented around K. Paige Harden's book \"The Genetic Lottery\" (2021).\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Ruben C. Arslan"]},{"type":"character","attributes":{},"value":["https://rubenarslan.github.io"]}]}]},{"type":"character","attributes":{},"value":["2022-10-20"]},{"type":"character","attributes":{},"value":["teaching","opportunity-equality-genetics"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["https://pbs.twimg.com/media/FfVg9isWIAAGV-Z?format=png&name=medium"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["opportunity-equality-and-genetics-session-2_files/anchor-4.2.2/anchor.min.js","opportunity-equality-and-genetics-session-2_files/bowser-1.9.3/bowser.min.js","opportunity-equality-and-genetics-session-2_files/distill-2.2.21/template.v2.js","opportunity-equality-and-genetics-session-2_files/header-attrs-2.17/header-attrs.js","opportunity-equality-and-genetics-session-2_files/jquery-3.6.0/jquery-3.6.0.js","opportunity-equality-and-genetics-session-2_files/jquery-3.6.0/jquery-3.6.0.min.js","opportunity-equality-and-genetics-session-2_files/jquery-3.6.0/jquery-3.6.0.min.map","opportunity-equality-and-genetics-session-2_files/popper-2.6.0/popper.min.js","opportunity-equality-and-genetics-session-2_files/tippy-6.2.7/tippy-bundle.umd.min.js","opportunity-equality-and-genetics-session-2_files/tippy-6.2.7/tippy-light-border.css","opportunity-equality-and-genetics-session-2_files/tippy-6.2.7/tippy.css","opportunity-equality-and-genetics-session-2_files/tippy-6.2.7/tippy.umd.min.js","opportunity-equality-and-genetics-session-2_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
   <!--radix_placeholder_navigation_in_header-->
-  <meta name="distill:offset" content=""/>
-
-  <script type="application/javascript">
-
-    window.headroom_prevent_pin = false;
-
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        tolerance: 5,
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
-  </script>
-
-  <style type="text/css">
-
-  /* Theme (user-documented overrideables for nav appearance) */
-
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #0F2E3D;
-    font-size: 15px;
-    font-weight: 300;
-  }
-
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .distill-site-nav a:hover {
-    color: white;
-  }
-
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-
-  .distill-site-header {
-
-  }
-
-  .distill-site-footer {
-
-  }
-
-
-  /* Site Header */
-
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-
-
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-
-  .distill-site-header .title {
-    font-size: 18px;
-    min-width: 150px;
-  }
-
-  .distill-site-header .logo {
-    padding: 0;
-  }
-
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-
-
-
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-
-
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-dropdown-active {
-    display: block;
-  }
-
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative; min-height: 500px; }
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
-  /* Site Footer */
-
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-
-  /* Headroom */
-
-  d-title {
-    padding-top: 6rem;
-  }
-
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-
-  .headroom--unpinned {
-    top: -100px;
-  }
-
-  .headroom--pinned {
-    top: 0;
-  }
-
-  /* adjust viewport for navbar height */
-  /* helps vertically center bootstrap (non-distill) content */
-  .min-vh-100 {
-    min-height: calc(100vh - 100px) !important;
-  }
-
-  </style>
-
-  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
-  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
-
-  <script type="application/javascript">
-
-  function getMeta(metaName) {
-    var metas = document.getElementsByTagName('meta');
-    for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') === metaName) {
-        return metas[i].getAttribute('content');
-      }
-    }
-    return '';
-  }
-
-  function offsetURL(url) {
-    var offset = getMeta('distill:offset');
-    return offset ? offset + '/' + url : url;
-  }
-
-  function createFuseIndex() {
-
-    // create fuse index
-    var options = {
-      keys: [
-        { name: 'title', weight: 20 },
-        { name: 'categories', weight: 15 },
-        { name: 'description', weight: 10 },
-        { name: 'contents', weight: 5 },
-      ],
-      ignoreLocation: true,
-      threshold: 0
-    };
-    var fuse = new window.Fuse([], options);
-
-    // fetch the main search.json
-    return fetch(offsetURL('search.json'))
-      .then(function(response) {
-        if (response.status == 200) {
-          return response.json().then(function(json) {
-            // index main articles
-            json.articles.forEach(function(article) {
-              fuse.add(article);
-            });
-            // download collections and index their articles
-            return Promise.all(json.collections.map(function(collection) {
-              return fetch(offsetURL(collection)).then(function(response) {
-                if (response.status === 200) {
-                  return response.json().then(function(articles) {
-                    articles.forEach(function(article) {
-                      fuse.add(article);
-                    });
-                  })
-                } else {
-                  return Promise.reject(
-                    new Error('Unexpected status from search index request: ' +
-                              response.status)
-                  );
-                }
-              });
-            })).then(function() {
-              return fuse;
-            });
-          });
-
-        } else {
-          return Promise.reject(
-            new Error('Unexpected status from search index request: ' +
-                        response.status)
-          );
-        }
-      });
-  }
-
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-
-    // get search element (bail if we don't have one)
-    var searchEl = window.document.getElementById('distill-search');
-    if (!searchEl)
-      return;
-
-    createFuseIndex()
-      .then(function(fuse) {
-
-        // make search box visible
-        searchEl.classList.remove('hidden');
-
-        // initialize autocomplete
-        var options = {
-          autoselect: true,
-          hint: false,
-          minLength: 2,
-        };
-        window.autocomplete(searchEl, options, [{
-          source: function(query, callback) {
-            const searchOptions = {
-              isCaseSensitive: false,
-              shouldSort: true,
-              minMatchCharLength: 2,
-              limit: 10,
-            };
-            var results = fuse.search(query, searchOptions);
-            callback(results
-              .map(function(result) { return result.item; })
-            );
-          },
-          templates: {
-            suggestion: function(suggestion) {
-              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-                : '';
-              var html = `
-                <div class="search-item">
-                  <h3>${suggestion.title}</h3>
-                  <div class="search-item-description">
-                    ${suggestion.description || ''}
-                  </div>
-                  <div class="search-item-preview">
-                    ${img}
-                  </div>
-                </div>
-              `;
-              return html;
-            }
-          }
-        }]).on('autocomplete:selected', function(event, suggestion) {
-          window.location.href = offsetURL(suggestion.path);
-        });
-        // remove inline display style on autocompleter (we want to
-        // manage responsive display via css)
-        $('.algolia-autocomplete').css("display", "");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-  });
-
-  </script>
-
-  <style type="text/css">
-
-  .nav-search {
-    font-size: x-small;
-  }
-
-  /* Algolioa Autocomplete */
-
-  .algolia-autocomplete {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: sub;
-    background-color: white;
-    color: black;
-    padding: 6px;
-    padding-top: 8px;
-    padding-bottom: 0;
-    border-radius: 6px;
-    border: 1px #0F2E3D solid;
-    width: 180px;
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-nav .algolia-autocomplete {
-      display: none;
-      visibility: hidden;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete {
-      display: inline-block;
-      visibility: visible;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-      margin-left: 0;
-      width: 400px;
-      max-height: 400px;
-    }
-  }
-
-  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-    width: 90%;
-    outline: none;
-    border: none;
-  }
-
-  .algolia-autocomplete .aa-hint {
-    color: #999;
-  }
-  .algolia-autocomplete .aa-dropdown-menu {
-    width: 550px;
-    max-height: 70vh;
-    overflow-x: visible;
-    overflow-y: scroll;
-    padding: 5px;
-    margin-top: 3px;
-    margin-left: -150px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #999;
-    border-top: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-    cursor: pointer;
-    padding: 5px 4px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-    border-bottom: none;
-    margin-bottom: 2px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-    overflow: hidden;
-    font-size: 0.8em;
-    line-height: 1.4em;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-    font-size: 1rem;
-    margin-block-start: 0;
-    margin-block-end: 5px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-    display: inline-block;
-    overflow: hidden;
-    height: 2.8em;
-    width: 80%;
-    margin-right: 4%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-    display: inline-block;
-    width: 15%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-    height: 3em;
-    width: auto;
-    display: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-    display: initial;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-    background-color: #eee;
-  }
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-    font-weight: bold;
-    font-style: normal;
-  }
-
-  </style>
-
-
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
 
@@ -832,21 +230,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     display: none !important;
   }
 
-  hr.section-separator {
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin: 0px;
-  }
-
-
-  d-byline {
-    border-top: none;
-  }
-
   d-article {
     padding-top: 2.5rem;
     padding-bottom: 30px;
-    border-top: none;
   }
 
   d-appendix {
@@ -941,11 +327,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article div.sourceCode pre {
     padding-left: 18px;
     font-size: 14px;
-  }
-
-  /* tweak for Pandoc numbered line within distill */
-  d-article pre.numberSource code > span {
-      left: -2em;
   }
 
   d-article pre {
@@ -1707,12 +1088,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // create d-title
     $('.d-title').changeElementType('d-title');
 
-    // separator
-    var separator = '<hr class="section-separator" style="clear: both"/>';
-    // prepend separator above appendix
-    $('.d-byline').before(separator);
-    $('.d-article').before(separator);
-
     // create d-byline
     var byline = $('<d-byline></d-byline>');
     $('.d-byline').replaceWith(byline);
@@ -1790,9 +1165,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     $('.distill-force-highlighting-css').parent().remove();
 
     // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme, except when numbering line
-    // in code chunk
-    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
 
     // load distill framework
     load_distill_framework();
@@ -1818,13 +1192,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       // add orcid ids
       $('.authors-affiliations').find('.author').each(function(i, el) {
         var orcid_id = front_matter.authors[i].orcidID;
-        var author_name = front_matter.authors[i].author
         if (orcid_id) {
           var a = $('<a></a>');
           a.attr('href', 'https://orcid.org/' + orcid_id);
           var img = $('<img></img>');
           img.addClass('orcid-id');
-          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
+          img.attr('alt', 'ORCID ID');
           img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
           a.append(img);
           $(this).append(a);
@@ -2102,52 +1475,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
-  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="opportunity-equality-and-genetics-session-2_files/header-attrs-2.17/header-attrs.js"></script>
+  <script src="opportunity-equality-and-genetics-session-2_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="opportunity-equality-and-genetics-session-2_files/popper-2.6.0/popper.min.js"></script>
+  <link href="opportunity-equality-and-genetics-session-2_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="opportunity-equality-and-genetics-session-2_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="opportunity-equality-and-genetics-session-2_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="opportunity-equality-and-genetics-session-2_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="opportunity-equality-and-genetics-session-2_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="opportunity-equality-and-genetics-session-2_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="opportunity-equality-and-genetics-session-2_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=UA-2102103-6"></script>
-  <script type="text/javascript" cookie-consent="tracking">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-2102103-6');
-  </script>
-  <style type="text/css">
-  .distill-site-nav {
-    color: #E4F2F7;
-    background-color: #4F94B0;
-    font-size: 15px;
-    font-weight: 300;
-  }
-
-  .distill-site-nav a:hover {
-    color: white;
-  }
-
-  .img-circle {
-    width:200px;
-    border-radius: 25%;
-  }
-  @media(min-width:768px) {
-      aside {
-          margin-bottom: -500px;
-      }
-  }
-  .figure img.external {
-    padding: 6px;
-  }
-
-  </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
 
 </head>
 
@@ -2156,170 +1496,75 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Bug Bounty Program","description":"Terms for my scientific bug bounty program.","authors":[]}
+{"title":"Opportunity, equality, and genetics, seminar session 2","description":"Notes on my seminar (German title \"Chancen, Gleichheit und Genetik\") oriented around K. Paige Harden's book \"The Genetic Lottery\" (2021).","authors":[{"author":"Ruben C. Arslan","authorURL":"https://rubenarslan.github.io","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-10-20T00:00:00.000+02:00","citationText":"Arslan, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">One lives only to make blunders</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="http://www.the100.ci/author/ruben/">Group Blog</a>
-<a href="bug_bounty.html">Bug Bounty</a>
-<a href="mistakes.html">Mistakes</a>
-<a href="cv_ruben_arslan.pdf">CV</a>
-<a href="index.xml">
-<i class="fa fa-rss" aria-hidden="true"></i>
-</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Bug Bounty Program</h1>
-
+<h1>Opportunity, equality, and genetics, seminar session 2</h1>
 <!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt-tag">teaching</div>
+<div class="dt-tag">opportunity-equality-genetics</div>
+</div>
 <!--/radix_placeholder_categories-->
-<p><p>Terms for my scientific bug bounty program.</p></p>
+<p><p>Notes on my seminar (German title “Chancen, Gleichheit und Genetik”) oriented around K. Paige Harden’s book “The Genetic Lottery” (2021).</p></p>
 </div>
 
+<div class="d-byline">
+  Ruben C. Arslan <a href="https://rubenarslan.github.io" class="uri">https://rubenarslan.github.io</a> 
+  
+<br/>2022-10-20
+</div>
 
 <div class="d-article">
-<div class="layout-chunk" data-layout="l-page-outset">
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
-<img src="https://farm3.staticflickr.com/2920/14764470974_92473042b4_o_d.jpg" alt="Bug death duster. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14764470974)" class=external />
-<p class="caption">
-Figure 1: Bug death duster. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14764470974">Internet Archive Book Images</a>
-</p>
-</div>
-</div>
-<p>See also my list of <a href="mistakes.html">mistakes</a>.</p>
-<p>To find errors in my work, I try to make my analyses reproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work.</p>
-<aside>
-<div class="layout-chunk" data-layout="l-body">
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
-<img src="https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg" alt="Get him. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804680103)" class=external />
-<p class="caption">
-Figure 2: Get him. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14804680103">Internet Archive Book Images</a>
-</p>
-</div>
-</div>
-</aside>
-<p>Putting up an anonymous submission form only yielded one measly submission (although a good one, which led to an erratum in Proceedings B, because it turned out the journal published a later version than the one I quoted and commented on).</p>
-<p>Stepping on people’s toes with my work yielded more, but it’s not a practice I want to institutionalise.</p>
-<h2 id="bug-bounties">Bug bounties</h2>
-<p>So, I’m borrowing another practice from software: a <a href="https://en.wikipedia.org/wiki/Bug_bounty_program">bug bounty program</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I’m slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend half of it.</p>
-<p>So, what does this apply to, and what can you earn?</p>
-<h3 id="criteria">Criteria</h3>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
 <ul>
-<li>I’m first author or the other authors ask me to include it in the bug bounty program.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
-<li>It’s an empirical manuscript<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
-<ul>
-<li>preprints count for the full amount (until they are accepted)</li>
-<li>published papers count for 3/4 the amount</li>
-<li>blog posts count for 1/4 the amount unless they are tagged <code>quick job</code><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
-</ul></li>
-<li>It was published after October 2, 2018.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>]</li>
-<li>The reporter hasn’t previously sent me bug reports that turned out not to be errors or AI misreadings. I’ve added this criterion because I’ve been getting automated reports since the advent of GPT-6 Astra. Which is fine with me as long as there is some quality control happening.</li>
+<li><a href="#how-to-discuss">How to discuss</a></li>
+<li><a href="#comprehension-questions">Comprehension questions</a></li>
+<li><a href="#quiz">Quiz</a></li>
+<li><a href="#preview">Preview</a></li>
 </ul>
-<p>The different factors for preprints, publications, and blogs reflect the amount of effort I already put in them and how easy it will be for me to correct something at that point. So, because I would love to hear about errors before the publication processes “enshrines” the paper<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, errors in preprints are worth more than those in published paper.</p>
-<h3 id="budget">Budget</h3>
-<p>For now, I’m setting aside 2500€. When this runs out, I’ll have to a) improve my error checking workflow, b) get another stipend, award, donation, or tenured position, so I can afford continuing to make errors. I’ll keep this page updated, so should my budget have run out, you won’t waste too much time.</p>
-<p>Within at most two months of the bug being reported, I’ll pay out the sum via Paypal or bank transfer or argue my case why it was not a bug. In severe cases, or if I’m ill, or out of work, it might take me longer, in these cases I will post a note quoting the bug report and my intention to respond. In all cases, I will post a note on this page, in more severe cases, I will start the process of submitting a correction, or a retraction. I cannot give a timeline on these because of co-authors.</p>
-<p>If you report a bug anonymously, I will donate the fee to <a href="https://againstmalaria.com">Against Malaria</a> via the <a href="https://effektiveraltruismus.de/effektiv-spenden/">German Equivalent</a> of <a href="https://effektiveraltruismus.de/effektiv-spenden/">Give Well</a>. You can also choose a different charity on the GiveWell list. You can also choose to donate if you do not report anonymously.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-<h3 id="bounties">Bounties</h3>
-<table>
-<colgroup>
-<col style="width: 72%" />
-<col style="width: 27%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Item</th>
-<th>Bounty</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Typos</td>
-<td>A beer<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> if we meet.</td>
-</tr>
-<tr class="even">
-<td>Omitted citations</td>
-<td>A beer<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> if we meet.</td>
-</tr>
-<tr class="odd">
-<td>Lacking reproducibility<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></td>
-<td>10€</td>
-</tr>
-<tr class="even">
-<td>Coding error that changes a number reported in the supplement</td>
-<td>10€</td>
-</tr>
-<tr class="odd">
-<td>Lacking robustness<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></td>
-<td>20€</td>
-</tr>
-<tr class="even">
-<td>Coding error that changes a number reported in the manuscript, but not a conclusion based on the number</td>
-<td>50€</td>
-</tr>
-<tr class="odd">
-<td>A better way to statistically model or test something that leads to a different conclusion</td>
-<td>100€</td>
-</tr>
-<tr class="even">
-<td>Coding error that changes a conclusion in the manuscript</td>
-<td>200€</td>
-</tr>
-<tr class="odd">
-<td>Coding error that changes the main conclusion in the abstract</td>
-<td>400€</td>
-</tr>
-</tbody>
-</table>
-<p>I will count the errors (by type, not by repetitions), not the numbers, or conclusions changed.</p>
-<p>Please note that these bounties do not necessarily reflect only the gravity of a bug (i.e., missing a citation can be pretty bad), but also my perception which of these are actually determinable objectively. So, by reducing the sum for omitting citations, I hope to forestall drawn-out arguments by reducing both sides’ temptation to bargain.</p>
-<p>Any one person can claim at most 5 items, so up to 760€. If multiple people notice the same error, second and third reporters only get a beer, and my heartfelt gratitude.</p>
-<p>This policy could change anytime without notice.</p>
-<h2 id="please-help">Please help!</h2>
-<div class="layout-chunk" data-layout="l-screen-inset">
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
-<img src="https://farm4.staticflickr.com/3855/14749733671_e759258f78_o_d.jpg" alt="Help me master my bugs. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14749733671)" class=external />
-<p class="caption">
-Figure 3: Help me master my bugs. Figure from the <a href="https://www.flickr.com/photos/internetarchivebookimages/14749733671">Internet Archive Book Images</a>
+</nav>
+</div>
+<p>Session 2 is still mainly input from me, with some discussion. We talk about how to have discussions on the controversial topics of the book, I respond to comprehension questions about the chapter, show them the results of their quiz.</p>
+<h2 id="how-to-discuss">How to discuss</h2>
+<p>I put up a few principles up for discussion (assume good faith, avoid overloaded words, stay friendly, watch how much you’re speaking). Then, we play a game, a confirmation bias exercise. Last year, I learned that most of them knew the 2-4-6 Wason sequences game (where people ask in a confirmatory way and grow overconfident about the rule), so this year, I modified it a little (letters instead of numbers, more complex rule). They shout possible 5-letter-words and I tell them whether they fit the rule or not. I got the desired result (overconfidence about the rule after confirmatory questions), though my game was maybe a little overengineered.</p>
+<p>I use this game as a jumping off point for talking about human (ir)rationality. I tell them that some of the “biases, fallacies, priming, nudging” work hasn’t survived the replication crisis and that some of the <a href="https://slate.com/health-and-science/2018/01/weve-been-told-were-living-in-a-post-truth-age-dont-believe-it.html">newer work on fake news, filter bubbles, the post-truth age, the backfire effect also is full of holes</a>. Still, <strong>confirmation bias</strong> is very replicable, as the exercise just showed. I namecheck Mercier &amp; Sperber’s argumentative theory of reasoning as one compelling explanation.</p>
+<p>I then show them a graph of their political leanings from the anonymous quiz, which in Leipzig reliably shows that they lean left. I argue that to sharpen our arguments, we need some friction, otherwise we’re at risk of confirmation bias and ending up with weak arguments for predetermined conclusions. If we want sharp arguments that will survive a debate with someone further away on the political spectrum, we need to do better.</p>
+<p>How? I planned to tell them about how the role of “advocatus diaboli” can help us keep this in check, as it did for the Catholic church, who ended up with an excess of saints and miracles after doing away with their advocatus diaboli. Unfortunately, that stylized fact doesn’t quite hold up to scrutiny (see tweet thread below). So, instead I told them about my journey of discovering that it’s more complicated, after <em>of course</em> seeking initially merely to <strong>confirm</strong> rather than disprove the story I heard. I guess it works on a meta level?</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+A story I've heard repeated (e.g. in Zenko's book "Red Team"): when the Cath church got rid of devil's advocates, the number of saints rose sharply.<br>Problem: I tried to find a quantitative treatment, but found only news items.<br>Self-made graph from Wikipedia's list of blesseds 1/n <a href="https://t.co/LQJGAxIyxU">pic.twitter.com/LQJGAxIyxU</a>
 </p>
-</div>
-</div>
-<h2 id="acknowledgements">Acknowledgements</h2>
-<p>Thanks to Wikimedia Germany and the Stifterverband for funding me through their fellowship “Free Knowledge” and supporting this program.
-Thanks to Daniel Mietchen, Nicolas Schmelling, and Benjamin Paffhausen with whom I hatched the precursor to this plan.</p>
+— Ruben C. Arslan (<span class="citation" data-cites="rubenarslan">@rubenarslan</span>) <a href="https://twitter.com/rubenarslan/status/1582278254735790080?ref_src=twsrc%5Etfw">October 18, 2022</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>As part of this, I remind them that I want to be criticized as well, and that I have set up a way for them to contact me anonymously.</p>
+<p>This part is a bit long. I don’t know if I need all of it, but the discussions last year were pretty healthy and my tendency is to keep the spiel.</p>
+<h2 id="comprehension-questions">Comprehension questions</h2>
+<p>In this part, I try to answer to comprehension questions they raised as part of their responses to the quiz. For chapter 1, a lot of people always ask about what is basically “happiness” economics. Harden challenges the ‘classic’ Kahneman &amp; Deaton 2010 study which purportedly found a limit after which more money (in income) is no longer associated with more happiness. First, they answer a small survey about the limit where <em>they</em> think happiness no longer increases (or whether they believe in a relationship at all). The modal result is usually something like 80,000€ a year, but this year it was more like 100,000€ a year. Inflation? :-)</p>
+<p>Then, I show them the graph from K&amp;D and then graphs from the international replication by Jebb, Tai, Diener, &amp; Oishi (2018). These both show some sort of flattening or even a peak of happiness (with log income on the X axis). In discussion, they come up with all sorts of reasons why that may be.</p>
+<p>I ask them whether it fits their impression that most people stop hustling after their first million. Then, I show them the following clip:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/s9Bg4UU76so?start=21" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p>Then, I show them Matthew Killingsworth (2021)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, who found no peak, no flattening, just a plain old loglinear relationship. I walk them through the result, the explanation for the previous results (ceiling effects, insensitive at high levels of positive affect). Then, I show them the graph with income <em>not</em> on a log scale and ask them what it implies for the effect of redistribution on average happiness.</p>
+<h2 id="quiz">Quiz</h2>
+<p>Here, I just pick some items that many got wrong and try to explain the correct answer with some recycled slides from my lecture. Because they all did their B.Sc. in a bunch of different places, the quantity and quality of their previous genetics lectures varies from “none” to “in depth knowledge of the virtues of the candidate gene paradigm” to “twin studies”. I don’t have the ambition to lay all the groundwork myself, because the book does it well, but of course it’s nice to add some graphs and other illustrative examples.</p>
+<h2 id="preview">Preview</h2>
+<p>To anticipate the next chapter, I close with a video of a Galton board/bean machine plus a picture of a lognormal variant (since we just talked about income). Then, some pictures of basketballers and a scatterplot of height for MZ/DZ twins, because Harden will go on to talk about Shawn Bradley, a very tall basketballer who has been genotyped.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>The computer scientist <a href="https://en.wikipedia.org/wiki/Knuth_reward_check">Donald Knuth</a> has a similar program in place that I did not know about until I mentioned this idea to others and I also drew some inspiration from <a href="https://www.gwern.net/Mistakes">gwern’s Mistakes page</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>I don’t want to scare people off of collaborating with me, so I have resolved not to badger anyone into this.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>I <a href="https://github.com/rubenarslan/formr.org/issues">know for a fact</a> that there are bugs in my software, but users already tell me about those. Also, it’s open source and can be updated continuously, so just create an issue or send a pull request.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>For these, payouts are capped at one beer.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I’m wrong form. I will buy you a beer though.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>I’m obviously not a fan of enshrining papers, but think we currently
-lack a good mechanism of correcting papers citing an invalidated claim, see <a href="https://rubenarslan.github.io/posts/2018-09-23-are-studies-that-replicate-cited-more/">my blog post</a>, so it’s hard to fix on our own.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>I will not donate more to reflect the amount I would get back in taxes if I donate, because I cannot be bothered to do the calculations.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>Capped at 3, I don’t want you to get hungover.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>Capped at 3, I don’t want you to get hungover.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>e.g., I forgot to list a necessary package, code doesn’t run without fiddling with paths.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>e.g., reasonable covariates that I left out would substantially alter estimates<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>so jealous of this name for a man with this research topic<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
@@ -2333,20 +1578,10 @@ lack a good mechanism of correcting papers citing an invalidated claim, see <a h
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom">
-<h3 id="updates-and-corrections">Corrections</h3>
-<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rubenarslan/rubenarslan.github.io/issues/new">create an issue</a> on the source repository.</p>
-<h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rubenarslan/rubenarslan.github.io">https://github.com/rubenarslan/rubenarslan.github.io</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
-</div>
+<div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
-<div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2018-2025 Ruben Arslan. <a href="about.html">Privacy
-Policy</a>.</p>
-</div>
 <!--/radix_placeholder_navigation_after_body-->
-
 
 </body>
 
