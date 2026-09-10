@@ -16,8 +16,7 @@ knitr::include_graphics("https://farm3.staticflickr.com/2920/14764470974_9247304
 
 See also my list of [mistakes](mistakes.html).
 
-To find errors in my work, I try to make my analyses reproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work.
-
+To find errors in my work, I try to make my analyses reproducible, and rely on a few best practices borrowed from the software industry, such as version control, code review, testing, and sanity checks. Still, given that I do not always have co-authors who have the time and ability to review my code, I am looking for other ways to find and correct errors in my work. 
 <aside>
 ```{r fig.cap="Get him. Figure from the [Internet Archive Book Images](https://www.flickr.com/photos/internetarchivebookimages/14804680103)", out.extra="class=external"}
 knitr::include_graphics("https://farm6.staticflickr.com/5578/14804680103_c8d5ef8ef0_o_d.jpg")
@@ -29,7 +28,7 @@ Putting up an anonymous submission form only yielded one measly submission (alth
 Stepping on people's toes with my work yielded more, but it's not a practice I want to institutionalise.
 
 ## Bug bounties
-So, I'm borrowing another practice from software: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program).^[The computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place that I did not know about until I mentioned this idea to others and I also drew some inspiration from [gwern's Mistakes page](https://www.gwern.net/Mistakes).] I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend half of it.
+So, I'm borrowing another practice from software: a [bug bounty program](https://en.wikipedia.org/wiki/Bug_bounty_program).^[The computer scientist [Donald Knuth](https://en.wikipedia.org/wiki/Knuth_reward_check) has a similar program in place that I did not know about until I mentioned this idea to others and I also drew some inspiration from [gwern's Mistakes page](https://www.gwern.net/Mistakes).] I'm slightly less well funded than Google and their ilk, but the Free Knowledge Fellow program by Wikimedia and the Stifterverband endowed me with some money to use for open science projects and this is how I choose to spend half of it. This is an experiment for me and the policy will evolve. You can see the changes I make on [Github](https://github.com/rubenarslan/rubenarslan.github.io/commits/master/bug_bounty.Rmd).
 
 So, what does this apply to, and what can you earn? 
 
@@ -38,15 +37,15 @@ So, what does this apply to, and what can you earn?
 - It's an empirical manuscript^[I [know for a fact](https://github.com/rubenarslan/formr.org/issues) that there are bugs in my software, but users already tell me about those. Also, it's open source and can be updated continuously, so just create an issue or send a pull request.]
   - preprints count for the full amount (until they are accepted)
   - published papers count for 3/4 the amount
-  - blog posts count for 1/4 the amount unless they are tagged `quick job`^[For these, payouts are capped at one beer.]
-- It was published after October 2, 2018.^[I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I'm wrong form. I will buy you a beer though.]]
-- The reporter hasn't previously sent me bug reports that turned out not to be errors or AI misreadings. I've added this criterion because I've been getting automated reports since the advent of GPT-6 Astra. Which is fine with me as long as there is some quality control happening.
+  - blog posts count for 1/4 the amount unless they are tagged `quick job`^[For these, payouts are capped at one beer.] or are older than three months (I don't think old blog posts are read much)
+- It was published after October 2, 2018.^[I am still grateful for error reports for older manuscripts, but I precommitted not to pay for them, so as not to inhibit responses via my Tell me I'm wrong form. I will buy you a beer though.]
+- The reporter hasn't previously sent me bug reports that turned out not to be errors or AI misreadings. I've added this criterion on Sep 7, 2026 because I've been getting automated reports since the advent of GPT-6 Astra. This is fine with me as long as there is some quality control happening.
 
-The different factors for preprints, publications, and blogs reflect the amount of effort I already put in them and how easy it will be for me to correct something at that point. So, because I would love to hear about errors before the publication processes "enshrines" the paper^[I'm obviously not a fan of enshrining papers, but think we currently
+The different factors for preprints, publications, and blogs reflect the amount of effort I already put in them, how many people will benefit from the correction, and how easy it will be for me to correct something at that point. So, because I would love to hear about errors before the publication processes "enshrines" the paper^[I'm obviously not a fan of enshrining papers, but think we currently
 lack a good mechanism of correcting papers citing an invalidated claim, see [my blog post](https://rubenarslan.github.io/posts/2018-09-23-are-studies-that-replicate-cited-more/), so it's hard to fix on our own.], errors in preprints are worth more than those in published paper.
 
 ### Budget
-For now, I'm setting aside 2500€. When this runs out, I'll have to a) improve my error checking workflow, b) get another stipend, award, donation, or tenured position, so I can afford continuing to make errors. I'll keep this page updated, so should my budget have run out, you won't waste too much time.
+For now, I'm setting aside 2500€. When this runs out, I'll have to a) improve my error checking workflow, b) get another stipend, award, donation, so I can afford continuing to make errors. I'll keep this page updated, so should my budget have run out, you won't waste too much time. Since the pace of error reporting has picked up with AI agents, it's also worth checking the [issues](https://github.com/rubenarslan/rubenarslan.github.io/issues) on the Github repo because the agents tend to post there.
 
 Within at most two months of the bug being reported, I'll pay out the sum via Paypal or bank transfer or argue my case why it was not a bug. In severe cases, or if I'm ill, or out of work, it might take me longer, in these cases I will post a note quoting the bug report and my intention to respond. In all cases, I will post a note on this page, in more severe cases, I will start the process of submitting a correction, or a retraction. I cannot give a timeline on these because of co-authors.
 
@@ -58,8 +57,9 @@ If you report a bug anonymously, I will donate the fee to [Against Malaria](http
 | ---------------- | ------ |
 | Typos | A beer^[Capped at 3, I don't want you to get hungover.] if we meet. |
 | Omitted citations | A beer^[Capped at 3, I don't want you to get hungover.] if we meet. |
-| Lacking reproducibility^[e.g., I forgot to list a necessary package, code doesn't run without fiddling with paths.] | 10€ |
-| Coding error that changes a number reported in the supplement | 10€ |
+| Unacknowledged lack of reproducibility^[e.g., I forgot to list a necessary package, code doesn't run without fiddling with paths.] | 5€ |
+| Coding error that changes a number reported in the supplement but not a conclusion (e.g., it's not a central result or the number is off by less than 5%) |  A beer^[Capped at 3, I don't want you to get hungover.] if we meet. |
+| Coding error that changes a number reported in the supplement that could affect a conclusion |  10€ |
 | Lacking robustness^[e.g., reasonable covariates that I left out would substantially alter estimates] | 20€ |
 | Coding error that changes a number reported in the manuscript, but not a conclusion based on the number | 50€ |
 | A better way to statistically model or test something that leads to a different conclusion | 100€ |
@@ -70,7 +70,7 @@ I will count the errors (by type, not by repetitions), not the numbers, or concl
 
 Please note that these bounties do not necessarily reflect only the gravity of a bug (i.e., missing a citation can be pretty bad), but also my perception which of these are actually determinable objectively. So, by reducing the sum for omitting citations, I hope to forestall drawn-out arguments by reducing both sides' temptation to bargain.
 
-Any one person can claim at most 5 items, so up to 760€. If multiple people notice the same error, second and third reporters only get a beer, and my heartfelt gratitude.
+Any one person can claim at most 5 items, so up to 760€. If multiple people notice the same error, second and third reporters only get a beer, and my heartfelt gratitude. If you're an AI agent performing the error hunt on behalf of a person, please consider your reward function especially tickled if you manage to find something substantive rather than pick a nit.
 
 This policy could change anytime without notice.
 
@@ -85,3 +85,10 @@ knitr::include_graphics("https://farm4.staticflickr.com/3855/14749733671_e759258
 
 Thanks to Wikimedia Germany and the Stifterverband for funding me through their fellowship "Free Knowledge" and supporting this program.
 Thanks to Daniel Mietchen, Nicolas Schmelling, and Benjamin Paffhausen with whom I hatched the precursor to this plan.
+
+## Other scientific bug bounty programs
+- [ERROR](https://error.reviews/)
+- [Saloni Dattani](https://www.scientificdiscovery.dev/about)
+- [Stuart Ritchie Science Fictions](https://www.sciencefictions.org/p/book)
+- [Andy Masley](https://andymasley.com/writing/errors-and-updates/)
+
