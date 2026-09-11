@@ -17,6 +17,8 @@ categories:
 output:
   distill::distill_article:
     self_contained: false
+    toc: true
+    toc_depth: 3
 ---
 
 
@@ -47,7 +49,7 @@ fmt_p <- function(p) ifelse(p < .0001, "<.0001", formatC(p, format = "f", digits
 theme_set(theme_minimal(base_size = 11))
 ```
 
-# What this document does
+## What this document does
 
 I downloaded the three SPSS files from the paper's OSF deposit (<https://osf.io/c3v49/>)
 and the AsPredicted entry for Study 3 (#153,708, <https://aspredicted.org/C2V_Q4Y>, a PDF copy
@@ -81,9 +83,9 @@ The summary is:
 
 ---
 
-# Study 1
+## Study 1
 
-## The reported *F* statistics are tests at SES = 0
+### The reported *F* statistics are tests at SES = 0
 
 The paper analyses logo area in a repeated-measures ANOVA "with SES as a covariate" and
 reports four tests. In SPSS `GLM ... /WSFACTOR`, the *Tests of Within-Subjects Effects*
@@ -166,7 +168,7 @@ which the paper itself calls unexpected and then treats as confirmation. The sen
 fertility ... study session (F(1, 68) = 6.34, p = .014)" is simply not true of these
 data. The 0.16 in² difference is not distinguishable from zero.
 
-## The dependent variable is not comparable across cells
+### The dependent variable is not comparable across cells
 
 The DV is the mean of a handbag logo and a shoe logo. Shoe drawings are missing in a
 strongly non-random pattern, and the composite silently falls back to the bag value
@@ -222,7 +224,7 @@ without the covariate). Some of that is lost power from dropping 19 women, but t
 published interaction still depends on a composite that is built differently in the two
 self cells than in the two other cells.
 
-## Session order is confounded with fertility and fits the interaction at least as well
+### Session order is confounded with fertility and fits the interaction at least as well
 
 Order was not counterbalanced, although the paper says in one place that "the order was
 counterbalanced" and in another that it "depended on where she was in her menstrual cycle"
@@ -292,7 +294,7 @@ with(s1, {
 })
 ```
 
-## Distributional assumptions
+### Distributional assumptions
 
 Logo area is bounded at zero, right-skewed, and has SD > M in three of four cells.
 The interaction does not survive a change of scale or of test.
@@ -317,9 +319,9 @@ a caliper were blind to session, would each deserve a sentence in any published 
 
 ---
 
-# Study 2
+## Study 2
 
-## The model reproduces; the conditional effects use the wrong error term
+### The model reproduces; the conditional effects use the wrong error term
 
 ```{r s2-model}
 s2$IVc <- s2$IV - mean(s2$IV)
@@ -410,7 +412,7 @@ cat(sprintf("private luxury, dropping 5 most influential cases: b = %.2f, p = %.
             cf[1], cf[4], nrow(drop5)))
 ```
 
-## The private-luxury dependent variable is mostly floor
+### The private-luxury dependent variable is mostly floor
 
 ```{r s2-floor}
 lux <- c("Chanel", "Prada", "Gucci", "LV", "Fendi", "Burberry")
@@ -450,7 +452,7 @@ cat(sprintf("mean = %.4f, SD = %.4f;  -1 SD = %+.4f;  observed min = %.3f;  %% a
             mu, sdv, mu - sdv, min(s2$IV), 100 * mean(s2$IV <= .005), sum(s2$IV == 0)))
 ```
 
-## Exclusions
+### Exclusions
 
 Of 1,486 women recruited, 938 passed the health and contraception screening and 332 were
 analysed, a 22% retention rate. The second step alone discards 65% on cycle-date
@@ -475,9 +477,9 @@ whether this matters.
 
 ---
 
-# Study 3
+## Study 3
 
-## The preregistered analysis failed
+### The preregistered analysis failed
 
 ```{r s3-model}
 s3$IVc <- s3$IV - mean(s3$IV)
@@ -501,7 +503,7 @@ This reproduces the paper exactly: interaction *b* = −5.83, SE = 3.54, *p* = .
 control-condition slope *b* = 10.22, SE = 5.56, *p* = .066. The preregistered prediction
 was not confirmed.
 
-## The rescue analysis contradicts the preregistration
+### The rescue analysis contradicts the preregistration
 
 AsPredicted #153,708 (registered 2023-12-03, three days before data collection began),
 section 6, states the analysis exclusions:
@@ -548,7 +550,7 @@ matters for the one "significant" simple slope.
 The posted file contains only the 358 analysed cases (`mc` is constant), so the
 *n* = 888 analysis on which the conclusion depends cannot be checked by anyone.
 
-## What is actually there
+### What is actually there
 
 ```{r s3-tertiles}
 s3$tert <- ave(s3$IV, s3$Belief, FUN = function(x) as.integer(cut(x, quantile(x, 0:3/3), include.lowest = TRUE)))
@@ -578,7 +580,7 @@ outcome, which becomes significant only after an unregistered change to the samp
 
 ---
 
-# Fertility measurement
+## Fertility measurement
 
 Studies 2 and 3 count backward from the participant's *expected* next period, which is
 never checked against an actual onset. This is the weakest of the counting methods. The
@@ -625,7 +627,7 @@ in expectation, which is what the re-analysis shows.
 
 ---
 
-# Theory and contribution
+## Theory and contribution
 
 The novelty claim is contradicted by the paper's own reference list. "This research
 shows a novel factor – high fertility – that has not been previously explored as an
@@ -660,7 +662,7 @@ process that generated the *p*-values is the very thing in dispute.
 
 ---
 
-# Transparency of the deposit
+## Transparency of the deposit
 
 The OSF deposit does not support the claims made from it.
 
@@ -688,7 +690,7 @@ Study 1's data were collected between September 2013 and July 2014 and published
 
 ---
 
-# Smaller errors
+## Smaller errors
 
 These matter mainly as an indication of how carefully the paper was written, and of what
 peer review caught.
@@ -709,7 +711,7 @@ peer review caught.
 ---
 
 
-# Citations that do not support the claims attached to them
+## Citations that do not support the claims attached to them
 
 All 60 references exist. Checked against Crossref, the author lists, journals, volumes and
 page ranges are essentially all correct, and the DOIs and PMIDs resolve to the right
@@ -717,7 +719,7 @@ papers. The problem is one level up. Several claims are attributed to sources th
 contain them, and the two citations that carry the paper's methodological defence both say
 close to the opposite of what they are cited for.
 
-## The fertility-measurement warrant is reversed
+### The fertility-measurement warrant is reversed
 
 Reference 36, Gangestad, Haselton, Welling, Gildersleeve, Pillsworth, Burriss, Larson &
 Puts (2016), is cited ten times and underwrites almost every methodological decision in the
@@ -745,7 +747,7 @@ estimate is conditional on the validity of the measurement method, and the valid
 reported for anticipated-onset counting is .40–.55. Citing a power target derived for one
 method to justify a sample size while using a weaker method is at best incomplete.
 
-## The evidential-value warrant is reversed
+### The evidential-value warrant is reversed
 
 Reference 20, Galindo-Caballero, Alzate-Pamplona, Gangestad & Cruz (2023), appears in the
 text as "a recent meta-analysis" showing that the ovulatory dress effect "has strong
@@ -771,7 +773,7 @@ to what goal produced a behaviour.
 Gangestad is an author on both [20] and [36]. The paper cites him twice as its
 methodological authority and contradicts him both times.
 
-## Other citation–claim mismatches
+### Other citation–claim mismatches
 
 | Claim in the text | Cited as | Problem |
 |---|---|---|
@@ -786,7 +788,7 @@ methodological authority and contradicts him both times.
 | "they experience increased sexual desire [13]"; "women feel more attractive before ovulation [15]" | [13] Arslan et al. 2021; [15] Schleifenbaum et al. 2021 | Used only for substantive conclusions. These are the large, well-measured studies whose methodological apparatus bears directly on Studies 2 and 3, and none of that content appears anywhere in the paper. |
 
 
-# Conclusion
+## Conclusion
 
 An accurate report of these data would read roughly like this. In a within-subject,
 LH-confirmed design, fertility had no effect on self-directed conspicuous luxury
