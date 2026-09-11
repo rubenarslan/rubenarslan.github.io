@@ -13,6 +13,7 @@ categories:
   - fertility
   - menstrual cycle
   - ERROR
+  - quick job
 output:
   distill::distill_article:
     self_contained: false
