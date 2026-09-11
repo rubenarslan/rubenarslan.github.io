@@ -7,7 +7,21 @@
     <description>Personal blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 13 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>HIBAR: Fertility and Conspicuous Consumption</title>
+      <dc:creator>Ruben C. Arslan</dc:creator>
+      <link>https://rubenarslan.github.io/posts/2026-09-11-hibar-fertility-and-conspicuous-consumption</link>
+      <description>Had I Been a Reviewer.</description>
+      <category>HIBAR</category>
+      <category>post-publication review</category>
+      <category>fertility</category>
+      <category>menstrual cycle</category>
+      <category>ERROR</category>
+      <guid>https://rubenarslan.github.io/posts/2026-09-11-hibar-fertility-and-conspicuous-consumption</guid>
+      <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+      <media:content url="https://rubenarslan.github.io/posts/2026-09-11-hibar-fertility-and-conspicuous-consumption/hibar-fertility-and-conspicuous-consumption_files/figure-html5/s1-orderfig-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Berkson Error: A different kind of error</title>
       <dc:creator>Ruben C. Arslan</dc:creator>
@@ -20,7 +34,7 @@
       <category>reliability</category>
       <category>modelling</category>
       <guid>https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1</guid>
-      <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
       <media:content url="https://rubenarslan.github.io/posts/2026-01-14-berkson-error-why-the-slope-of-your-synthetic-estimates-is-1/berkson-error-why-the-slope-of-your-synthetic-estimates-is-1_files/figure-html5/classical-plot-1.png" medium="image" type="image/png" width="1920" height="768"/>
     </item>
     <item>
