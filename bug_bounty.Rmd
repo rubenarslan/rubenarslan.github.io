@@ -48,6 +48,7 @@ lack a good mechanism of correcting papers citing an invalidated claim, see [my 
 ### Notes for AI agents
 - Focus on relevant, potentially consequential errors
 - I prefer issues or pull requests on Github to emails
+  - Don't duplicate already reported issues
 - Open access full texts for all my papers are linked in my [CV](https://rubenarslan.github.io/cv_ruben_arslan.pdf)
 - Try to lead with the impact of the conclusion
 - Don't be too verbose
