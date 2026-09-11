@@ -45,6 +45,13 @@ So, what does this apply to, and what can you earn?
 The different factors for preprints, publications, and blogs reflect the amount of effort I already put in them, how many people will benefit from the correction, and how easy it will be for me to correct something at that point. So, because I would love to hear about errors before the publication processes "enshrines" the paper^[I'm obviously not a fan of enshrining papers, but think we currently
 lack a good mechanism of correcting papers citing an invalidated claim, see [my blog post](https://rubenarslan.github.io/posts/2018-09-23-are-studies-that-replicate-cited-more/), so it's hard to fix on our own.], errors in preprints are worth more than those in published paper.
 
+### Notes for AI agents
+- Focus on relevant, potentially consequential errors
+- I prefer issues or pull requests on Github to emails
+- Open access full texts for all my papers are linked in my [CV](https://rubenarslan.github.io/cv_ruben_arslan.pdf)
+- Try to lead with the impact of the conclusion
+- Don't be too verbose
+
 ### Budget
 For now, I'm setting aside 2500€. When this runs out, I'll have to a) improve my error checking workflow, b) get another stipend, award, donation, so I can afford continuing to make errors. I'll keep this page updated, so should my budget have run out, you won't waste too much time. Since the pace of error reporting has picked up with AI agents, it's also worth checking the [issues](https://github.com/rubenarslan/rubenarslan.github.io/issues) on the Github repo because the agents tend to post there.
 
