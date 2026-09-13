@@ -181,39 +181,36 @@ In the real example, I'm interested in estimating how many users __ever__ experi
 
 Complications: 
 
-1. I had to implement an offset to correctly estimate the FP rate from the shorter cycles (after excluding the midcycle period).
-2. I had to use the sum score of `c_clicks` as a predictor, instead of the mean (so that it would scale with the observation period)
+1. The fitted daily false positive probabilities need to be aggregated to the user/cycle level before correcting the observed user/cycle rate.
+2. For independent daily false positives, this is the complement of observing no false positives on all tracked days.
 
 ```{r}
+false_positive_any <- function(fp) -expm1(sum(log1p(-fp)))
+
 no_o_users <- daily %>% 
   filter(!feel_ms, !time %in% 10:20) %>% 
   group_by(id, feel_ms) %>% 
-  summarise(fp_daily = mean(fp),
+  summarise(fp_users = false_positive_any(fp),
             any_o_clicks = if_else(any(o_clicks == 1), 1, 0),
             days = n(),
             o_clicks = sum(o_clicks),
             c_clicks = sum(c_clicks))
 
 users <- daily %>% group_by(id, feel_ms) %>% 
-  summarise(fp_daily = mean(fp),
+  summarise(fp_users = false_positive_any(fp),
             any_o_clicks = if_else(any(o_clicks == 1), 1, 0),
             days = n(),
             o_clicks = sum(o_clicks), 
             c_clicks = sum(c_clicks))
 
-glm9 <- glm(any_o_clicks ~ 1 + c_clicks + offset(log(days)), data = no_o_users, family = binomial())
-avg_predictions(glm9)
-(fp_rate <- avg_predictions(glm9, newdata = tibble(days = 30, c_clicks = mean(users$c_clicks)))[,"estimate"])
+mean(no_o_users$fp_users, na.rm = T)
 
-
-
-users$fp_users <- predict(glm9, newdata = users, type = "response")
 glm10 <- glm(any_o_clicks ~ 1 + offset(log(days)), data = users, family = binomial())
 obs_rate <- avg_predictions(glm10, newdata = tibble(days = 30, c_clicks = mean(no_o_users$c_clicks)))[,"estimate"]
 
-mean(users$fp_users,na.rm=T)
+mean(users$fp_users, na.rm = T)
 fp_rate <- mean(users$fp_users)
-(mean(users$any_o_clicks) - fp_rate)/(1- fp_rate)
+(mean(users$any_o_clicks) - fp_rate)/(1 - fp_rate)
 ```
 
 Looks good! Now I'll try my approach on the real data, to be inevitably disappointed.
@@ -286,4 +283,3 @@ bind_rows(
   theme_bw() +
   scale_color_brewer(type = 'qual')
 ```
-

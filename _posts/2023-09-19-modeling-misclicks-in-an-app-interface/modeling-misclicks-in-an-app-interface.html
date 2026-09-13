@@ -1708,53 +1708,41 @@ accidental. Normally, two clicks on the same button would turn the button off ag
 <p>In the real example, I’m interested in estimating how many users <strong>ever</strong> experience mittelschmerz. So, I also wanted to estimate false positives at the cycle and user level. For simplification, I just consider user/cycle as one thing here. The strategy remains the same: focus on the (pre-)menstruation period for users who are not ovulating to estimate the false positive rate. Extrapolate it to the rest of the users. Then compute the true rate from the observed rate.</p>
 <p>Complications:</p>
 <ol type="1">
-<li>I had to implement an offset to correctly estimate the FP rate from the shorter cycles (after excluding the midcycle period).</li>
-<li>I had to use the sum score of <code>c_clicks</code> as a predictor, instead of the mean (so that it would scale with the observation period)</li>
+<li>The fitted daily false positive probabilities need to be aggregated to the user/cycle level before correcting the observed user/cycle rate.</li>
+<li>For independent daily false positives, this is the complement of observing no false positives on all tracked days.</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>no_o_users</span> <span class='op'>&lt;-</span> <span class='va'>daily</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='va'>feel_ms</span>, <span class='op'>!</span><span class='va'>time</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>feel_ms</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>fp_daily <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>fp</span><span class='op'>)</span>,</span>
-<span>            any_o_clicks <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='va'>o_clicks</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>,</span>
-<span>            days <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
-<span>            o_clicks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>o_clicks</span><span class='op'>)</span>,</span>
-<span>            c_clicks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>c_clicks</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>users</span> <span class='op'>&lt;-</span> <span class='va'>daily</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>feel_ms</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>fp_daily <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>fp</span><span class='op'>)</span>,</span>
-<span>            any_o_clicks <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='va'>o_clicks</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>,</span>
-<span>            days <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
-<span>            o_clicks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>o_clicks</span><span class='op'>)</span>, </span>
-<span>            c_clicks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>c_clicks</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>glm9</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>any_o_clicks</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='va'>c_clicks</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/offset.html'>offset</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>days</span><span class='op'>)</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>no_o_users</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/marginaleffects/man/predictions.html'>avg_predictions</a></span><span class='op'>(</span><span class='va'>glm9</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>
- Estimate Pr(&gt;|z|)     S 2.5 % 97.5 %
-    0.386   &lt;0.001 267.3 0.374  0.397
+<pre class="sourceCode r"><code class="sourceCode r">false_positive_any &lt;- function(fp) -expm1(sum(log1p(-fp)))
 
-Columns: estimate, p.value, s.value, conf.low, conf.high 
-Type:  invlink(link) </code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='op'>(</span><span class='va'>fp_rate</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/marginaleffects/man/predictions.html'>avg_predictions</a></span><span class='op'>(</span><span class='va'>glm9</span>, newdata <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>days <span class='op'>=</span> <span class='fl'>30</span>, c_clicks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>users</span><span class='op'>$</span><span class='va'>c_clicks</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>,<span class='st'>"estimate"</span><span class='op'>]</span><span class='op'>)</span></span></code></pre>
+no_o_users &lt;- daily %&gt;% 
+  filter(!feel_ms, !time %in% 10:20) %&gt;% 
+  group_by(id, feel_ms) %&gt;% 
+  summarise(fp_users = false_positive_any(fp),
+            any_o_clicks = if_else(any(o_clicks == 1), 1, 0),
+            days = n(),
+            o_clicks = sum(o_clicks),
+            c_clicks = sum(c_clicks))
+
+users &lt;- daily %&gt;% group_by(id, feel_ms) %&gt;% 
+  summarise(fp_users = false_positive_any(fp),
+            any_o_clicks = if_else(any(o_clicks == 1), 1, 0),
+            days = n(),
+            o_clicks = sum(o_clicks), 
+            c_clicks = sum(c_clicks))
+
+mean(no_o_users$fp_users, na.rm = T)
+
+glm10 &lt;- glm(any_o_clicks ~ 1 + offset(log(days)), data = users, family = binomial())
+obs_rate &lt;- avg_predictions(glm10, newdata = tibble(days = 30, c_clicks = mean(no_o_users$c_clicks)))[,"estimate"]
+
+mean(users$fp_users, na.rm = T)
+fp_rate &lt;- mean(users$fp_users)
+(mean(users$any_o_clicks) - fp_rate)/(1 - fp_rate)</code></pre>
 </div>
-<pre><code>[1] 0.5111248</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>users</span><span class='op'>$</span><span class='va'>fp_users</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>glm9</span>, newdata <span class='op'>=</span> <span class='va'>users</span>, type <span class='op'>=</span> <span class='st'>"response"</span><span class='op'>)</span></span>
-<span><span class='va'>glm10</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>any_o_clicks</span> <span class='op'>~</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/offset.html'>offset</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>days</span><span class='op'>)</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>users</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='va'>obs_rate</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/marginaleffects/man/predictions.html'>avg_predictions</a></span><span class='op'>(</span><span class='va'>glm10</span>, newdata <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>days <span class='op'>=</span> <span class='fl'>30</span>, c_clicks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>no_o_users</span><span class='op'>$</span><span class='va'>c_clicks</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>,<span class='st'>"estimate"</span><span class='op'>]</span></span>
-<span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>users</span><span class='op'>$</span><span class='va'>fp_users</span>,na.rm<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 0.5078552</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fp_rate</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>users</span><span class='op'>$</span><span class='va'>fp_users</span><span class='op'>)</span></span>
-<span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>users</span><span class='op'>$</span><span class='va'>any_o_clicks</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span> <span class='va'>fp_rate</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 0.2611931</code></pre>
+<pre><code>[1] 0.3916000
+[1] 0.5147281
+[1] 0.2507293</code></pre>
 </div>
 <p>Looks good! Now I’ll try my approach on the real data, to be inevitably disappointed.</p>
 <h2 class="appendix" id="appendix">Appendix</h2>
