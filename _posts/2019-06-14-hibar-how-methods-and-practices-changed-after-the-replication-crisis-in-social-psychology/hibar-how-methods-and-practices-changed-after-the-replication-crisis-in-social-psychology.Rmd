@@ -167,16 +167,16 @@ Given the presented data, I am not convinced that the researchers have shown tha
 ```{r layout="l-screen-inset"}
 methods_time <- methods_time %>% select(paperID:online)
 metadata(methods_time)$name <- "Research in social psychology changed"
-metadata(bfi)$identifier <- "doi:10.23668/psycharchives.2367"
-metadata(bfi)$datePublished <- "2016-06-01"
-metadata(bfi)$creator <- list(
+metadata(methods_time)$identifier <- "doi:10.23668/psycharchives.2367"
+metadata(methods_time)$datePublished <- "2016-06-01"
+metadata(methods_time)$creator <- list(
       "@type" = "Person",
       givenName = "Kai", familyName = "Sassenberg",
       affiliation = list("@type" = "Organization",
         name = "Leibniz-Institut für Wissensmedien (Knowledge Media Research Center) Tübingen, Germany, School of Science, University of Tübingen"))
-metadata(bfi)$citation <- "Sassenberg, K., & Ditrich, L. (2019). Research in Social Psychology Changed Between 2011 and 2016: Larger Sample Sizes, More Self-Report Measures, and More Online Studies. Advances in Methods and Practices in Psychological Science, 2(2), 107–114. doi: 10.1177/2515245919838781"
-metadata(bfi)$url <- "https://hdl.handle.net/20.500.12034/1999"
-metadata(bfi)$temporalCoverage <- "2016" 
+metadata(methods_time)$citation <- "Sassenberg, K., & Ditrich, L. (2019). Research in Social Psychology Changed Between 2011 and 2016: Larger Sample Sizes, More Self-Report Measures, and More Online Studies. Advances in Methods and Practices in Psychological Science, 2(2), 107–114. doi: 10.1177/2515245919838781"
+metadata(methods_time)$url <- "https://hdl.handle.net/20.500.12034/1999"
+metadata(methods_time)$temporalCoverage <- "2016" 
 
 compact_codebook(methods_time)
 ```
