@@ -323,7 +323,7 @@ __Edit:__ Here's an approach that does work.
 cycles_long <- cycles_long %>% group_by(ID) %>% 
               mutate(logOESTR2 = logOESTR,
                      seOE = sd(logOESTR, na.rm = T)/sum(!is.na(logOESTR)),
-                     seP = sd(logPROG, na.rm = T)/sum(!is.na(logOESTR)),
+                     seP = sd(logPROG, na.rm = T)/sum(!is.na(logPROG)),
                      logPROG2 = logPROG)
 
 fit_latent <- brm(
