@@ -154,7 +154,10 @@ To determine whether I could aggregate across their four outcomes, I ran a multi
 ```{r}
 cycles_long <- cycles_long %>% mutate(cycle_time = str_c(cycle, time))
 df <- cycles_long %>% select(ID, cycle_time, starts_with("SR_")) %>% drop_na() %>% as.data.frame
-psych::mlr(df, grp = "ID", Time = "cycle_time")
+psych::mlr(
+  df, grp = "ID", Time = "cycle_time",
+  items = c("SR_Faces", "SR_Kissing", "SR_Bodies", "SR_Intercourse")
+)
 ```
 
 
