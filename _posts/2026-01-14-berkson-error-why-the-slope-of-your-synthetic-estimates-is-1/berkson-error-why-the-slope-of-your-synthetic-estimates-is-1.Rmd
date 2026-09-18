@@ -464,7 +464,7 @@ knitr::kable(results, digits = 3,
              caption = "Multivariate regression: True β1 = 0.6, β2 = 0.4")
 ```
 
-The "Berkson (mutual adj.)" row shows what happens when we predict T1 and T2 using both Z1 and Z2 using theoretical population coefficients (equivalent to a large training set).
+The "Berkson (mutual adj.)" row shows what happens when we predict T1 and T2 from both Z1 and Z2 using theoretical population coefficients (equivalent to a large training set). Regressing Y directly on Z1 and Z2 gives the same fitted values, but its coefficients are on the auxiliary-variable scale; with the parameters above they are 1/3 and 4/15, and recovering the true-score coefficients requires the calibration transformation used here.
 
 ```{r multivariate-coverage, cache=TRUE}
 # Simulation function for multivariate coverage
